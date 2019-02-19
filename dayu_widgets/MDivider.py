@@ -10,8 +10,7 @@ from qt import *
 
 
 class MDivider(MWidget):
-    _property_map = None
-    _orientation_map = {
+    _alignment_map = {
         Qt.AlignCenter: 50,
         Qt.AlignLeft: 20,
         Qt.AlignRight: 80,
@@ -23,13 +22,13 @@ class MDivider(MWidget):
         self._text_label.setStyleSheet('padding:4px')
         self._left_frame = QFrame()
         self._right_frame = QFrame()
-        self.main_lay = QHBoxLayout()
-        self.main_lay.setContentsMargins(0, 0, 0, 0)
-        self.main_lay.setSpacing(0)
-        self.main_lay.addWidget(self._left_frame)
-        self.main_lay.addWidget(self._text_label)
-        self.main_lay.addWidget(self._right_frame)
-        self.setLayout(self.main_lay)
+        self._main_lay = QHBoxLayout()
+        self._main_lay.setContentsMargins(0, 0, 0, 0)
+        self._main_lay.setSpacing(0)
+        self._main_lay.addWidget(self._left_frame)
+        self._main_lay.addWidget(self._text_label)
+        self._main_lay.addWidget(self._right_frame)
+        self.setLayout(self._main_lay)
 
         self.addProperty('text', text)
         self.addProperty('orientation', orientation)
@@ -62,13 +61,5 @@ class MDivider(MWidget):
             self.setFixedWidth(2)
 
     def set_alignment(self, value):
-        self.main_lay.setStretchFactor(self._left_frame, self._orientation_map.get(value, 50))
-        self.main_lay.setStretchFactor(self._right_frame, 100 - self._orientation_map.get(value, 50))
-
-if __name__ == '__main__':
-    import sys
-
-    app = QApplication(sys.argv)
-    test = MDivider(text='hahaha')
-    test.show()
-    sys.exit(app.exec_())
+        self._main_lay.setStretchFactor(self._left_frame, self._alignment_map.get(value, 50))
+        self._main_lay.setStretchFactor(self._right_frame, 100 - self._alignment_map.get(value, 50))
