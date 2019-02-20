@@ -10,6 +10,7 @@ from qt import *
 from MTheme import global_theme
 
 qss = '''
+QLabel
 QLabel[type=main_head]{{
     {main_head_font}
     {font_family}
@@ -42,9 +43,15 @@ QLabel:disabled{{
 
 
 class MLabel(QLabel):
-    def __init__(self, text='', type='text', wordWrap=False, parent=None):
+    MainHeadType = 'main_head'
+    SubHeadType = 'sub_head'
+    SmallHeadType = 'small_head'
+    TextType = 'text'
+    HelpType = 'help'
+    LinkType = 'like'
+
+    def __init__(self, text='', type=None, parent=None):
         super(MLabel, self).__init__(parent=parent)
         self.setProperty('text', text)
-        self.setProperty('type', type)
-        self.setProperty('wordWrap', wordWrap)
+        self.setProperty('type', type or MLabel.TextType)
         self.setStyleSheet(qss)
