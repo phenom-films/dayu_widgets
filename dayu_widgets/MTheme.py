@@ -61,5 +61,8 @@ global_theme = {
     ''',
     'link_font': '''
     color: #3399ff;
-    '''
+    ''',
+    'large_size': 40,
+    'default_size': 32,
+    'small_size': 24
 }
