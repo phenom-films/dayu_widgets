@@ -9,7 +9,8 @@
 from qt import *
 
 
-class MDivider(MWidget):
+@property_mixin
+class MDivider(QWidget):
     _alignment_map = {
         Qt.AlignCenter: 50,
         Qt.AlignLeft: 20,
@@ -30,9 +31,9 @@ class MDivider(MWidget):
         self._main_lay.addWidget(self._right_frame)
         self.setLayout(self._main_lay)
 
-        self.addProperty('text', text)
-        self.addProperty('orientation', orientation)
-        self.addProperty('alignment', alignment)
+        self.setProperty('text', text)
+        self.setProperty('orientation', orientation)
+        self.setProperty('alignment', alignment)
 
     def set_text(self, value):
         self._text_label.setProperty('text', value)
