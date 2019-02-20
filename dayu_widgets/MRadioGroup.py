@@ -40,9 +40,11 @@ QPushButton#radio:checked{
 
 @property_mixin
 class MRadioGroup(QWidget):
+    sig_button_clicked = Signal(int)
     def __init__(self, orientation=Qt.Horizontal, type=None, button_size='default', parent=None):
         super(MRadioGroup, self).__init__(parent=parent)
         self._button_group = QButtonGroup(self)
+        self._button_group.buttonClicked[int].connect(self.sig_button_clicked)
         self._main_layout = QBoxLayout(
             QBoxLayout.LeftToRight if orientation == Qt.Horizontal else QBoxLayout.TopToBottom)
         self._main_layout.addStretch()
@@ -85,3 +87,4 @@ class MRadioGroup(QWidget):
         button = self._button_group.button(value)
         if button:
             button.setChecked(True)
+            self.sig_button_clicked.emit(value)
