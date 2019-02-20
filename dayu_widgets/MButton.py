@@ -16,22 +16,17 @@ QPushButton {{
     {text_font}
     {font_family}
     color: white;
+    padding: 10px;
 }}
 
-
-QPushButton[button_size=large]{{
-    font-size:14px;
-    padding: 1px 10px;
-    height: 36px;
+QPushButton[combine=horizontal]{{
+    border-radius: 0;
+    border-left: 1px solid {border};
 }}
-QPushButton[button_size=default]{{
-    padding: 0 12px;
-    height: 32px;
+QPushButton[combine=vertical]{{
+    border-radius: 0;
+    border-top: 1px solid {border};
 }}
-QPushButton[button_size=small]{{
-    height: 24px;
-}}
-
 
 QPushButton[type=default]{{
     color: {content};
@@ -108,8 +103,20 @@ QPushButton[type=error]:pressed{{
 QPushButton:disabled{{
     color: {disabled};
     border: 2px dashed {border};
+    padding: none;
     background-color: {background};
 }}
+
+QPushButton[button_size=large]{{
+    font-size:14px;
+    padding: 12px 20px;
+}}
+QPushButton[button_size=small]{{
+    padding: none;
+}}
+
+
+
 '''.format(**global_theme)
 
 
@@ -120,14 +127,16 @@ class MButton(QPushButton):
     SuccessType = 'success'
     WarningType = 'warning'
     ErrorType = 'error'
-    DefaultSize = 'default'
     LargeSize = 'large'
+    DefaultSize = 'default'
     SmallSize = 'small'
-    def __init__(self, text='', type=None, button_size=None, button_icon=None, parent=None):
+
+    def __init__(self, text='', type=None, size=None, icon=None, parent=None):
         super(MButton, self).__init__(parent=parent)
-        if button_icon:
-            self.setProperty('icon', MIcon(request_file(button_icon or '' + '.png')))
+        if icon:
+            self.setProperty('icon', MIcon(request_file(icon or '' + '.png')))
         self.setProperty('text', text)
+        self.setProperty('button_size', size)
         self.setProperty('type', type or MButton.DefaultType)
-        self.setProperty('button_size', button_size or MButton.DefaultSize)
+        self.setFixedHeight(global_theme.get((size or MButton.DefaultSize) + '_size'))
         self.setStyleSheet(qss)
