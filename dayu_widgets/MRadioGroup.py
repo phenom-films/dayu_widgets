@@ -17,34 +17,21 @@ QRadioButton, QPushButton {
 }
 
 
-MRadioGroup[button_size=large]{
-    font-size:14px;
-    padding: 1px 10px;
-    height: 36px;
-}
-MRadioGroup[button_size=default]{
-    padding: 0 12px;
-    height: 32px;
-}
-MRadioGroup[button_size=small]{
-    height: 24px;
-}
-
-QPushButton{
+QPushButton#radio{
     color: grey;
     padding: 4px 12px;
     background-color: #f8f8f9;
     border: 1px solid #dcdee2;
 }
-QPushButton:hover{
+QPushButton#radio:hover{
     color: #2d8cf0;
     border-color: #5cadff;
 }
-QPushButton:pressed{
+QPushButton#radio:pressed{
     color: #2b85e4;
     border-color: #2b85e4;
 }
-QPushButton:checked{
+QPushButton#radio:checked{
     color: #5cadff;
     border: 2px solid #5cadff;
 }
@@ -53,7 +40,7 @@ QPushButton:checked{
 
 @property_mixin
 class MRadioGroup(QWidget):
-    def __init__(self, orientation=Qt.Horizontal, type=None, parent=None):
+    def __init__(self, orientation=Qt.Horizontal, type=None, button_size='default', parent=None):
         super(MRadioGroup, self).__init__(parent=parent)
         self._button_group = QButtonGroup(self)
         self._main_layout = QBoxLayout(
@@ -62,6 +49,7 @@ class MRadioGroup(QWidget):
         self._main_layout.setContentsMargins(0, 0, 0, 0)
         self.setProperty('type', type)
         self.setProperty('checked', -1)
+        self.setProperty('button_size', button_size)
         self.setLayout(self._main_layout)
         self.setStyleSheet(qss)
 
@@ -69,6 +57,7 @@ class MRadioGroup(QWidget):
         button_class = QPushButton if self.property('type') == 'button' else QRadioButton
         for index, data_dict in enumerate(button_list):
             button = button_class(self)
+            button.setObjectName('radio')
             button.setCheckable(True)
             if isinstance(data_dict, basestring):
                 button.setProperty('text', data_dict)
