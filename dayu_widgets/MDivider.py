@@ -8,6 +8,15 @@
 
 from qt import *
 
+qss = '''
+QLabel {
+    color: grey;
+    font-size: 12px;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+
+'''
+
 
 @property_mixin
 class MDivider(QWidget):
@@ -34,6 +43,7 @@ class MDivider(QWidget):
         self.setProperty('text', text)
         self.setProperty('orientation', orientation)
         self.setProperty('alignment', alignment)
+        self.setStyleSheet(qss)
 
     def set_text(self, value):
         self._text_label.setProperty('text', value)
