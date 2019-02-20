@@ -47,23 +47,19 @@ global_theme = {
     color: #464c5b;
     ''',
     'text_font': '''
-    font-weight:normal;
+    font-weight: normal;
     font-size: 12px;
     color: #657180;
     ''',
     'help_font': '''
-    font-weight:normal;
+    font-weight: normal;
     font-size: 12px;
     color: #9ea7b4;
     ''',
     'disabled_font': '''
-    font-weight:normal;
-    font-size: 12px;
     color: #c3cbd6;
     ''',
     'link_font': '''
-    font-weight:normal;
-    font-size: 12px;
     color: #3399ff;
     '''
 }

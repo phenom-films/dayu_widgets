@@ -7,15 +7,7 @@
 ###################################################################
 
 from qt import *
-from MTheme import global_theme
-qss = '''
-QLabel {{
-    {help_font}
-    {font_family}
-}}
-
-'''.format(**global_theme)
-
+from MLabel import MLabel
 
 @property_mixin
 class MDivider(QWidget):
@@ -27,8 +19,7 @@ class MDivider(QWidget):
 
     def __init__(self, text='', orientation=Qt.Horizontal, alignment=Qt.AlignCenter, parent=None):
         super(MDivider, self).__init__(parent)
-        self._text_label = QLabel()
-        self._text_label.setStyleSheet('padding:4px')
+        self._text_label = MLabel(type='help')
         self._left_frame = QFrame()
         self._right_frame = QFrame()
         self._main_lay = QHBoxLayout()
@@ -42,16 +33,12 @@ class MDivider(QWidget):
         self.setProperty('text', text)
         self.setProperty('orientation', orientation)
         self.setProperty('alignment', alignment)
-        self.setStyleSheet(qss)
 
     def set_text(self, value):
         self._text_label.setProperty('text', value)
         with_text = bool(value)
         if not with_text:
-            font = self.font()
-            font.setPointSize(1)
-            self._text_label.setFont(font)
-            self._text_label.setStyleSheet('padding:0')
+            self._text_label.setStyleSheet('font-size:1px;padding:0')
 
     def set_orientation(self, value):
         if value == Qt.Horizontal:
