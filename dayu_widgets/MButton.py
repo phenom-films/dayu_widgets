@@ -8,109 +8,109 @@
 
 from qt import *
 from static import request_file
+from MTheme import global_theme
 
 qss = '''
-QPushButton {
-    color: white;
+QPushButton {{
     border-radius: 4px;
-    font-size: 12px;
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-}
+    {text_font}
+    {font_family}
+    color: white;
+}}
 
 
-QPushButton[button_size=large]{
+QPushButton[button_size=large]{{
     font-size:14px;
     padding: 1px 10px;
     height: 36px;
-}
-QPushButton[button_size=default]{
+}}
+QPushButton[button_size=default]{{
     padding: 0 12px;
     height: 32px;
-}
-QPushButton[button_size=small]{
+}}
+QPushButton[button_size=small]{{
     height: 24px;
-}
+}}
 
 
-QPushButton[type=default]{
-    color: grey;
-    background-color: #f8f8f9;
-    border: 1px solid #dcdee2;
-}
-QPushButton[type=default]:hover{
+QPushButton[type=default]{{
+    color: {content};
+    background-color: {background};
+    border: 1px solid {border};
+}}
+QPushButton[type=default]:hover{{
     color: #2d8cf0;
     border-color: #5cadff;
-}
-QPushButton[type=default]:pressed{
+}}
+QPushButton[type=default]:pressed{{
     color: #2b85e4;
     border-color: #2b85e4;
-}
+}}
 
 
-QPushButton[type=primary]{
-    background-color: #2d8cf0;
+QPushButton[type=primary]{{
+    background-color: {primary};
+}}
+QPushButton[type=primary]:hover{{
+    background-color: {primary_light};
 
-}
-QPushButton[type=primary]:hover{
-    background-color: #5cadff;
-
-}
-QPushButton[type=primary]:pressed{
-    background-color: #2b85e4;
-}
-
-
-QPushButton[type=info]{
-    background-color: #2db7f5;
-}
-QPushButton[type=info]:hover{
-    background-color: #57c5f7;
-}
-QPushButton[type=info]:pressed{
-    background-color: #2baee9;
-}
+}}
+QPushButton[type=primary]:pressed{{
+    background-color: {primary_dark};
+}}
 
 
-QPushButton[type=success]{
-    background-color: #19be6b;
-}
-QPushButton[type=success]:hover{
-    background-color: #47cb89;
-}
-QPushButton[type=success]:pressed{
-    background-color: #18b566;
-}
+QPushButton[type=info]{{
+    background-color: {info};
+}}
+QPushButton[type=info]:hover{{
+    background-color: {info_light};
+}}
+QPushButton[type=info]:pressed{{
+    background-color: {info_dark};
+}}
 
 
-QPushButton[type=warning]{
-    background-color: #ff9900;
-}
-QPushButton[type=warning]:hover{
-    background-color: #ffad33;
-}
-QPushButton[type=warning]:pressed{
-    background-color: #f29100;
-}
+QPushButton[type=success]{{
+    background-color: {success};
+}}
+QPushButton[type=success]:hover{{
+    background-color: {success_light};
+}}
+QPushButton[type=success]:pressed{{
+    background-color: {success_dark};
+}}
 
 
-QPushButton[type=error]{
-    background-color: #ed4014;
-}
-QPushButton[type=error]:hover{
-    background-color: #f16643;
-}
-QPushButton[type=error]:pressed{
-    background-color: #e13d13;
-}
+QPushButton[type=warning]{{
+    background-color: {warning};
+}}
+QPushButton[type=warning]:hover{{
+    background-color: {warning_light};
+}}
+QPushButton[type=warning]:pressed{{
+    background-color: {warning_dark};
+}}
+
+
+QPushButton[type=error]{{
+    background-color: {error};
+}}
+QPushButton[type=error]:hover{{
+    background-color: {error_light};
+}}
+QPushButton[type=error]:pressed{{
+    background-color: {error_dark};
+}}
 
 
 
-QPushButton:disabled{
-    color: grey;
-    border: 2px dashed #dcdee2;
-    background-color: #f7f7f7;
-}
-'''
+QPushButton:disabled{{
+    color: {disabled};
+    border: 2px dashed {border};
+    background-color: {background};
+}}
+'''.format(**global_theme)
 
 
 class MButton(QPushButton):

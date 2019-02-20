@@ -8,34 +8,33 @@
 
 from qt import *
 from static import request_file
+from MTheme import global_theme
 
-qss = u'''
-QRadioButton, QPushButton {
-    color: grey;
-    font-size: 12px;
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-}
+qss = '''
+QRadioButton, QPushButton {{
+    {text_font}
+    {font_family}
+}}
 
 
-QPushButton#radio{
-    color: grey;
+QPushButton#radio{{
     padding: 4px 12px;
-    background-color: #f8f8f9;
-    border: 1px solid #dcdee2;
-}
-QPushButton#radio:hover{
-    color: #2d8cf0;
-    border-color: #5cadff;
-}
-QPushButton#radio:pressed{
-    color: #2b85e4;
-    border-color: #2b85e4;
-}
-QPushButton#radio:checked{
-    color: #5cadff;
-    border: 2px solid #5cadff;
-}
-'''
+    background-color: {background};
+    border: 1px solid {border};
+}}
+QPushButton#radio:hover{{
+    color: {primary_light};
+    border-color: {primary_light};
+}}
+QPushButton#radio:pressed{{
+    color: {primary_dark};
+    border-color: {primary_dark};
+}}
+QPushButton#radio:checked{{
+    color: {primary};
+    border: 2px solid {primary};
+}}
+'''.format(**global_theme)
 
 
 @property_mixin
