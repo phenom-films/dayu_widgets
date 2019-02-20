@@ -49,11 +49,11 @@ QPushButton[type=default]:pressed{
 
 QPushButton[type=primary]{
     background-color: #2d8cf0;
-    border-color: #2d8cf0;
+
 }
 QPushButton[type=primary]:hover{
     background-color: #5cadff;
-    border-color: #5cadff;
+
 }
 QPushButton[type=primary]:pressed{
     background-color: #2b85e4;
@@ -62,11 +62,9 @@ QPushButton[type=primary]:pressed{
 
 QPushButton[type=info]{
     background-color: #2db7f5;
-    border-color: #2db7f5;
 }
 QPushButton[type=info]:hover{
     background-color: #57c5f7;
-    border-color: #57c5f7;
 }
 QPushButton[type=info]:pressed{
     background-color: #2baee9;
@@ -75,11 +73,9 @@ QPushButton[type=info]:pressed{
 
 QPushButton[type=success]{
     background-color: #19be6b;
-    border-color: #19be6b;
 }
 QPushButton[type=success]:hover{
     background-color: #47cb89;
-    border-color: #47cb89;
 }
 QPushButton[type=success]:pressed{
     background-color: #18b566;
@@ -88,11 +84,9 @@ QPushButton[type=success]:pressed{
 
 QPushButton[type=warning]{
     background-color: #ff9900;
-    border-color: #ff9900;
 }
 QPushButton[type=warning]:hover{
     background-color: #ffad33;
-    border-color: #ffad33;
 }
 QPushButton[type=warning]:pressed{
     background-color: #f29100;
@@ -123,8 +117,7 @@ class MButton(QPushButton):
     def __init__(self, text='', type='default', button_size='default', button_icon=None, parent=None):
         super(MButton, self).__init__(parent=parent)
         if button_icon:
-            icon = MIcon(request_file(button_icon or '' + '.png')),
-            self.setProperty('icon', icon)
+            self.setProperty('icon', MIcon(request_file(button_icon or '' + '.png')))
 
         self.setProperty('text', text)
         self.setProperty('type', type)

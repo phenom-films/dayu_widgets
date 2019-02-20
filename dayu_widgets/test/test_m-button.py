@@ -8,11 +8,12 @@
 
 from dayu_widgets.qt import *
 from dayu_widgets.MButton import MButton
+from dayu_widgets.MButtonGroup import MButtonGroup
+from dayu_widgets.MDivider import MDivider
 
-
-class MDividerTest(QWidget):
+class MButtonTest(QWidget):
     def __init__(self, parent=None):
-        super(MDividerTest, self).__init__(parent)
+        super(MButtonTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -25,11 +26,29 @@ class MDividerTest(QWidget):
         button_large = MButton(text='Large', type='primary', button_size='large')
         button_default = MButton(text='Default', type='primary')
         button_small = MButton(text='Small', type='warning', button_size='small')
+        button_default.setDisabled(True)
         button_circle = MButton(button_icon='icon-delete', type='primary', text='Delete')
-        button_circle2 = MButton(button_icon='icon-delete', type='primary', text='Delete')
-        button_circle3 = MButton(button_icon='icon-delete', type='primary', text='Delete')
-        button_circle4 = MButton(button_icon='icon-delete', type='primary', text='Delete')
-        button_circle4.setDisabled(True)
+        button_circle2 = MButton(button_icon='icon-search', type='primary', text='Search')
+        button_circle3 = MButton(button_icon='icon-browser', type='primary', text='Browser')
+        button_circle4 = MButton(button_icon='icon-up', type='primary', text='Up')
+
+        button_group_h = MButtonGroup()
+        button_group_h.add_button(button_circle)
+        button_group_h.add_button(button_circle2)
+        button_group_h.add_button(button_circle3)
+        button_group_h.add_button(button_circle4)
+
+
+        button_v1 = MButton(button_icon='icon-delete', type='info',text='Delete')
+        button_v2 = MButton(button_icon='icon-search', type='info',text='Search')
+        button_v3 = MButton(button_icon='icon-browser',type='info', text='Browser')
+        button_v4 = MButton(button_icon='icon-up', type='info',text='Up')
+        button_group_v = MButtonGroup(orientation=Qt.Vertical)
+        button_group_v.add_button(button_v1)
+        button_group_v.add_button(button_v2)
+        button_group_v.add_button(button_v3)
+        button_group_v.add_button(button_v4)
+
         sub_lay1 = QHBoxLayout()
         sub_lay1.addWidget(button1)
         sub_lay1.addWidget(button2)
@@ -44,16 +63,16 @@ class MDividerTest(QWidget):
         sub_lay3.addWidget(button_default)
         sub_lay3.addWidget(button_small)
 
-        sub_lay4 = QHBoxLayout()
-        sub_lay4.addWidget(button_circle)
-        sub_lay4.addWidget(button_circle2)
-        sub_lay4.addWidget(button_circle3)
-        sub_lay4.addWidget(button_circle4)
         main_lay = QVBoxLayout()
+        main_lay.addWidget(MDivider(u'各种 type 的 MButton'))
         main_lay.addLayout(sub_lay1)
         main_lay.addLayout(sub_lay2)
+        main_lay.addWidget(MDivider(u'各种 button_size 的 MButton'))
         main_lay.addLayout(sub_lay3)
-        main_lay.addLayout(sub_lay4)
+        main_lay.addWidget(MDivider(u'水平排列的 MButtonGroup'))
+        main_lay.addWidget(button_group_h)
+        main_lay.addWidget(MDivider(u'垂直排列的 MButtonGroup'))
+        main_lay.addWidget(button_group_v)
         self.setLayout(main_lay)
 
 
@@ -61,6 +80,6 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MDividerTest()
+    test = MButtonTest()
     test.show()
     sys.exit(app.exec_())
