@@ -8,20 +8,17 @@ except:
     from PySide.QtWebKit import *
 
 
-class MWidget(QWidget):
-    def __init__(self, parent=None):
-        super(MWidget, self).__init__(parent)
-
-    def addProperty(self, attr, value=None):
-        self.setProperty(attr, value)
-
+def property_mixin(cls):
     def event(self, event):
         if event.type() == QEvent.DynamicPropertyChange:
             p = event.propertyName()
             if hasattr(self, 'set_{}'.format(p)):
                 callback = getattr(self, 'set_{}'.format(p))
                 callback(self.property(str(p)))
-        return super(QWidget, self).event(event)
+        return True
+
+    setattr(cls, 'event', event)
+    return cls
 
 
 class MPixmapCacheDict(object):
