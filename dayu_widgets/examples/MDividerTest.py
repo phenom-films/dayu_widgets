@@ -23,7 +23,7 @@ class MDividerTest(QWidget):
         div5 = MDivider(text='Right Text', alignment=Qt.AlignRight)
         div6 = MDivider(orientation=Qt.Vertical)
         div7 = MDivider(orientation=Qt.Vertical)
-        div8 = MDivider(text=u'垂直分割线', alignment=Qt.AlignLeft)
+        div8 = MDivider(text='orientation=Qt.Vertical', alignment=Qt.AlignLeft)
         label1 = QLabel('Maya')
         label2 = QLabel('Nuke')
         label3 = QLabel('Houdini')
@@ -48,6 +48,7 @@ class MDividerTest(QWidget):
         main_lay.addWidget(div5)
         main_lay.addLayout(sub_lay)
         main_lay.addWidget(div8)
+        main_lay.addStretch()
         self.setLayout(main_lay)
 
 

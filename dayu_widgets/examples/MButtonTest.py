@@ -64,14 +64,14 @@ class MButtonTest(QWidget):
         sub_lay3.addWidget(button_small)
 
         main_lay = QVBoxLayout()
-        main_lay.addWidget(MDivider(u'各种 type 的 MButton'))
+        main_lay.addWidget(MDivider('different type'))
         main_lay.addLayout(sub_lay1)
         main_lay.addLayout(sub_lay2)
-        main_lay.addWidget(MDivider(u'各种 button_size 的 MButton'))
+        main_lay.addWidget(MDivider('different button_size'))
         main_lay.addLayout(sub_lay3)
-        main_lay.addWidget(MDivider(u'水平排列的 MButtonGroup'))
+        main_lay.addWidget(MDivider('orientation=Qt.Horizontal'))
         main_lay.addWidget(button_group_h)
-        main_lay.addWidget(MDivider(u'垂直排列的 MButtonGroup'))
+        main_lay.addWidget(MDivider('orientation=Qt.Vertical'))
         main_lay.addWidget(button_group_v)
         self.setLayout(main_lay)
 
