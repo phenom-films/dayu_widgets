@@ -114,12 +114,20 @@ QPushButton:disabled{{
 
 
 class MButton(QPushButton):
-    def __init__(self, text='', type='default', button_size='default', button_icon=None, parent=None):
+    DefaultType = 'default'
+    PrimaryType = 'primary'
+    InfoType = 'info'
+    SuccessType = 'success'
+    WarningType = 'warning'
+    ErrorType = 'error'
+    DefaultSize = 'default'
+    LargeSize = 'large'
+    SmallSize = 'small'
+    def __init__(self, text='', type=None, button_size=None, button_icon=None, parent=None):
         super(MButton, self).__init__(parent=parent)
         if button_icon:
             self.setProperty('icon', MIcon(request_file(button_icon or '' + '.png')))
-
         self.setProperty('text', text)
-        self.setProperty('type', type)
-        self.setProperty('button_size', button_size)
+        self.setProperty('type', type or MButton.DefaultType)
+        self.setProperty('button_size', button_size or MButton.DefaultSize)
         self.setStyleSheet(qss)

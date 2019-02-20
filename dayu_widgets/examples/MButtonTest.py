@@ -11,6 +11,7 @@ from dayu_widgets.MButton import MButton
 from dayu_widgets.MButtonGroup import MButtonGroup
 from dayu_widgets.MDivider import MDivider
 
+
 class MButtonTest(QWidget):
     def __init__(self, parent=None):
         super(MButtonTest, self).__init__(parent)
@@ -18,19 +19,19 @@ class MButtonTest(QWidget):
 
     def _init_ui(self):
         button1 = MButton(text='Default')
-        button2 = MButton(text='Primary', type='primary')
-        button3 = MButton(text='Info', type='info')
-        button4 = MButton(text='Success', type='success')
-        button5 = MButton(text='Warning', type='warning')
-        button6 = MButton(text='Error', type='error')
-        button_large = MButton(text='Large', type='primary', button_size='large')
-        button_default = MButton(text='Default', type='primary')
-        button_small = MButton(text='Small', type='warning', button_size='small')
+        button2 = MButton(text='Primary', type=MButton.PrimaryType)
+        button3 = MButton(text='Info', type=MButton.InfoType)
+        button4 = MButton(text='Success', type=MButton.SuccessType)
+        button5 = MButton(text='Warning', type=MButton.WarningType)
+        button6 = MButton(text='Error', type=MButton.ErrorType)
+        button_large = MButton(text='Large', type=MButton.PrimaryType, button_size=MButton.LargeSize)
+        button_default = MButton(text='Default', type=MButton.PrimaryType)
+        button_small = MButton(text='Small', type=MButton.WarningType, button_size=MButton.SmallSize)
         button_default.setDisabled(True)
-        button_circle = MButton(button_icon='icon-delete', type='primary', text='Delete')
-        button_circle2 = MButton(button_icon='icon-search', type='primary', text='Search')
-        button_circle3 = MButton(button_icon='icon-browser', type='primary', text='Browser')
-        button_circle4 = MButton(button_icon='icon-up', type='primary', text='Up')
+        button_circle = MButton(button_icon='icon-delete', type=MButton.PrimaryType, text='Delete')
+        button_circle2 = MButton(button_icon='icon-search', type=MButton.PrimaryType, text='Search')
+        button_circle3 = MButton(button_icon='icon-browser', type=MButton.PrimaryType, text='Browser')
+        button_circle4 = MButton(button_icon='icon-up', type=MButton.PrimaryType, text='Up')
 
         button_group_h = MButtonGroup()
         button_group_h.add_button(button_circle)
@@ -38,11 +39,10 @@ class MButtonTest(QWidget):
         button_group_h.add_button(button_circle3)
         button_group_h.add_button(button_circle4)
 
-
-        button_v1 = MButton(button_icon='icon-delete', type='info',text='Delete')
-        button_v2 = MButton(button_icon='icon-search', type='info',text='Search')
-        button_v3 = MButton(button_icon='icon-browser',type='info', text='Browser')
-        button_v4 = MButton(button_icon='icon-up', type='info',text='Up')
+        button_v1 = MButton(button_icon='icon-delete', type=MButton.InfoType, text='Delete')
+        button_v2 = MButton(button_icon='icon-search', type=MButton.InfoType, text='Search')
+        button_v3 = MButton(button_icon='icon-browser', type=MButton.InfoType, text='Browser')
+        button_v4 = MButton(button_icon='icon-up', type=MButton.InfoType, text='Up')
         button_group_v = MButtonGroup(orientation=Qt.Vertical)
         button_group_v.add_button(button_v1)
         button_group_v.add_button(button_v2)
