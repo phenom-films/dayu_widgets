@@ -42,9 +42,11 @@ QPushButton[type=default]:pressed{{
 }}
 
 QPushButton[type=icon]{{
-    color: transparent;
     background-color: transparent;
     border: none;
+}}
+QPushButton[type=icon]:checked{{
+    background-color: {primary};
 }}
 QPushButton[type=icon]:hover{{
     border: 1px solid #5cadff;
