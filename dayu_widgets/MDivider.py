@@ -6,11 +6,16 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from qt import *
 from MLabel import MLabel
+from qt import *
+
 
 @property_mixin
 class MDivider(QWidget):
+    '''
+    props:
+        text: basestring
+    '''
     _alignment_map = {
         Qt.AlignCenter: 50,
         Qt.AlignLeft: 20,
@@ -30,18 +35,7 @@ class MDivider(QWidget):
         self._main_lay.addWidget(self._right_frame)
         self.setLayout(self._main_lay)
 
-        self.setProperty('text', text)
-        self.setProperty('orientation', orientation)
-        self.setProperty('alignment', alignment)
-
-    def set_text(self, value):
-        self._text_label.setProperty('text', value)
-        with_text = bool(value)
-        if not with_text:
-            self._text_label.setStyleSheet('font-size:1px;padding:0')
-
-    def set_orientation(self, value):
-        if value == Qt.Horizontal:
+        if orientation == Qt.Horizontal:
             self._left_frame.setVisible(True)
             self._text_label.setVisible(True)
             self._right_frame.setVisible(True)
@@ -56,7 +50,11 @@ class MDivider(QWidget):
             self._left_frame.setFrameShape(QFrame.VLine)
             self._left_frame.setFrameShadow(QFrame.Plain)
             self.setFixedWidth(2)
+        self.setProperty('text', text)
+        self._main_lay.setStretchFactor(self._left_frame, self._alignment_map.get(alignment, 50))
+        self._main_lay.setStretchFactor(self._right_frame, 100 - self._alignment_map.get(alignment, 50))
 
-    def set_alignment(self, value):
-        self._main_lay.setStretchFactor(self._left_frame, self._alignment_map.get(value, 50))
-        self._main_lay.setStretchFactor(self._right_frame, 100 - self._alignment_map.get(value, 50))
+    def set_text(self, value):
+        self._text_label.setProperty('text', value)
+        self._text_label.setVisible(bool(value))
+        self._right_frame.setVisible(bool(value))
