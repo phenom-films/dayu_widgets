@@ -70,8 +70,11 @@ class MLabel(QLabel):
         self.setProperty('type', type or MLabel.TextType)
         self.setTextInteractionFlags(Qt.TextBrowserInteraction | Qt.LinksAccessibleByMouse)
         self.setStyleSheet(qss)
-        self.setProperty('link', link)
+        self.set_link(link)
 
-    def set_link(self, value):
+    def _set_link(self, value):
         self.setCursor(Qt.PointingHandCursor if value else Qt.ArrowCursor)
         self.style().polish(self)
+
+    def set_link(self, value):
+        self.setProperty('link', value)
