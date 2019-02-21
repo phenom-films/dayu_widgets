@@ -10,9 +10,10 @@ from dayu_widgets.qt import *
 from dayu_widgets.MButton import MButton
 from dayu_widgets.MButtonGroup import MButtonGroup
 from dayu_widgets.MDivider import MDivider
+from dayu_widgets.data_bind import FieldMixin
 
 
-class MButtonTest(QWidget):
+class MButtonTest(QWidget, FieldMixin):
     def __init__(self, parent=None):
         super(MButtonTest, self).__init__(parent)
         self._init_ui()
@@ -28,10 +29,16 @@ class MButtonTest(QWidget):
         button_default = MButton(text='Default', type=MButton.PrimaryType)
         button_small = MButton(text='Small', type=MButton.WarningType, size=MButton.SmallSize)
         button_default.setDisabled(True)
-        button_circle = MButton(icon=MIcon('icon-delete.png'), type=MButton.PrimaryType, text='Delete')
+        button_circle = MButton(icon=MIcon('icon-delete.png'), type=MButton.ErrorType, text='Delete')
         button_circle2 = MButton(icon=MIcon('icon-search.png'), type=MButton.PrimaryType, text='Search')
         button_circle3 = MButton(icon=MIcon('icon-browser.png'), type=MButton.PrimaryType, text='Browser')
         button_circle4 = MButton(icon=MIcon('icon-up.png'), type=MButton.PrimaryType, text='Up')
+
+        self.register_field('button_type', MButton.PrimaryType)
+        button_bind = MButton()
+        button_bind.clicked.connect(self.slot_change_button_type)
+        self.bind('button_type', button_bind, 'type')
+        self.bind('button_type', button_bind, 'text')
 
         button_group_h = MButtonGroup()
         button_group_h.add_button(button_circle)
@@ -73,8 +80,14 @@ class MButtonTest(QWidget):
         main_lay.addWidget(button_group_h)
         main_lay.addWidget(MDivider('orientation=Qt.Vertical'))
         main_lay.addWidget(button_group_v)
+        main_lay.addWidget(MDivider('data bind: click button to change type'))
+        main_lay.addWidget(button_bind)
+
         self.setLayout(main_lay)
 
+    def slot_change_button_type(self):
+        import random
+        self.set_field('button_type', random.choice([MButton.DefaultType, MButton.PrimaryType, MButton.SuccessType, MButton.InfoType, MButton.WarningType, MButton.ErrorType]))
 
 if __name__ == '__main__':
     import sys

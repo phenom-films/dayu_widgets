@@ -7,7 +7,6 @@
 ###################################################################
 
 from qt import *
-from static import request_file
 from MTheme import global_theme
 
 qss = '''
@@ -120,7 +119,13 @@ QPushButton[button_size=small]{{
 '''.format(**global_theme)
 
 
+@property_mixin
 class MButton(QPushButton):
+    '''
+    自定义 props:
+        type:
+        button_size:
+    '''
     DefaultType = 'default'
     PrimaryType = 'primary'
     InfoType = 'info'
@@ -131,12 +136,18 @@ class MButton(QPushButton):
     DefaultSize = 'default'
     SmallSize = 'small'
 
-    def __init__(self, text='', type=None, size=None, icon=None, parent=None):
-        super(MButton, self).__init__(parent=parent)
+    def __init__(self, icon=None, text='', type=None, size=None, parent=None):
         if icon:
-            self.setProperty('icon', MIcon(request_file(icon or '' + '.png')))
-        self.setProperty('text', text)
-        self.setProperty('button_size', size)
+            super(MButton, self).__init__(icon=icon, text=text, parent=parent)
+        else:
+            super(MButton, self).__init__(text=text, parent=parent)
         self.setProperty('type', type or MButton.DefaultType)
-        self.setFixedHeight(global_theme.get((size or MButton.DefaultSize) + '_size'))
+        self.setProperty('button_size', size or MButton.DefaultSize)
         self.setStyleSheet(qss)
+
+    def set_button_size(self, value):
+        self.setFixedHeight(global_theme.get(value + '_size'))
+        self.style().polish(self)
+
+    def set_type(self, value):
+        self.style().polish(self)
