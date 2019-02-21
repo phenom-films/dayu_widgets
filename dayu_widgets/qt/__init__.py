@@ -12,8 +12,8 @@ def property_mixin(cls):
     def event(self, event):
         if event.type() == QEvent.DynamicPropertyChange:
             p = event.propertyName()
-            if hasattr(self, 'set_{}'.format(p)):
-                callback = getattr(self, 'set_{}'.format(p))
+            if hasattr(self, '_set_{}'.format(p)):
+                callback = getattr(self, '_set_{}'.format(p))
                 callback(self.property(str(p)))
         return super(cls, self).event(event)
 
