@@ -64,14 +64,13 @@ class MLineEdit(QLineEdit):
 
     def __init__(self, text='', type=None, prefix_icon=None, prefix_text=None, suffix_icon=None, suffix_text=None,
                  size=None, parent=None):
-        super(MLineEdit, self).__init__(parent)
+        super(MLineEdit, self).__init__(text, parent)
         button_layout = QHBoxLayout()
         button_layout.setContentsMargins(0, 0, 0, 0)
         margin = QMargins(4, 2, 4, 2)
         fixed_height = global_theme.get((size or MLineEdit.DefaultSize) + '_size') + 1
         self.setFixedHeight(fixed_height)
-        self.setProperty('text', text)
-        self.setProperty('line_size', size)
+        self.setProperty('line_size', size or MLineEdit.DefaultSize)
         if prefix_icon or prefix_text:
             prefix_button = MButton(text=prefix_text, icon=prefix_icon, size=size, type=MButton.PrimaryType)
             prefix_button.setProperty('combine', 'horizontal')
@@ -84,12 +83,12 @@ class MLineEdit(QLineEdit):
             self.setProperty('type', type)
             if type == MLineEdit.ErrorType:
                 self.setReadOnly(True)
-                suffix_button = MButton(icon='icon-detail', size=size, type=MButton.ErrorType)
+                suffix_button = MButton(icon=MIcon('icon-detail.png'), size=size, type=MButton.ErrorType)
                 suffix_button.clicked.connect(self.slot_show_detail)
                 suffix_button.setFixedWidth(fixed_height)
                 self.setPlaceholderText('Error information will be here...')
             elif type == MLineEdit.SearchType:
-                suffix_button = MButton(icon='icon-search', size=size, type=MButton.PrimaryType)
+                suffix_button = MButton(icon=MIcon('icon-search.png'), size=size, type=MButton.PrimaryType)
                 suffix_button.clicked.connect(self.returnPressed)
                 suffix_button.setFixedWidth(fixed_height)
                 self.setPlaceholderText('Enter key word to search...')
@@ -113,15 +112,15 @@ class MLineEdit(QLineEdit):
         self.setProperty('content', self.property('text'))
 
     def append(self, text):
-        self.setText(text)
-        self.content += '\n' + text
+        self.setProperty('text', text)
+        self.setProperty('content', u'{}\n{}'.format(self.property('content'), text))
 
     def setText(self, text):
-        self.setProperty('content', u'{}\n{}'.format(self.property('content'), text))
+        self.setProperty('content', text)
         return super(MLineEdit, self).setText(text)
 
     def clear(self):
-        self.setProperty('content')
+        self.setProperty('content', '')
         return super(MLineEdit, self).clear()
 
     @Slot()
