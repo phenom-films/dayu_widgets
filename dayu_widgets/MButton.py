@@ -41,6 +41,18 @@ QPushButton[type=default]:pressed{{
     border-color: #2b85e4;
 }}
 
+QPushButton[type=icon]{{
+    color: transparent;
+    background-color: transparent;
+    border: none;
+}}
+QPushButton[type=icon]:hover{{
+    border: 1px solid #5cadff;
+}}
+QPushButton[type=icon]:pressed{{
+    border: 1px solid #2b85e4;
+}}
+
 
 QPushButton[type=primary]{{
     background-color: {primary};
@@ -127,6 +139,7 @@ class MButton(QPushButton):
         button_size:
     '''
     DefaultType = 'default'
+    IconType = 'icon'
     PrimaryType = 'primary'
     InfoType = 'info'
     SuccessType = 'success'
@@ -141,8 +154,8 @@ class MButton(QPushButton):
             super(MButton, self).__init__(icon=icon, text=text, parent=parent)
         else:
             super(MButton, self).__init__(text=text, parent=parent)
-        self.setProperty('type', type or MButton.DefaultType)
         self.setProperty('button_size', size or MButton.DefaultSize)
+        self.setProperty('type', type or MButton.DefaultType)
         self.setStyleSheet(qss)
 
     def set_button_size(self, value):
@@ -150,4 +163,7 @@ class MButton(QPushButton):
         self.style().polish(self)
 
     def set_type(self, value):
+        if value == MButton.IconType:
+            self.setText('')
+            self.setFixedWidth(global_theme.get(self.property('button_size') + '_size'))
         self.style().polish(self)
