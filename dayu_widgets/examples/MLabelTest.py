@@ -9,11 +9,11 @@
 from dayu_widgets.qt import *
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import FieldMixin
+from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MButton import MButton
 
 
-class MLabelTest(QWidget, FieldMixin):
+class MLabelTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MLabelTest, self).__init__(parent)
         self._init_ui()
