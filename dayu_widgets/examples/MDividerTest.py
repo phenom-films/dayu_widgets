@@ -8,9 +8,11 @@
 
 from dayu_widgets.qt import *
 from dayu_widgets.MDivider import MDivider
+from dayu_widgets.data_bind import FieldMixin
+from dayu_widgets.MButton import MButton
 
 
-class MDividerTest(QWidget):
+class MDividerTest(QWidget, FieldMixin):
     def __init__(self, parent=None):
         super(MDividerTest, self).__init__(parent)
         self._init_ui()
@@ -35,6 +37,13 @@ class MDividerTest(QWidget):
         sub_lay.addWidget(label3)
         sub_lay.addStretch()
 
+        self.register_field('count', 0)
+        self.register_field('show_text', self.computed_text)
+        divider = MDivider(alignment=Qt.AlignCenter)
+        button = MButton(type=MButton.PrimaryType, text='Change Divider text')
+        button.clicked.connect(self.slot_change_divider_text)
+        self.bind('show_text', divider, 'text')
+
         main_lay = QVBoxLayout()
         main_lay.addWidget(QLabel('Steven Paul Jobs was an American entrepreneur and business magnate.'))
         main_lay.addWidget(div1)
@@ -48,8 +57,16 @@ class MDividerTest(QWidget):
         main_lay.addWidget(div5)
         main_lay.addLayout(sub_lay)
         main_lay.addWidget(div8)
+        main_lay.addWidget(divider)
+        main_lay.addWidget(button)
         main_lay.addStretch()
         self.setLayout(main_lay)
+
+    def computed_text(self):
+        return 'Clicked: ' + str(self.field('count'))
+
+    def slot_change_divider_text(self):
+        self.set_field('count', self.field('count') + 1)
 
 
 if __name__ == '__main__':
