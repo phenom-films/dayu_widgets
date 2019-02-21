@@ -7,8 +7,9 @@
 ###################################################################
 
 from qt import *
-from static import request_file
 from MTheme import global_theme
+from MFieldMixin import MFieldMixin
+import functools
 
 qss = '''
 QRadioButton, QPushButton {{
@@ -38,24 +39,39 @@ QPushButton#radio:checked{{
 
 
 @property_mixin
-class MRadioGroup(QWidget):
-    sig_button_clicked = Signal(int)
-    def __init__(self, orientation=Qt.Horizontal, type=None, button_size='default', parent=None):
+class MRadioGroup(QWidget, MFieldMixin):
+    '''
+    props:
+        value: int
+            signal: sig_value_changed
+
+    '''
+    RadioType = 'radio'
+    ButtonType = 'button'
+    sig_checked_changed = Signal(int)
+
+    def __init__(self, orientation=Qt.Horizontal, type=None, parent=None):
         super(MRadioGroup, self).__init__(parent=parent)
         self._button_group = QButtonGroup(self)
-        self._button_group.buttonClicked[int].connect(self.sig_button_clicked)
+        self._button_group.buttonClicked[int].connect(functools.partial(self.setProperty, 'value'))
+        self._button_group.buttonClicked[int].connect(self.sig_checked_changed)
+
         self._main_layout = QBoxLayout(
             QBoxLayout.LeftToRight if orientation == Qt.Horizontal else QBoxLayout.TopToBottom)
         self._main_layout.addStretch()
         self._main_layout.setContentsMargins(0, 0, 0, 0)
-        self.setProperty('type', type)
-        self.setProperty('checked', -1)
-        self.setProperty('button_size', button_size)
+        self.setProperty('type', type or MRadioGroup.RadioType)
+        self.set_checked(-1)
         self.setLayout(self._main_layout)
         self.setStyleSheet(qss)
 
-    def add_radio_list(self, button_list):
-        button_class = QPushButton if self.property('type') == 'button' else QRadioButton
+    def set_radio_list(self, button_list):
+        for button in self._button_group.buttons():
+            self._button_group.removeButton(button)
+            self._main_layout.removeWidget(button)
+            button.setVisible(False)
+
+        button_class = QPushButton if self.property('type') == MRadioGroup.ButtonType else QRadioButton
         for index, data_dict in enumerate(button_list):
             button = button_class(self)
             button.setObjectName('radio')
@@ -65,7 +81,7 @@ class MRadioGroup(QWidget):
             elif isinstance(data_dict, dict):
                 button.setProperty('text', data_dict.get('text'))
                 if data_dict.get('icon'):
-                    button.setProperty('icon', MIcon(request_file(data_dict.get('icon', '') + '.png')))
+                    button.setProperty('icon', data_dict.get('icon'))
                 if data_dict.get('data'):
                     button.setProperty('data', data_dict.get('data'))
             else:
@@ -82,8 +98,14 @@ class MRadioGroup(QWidget):
     def checked_button(self):
         return self._button_group.checkedButton()
 
+    def _set_checked(self, value):
+        assert isinstance(value, int)
+        if value != self._button_group.checkedId():
+            # 更新来自代码
+            button = self._button_group.button(value)
+            if button:
+                button.setChecked(True)
+            self.sig_checked_changed.emit(value)
+
     def set_checked(self, value):
-        button = self._button_group.button(value)
-        if button:
-            button.setChecked(True)
-            self.sig_button_clicked.emit(value)
+        self.setProperty('checked', value)
