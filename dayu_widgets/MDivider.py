@@ -50,11 +50,14 @@ class MDivider(QWidget):
             self._left_frame.setFrameShape(QFrame.VLine)
             self._left_frame.setFrameShadow(QFrame.Plain)
             self.setFixedWidth(2)
-        self.setProperty('text', text)
+        self.set_text(text)
         self._main_lay.setStretchFactor(self._left_frame, self._alignment_map.get(alignment, 50))
         self._main_lay.setStretchFactor(self._right_frame, 100 - self._alignment_map.get(alignment, 50))
 
-    def set_text(self, value):
+    def _set_text(self, value):
         self._text_label.setProperty('text', value)
         self._text_label.setVisible(bool(value))
         self._right_frame.setVisible(bool(value))
+
+    def set_text(self, value):
+        self.setProperty('text', value)

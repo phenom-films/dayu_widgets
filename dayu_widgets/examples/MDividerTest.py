@@ -8,11 +8,11 @@
 
 from dayu_widgets.qt import *
 from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import FieldMixin
+from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MButton import MButton
 
 
-class MDividerTest(QWidget, FieldMixin):
+class MDividerTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MDividerTest, self).__init__(parent)
         self._init_ui()
@@ -25,7 +25,8 @@ class MDividerTest(QWidget, FieldMixin):
         div5 = MDivider(text='Right Text', alignment=Qt.AlignRight)
         div6 = MDivider(orientation=Qt.Vertical)
         div7 = MDivider(orientation=Qt.Vertical)
-        div8 = MDivider(text='orientation=Qt.Vertical', alignment=Qt.AlignLeft)
+        div8 = MDivider(alignment=Qt.AlignLeft)
+        div8.set_text('orientation=Qt.Vertical')
         label1 = QLabel('Maya')
         label2 = QLabel('Nuke')
         label3 = QLabel('Houdini')
