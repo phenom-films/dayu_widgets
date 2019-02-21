@@ -8,7 +8,7 @@
 import functools
 
 
-class FieldMixin(object):
+class MFieldMixin(object):
     computed_dict = None
     props_dict = None
 

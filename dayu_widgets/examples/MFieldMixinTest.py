@@ -1,10 +1,10 @@
-from dayu_widgets.MFieldMixin import FieldMixin
+from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.qt import *
 from dayu_widgets.MLineEdit import MLineEdit
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MButton import MButton
 
-class MFieldMixinTest(QWidget, FieldMixin):
+class MFieldMixinTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MFieldMixinTest, self).__init__(parent)
         self.register_field('my_name', 'xiaoming')
