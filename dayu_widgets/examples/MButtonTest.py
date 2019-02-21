@@ -10,10 +10,10 @@ from dayu_widgets.qt import *
 from dayu_widgets.MButton import MButton
 from dayu_widgets.MButtonGroup import MButtonGroup
 from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import FieldMixin
+from dayu_widgets.MFieldMixin import MFieldMixin
 
 
-class MButtonTest(QWidget, FieldMixin):
+class MButtonTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MButtonTest, self).__init__(parent)
         self._init_ui()

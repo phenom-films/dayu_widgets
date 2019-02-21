@@ -27,7 +27,7 @@ class MDemo(QDialog):
 
     def _init_ui(self):
         list_widget = MRadioGroup(type='button', orientation=Qt.Vertical)
-        list_widget.sig_button_clicked.connect(self.slot_change_widget)
+        list_widget.sig_checked_changed.connect(self.slot_change_widget)
         self.stacked_widget = QStackedWidget()
         self.text_edit = QTextEdit()
         data_list = []
@@ -36,7 +36,7 @@ class MDemo(QDialog):
             widget = cls()
             widget.setProperty('code', code)
             self.stacked_widget.addWidget(widget)
-        list_widget.add_radio_list(data_list)
+        list_widget.set_radio_list(data_list)
         list_widget.set_checked(0)
 
         splitter = QSplitter()

@@ -156,16 +156,22 @@ class MButton(QPushButton):
             super(MButton, self).__init__(icon=icon, text=text, parent=parent)
         else:
             super(MButton, self).__init__(text=text, parent=parent)
-        self.setProperty('button_size', size or MButton.DefaultSize)
-        self.setProperty('type', type or MButton.DefaultType)
+        self.set_button_size(size or MButton.DefaultSize)
+        self.set_type(type or MButton.DefaultType)
         self.setStyleSheet(qss)
 
-    def set_button_size(self, value):
+    def _set_button_size(self, value):
         self.setFixedHeight(global_theme.get(value + '_size'))
         self.style().polish(self)
 
-    def set_type(self, value):
+    def _set_type(self, value):
         if value == MButton.IconType:
             self.setText('')
             self.setFixedWidth(global_theme.get(self.property('button_size') + '_size'))
         self.style().polish(self)
+
+    def set_type(self, value):
+        self.setProperty('type', value)
+
+    def set_button_size(self, value):
+        self.setProperty('button_size', value)
