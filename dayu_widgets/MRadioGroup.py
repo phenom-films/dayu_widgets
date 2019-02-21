@@ -89,15 +89,6 @@ class MRadioGroup(QWidget, MFieldMixin):
             self._button_group.addButton(button, index)
             self._main_layout.insertWidget(self._main_layout.count() - 1, button)
 
-    def button(self, id):
-        return self._button_group.button(id)
-
-    def checked_id(self):
-        return self._button_group.checkedId()
-
-    def checked_button(self):
-        return self._button_group.checkedButton()
-
     def _set_checked(self, value):
         assert isinstance(value, int)
         if value != self._button_group.checkedId():
