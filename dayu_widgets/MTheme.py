@@ -30,10 +30,10 @@ global_theme = {
     'border': '#dcdee2',
     'divider': '#e8eaec',
     'background': '#f8f8f9',
-    'font_family':'font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;',
+    'font_family': 'font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;',
     'main_head_font': '''
     font-weight:bold;
-    font-size: 16px;
+    font-size: 18px;
     color: #464c5b;
     ''',
     'sub_head_font': '''
@@ -58,9 +58,6 @@ global_theme = {
     ''',
     'disabled_font': '''
     color: #c3cbd6;
-    ''',
-    'link_font': '''
-    color: #3399ff;
     ''',
     'large_size': 40,
     'default_size': 32,
