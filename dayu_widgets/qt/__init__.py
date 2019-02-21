@@ -15,20 +15,24 @@ def property_mixin(cls):
             if hasattr(self, 'set_{}'.format(p)):
                 callback = getattr(self, 'set_{}'.format(p))
                 callback(self.property(str(p)))
-        return True
+        return super(cls, self).event(event)
 
     setattr(cls, 'event', event)
     return cls
 
 
-class MPixmapCacheDict(object):
+class MCacheDict(object):
     def __init__(self, cls):
-        super(MPixmapCacheDict, self).__init__()
+        super(MCacheDict, self).__init__()
         self.cls = cls
         self._cache_pix_dict = {}
 
     def __call__(self, path):
         assert isinstance(path, basestring)
+        import os
+        from dayu_widgets import STATIC_FOLDERS
+        path = next((os.path.join(prefix, path) for prefix in [''] + STATIC_FOLDERS if
+                     os.path.isfile(os.path.join(prefix, path))), path)
         lower_path = unicode(path.lower())
         pix_map = self._cache_pix_dict.get(lower_path, None)
         if pix_map is None:
@@ -37,5 +41,5 @@ class MPixmapCacheDict(object):
         return pix_map
 
 
-MPixmap = MPixmapCacheDict(QPixmap)
-MIcon = MPixmapCacheDict(QIcon)
+MPixmap = MCacheDict(QPixmap)
+MIcon = MCacheDict(QIcon)
