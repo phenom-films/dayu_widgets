@@ -10,7 +10,7 @@ from dayu_widgets.qt import *
 from dayu_widgets.MButton import MButton
 from dayu_widgets.MButtonGroup import MButtonGroup
 from dayu_widgets.MDivider import MDivider
-from dayu_widgets.data_bind import FieldMixin
+from dayu_widgets.MFieldMixin import FieldMixin
 
 
 class MButtonTest(QWidget, FieldMixin):
