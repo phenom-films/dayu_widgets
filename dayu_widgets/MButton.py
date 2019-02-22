@@ -15,7 +15,7 @@ QPushButton {{
     {text_font}
     {font_family}
     color: white;
-    padding: 10px;
+    padding: 9px 10px;
 }}
 
 QPushButton[combine=horizontal]{{
