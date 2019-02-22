@@ -18,9 +18,9 @@ from dayu_widgets.MTheme import global_theme
 from dayu_widgets.qt import *
 
 
-class MAlertTest(QWidget, MFieldMixin):
+class MCircleTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MAlertTest, self).__init__(parent)
+        super(MCircleTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -77,7 +77,7 @@ class MAlertTest(QWidget, MFieldMixin):
         custom_layout.addWidget(MDivider())
         custom_layout.addWidget(lab3)
         custom_layout.addStretch()
-        custom_circle = MCircle(radius=200)
+        custom_circle = MCircle(radius=180, percent=75)
         custom_circle.set_widget(custom_widget)
 
         main_lay.addWidget(MDivider('custom circle'))
@@ -102,6 +102,6 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MAlertTest()
+    test = MCircleTest()
     test.show()
     sys.exit(app.exec_())
