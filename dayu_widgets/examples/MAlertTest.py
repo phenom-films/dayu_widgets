@@ -23,18 +23,19 @@ class MAlertTest(QWidget, MFieldMixin):
 
     def _init_ui(self):
         main_lay = QVBoxLayout()
+        self.setLayout(main_lay)
         main_lay.addWidget(MDivider('different type'))
-        main_lay.addWidget(MAlert(text='Normal Message', type=MAlert.InfoType))
-        main_lay.addWidget(MAlert(text='Success Message', type=MAlert.SuccessType))
-        main_lay.addWidget(MAlert(text='Warning Message', type=MAlert.WarningType))
-        main_lay.addWidget(MAlert(text='Error Message', type=MButton.ErrorType))
-        main_lay.addWidget(MLabel(u'不同的提示状态：普通、成功、警告、错误。默认2秒后消失'))
+        main_lay.addWidget(MAlert(text='Normal Message', type=MAlert.InfoType, parent=self))
+        main_lay.addWidget(MAlert(text='Success Message', type=MAlert.SuccessType, parent=self))
+        main_lay.addWidget(MAlert(text='Warning Message', type=MAlert.WarningType, parent=self))
+        main_lay.addWidget(MAlert(text='Error Message', type=MButton.ErrorType, parent=self))
+        main_lay.addWidget(MLabel(u'不同的提示信息类型'))
         main_lay.addWidget(MDivider('closable'))
-        main_lay.addWidget(MAlert(text='Error Message', type=MButton.ErrorType, closable=True))
+        main_lay.addWidget(MAlert(text='Error Message', type=MButton.ErrorType, closable=True, parent=self))
         main_lay.addWidget(MDivider('data bind'))
         self.register_field('msg', '')
         self.register_field('msg_type', MAlert.InfoType)
-        alert = MAlert(closable=True)
+        alert = MAlert(closable=True, parent=self)
 
         self.bind('msg', alert, 'text')
         self.bind('msg_type', alert, 'type')
@@ -48,7 +49,7 @@ class MAlertTest(QWidget, MFieldMixin):
         main_lay.addWidget(alert)
         main_lay.addWidget(button_grp)
         main_lay.addStretch()
-        self.setLayout(main_lay)
+
 
     def slot_change_alert(self, alert_text, alert_type):
         self.set_field('msg_type', alert_type)

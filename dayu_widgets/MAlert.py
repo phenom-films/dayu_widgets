@@ -50,11 +50,11 @@ class MAlert(QFrame):
     WarningType = 'warning'
     ErrorType = 'error'
 
-    def __init__(self, text='', type=None, closable=False, show_icon=True, parent=None):
-        super(MAlert, self).__init__(parent)
+    def __init__(self, text='', type=None, closable=False, show_icon=True, parent=None, flags=0):
+        super(MAlert, self).__init__(parent, flags)
         self.setObjectName('alert')
-        self._icon_label = MAvatar(size=MAvatar.TinySize, parent=self)
-        self._content_label = MLabel(parent=self)
+        self._icon_label = MAvatar(size=MAvatar.TinySize)
+        self._content_label = MLabel()
         self._close_button = MButton(size=MButton.SmallSize, icon=MIcon('icon-clear.png'), type=MButton.IconType)
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
 
