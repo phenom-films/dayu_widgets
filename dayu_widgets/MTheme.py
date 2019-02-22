@@ -11,18 +11,22 @@ global_theme = {
     'primary': '#2d8cf0',
     'primary_light': '#5cadff',
     'primary_dark': '#2b85e4',
+    'primary_opacity': '#f0faff',
     'info': '#2db7f5',
     'info_light': '#57c5f7',
     'info_dark': '#2baee9',
     'success': '#19be6b',
     'success_light': '#47cb89',
     'success_dark': '#18b566',
+    'success_opacity': '#edfff3',
     'warning': '#ff9900',
     'warning_light': '#ffad33',
     'warning_dark': '#f29100',
+    'warning_opacity': '#fff9e6',
     'error': '#ed4014',
     'error_light': '#f16643',
     'error_dark': '#e13d13',
+    'error_opacity': '#ffefe6',
     'title': '#17233d',
     'content': '#515a6e',
     'sub_color': '#808695',
@@ -30,6 +34,7 @@ global_theme = {
     'border': '#dcdee2',
     'divider': '#e8eaec',
     'background': '#f8f8f9',
+    'background_dark': '#cccccc',
     'font_family': 'font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;',
     'main_head_font': '''
     font-weight:bold;
@@ -61,5 +66,6 @@ global_theme = {
     ''',
     'large_size': 40,
     'default_size': 32,
-    'small_size': 24
+    'small_size': 24,
+    'tiny_size': 18
 }
