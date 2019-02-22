@@ -31,7 +31,7 @@ class MAvatar(QLabel):
         self.setObjectName('avatar')
         self.set_size(size or MAvatar.DefaultSize)
         self.set_image(image or 'icon-user.png')
-        self.setStyleSheet(qss)
+        # self.setStyleSheet(qss)
 
     def _set_image(self, value):
         fixed_height = global_theme.get(self.property('button_size') + '_size')
