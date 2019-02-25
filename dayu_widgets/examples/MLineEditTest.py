@@ -8,6 +8,8 @@
 
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MLineEdit import MLineEdit
+from dayu_widgets.MButton import MButton
+from dayu_widgets.MLabel import MLabel
 from dayu_widgets.qt import *
 
 
@@ -24,15 +26,21 @@ class MLineEditTest(QWidget):
         line_edit_small = MLineEdit(size=MLineEdit.SmallSize)
         line_edit_small.setPlaceholderText('Small Size')
 
-        line_edit_icon = MLineEdit(suffix_icon=MIcon('icon-browser.png'), text='Browser')
-        line_edit_error = MLineEdit(type=MLineEdit.ErrorType, size=MLineEdit.SmallSize)
-        line_edit_error.setText('waring: file d:/ddd/ccc.jpg not exists.')
-        line_edit_error2 = MLineEdit(type=MLineEdit.ErrorType, size=MLineEdit.SmallSize)
+        line_edit_icon = MLineEdit(text='Browser', size=MLineEdit.SmallSize)
+        button = MButton(icon=MIcon('icon-browser.png'), type=MButton.IconType, size=MButton.SmallSize)
+        line_edit_icon.add_suffix_widget(button)
 
-        line_edit_search = MLineEdit(type=MLineEdit.SearchType, size=MLineEdit.SmallSize)
-        line_edit_search_engine = MLineEdit(prefix_icon=MIcon('icon-filter.png'), type=MLineEdit.SearchEngineType,
-                                            size=MLineEdit.LargeSize)
-        line_edit_search_engine.sig_prefix_button_clicked.connect(self.slot_prefix_button_clicked)
+        line_edit_error = MLineEdit.error(size=MLineEdit.DefaultSize)
+        line_edit_error.setText('waring: file d:/ddd/ccc.jpg not exists.')
+        line_edit_error2 = MLineEdit.error()
+
+        line_edit_search = MLineEdit.search()
+        line_edit_search_engine = MLineEdit.search_engine()
+        line_edit_search_engine.add_prefix_widget(
+            MButton(icon=MIcon('icon-filter.png'), type=MButton.IconType, size=MButton.LargeSize))
+
+        line_edit_file = MLineEdit.file(size=MLineEdit.DefaultSize)
+        line_edit_folder = MLineEdit.folder()
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('different size'))
@@ -41,10 +49,19 @@ class MLineEditTest(QWidget):
         main_lay.addWidget(line_edit_small)
         main_lay.addWidget(MDivider('icon'))
         main_lay.addWidget(line_edit_icon)
+        main_lay.addWidget(MDivider('preset'))
+
+        main_lay.addWidget(MLabel('MLineEdit.error()'))
         main_lay.addWidget(line_edit_error)
         main_lay.addWidget(line_edit_error2)
+        main_lay.addWidget(MLabel('MLineEdit.search()'))
         main_lay.addWidget(line_edit_search)
+        main_lay.addWidget(MLabel('MLineEdit.search_engine()'))
         main_lay.addWidget(line_edit_search_engine)
+        main_lay.addWidget(MLabel('MLineEdit.file(size=MLineEdit.DefaultSize)'))
+        main_lay.addWidget(line_edit_file)
+        main_lay.addWidget(MLabel('MLineEdit.folder()'))
+        main_lay.addWidget(line_edit_folder)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
