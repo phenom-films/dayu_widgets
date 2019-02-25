@@ -23,7 +23,7 @@ class MAvatarTest(QWidget, MFieldMixin):
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('different size'))
 
-        size_list = [MAvatar.LargeSize, MAvatar.DefaultSize, MAvatar.SmallSize, ]
+        size_list = [MView.LargeSize, MView.DefaultSize, MView.SmallSize, ]
 
         for size in size_list:
             h_lay = QHBoxLayout()

@@ -19,27 +19,27 @@ class MLineEditTest(QWidget):
         self._init_ui()
 
     def _init_ui(self):
-        line_edit_large = MLineEdit(size=MLineEdit.LargeSize)
+        line_edit_large = MLineEdit(size=MView.LargeSize)
         line_edit_large.setPlaceholderText('Large Size')
         line_edit_default = MLineEdit()
         line_edit_default.setPlaceholderText('Default Size')
-        line_edit_small = MLineEdit(size=MLineEdit.SmallSize)
+        line_edit_small = MLineEdit(size=MView.SmallSize)
         line_edit_small.setPlaceholderText('Small Size')
 
-        line_edit_icon = MLineEdit(text='Browser', size=MLineEdit.SmallSize)
-        button = MButton(icon=MIcon('icon-browser.png'), type=MButton.IconType, size=MButton.SmallSize)
+        line_edit_icon = MLineEdit(text='Browser', size=MView.SmallSize)
+        button = MButton(icon=MIcon('icon-browser.png'), type=MButton.IconType, size=MView.SmallSize)
         line_edit_icon.add_suffix_widget(button)
 
-        line_edit_error = MLineEdit.error(size=MLineEdit.DefaultSize)
+        line_edit_error = MLineEdit.error(size=MView.DefaultSize)
         line_edit_error.setText('waring: file d:/ddd/ccc.jpg not exists.')
         line_edit_error2 = MLineEdit.error()
 
         line_edit_search = MLineEdit.search()
         line_edit_search_engine = MLineEdit.search_engine()
         line_edit_search_engine.add_prefix_widget(
-            MButton(icon=MIcon('icon-filter.png'), type=MButton.IconType, size=MButton.LargeSize))
+            MButton(icon=MIcon('icon-filter.png'), type=MButton.IconType, size=MView.LargeSize))
 
-        line_edit_file = MLineEdit.file(size=MLineEdit.DefaultSize)
+        line_edit_file = MLineEdit.file(size=MView.DefaultSize)
         line_edit_folder = MLineEdit.folder()
 
         main_lay = QVBoxLayout()
@@ -58,7 +58,7 @@ class MLineEditTest(QWidget):
         main_lay.addWidget(line_edit_search)
         main_lay.addWidget(MLabel('MLineEdit.search_engine()'))
         main_lay.addWidget(line_edit_search_engine)
-        main_lay.addWidget(MLabel('MLineEdit.file(size=MLineEdit.DefaultSize)'))
+        main_lay.addWidget(MLabel('MLineEdit.file(size=MView.DefaultSize)'))
         main_lay.addWidget(line_edit_file)
         main_lay.addWidget(MLabel('MLineEdit.folder()'))
         main_lay.addWidget(line_edit_folder)
