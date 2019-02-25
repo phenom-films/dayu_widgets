@@ -21,6 +21,13 @@ def property_mixin(cls):
     return cls
 
 
+class MView(object):
+    LargeSize = 'large'
+    DefaultSize = 'default'
+    SmallSize = 'small'
+    TinySize = 'tiny'
+
+
 class MCacheDict(object):
     def __init__(self, cls):
         super(MCacheDict, self).__init__()

@@ -6,11 +6,6 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-import functools
-
-from MAvatar import MAvatar
-from MButton import MButton
-from MLabel import MLabel
 from MTheme import global_theme
 from qt import *
 

@@ -6,8 +6,8 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from qt import *
 from MTheme import global_theme
+from qt import *
 
 qss = '''
 QPushButton {{
@@ -147,16 +147,13 @@ class MButton(QPushButton):
     SuccessType = 'success'
     WarningType = 'warning'
     ErrorType = 'error'
-    LargeSize = 'large'
-    DefaultSize = 'default'
-    SmallSize = 'small'
 
     def __init__(self, icon=None, text='', type=None, size=None, parent=None):
         if icon:
             super(MButton, self).__init__(icon=icon, text=text, parent=parent)
         else:
             super(MButton, self).__init__(text=text, parent=parent)
-        self.set_button_size(size or MButton.DefaultSize)
+        self.set_button_size(size or MView.DefaultSize)
         self.set_type(type or MButton.DefaultType)
         self.setStyleSheet(qss)
 

@@ -17,15 +17,11 @@ class MAvatar(QLabel):
         size:
         image:
     '''
-    LargeSize = 'large'
-    DefaultSize = 'default'
-    SmallSize = 'small'
-    TinySize = 'tiny'
 
     def __init__(self, size=None, image=None, parent=None, flags=0):
         super(MAvatar, self).__init__(parent, flags)
         self.setObjectName('avatar')
-        self.set_button_size(size or MAvatar.DefaultSize)
+        self.set_button_size(size or MView.DefaultSize)
         self.set_image(image or 'icon-user.png')
 
     def _set_image(self, value):
@@ -33,7 +29,7 @@ class MAvatar(QLabel):
         self.setPixmap(MPixmap(value or 'icon-user.png').scaledToWidth(fixed_height, Qt.SmoothTransformation))
 
     def _set_button_size(self, value):
-        fixed_height = global_theme.get((value or MAvatar.DefaultSize) + '_size')
+        fixed_height = global_theme.get((value or MView.DefaultSize) + '_size')
         self.setFixedSize(QSize(fixed_height, fixed_height))
 
     def set_image(self, value):

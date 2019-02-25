@@ -53,9 +53,9 @@ class MAlert(QFrame):
     def __init__(self, text='', type=None, closable=False, show_icon=True, parent=None, flags=0):
         super(MAlert, self).__init__(parent, flags)
         self.setObjectName('alert')
-        self._icon_label = MAvatar(size=MAvatar.TinySize)
+        self._icon_label = MAvatar(size=MView.TinySize)
         self._content_label = MLabel()
-        self._close_button = MButton(size=MButton.SmallSize, icon=MIcon('icon-clear.png'), type=MButton.IconType)
+        self._close_button = MButton(size=MView.SmallSize, icon=MIcon('icon-clear.png'), type=MButton.IconType)
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
 
         self._main_lay = QHBoxLayout()

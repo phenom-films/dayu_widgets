@@ -9,7 +9,7 @@
 import functools
 
 from MButton import MButton
-from MSpecifyFiles import MBrowserFile, MBrowserFolder
+from MSpecifyFiles import MClickBrowserFileButton, MClickBrowserFolderButton
 from MTheme import global_theme
 from qt import *
 
@@ -49,18 +49,15 @@ QLineEdit[line_size=small]{{
 
 @property_mixin
 class MLineEdit(QLineEdit):
-    LargeSize = 'large'
-    DefaultSize = 'default'
-    SmallSize = 'small'
 
     def __init__(self, text='', size=None, parent=None):
         super(MLineEdit, self).__init__(text, parent)
         self._main_layout = QHBoxLayout()
         self._main_layout.setContentsMargins(0, 0, 0, 0)
         self._main_layout.addStretch()
-        fixed_height = global_theme.get((size or MLineEdit.DefaultSize) + '_size') + 1
+        fixed_height = global_theme.get((size or MView.DefaultSize) + '_size') + 1
         self.setFixedHeight(fixed_height)
-        self.setProperty('line_size', size or MLineEdit.DefaultSize)
+        self.setProperty('line_size', size or MView.DefaultSize)
         self.setLayout(self._main_layout)
         self.setStyleSheet(qss)
         self.setProperty('history', self.property('text'))
@@ -87,7 +84,7 @@ class MLineEdit(QLineEdit):
 
     @classmethod
     def search(cls, size=None, parent=None):
-        size = size or MLineEdit.SmallSize
+        size = size or MView.SmallSize
         line_edit = MLineEdit(size=size, parent=parent)
         suffix_button = MButton(icon=MIcon('icon-search.png'), size=size, type=MButton.PrimaryType, parent=parent)
         suffix_button.setProperty('combine', 'horizontal')
@@ -110,7 +107,7 @@ class MLineEdit(QLineEdit):
             dialog.setWindowFlags(Qt.Dialog)
             dialog.show()
 
-        size = size or MLineEdit.SmallSize
+        size = size or MView.SmallSize
         line_edit = MLineEdit(size=size, parent=parent)
         line_edit.setReadOnly(True)
         suffix_button = MButton(icon=MIcon('icon-detail.png'), size=size, type=MButton.ErrorType)
@@ -123,7 +120,7 @@ class MLineEdit(QLineEdit):
 
     @classmethod
     def search_engine(cls, size=None, parent=None):
-        size = size or MLineEdit.LargeSize
+        size = size or MView.LargeSize
         line_edit = MLineEdit(size=size, parent=parent)
         suffix_button = MButton(text='Search', size=size, type=MButton.PrimaryType)
         suffix_button.setProperty('combine', 'horizontal')
@@ -135,9 +132,9 @@ class MLineEdit(QLineEdit):
 
     @classmethod
     def file(cls, size=None, parent=None):
-        size = size or MLineEdit.SmallSize
+        size = size or MView.SmallSize
         line_edit = MLineEdit(size=size, parent=parent)
-        suffix_button = MBrowserFile(size=size, type=MBrowserFile.IconType)
+        suffix_button = MClickBrowserFileButton(size=size)
         suffix_button.sig_file_changed.connect(line_edit.setText)
         suffix_button.setFixedWidth(line_edit.height())
         suffix_button.get_widget().setProperty('combine', 'horizontal')
@@ -148,9 +145,9 @@ class MLineEdit(QLineEdit):
 
     @classmethod
     def folder(cls, size=None, parent=None):
-        size = size or MLineEdit.SmallSize
+        size = size or MView.SmallSize
         line_edit = MLineEdit(size=size, parent=parent)
-        suffix_button = MBrowserFolder(size=size, type=MBrowserFolder.IconType)
+        suffix_button = MClickBrowserFolderButton(size=size)
         suffix_button.sig_folder_changed.connect(line_edit.setText)
         suffix_button.setFixedWidth(line_edit.height())
         suffix_button.get_widget().setProperty('combine', 'horizontal')
