@@ -42,7 +42,7 @@ QPushButton#radio:checked{{
 class MRadioGroup(QWidget, MFieldMixin):
     '''
     props:
-        value: int
+        checked: int
             signal: sig_value_changed
 
     '''
@@ -53,7 +53,7 @@ class MRadioGroup(QWidget, MFieldMixin):
     def __init__(self, orientation=Qt.Horizontal, type=None, parent=None):
         super(MRadioGroup, self).__init__(parent=parent)
         self._button_group = QButtonGroup(self)
-        self._button_group.buttonClicked[int].connect(functools.partial(self.setProperty, 'value'))
+        self._button_group.buttonClicked[int].connect(functools.partial(self.setProperty, 'checked'))
         self._button_group.buttonClicked[int].connect(self.sig_checked_changed)
 
         self._main_layout = QBoxLayout(
