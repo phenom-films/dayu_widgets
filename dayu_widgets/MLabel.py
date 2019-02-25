@@ -44,6 +44,9 @@ QLabel[link=true]:pressed{{
     color: {primary_dark};
 }}
 
+QLabel[error=true]{{
+    color: {error_light};
+}}
 
 QLabel:disabled{{
     {disabled_font}
