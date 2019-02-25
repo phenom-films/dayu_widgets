@@ -84,7 +84,7 @@ class MLineEdit(QLineEdit):
 
     @classmethod
     def search(cls, size=None, parent=None):
-        size = size or MView.SmallSize
+        size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
         suffix_button = MButton(icon=MIcon('icon-search.png'), size=size, type=MButton.PrimaryType, parent=parent)
         suffix_button.setProperty('combine', 'horizontal')
@@ -107,8 +107,9 @@ class MLineEdit(QLineEdit):
             dialog.setWindowFlags(Qt.Dialog)
             dialog.show()
 
-        size = size or MView.SmallSize
+        size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
+        line_edit.setProperty('type', 'error')
         line_edit.setReadOnly(True)
         suffix_button = MButton(icon=MIcon('icon-detail.png'), size=size, type=MButton.ErrorType)
         suffix_button.setProperty('combine', 'horizontal')
@@ -131,24 +132,26 @@ class MLineEdit(QLineEdit):
         return line_edit
 
     @classmethod
-    def file(cls, size=None, parent=None):
-        size = size or MView.SmallSize
+    def file(cls, size=None, format=None, parent=None):
+        size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
         suffix_button = MClickBrowserFileButton(size=size)
         suffix_button.sig_file_changed.connect(line_edit.setText)
         suffix_button.setFixedWidth(line_edit.height())
         suffix_button.get_widget().setProperty('combine', 'horizontal')
-        suffix_button.set_format(['.py', '.pyc'])
+        suffix_button.set_format(format or [])
+        line_edit.textChanged.connect(suffix_button.set_path)
         line_edit.add_suffix_widget(suffix_button)
         line_edit.setPlaceholderText('Click button to browser files')
         return line_edit
 
     @classmethod
     def folder(cls, size=None, parent=None):
-        size = size or MView.SmallSize
+        size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
         suffix_button = MClickBrowserFolderButton(size=size)
         suffix_button.sig_folder_changed.connect(line_edit.setText)
+        line_edit.textChanged.connect(suffix_button.set_path)
         suffix_button.setFixedWidth(line_edit.height())
         suffix_button.get_widget().setProperty('combine', 'horizontal')
         line_edit.add_suffix_widget(suffix_button)
