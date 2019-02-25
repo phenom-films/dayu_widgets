@@ -101,7 +101,10 @@ class MCanClickBrowserFolderMixin(object):
     def slot_browser_folder(self):
         r_folder = QFileDialog.getExistingDirectory(self, 'Browser Folder', self.property('path'))
         if r_folder:
-            self.sig_folder_changed.emit(r_folder)
+            if self.property('multiple'):
+                self.sig_folders_changed.emit([r_folder])
+            else:
+                self.sig_folder_changed.emit(r_folder)
             self.set_path(r_folder)
 
 
@@ -111,13 +114,16 @@ class MCanDragFolderMixin(object):
         if event.mimeData().hasFormat("text/uri-list"):
             folder_list = [url.toLocalFile() for url in event.mimeData().urls() if os.path.isdir(url.toLocalFile())]
             count = len(folder_list)
-            if count == 1:
+            if count == 1 or (count > 1 and self.property('multiple')):
                 event.acceptProposedAction()
                 return
 
     def dropEvent(self, event):
         folder_list = [url.toLocalFile() for url in event.mimeData().urls() if os.path.isdir(url.toLocalFile())]
-        self.sig_folder_changed.emit(folder_list[0])
+        if self.property('multiple'):
+            self.sig_folders_changed.emit(folder_list)
+        else:
+            self.sig_folder_changed.emit(folder_list[0])
         self.set_path(folder_list[0])
 
 
@@ -152,6 +158,7 @@ class MBrowser(QWidget):
 
 class MClickBrowserFileButton(MBrowser, MCanClickBrowserFileMixin):
     sig_file_changed = Signal(str)
+    sig_files_changed = Signal(list)
 
     def __init__(self, text='', icon=None, size=None, multiple=False, parent=None):
         super(MClickBrowserFileButton, self).__init__(multiple=multiple, parent=parent)
@@ -169,6 +176,7 @@ class MClickBrowserFileButton(MBrowser, MCanClickBrowserFileMixin):
 
 class MDragFileButton(MBrowser, MCanClickBrowserFileMixin, MCanDragFileMixin):
     sig_file_changed = Signal(str)
+    sig_files_changed = Signal(list)
 
     def __init__(self, text='', icon=None, multiple=False, parent=None):
         super(MDragFileButton, self).__init__(multiple=multiple, parent=parent)
@@ -186,6 +194,7 @@ class MDragFileButton(MBrowser, MCanClickBrowserFileMixin, MCanDragFileMixin):
 
 class MClickBrowserFolderButton(MBrowser, MCanClickBrowserFolderMixin):
     sig_folder_changed = Signal(str)
+    sig_folders_changed = Signal(list)
 
     def __init__(self, text='', icon=None, size=None, multiple=False, parent=None):
         super(MClickBrowserFolderButton, self).__init__(multiple=multiple, parent=parent)
@@ -203,6 +212,7 @@ class MClickBrowserFolderButton(MBrowser, MCanClickBrowserFolderMixin):
 
 class MDragFolderButton(MBrowser, MCanClickBrowserFolderMixin, MCanDragFolderMixin):
     sig_folder_changed = Signal(str)
+    sig_folders_changed = Signal(list)
 
     def __init__(self, text='', icon=None, multiple=False, parent=None):
         super(MDragFolderButton, self).__init__(multiple=multiple, parent=parent)
