@@ -8,8 +8,8 @@
 
 import functools
 
+from MBrowser import MClickBrowserFileButton, MClickBrowserFolderButton
 from MButton import MButton
-from MSpecifyFiles import MClickBrowserFileButton, MClickBrowserFolderButton
 from MTheme import global_theme
 from qt import *
 
