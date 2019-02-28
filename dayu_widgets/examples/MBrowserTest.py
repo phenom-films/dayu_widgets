@@ -9,6 +9,7 @@
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MButton import MButton
 from dayu_widgets.MBrowser import MClickBrowserFileButton, MClickBrowserFolderButton, MDragFileButton, \
     MDragFolderButton
 from dayu_widgets.qt import *
@@ -22,7 +23,7 @@ class MBrowserTest(QWidget, MFieldMixin):
     def _init_ui(self):
         browser_1 = MClickBrowserFileButton(size=MView.SmallSize, text='Browser File (Small)')
         browser_2 = MClickBrowserFileButton(size=MView.DefaultSize, text='Browser File (Default)')
-        browser_3 = MClickBrowserFileButton(size=MView.LargeSize, text='Browser File (Large)')
+        browser_3 = MClickBrowserFileButton(size=MView.LargeSize, type=MButton.PrimaryType, text='Browser File (Large)')
         lay_1 = QHBoxLayout()
         lay_1.addWidget(browser_1)
         lay_1.addWidget(browser_2)

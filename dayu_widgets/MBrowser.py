@@ -156,73 +156,89 @@ class MBrowser(QWidget):
         self.setProperty('path', value)
 
 
-class MClickBrowserFileButton(MBrowser, MCanClickBrowserFileMixin):
+class MClickBrowserFileButton(MButton, MCanClickBrowserFileMixin):
     sig_file_changed = Signal(str)
     sig_files_changed = Signal(list)
 
-    def __init__(self, text='', icon=None, size=None, multiple=False, parent=None):
-        super(MClickBrowserFileButton, self).__init__(multiple=multiple, parent=parent)
-        size = size or MView.LargeSize
-        if text:
-            button = MButton(text=text, icon=icon or MIcon('icon-upload.png'), size=size, type=MButton.PrimaryType)
-        else:
-            button = MButton(icon=icon or MIcon('icon-upload.png'), size=size, type=MButton.PrimaryType)
-            self.setFixedWidth(global_theme.get(size + '_size'))
-        button.clicked.connect(self.slot_browser_file)
-        button.clicked.connect(self.clicked)
+    def __init__(self, icon=None, text='', type=None, size=None, multiple=False, parent=None):
+        super(MClickBrowserFileButton, self).__init__(icon=icon or MIcon('icon-upload.png'),
+                                                      text=text, type=type, size=size, parent=parent)
+        self.setProperty('multiple', multiple)
+        self.setCursor(Qt.PointingHandCursor)
+        self.clicked.connect(self.slot_browser_file)
+        self.set_path('')
 
-        self.set_widget(button)
+    def set_format(self, value):
+        self.setProperty('format', value)
+
+    def set_path(self, value):
+        self.setProperty('path', value)
 
 
-class MDragFileButton(MBrowser, MCanClickBrowserFileMixin, MCanDragFileMixin):
+class MDragFileButton(QToolButton, MCanClickBrowserFileMixin, MCanDragFileMixin):
     sig_file_changed = Signal(str)
     sig_files_changed = Signal(list)
 
     def __init__(self, text='', icon=None, multiple=False, parent=None):
-        super(MDragFileButton, self).__init__(multiple=multiple, parent=parent)
+        super(MDragFileButton, self).__init__(parent=parent)
         self.setAcceptDrops(True)
-        button = QToolButton()
-        button.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-        button.setText(text)
-        button.setIcon(icon or MIcon('icon-upload.png'))
-        button.setIconSize(QSize(50, 50))
-        button.clicked.connect(self.slot_browser_file)
-        button.clicked.connect(self.clicked)
-        button.setStyleSheet(qss)
-        self.set_widget(button)
+        self.setProperty('multiple', multiple)
+        self.setCursor(Qt.PointingHandCursor)
+        self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.setText(text)
+        self.setIcon(icon or MIcon('icon-upload.png'))
+        self.setIconSize(QSize(50, 50))
+        self.clicked.connect(self.slot_browser_file)
+        self.setStyleSheet(qss)
+        self.set_path('')
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+    def set_format(self, value):
+        self.setProperty('format', value)
+
+    def set_path(self, value):
+        self.setProperty('path', value)
 
 
-class MClickBrowserFolderButton(MBrowser, MCanClickBrowserFolderMixin):
+class MClickBrowserFolderButton(MButton, MCanClickBrowserFolderMixin):
     sig_folder_changed = Signal(str)
     sig_folders_changed = Signal(list)
 
-    def __init__(self, text='', icon=None, size=None, multiple=False, parent=None):
-        super(MClickBrowserFolderButton, self).__init__(multiple=multiple, parent=parent)
-        size = size or MView.LargeSize
-        if text:
-            button = MButton(text=text, icon=icon or MIcon('icon-browser.png'), size=size, type=MButton.PrimaryType)
-        else:
-            button = MButton(icon=icon or MIcon('icon-browser.png'), size=size, type=MButton.PrimaryType)
-            self.setFixedWidth(global_theme.get(size + '_size'))
-        button.clicked.connect(self.slot_browser_folder)
-        button.clicked.connect(self.clicked)
+    def __init__(self, icon=None, text='', type=None, size=None, multiple=False, parent=None):
+        super(MClickBrowserFolderButton, self).__init__(icon=icon or MIcon('icon-upload.png'),
+                                                        text=text, type=type, size=size, parent=parent)
+        self.setProperty('multiple', multiple)
+        self.setCursor(Qt.PointingHandCursor)
+        self.clicked.connect(self.slot_browser_folder)
+        self.set_path('')
 
-        self.set_widget(button)
+    def set_format(self, value):
+        self.setProperty('format', value)
+
+    def set_path(self, value):
+        self.setProperty('path', value)
 
 
-class MDragFolderButton(MBrowser, MCanClickBrowserFolderMixin, MCanDragFolderMixin):
+class MDragFolderButton(QToolButton, MCanClickBrowserFolderMixin, MCanDragFolderMixin):
     sig_folder_changed = Signal(str)
     sig_folders_changed = Signal(list)
 
     def __init__(self, text='', icon=None, multiple=False, parent=None):
-        super(MDragFolderButton, self).__init__(multiple=multiple, parent=parent)
+        super(MDragFolderButton, self).__init__(parent=parent)
         self.setAcceptDrops(True)
-        button = QToolButton()
-        button.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-        button.setText(text)
-        button.setIcon(icon or MIcon('icon-browser.png'))
-        button.setIconSize(QSize(50, 50))
-        button.clicked.connect(self.slot_browser_folder)
-        button.clicked.connect(self.clicked)
-        button.setStyleSheet(qss)
-        self.set_widget(button)
+        self.setProperty('multiple', multiple)
+        self.setAcceptDrops(True)
+        self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.setText(text)
+        self.setIcon(icon or MIcon('icon-browser.png'))
+        self.setIconSize(QSize(50, 50))
+        self.clicked.connect(self.slot_browser_folder)
+        self.setStyleSheet(qss)
+        self.set_path('')
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+    def set_format(self, value):
+        self.setProperty('format', value)
+
+    def set_path(self, value):
+        self.setProperty('path', value)
