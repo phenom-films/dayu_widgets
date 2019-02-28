@@ -36,6 +36,7 @@ class MSequenceFile(QWidget, MFieldMixin):
         self._info_label = MLabel(type=MLabel.HelpType)
         self._error_label = MLabel(type=MLabel.HelpType)
         self._error_label.setProperty('error', True)
+        self._error_label.setMinimumWidth(100)
 
         seq_lay = QHBoxLayout()
         seq_lay.addWidget(self._is_sequence_check_box)
@@ -43,6 +44,7 @@ class MSequenceFile(QWidget, MFieldMixin):
         seq_lay.addWidget(self._error_label)
         seq_lay.setStretchFactor(self._is_sequence_check_box, 0)
         seq_lay.setStretchFactor(self._info_label, 0)
+        seq_lay.setStretchFactor(self._error_label, 100)
 
         self._main_lay = QVBoxLayout()
         self._main_lay.setContentsMargins(0, 0, 0, 0)
@@ -82,7 +84,8 @@ class MSequenceFile(QWidget, MFieldMixin):
                                                                         0] if self.sequence_obj.frames else '/',
                                                                     end=self.sequence_obj.frames[
                                                                         -1] if self.sequence_obj.frames else '/'))
-            self._error_label.setText(
-                u'Missing: {}'.format(self.sequence_obj.missing) if self.sequence_obj.missing else '')
+            error_info = u'Missing: {}'.format(self.sequence_obj.missing) if self.sequence_obj.missing else ''
+            self._error_label.setText(error_info)
+            self._error_label.setToolTip(error_info)
         self._info_label.setVisible(self.property('sequence'))
         self._error_label.setVisible(self.property('sequence'))
