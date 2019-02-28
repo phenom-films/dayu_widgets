@@ -33,14 +33,19 @@ QLineEdit[type=error]:focus{{
 }}
 
 QLineEdit[line_size=default]{{
-    
+    min-height: {default_size}px;
+    max-height: {default_size}px;
 }}
 QLineEdit[line_size=large]{{
     font-size: 16px;
     border-radius: 4px;
+    min-height: {large_size}px;
+    max-height: {large_size}px;
 }}
 QLineEdit[line_size=small]{{
     border-radius: 2px;
+    min-height: {small_size}px;
+    max-height: {small_size}px;
 }}
 
 
@@ -55,12 +60,11 @@ class MLineEdit(QLineEdit):
         self._main_layout = QHBoxLayout()
         self._main_layout.setContentsMargins(0, 0, 0, 0)
         self._main_layout.addStretch()
-        fixed_height = global_theme.get((size or MView.DefaultSize) + '_size') + 1
-        self.setFixedHeight(fixed_height)
         self.setProperty('line_size', size or MView.DefaultSize)
         self.setLayout(self._main_layout)
         self.setStyleSheet(qss)
         self.setProperty('history', self.property('text'))
+        self.setTextMargins(2, 0, 2, 0)
 
     def add_prefix_widget(self, widget):
         margin = self.textMargins()
@@ -89,7 +93,7 @@ class MLineEdit(QLineEdit):
         suffix_button = MButton(icon=MIcon('icon-search.png'), size=size, type=MButton.PrimaryType, parent=parent)
         suffix_button.setProperty('combine', 'horizontal')
         suffix_button.clicked.connect(line_edit.returnPressed)
-        suffix_button.setFixedWidth(line_edit.height())
+        suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
         line_edit.add_suffix_widget(suffix_button)
         line_edit.setPlaceholderText('Enter key word to search...')
         return line_edit
@@ -114,7 +118,7 @@ class MLineEdit(QLineEdit):
         suffix_button = MButton(icon=MIcon('icon-detail.png'), size=size, type=MButton.ErrorType)
         suffix_button.setProperty('combine', 'horizontal')
         suffix_button.clicked.connect(functools.partial(slot_show_detail, line_edit))
-        suffix_button.setFixedWidth(line_edit.height())
+        suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
         line_edit.add_suffix_widget(suffix_button)
         line_edit.setPlaceholderText('Error information will be here...')
         return line_edit
@@ -137,7 +141,7 @@ class MLineEdit(QLineEdit):
         line_edit = MLineEdit(size=size, parent=parent)
         suffix_button = MClickBrowserFileButton(size=size)
         suffix_button.sig_file_changed.connect(line_edit.setText)
-        suffix_button.setFixedWidth(line_edit.height())
+        suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
         suffix_button.get_widget().setProperty('combine', 'horizontal')
         suffix_button.set_format(format or [])
         line_edit.textChanged.connect(suffix_button.set_path)
@@ -152,7 +156,7 @@ class MLineEdit(QLineEdit):
         suffix_button = MClickBrowserFolderButton(size=size)
         suffix_button.sig_folder_changed.connect(line_edit.setText)
         line_edit.textChanged.connect(suffix_button.set_path)
-        suffix_button.setFixedWidth(line_edit.height())
+        suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
         suffix_button.get_widget().setProperty('combine', 'horizontal')
         line_edit.add_suffix_widget(suffix_button)
         line_edit.setPlaceholderText('Click button to browser folder')
