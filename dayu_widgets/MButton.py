@@ -11,11 +11,11 @@ from qt import *
 
 qss = '''
 QPushButton {{
-    border-radius: 4px;
+    border-radius: 5%;
     {text_font}
     {font_family}
     color: white;
-    padding: 9px 10px;
+    padding: 1% 10%;
 }}
 
 QPushButton[combine=horizontal]{{
@@ -120,12 +120,18 @@ QPushButton:disabled{{
     background-color: {background};
 }}
 
+QPushButton[button_size=default]{{
+    min-height: {default_size}px;
+    max-height: {default_size}px;
+}}
 QPushButton[button_size=large]{{
     font-size:14px;
-    padding: 12px 20px;
+    min-height: {large_size}px;
+    max-height: {large_size}px;
 }}
 QPushButton[button_size=small]{{
-    padding: none;
+    min-height: {small_size}px;
+    max-height: {small_size}px;
 }}
 
 
@@ -158,7 +164,6 @@ class MButton(QPushButton):
         self.setStyleSheet(qss)
 
     def _set_button_size(self, value):
-        self.setFixedHeight(global_theme.get(value + '_size'))
         self.style().polish(self)
 
     def _set_type(self, value):
