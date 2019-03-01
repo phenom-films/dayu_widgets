@@ -39,7 +39,11 @@ class MFieldMixinTest(QWidget, MFieldMixin):
         # for index, i in enumerate(self.field('my_name')):
         #     main_lay.addRow('name{}:'.format(index), self.bind('my_name', QLabel(), 'text', index=index))
         main_lay.addWidget(button, 4, 1)
-        self.setLayout(main_lay)
+
+        temp_lay = QVBoxLayout()
+        temp_lay.addLayout(main_lay)
+        temp_lay.addStretch()
+        self.setLayout(temp_lay)
 
     def computed_str_enable(self):
         print 'computed_str_enable'
