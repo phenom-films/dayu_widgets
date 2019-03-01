@@ -142,7 +142,7 @@ class MLineEdit(QLineEdit):
         suffix_button = MClickBrowserFileButton(size=size)
         suffix_button.sig_file_changed.connect(line_edit.setText)
         suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
-        suffix_button.get_widget().setProperty('combine', 'horizontal')
+        suffix_button.setProperty('combine', 'horizontal')
         suffix_button.set_format(format or [])
         line_edit.textChanged.connect(suffix_button.set_path)
         line_edit.add_suffix_widget(suffix_button)
@@ -157,7 +157,7 @@ class MLineEdit(QLineEdit):
         suffix_button.sig_folder_changed.connect(line_edit.setText)
         line_edit.textChanged.connect(suffix_button.set_path)
         suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
-        suffix_button.get_widget().setProperty('combine', 'horizontal')
+        suffix_button.setProperty('combine', 'horizontal')
         line_edit.add_suffix_widget(suffix_button)
         line_edit.setPlaceholderText('Click button to browser folder')
         return line_edit
