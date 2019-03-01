@@ -100,7 +100,7 @@ class MMenuTest(QWidget, MFieldMixin):
         main_lay.addLayout(sub_lay3)
         main_lay.addWidget(MDivider(u'级联选择'))
         main_lay.addLayout(sub_lay4)
-
+        main_lay.addStretch()
         self.setLayout(main_lay)
 
 

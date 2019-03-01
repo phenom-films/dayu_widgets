@@ -85,7 +85,7 @@ class MButtonTest(QWidget, MFieldMixin):
         main_lay.addWidget(button_group_v)
         main_lay.addWidget(MDivider('data bind: click button to change type'))
         main_lay.addWidget(button_bind)
-
+        main_lay.addStretch()
         self.setLayout(main_lay)
 
     def slot_change_button_type(self):

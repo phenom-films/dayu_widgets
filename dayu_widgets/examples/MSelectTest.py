@@ -109,6 +109,7 @@ class MSelectTest(QWidget, MFieldMixin):
         main_lay.addWidget(MDivider(u'自定义格式'))
         main_lay.addLayout(sub_lay4)
         main_lay.addLayout(sub_lay5)
+        main_lay.addStretch()
 
         self.setLayout(main_lay)
 
