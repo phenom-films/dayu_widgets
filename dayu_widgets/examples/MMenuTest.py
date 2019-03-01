@@ -58,7 +58,7 @@ class MMenuTest(QWidget, MFieldMixin):
         self.register_field('button4_selected_text', lambda: ' / '.join(self.field('button4_selected')))
         button4 = MButton(text=u'级联选择', type=MButton.PrimaryType)
         menu4 = MMenu(cascader=True)
-        menu4.set_cascader_data([u'北京/故宫', u'北京/天坛', u'北京/王府井', u'江苏/南京/夫子庙', u'江苏/苏州/拙政园', u'江苏/苏州/狮子林'])
+        menu4.set_data([u'北京/故宫', u'北京/天坛', u'北京/王府井', u'江苏/南京/夫子庙', u'江苏/苏州/拙政园', u'江苏/苏州/狮子林'])
         button4.setMenu(menu4)
         button4.clicked.connect(button4.showMenu)
         label4 = MLabel()
