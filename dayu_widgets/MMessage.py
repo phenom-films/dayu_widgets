@@ -49,12 +49,12 @@ class MMessage(QWidget):
         if isinstance(config, basestring):
             config = {'content': config}
 
-        self._icon_label = MAvatar(size=MAvatar.SmallSize, image='icon-{}.png'.format(self.property('type')))
+        self._icon_label = MAvatar(size=MView.SmallSize, image='icon-{}.png'.format(self.property('type')))
 
         self._content_label = MLabel(parent=self)
         self._content_label.setText(config.get('content'))
 
-        self._close_button = MButton(size=MButton.SmallSize, icon=MIcon('icon-clear.png'), type=MButton.IconType,
+        self._close_button = MButton(size=MView.SmallSize, icon=MIcon('icon-clear.png'), type=MButton.IconType,
                                      parent=self)
         self._close_button.clicked.connect(self.close)
         self._close_button.setVisible(config.get('closable', False))
