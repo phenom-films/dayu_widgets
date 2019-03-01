@@ -91,7 +91,6 @@ class MMenu(QMenu):
         self.set_data(data_list)
 
     def set_value(self, data):
-        print type(data)
         assert isinstance(data, (basestring, list, int))
         if isinstance(data, int):
             action = self._action_group.actions()[data]
