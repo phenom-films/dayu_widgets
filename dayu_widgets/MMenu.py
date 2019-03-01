@@ -110,13 +110,6 @@ class MMenu(QMenu):
         if flag:
             self.sig_value_changed.emit(value)
 
-    def set_cascader_data(self, option_list):
-        assert isinstance(option_list, list)
-        assert all(isinstance(i, basestring) for i in option_list) or all(isinstance(i, dict) for i in option_list)
-        if all(isinstance(i, basestring) for i in option_list):
-            option_list = from_list_to_nested_dict(option_list, sep=self.property('separator'))
-        self.setProperty('cascader_data', option_list)
-
     def _add_menu(self, parent_menu, data_dict):
         if 'children' in data_dict:
             menu = QMenu(title=data_dict.get('label'), parent=self)
@@ -133,13 +126,10 @@ class MMenu(QMenu):
             action.setProperty('parent_menu', parent_menu)
             parent_menu.addAction(action)
 
-    def _set_cascader_data(self, option_list):
-        for data_dict in option_list:
-            self._add_menu(self, data_dict)
-
     def set_data(self, option_list):
         assert isinstance(option_list, list)
-        option_list = [{'label': i, 'value': i} if isinstance(i, basestring) else i for i in option_list]
+        if all(isinstance(i, basestring) for i in option_list):
+            option_list = from_list_to_nested_dict(option_list, sep=self.property('separator'))
         self.setProperty('data', option_list)
 
     def _set_data(self, option_list):
@@ -147,11 +137,8 @@ class MMenu(QMenu):
         for act in self._action_group.actions():
             self._action_group.removeAction(act)
 
-        for item in option_list:
-            action = self._action_group.addAction(utils.default_formatter(item.get('label')))
-            action.setProperty('value', item.get('value'))
-            action.setCheckable(True)
-        self.addActions(self._action_group.actions())
+        for data_dict in option_list:
+            self._add_menu(self, data_dict)
 
     def _get_parent(self, result, obj):
         if obj.property('parent_menu'):
