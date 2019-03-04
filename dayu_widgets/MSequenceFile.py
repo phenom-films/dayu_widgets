@@ -37,6 +37,7 @@ class MSequenceFile(QWidget, MFieldMixin):
         self._error_label = MLabel(type=MLabel.HelpType)
         self._error_label.setProperty('error', True)
         self._error_label.setMinimumWidth(100)
+        self._error_label.set_elide_mode(Qt.ElideMiddle)
 
         seq_lay = QHBoxLayout()
         seq_lay.addWidget(self._is_sequence_check_box)
