@@ -49,6 +49,19 @@ class MLabelTest(QWidget, MFieldMixin):
         link_button = MButton(text='Link', type=MButton.PrimaryType)
         link_button.clicked.connect(self.slot_link_text)
 
+        lay_elide = QVBoxLayout()
+        label_none = MLabel('This is a elide NONE mode label. Ellipsis should NOT appear in the text.')
+        label_left = MLabel('This is a elide LEFT mode label. The ellipsis should appear at the beginning of the text. xiao mao xiao gou xiao ci wei')
+        label_left.set_elide_mode(Qt.ElideLeft)
+        label_middle = MLabel('This is a elide MIDDLE mode label. The ellipsis should appear in the middle of the text. xiao mao xiao gou xiao ci wei')
+        label_middle.set_elide_mode(Qt.ElideMiddle)
+        label_right = MLabel('This is a elide RIGHT mode label. The ellipsis should appear at the end of the text. xiao mao xiao gou xiao ci wei')
+        label_right.set_elide_mode(Qt.ElideRight)
+        lay_elide.addWidget(label_none)
+        lay_elide.addWidget(label_left)
+        lay_elide.addWidget(label_middle)
+        lay_elide.addWidget(label_right)
+
         main_lay = QVBoxLayout()
         main_lay.addWidget(div1)
         main_lay.addWidget(div2)
@@ -58,6 +71,8 @@ class MLabelTest(QWidget, MFieldMixin):
         main_lay.addWidget(data_bind_label)
         main_lay.addWidget(button)
         main_lay.addWidget(link_button)
+        main_lay.addWidget(MDivider('elide mode'))
+        main_lay.addLayout(lay_elide)
         main_lay.addStretch()
         self.setLayout(main_lay)
 

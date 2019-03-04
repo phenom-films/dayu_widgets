@@ -12,6 +12,7 @@ from qt import *
 qss = '''
 QLabel{{
     padding: 2px;
+    background-color: #ddd;
 }}
 QLabel[type=main_head]{{
     {main_head_font}
@@ -72,8 +73,10 @@ class MLabel(QLabel):
         super(MLabel, self).__init__(text, parent, flags)
         self.setProperty('type', type or MLabel.TextType)
         self.setTextInteractionFlags(Qt.TextBrowserInteraction | Qt.LinksAccessibleByMouse)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.setStyleSheet(qss)
         self.set_link(link)
+        self.elide_mode = None
 
     def _set_link(self, value):
         self.setCursor(Qt.PointingHandCursor if value else Qt.ArrowCursor)
@@ -81,3 +84,24 @@ class MLabel(QLabel):
 
     def set_link(self, value):
         self.setProperty('link', value)
+
+    def set_elide_mode(self, value):
+        self.elide_mode = value
+        self.update()
+
+    def minimumSizeHint(self):
+        return QSize(1, self.fontMetrics().height())
+
+    def paintEvent(self, event):
+        if self.elide_mode is None:
+            return QLabel.paintEvent(self, event)
+        else:
+            # TODO: no interaction( can't select text)
+            _text = self.text()
+            if not _text:
+                return
+            painter = QPainter(self)
+            font_metrics = painter.fontMetrics()
+            elided_text = font_metrics.elidedText(_text, self.elide_mode, self.width() - 2 * 2)
+            painter.drawText(QPoint(2, font_metrics.ascent() + 3), elided_text)
+            painter.end()
