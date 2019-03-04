@@ -12,7 +12,6 @@ from qt import *
 qss = '''
 QLabel{{
     padding: 2px;
-    background-color: #ddd;
 }}
 QLabel[type=main_head]{{
     {main_head_font}
