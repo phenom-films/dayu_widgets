@@ -76,6 +76,28 @@ def show_loading():
     return wrapper1
 
 
+@singledispatch
+def real_model(obj):
+    return obj
+
+
+@real_model.register(QSortFilterProxyModel)
+def _(obj):
+    return obj.sourceModel()
+
+
+@real_model.register(QModelIndex)
+def _(obj):
+    return real_model(obj.model())
+
+
+def real_index(index):
+    model = index.model()
+    if isinstance(model, QSortFilterProxyModel):
+        return model.mapToSource(index)
+    return index
+
+
 def get_obj_value(data_obj, attr, default=None):
     if isinstance(data_obj, dict):
         return data_obj.get(attr, default)
