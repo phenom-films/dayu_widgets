@@ -13,9 +13,9 @@ from dayu_widgets.MTable import MTable
 from dayu_widgets.MItemModel import MTableModel, MSortFilterModel
 
 
-class MDividerTest(QWidget, MFieldMixin):
+class MTableTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MDividerTest, self).__init__(parent)
+        super(MTableTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -73,30 +73,8 @@ class MDividerTest(QWidget, MFieldMixin):
         table_1.load_state('table_test_1')
         model_1.set_data_list(data_list)
 
-
-        file_png = 'd:/mu_prj/GITHUB-PF/dayu_widgets/dayu_widgets/static/white.png'
-        alpha_color = QColor('#ffffff')
-
-        pixmap = MPixmap('up-4.svg')
-        pixmap.fill(QColor('#f00'))
-        alpha_map = pixmap.createMaskFromColor(alpha_color, Qt.MaskInColor)
-        pixmap.setMask(alpha_map)
-        print alpha_map.save('d:/aaa.bmp')
-        label = QLabel()
-        label.setPixmap(pixmap)
-
-
-        icon = MIcon(r'up-4.svg')
-        # icon = QIcon(pixmap)
-        button = QToolButton()
-        button.setIcon(icon)
-        button.setIconSize(QSize(24,24))
-
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('normal'))
-        main_lay.addWidget(QLabel('Steven Paul Jobs was an American entrepreneur and business magnate.'))
-        main_lay.addWidget(label)
-        main_lay.addWidget(button)
         main_lay.addWidget(table_1)
         main_lay.addStretch()
         self.setLayout(main_lay)
@@ -108,13 +86,13 @@ class MDividerTest(QWidget, MFieldMixin):
         self.set_field('count', self.field('count') + 1)
 
     def closeEvent(self, *args, **kwargs):
+        return super(MTableTest, self).closeEvent(*args, **kwargs)
 
-        return super(MDividerTest, self).closeEvent(*args, **kwargs)
 
 if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MDividerTest()
+    test = MTableTest()
     test.show()
     sys.exit(app.exec_())
