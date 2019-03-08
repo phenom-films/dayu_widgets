@@ -66,7 +66,7 @@ QHeaderView::up-arrow {{
     bottom: 8;
     right: 50%;
     color: red;
-    image: url(icon-up-arrow.png);
+    image: url(up_line.svg);
 }}
 
 QHeaderView::down-arrow {{
@@ -75,7 +75,7 @@ QHeaderView::down-arrow {{
     position: relative;
     bottom: 2px;
     right: 10px;
-    image: url(icon-down-arrow.png);
+    image: url(down_line.svg);
 }}
 '''.format(**global_theme)
 qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
