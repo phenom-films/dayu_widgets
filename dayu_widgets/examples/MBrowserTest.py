@@ -52,7 +52,7 @@ class MBrowserTest(QWidget, MFieldMixin):
         lay_2.addWidget(label_6, 3, 0)
         lay_2.addWidget(label_7, 3, 1)
 
-        browser_8 = MDragFileButton(text='Click or drag media file here', icon=MIcon('icon-media.png'), multiple=False)
+        browser_8 = MDragFileButton(text='Click or drag media file here', icon=MIcon('media_fill.svg', '#cccccc'), multiple=False)
         browser_8.set_format(['.mov', '.mp4'])
         browser_8_label = MLabel()
         self.register_field('current_file', '')
