@@ -67,7 +67,7 @@ class MClickBrowserFileButton(MButton):
     slot_browser_file = _slot_browser_file
 
     def __init__(self, icon=None, text='', type=None, size=None, multiple=False, parent=None):
-        super(MClickBrowserFileButton, self).__init__(icon=icon or MIcon('icon-upload.png'),
+        super(MClickBrowserFileButton, self).__init__(icon=icon or MIcon('cloud_fill.svg', '#cccccc'),
                                                       text=text, type=type, size=size, parent=parent)
         self.setProperty('multiple', multiple)
         self.setCursor(Qt.PointingHandCursor)
@@ -95,7 +95,7 @@ class MDragFileButton(QToolButton):
         self.setCursor(Qt.PointingHandCursor)
         self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.setText(text)
-        self.setIcon(icon or MIcon('icon-upload.png'))
+        self.setIcon(icon or MIcon('cloud_fill.svg', '#cccccc'))
         self.setIconSize(QSize(50, 50))
         self.clicked.connect(self.slot_browser_file)
         self.setStyleSheet(qss)
@@ -159,7 +159,7 @@ class MClickBrowserFolderButton(MButton):
     slot_browser_folder = _slot_browser_folder
 
     def __init__(self, icon=None, text='', type=None, size=None, multiple=False, parent=None):
-        super(MClickBrowserFolderButton, self).__init__(icon=icon or MIcon('icon-upload.png'),
+        super(MClickBrowserFolderButton, self).__init__(icon=icon or MIcon('cloud_fill.svg', '#cccccc'),
                                                         text=text, type=type, size=size, parent=parent)
         self.setProperty('multiple', multiple)
         self.setCursor(Qt.PointingHandCursor)
@@ -186,7 +186,7 @@ class MDragFolderButton(QToolButton):
         self.setProperty('multiple', multiple)
         self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.setText(text)
-        self.setIcon(icon or MIcon('icon-browser.png'))
+        self.setIcon(icon or MIcon('folder_fill.svg', '#cccccc'))
         self.setIconSize(QSize(50, 50))
         self.clicked.connect(self.slot_browser_folder)
         self.setStyleSheet(qss)
