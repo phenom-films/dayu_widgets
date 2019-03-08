@@ -23,7 +23,9 @@ class MCheckBoxGroup(QWidget):
         self._button_group.setExclusive(False)
         self._main_layout = QBoxLayout(
             QBoxLayout.LeftToRight if orientation == Qt.Horizontal else QBoxLayout.TopToBottom)
-        self._main_layout.addStretch()
+        if orientation == Qt.Horizontal:
+            self._main_layout.addStretch()
+        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         self._main_layout.setSpacing(15)
         self._main_layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self._main_layout)
