@@ -63,6 +63,7 @@ class MCheckBoxGroupTest(QWidget, MFieldMixin):
 
         main_lay.addWidget(MDivider('Try Context Menu'))
         main_lay.addWidget(radio_group_tri)
+        main_lay.addStretch()
         self.setLayout(main_lay)
 
     @Slot()

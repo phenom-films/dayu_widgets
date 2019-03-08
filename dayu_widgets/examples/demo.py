@@ -39,8 +39,14 @@ class MDemo(QDialog):
         list_widget.set_radio_list(data_list)
         list_widget.set_checked(0)
 
+        left_widget = QWidget()
+        left_lay = QVBoxLayout()
+        left_widget.setLayout(left_lay)
+        left_lay.addWidget(list_widget)
+        left_lay.addStretch()
+
         splitter = QSplitter()
-        splitter.addWidget(list_widget)
+        splitter.addWidget(left_widget)
         splitter.addWidget(self.stacked_widget)
         splitter.addWidget(self.text_edit)
         splitter.setStretchFactor(0, 0)

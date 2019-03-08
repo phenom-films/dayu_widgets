@@ -72,12 +72,7 @@ class MCheckBoxTest(QWidget, MFieldMixin):
         main_lay.addWidget(check_box_b)
         main_lay.addWidget(label)
         main_lay.addWidget(button)
-        # main_lay.addWidget(MDivider('MRadioGroup: orientation=Qt.Vertical'))
-        # main_lay.addWidget(radio_group_v)
-        # main_lay.addWidget(MDivider('MRadioGroup: orientation=Qt.Horizontal type=button'))
-        # main_lay.addWidget(radio_group_button_h)
-        # main_lay.addWidget(MDivider('MRadioGroup: orientation=Qt.Vertical, type=button'))
-        # main_lay.addWidget(radio_group_button_v)
+        main_lay.addStretch()
         self.setLayout(main_lay)
 
 
