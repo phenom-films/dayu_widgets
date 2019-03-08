@@ -43,11 +43,10 @@ class MCacheDict(object):
         from dayu_widgets import STATIC_FOLDERS
         path = next((os.path.join(prefix, path) for prefix in [''] + STATIC_FOLDERS if
                      os.path.isfile(os.path.join(prefix, path))), path)
-        key = unicode(path.lower())
+        key = unicode(path.lower() + (color or ''))
         pix_map = self._cache_pix_dict.get(key, None)
         if pix_map is None:
             if path.endswith('svg') and isinstance(color, basestring):
-                key += color
                 with open(path, 'r+') as f:
                     self._render.load(QByteArray(f.read().replace('#555555', color)))
                     pix = QPixmap(128, 128)
