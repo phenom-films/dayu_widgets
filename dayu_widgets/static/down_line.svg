@@ -1,1 +1,13 @@
-<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1552050348048" class="icon" style="" viewBox="0 0 1706 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="992" xmlns:xlink="http://www.w3.org/1999/xlink" width="26.65625" height="16"><defs><style type="text/css"></style></defs><path d="M1375.25325511 116.4921875l138.03222656 138.04687503-650.74218776 650.74218775L211.80110693 254.53906253 349.84798196 116.4921875l512.69531195 512.69531273z" fill="#555555" p-id="993"></path></svg>
+<svg width="1024" height="1024" xmlns="http://www.w3.org/2000/svg" class="icon">
+ <defs>
+  <style type="text/css"/>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="1026" width="1026" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path stroke="null" id="svg_1" fill="#555555" d="m803.314296,287.910803l78.427891,78.436214l-369.742186,369.742186l-369.742186,-369.742186l78.436214,-78.436214l291.305972,291.305972l291.314295,-291.305972z"/>
+ </g>
+</svg>
