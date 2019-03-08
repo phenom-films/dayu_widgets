@@ -6,6 +6,7 @@ except:
     from PySide.QtCore import *
     from PySide.QtGui import *
     from PySide.QtWebKit import *
+    from PySide.QtSvg import *
 
 
 def property_mixin(cls):
@@ -29,22 +30,38 @@ class MView(object):
 
 
 class MCacheDict(object):
+    _render = QSvgRenderer()
+
     def __init__(self, cls):
         super(MCacheDict, self).__init__()
         self.cls = cls
         self._cache_pix_dict = {}
 
-    def __call__(self, path):
+    def __call__(self, path, color=None):
         assert isinstance(path, basestring)
         import os
         from dayu_widgets import STATIC_FOLDERS
         path = next((os.path.join(prefix, path) for prefix in [''] + STATIC_FOLDERS if
                      os.path.isfile(os.path.join(prefix, path))), path)
-        lower_path = unicode(path.lower())
-        pix_map = self._cache_pix_dict.get(lower_path, None)
+        key = unicode(path.lower())
+        pix_map = self._cache_pix_dict.get(key, None)
         if pix_map is None:
-            pix_map = self.cls(lower_path)
-            self._cache_pix_dict.update({lower_path: pix_map})
+            if path.endswith('svg') and isinstance(color, basestring):
+                key += color
+                with open(path, 'r+') as f:
+                    self._render.load(QByteArray(f.read().replace('#555555', color)))
+                    pix = QPixmap(128, 128)
+                    pix.fill(Qt.transparent)
+                    painter = QPainter(pix)
+                    self._render.render(painter)
+                    painter.end()
+                    if self.cls is QIcon:
+                        pix_map = QIcon(pix)
+                    elif self.cls is QPixmap:
+                        pix_map = pix
+            else:
+                pix_map = self.cls(path)
+            self._cache_pix_dict.update({key: pix_map})
         return pix_map
 
 
