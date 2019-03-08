@@ -54,7 +54,7 @@ class MMessage(QWidget):
         self._content_label = MLabel(parent=self)
         self._content_label.setText(config.get('content'))
 
-        self._close_button = MButton(size=MView.SmallSize, icon=MIcon('icon-clear.png'), type=MButton.IconType,
+        self._close_button = MButton(size=MView.TinySize, icon=MIcon('close_line.svg'), type=MButton.IconType,
                                      parent=self)
         self._close_button.clicked.connect(self.close)
         self._close_button.setVisible(config.get('closable', False))
