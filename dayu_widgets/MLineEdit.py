@@ -90,7 +90,7 @@ class MLineEdit(QLineEdit):
     def search(cls, size=None, parent=None):
         size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
-        suffix_button = MButton(icon=MIcon('icon-search.png'), size=size, type=MButton.PrimaryType, parent=parent)
+        suffix_button = MButton(icon=MIcon('search_line.svg', '#fff'), size=size, type=MButton.PrimaryType, parent=parent)
         suffix_button.setProperty('combine', 'horizontal')
         suffix_button.clicked.connect(line_edit.returnPressed)
         suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
@@ -115,7 +115,7 @@ class MLineEdit(QLineEdit):
         line_edit = MLineEdit(size=size, parent=parent)
         line_edit.setProperty('type', 'error')
         line_edit.setReadOnly(True)
-        suffix_button = MButton(icon=MIcon('icon-detail.png'), size=size, type=MButton.ErrorType)
+        suffix_button = MButton(icon=MIcon('detail_line.svg', '#fff'), size=size, type=MButton.ErrorType)
         suffix_button.setProperty('combine', 'horizontal')
         suffix_button.clicked.connect(functools.partial(slot_show_detail, line_edit))
         suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
