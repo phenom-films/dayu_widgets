@@ -19,7 +19,7 @@ QHeaderView {{
     background-color: {background_selected};
     {small_head_font}
 }}
-QHeaderView::section, QTableCornerButton::section{{
+QHeaderView::section{{
     background-color: {background_selected};
     border: 0 solid {border};
     padding: 1px 6px;
@@ -122,9 +122,10 @@ class MHeaderViewPrivate(QHeaderView):
             context_menu.addSeparator()
 
         fit_action = context_menu.addAction(self.tr('Fit Size'))
-        fit_action.setCheckable(True)
-        fit_action.setChecked(True if self.resizeMode(0) == QHeaderView.ResizeToContents else False)
-        fit_action.toggled.connect(self._slot_set_resize_mode)
+        # fit_action.setCheckable(True)
+        # fit_action.setChecked(True if self.resizeMode(0) == QHeaderView.ResizeToContents else False)
+        fit_action.triggered.connect(functools.partial(self._slot_set_resize_mode, True))
+        context_menu.addSeparator()
         for column in range(self.count()):
             action = context_menu.addAction(model.headerData(column, Qt.Horizontal, Qt.DisplayRole))
             action.setCheckable(True)
