@@ -26,7 +26,7 @@ QComboBox::drop-down {{
     image: url(down_line.svg);
 }}
 
-QComboBox:focus, QComboBox:on{{
+QComboBox:focus, QComboBox:hover{{
     border: 1px solid {primary};
 }}
 
