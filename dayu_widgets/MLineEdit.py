@@ -90,9 +90,9 @@ class MLineEdit(QLineEdit):
     def search(cls, size=None, parent=None):
         size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
-        suffix_button = MButton(icon=MIcon('search_line.svg', '#fff'), size=size, type=MButton.PrimaryType, parent=parent)
+        suffix_button = MButton(icon=MIcon('close_line.svg'), size=size, type=MButton.IconType, parent=parent)
         suffix_button.setProperty('combine', 'horizontal')
-        suffix_button.clicked.connect(line_edit.returnPressed)
+        suffix_button.clicked.connect(line_edit.clear)
         suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
         line_edit.add_suffix_widget(suffix_button)
         line_edit.setPlaceholderText('Enter key word to search...')
