@@ -16,15 +16,14 @@ qss = '''
 QComboBox{{
     {text_font}
     border: 1px solid {border};
-    border-radius: 3px;
+    border-radius: 4px;
 }}
 
 QComboBox::drop-down {{
     subcontrol-origin: content;
     subcontrol-position: top right;
-    width: 25px;
-    border: 0px solid {border};
-    image: url(icon-down.png);
+    width: 20px;
+    image: url(down_line.svg);
 }}
 
 QComboBox:focus, QComboBox:on{{
@@ -41,12 +40,17 @@ QComboBox[line_size=large]{{
     min-height: {large_size}px;
     max-height: {large_size}px;
 }}
+QComboBox[line_size=large]::drop-down{{
+    width: 24px;
+}}
 QComboBox[line_size=small]{{
     border-radius: 2px;
     min-height: {small_size}px;
     max-height: {small_size}px;
 }}
-
+QComboBox[line_size=small]::drop-down{{
+    width: 18px;
+}}
 '''.format(**global_theme)
 
 qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
@@ -70,6 +74,8 @@ class MSelect(QComboBox):
         line_edit.setReadOnly(True)
         line_edit.setTextMargins(4, 0, 4, 0)
         line_edit.setStyleSheet('border-radius: 4px;')
+        line_edit.setCursor(Qt.PointingHandCursor)
+        line_edit.installEventFilter(self)
         self.set_value('')
         self.set_placeholder(u'请选择')
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
@@ -99,3 +105,9 @@ class MSelect(QComboBox):
 
     def setCurrentIndex(self, index):
         raise NotImplementedError
+
+    def eventFilter(self, widget, event):
+        if widget is self.lineEdit():
+            if event.type() == QEvent.MouseButtonPress:
+                self.showPopup()
+        return super(MSelect, self).eventFilter(widget, event)
