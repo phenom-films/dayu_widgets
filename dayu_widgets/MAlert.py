@@ -55,7 +55,7 @@ class MAlert(QFrame):
         self.setObjectName('alert')
         self._icon_label = MAvatar(size=MView.TinySize)
         self._content_label = MLabel()
-        self._close_button = MButton(size=MView.SmallSize, icon=MIcon('icon-clear.png'), type=MButton.IconType)
+        self._close_button = MButton(size=MView.TinySize, icon=MIcon('close_line.svg'), type=MButton.IconType)
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
 
         self._main_lay = QHBoxLayout()
@@ -82,7 +82,7 @@ class MAlert(QFrame):
         self.setProperty('text', value)
 
     def _set_type(self, value):
-        self._icon_label.set_image('icon-{}.png'.format(self.property('type')))
+        self._icon_label.set_image(MPixmap('{}_fill.svg'.format(self.property('type')), global_theme.get(self.property('type'))))
         self.style().polish(self)
 
     def set_type(self, value):
