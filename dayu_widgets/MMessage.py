@@ -44,12 +44,11 @@ class MMessage(QWidget):
         super(MMessage, self).__init__(parent)
         self.setObjectName('message')
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.Dialog | Qt.WA_TranslucentBackground)
-        self.setProperty('type', type or MMessage.InfoType)
 
         if isinstance(config, basestring):
             config = {'content': config}
 
-        self._icon_label = MAvatar(size=MView.SmallSize, image='icon-{}.png'.format(self.property('type')))
+        self._icon_label = MAvatar(size=MView.TinySize)
 
         self._content_label = MLabel(parent=self)
         self._content_label.setText(config.get('content'))
@@ -66,16 +65,26 @@ class MMessage(QWidget):
         self._main_lay.addWidget(self._close_button)
         self.setLayout(self._main_lay)
         self.setStyleSheet(qss)
+        self.set_type(type or MMessage.InfoType)
         timer = QTimer(self)
         timer.timeout.connect(self.close)
         timer.setInterval(config.get('duration', self.default_config.get('duration')) * 1000)
         timer.start()
 
+    def _set_type(self, value):
+        self._icon_label.set_image(
+            MPixmap('{}_fill.svg'.format(self.property('type')), global_theme.get(self.property('type'))))
+        self.style().polish(self)
+
+    def set_type(self, value):
+        self.setProperty('type', value or MMessage.InfoType)
+
     @classmethod
     def _show(cls, config, type, parent):
         msg = MMessage(config=config, type=type, parent=parent)
-        geo = QApplication.topLevelWidgets()[0].geometry()
-        msg.move(geo.x() + geo.width() / 2 - 100, geo.y() + cls.default_config.get('top'))
+        parent_geo = parent.geometry()
+        pos = parent_geo.topLeft() if parent.parent() is None else parent.mapToGlobal(parent_geo.topLeft())
+        msg.move(pos.x() + parent_geo.width() / 2 - 100, pos.y() + cls.default_config.get('top'))
         msg.show()
 
     @classmethod
