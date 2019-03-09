@@ -3,6 +3,27 @@ import os
 
 from dayu_widgets import MRadioGroup
 from dayu_widgets.qt import *
+from dayu_widgets import STATIC_FOLDERS
+from dayu_widgets.MTheme import global_theme
+
+
+qss = '''
+
+QSplitter::handle {{
+    background-color: {border};
+    image: url(splitter.svg);
+}}
+
+QSplitter::handle:horizontal {{
+    width: 2px;
+}}
+
+QSplitter::handle:vertical {{
+    height: 2px;
+}}
+
+'''.format(**global_theme)
+qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
 
 
 def get_test_widget():
@@ -46,6 +67,7 @@ class MDemo(QDialog):
         left_lay.addStretch()
 
         splitter = QSplitter()
+        splitter.setStyleSheet(qss)
         splitter.addWidget(left_widget)
         splitter.addWidget(self.stacked_widget)
         splitter.addWidget(self.text_edit)
