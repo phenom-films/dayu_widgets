@@ -18,10 +18,9 @@ class MAvatar(QLabel):
         image:
     '''
 
-    _default_pix = MPixmap('user_fill.svg', '#aaa')
-
     def __init__(self, size=None, image=None, parent=None, flags=0):
         super(MAvatar, self).__init__(parent, flags)
+        self._default_pix = MPixmap('user_fill.svg', '#aaa')
         self.setObjectName('avatar')
         self.set_button_size(size or MView.DefaultSize)
         self.set_image(image or '')
