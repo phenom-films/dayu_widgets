@@ -135,22 +135,20 @@ class MHeaderViewPrivate(QHeaderView):
 
     @Slot(int, int)
     def _slot_set_select(self, column, state):
-        model = utils.real_model(self.model())
-        model.beginResetModel()
-        attr = '{}_checked'.format(model.header_list[column].get('key'))
-        for row in range(model.rowCount()):
-            if isinstance(model, QSortFilterProxyModel):
-                real_index = model.mapToSource(model.index(row, column))
-            else:
-                real_index = model.index(row, column, QModelIndex())
+        current_model = self.model()
+        source_model = utils.real_model(current_model)
+        source_model.beginResetModel()
+        attr = '{}_checked'.format(source_model.header_list[column].get('key'))
+        for row in range(current_model.rowCount()):
+            real_index = utils.real_index(current_model.index(row, column))
             data_obj = real_index.internalPointer()
             if state is None:
                 old_state = utils.get_obj_value(data_obj, attr)
                 utils.set_obj_value(data_obj, attr, Qt.Unchecked if old_state == Qt.Checked else Qt.Checked)
             else:
                 utils.set_obj_value(data_obj, attr, state)
-        model.endResetModel()
-        model.emit(SIGNAL('dataChanged(QModelIndex, QModelIndex)'), None, None)
+        source_model.endResetModel()
+        source_model.emit(SIGNAL('dataChanged(QModelIndex, QModelIndex)'), None, None)
 
     @Slot(QModelIndex, int)
     def _slot_set_section_visible(self, index, flag):
