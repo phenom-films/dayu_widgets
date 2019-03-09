@@ -67,7 +67,7 @@ class MClickBrowserFileButton(MButton):
     slot_browser_file = _slot_browser_file
 
     def __init__(self, icon=None, text='', type=None, size=None, multiple=False, parent=None):
-        super(MClickBrowserFileButton, self).__init__(icon=icon or MIcon('cloud_fill.svg', '#cccccc'),
+        super(MClickBrowserFileButton, self).__init__(icon=icon or MIcon('cloud_fill.svg', '#aaa' if type is None or type == MButton.DefaultType else '#fff'),
                                                       text=text, type=type, size=size, parent=parent)
         self.setProperty('multiple', multiple)
         self.setCursor(Qt.PointingHandCursor)
@@ -95,8 +95,8 @@ class MDragFileButton(QToolButton):
         self.setCursor(Qt.PointingHandCursor)
         self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.setText(text)
-        self.setIcon(icon or MIcon('cloud_fill.svg', '#cccccc'))
-        self.setIconSize(QSize(50, 50))
+        self.setIcon(icon or MIcon('cloud_fill.svg', '#aaa'))
+        self.setIconSize(QSize(80, 80))
         self.clicked.connect(self.slot_browser_file)
         self.setStyleSheet(qss)
         self.set_path('')
@@ -109,7 +109,6 @@ class MDragFileButton(QToolButton):
         self.setProperty('path', value)
 
     def dragEnterEvent(self, event):
-        print 'drag enter', event
         if event.mimeData().hasFormat("text/uri-list"):
             file_list = self._get_valid_file_list(event.mimeData().urls())
             count = len(file_list)
@@ -159,7 +158,7 @@ class MClickBrowserFolderButton(MButton):
     slot_browser_folder = _slot_browser_folder
 
     def __init__(self, icon=None, text='', type=None, size=None, multiple=False, parent=None):
-        super(MClickBrowserFolderButton, self).__init__(icon=icon or MIcon('cloud_fill.svg', '#cccccc'),
+        super(MClickBrowserFolderButton, self).__init__(icon=icon or MIcon('cloud_fill.svg', '#aaa' if type is None or type == MButton.DefaultType else '#fff'),
                                                         text=text, type=type, size=size, parent=parent)
         self.setProperty('multiple', multiple)
         self.setCursor(Qt.PointingHandCursor)
@@ -186,8 +185,8 @@ class MDragFolderButton(QToolButton):
         self.setProperty('multiple', multiple)
         self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.setText(text)
-        self.setIcon(icon or MIcon('folder_fill.svg', '#cccccc'))
-        self.setIconSize(QSize(50, 50))
+        self.setIcon(icon or MIcon('folder_fill.svg', '#aaa'))
+        self.setIconSize(QSize(80, 80))
         self.clicked.connect(self.slot_browser_folder)
         self.setStyleSheet(qss)
         self.set_path('')

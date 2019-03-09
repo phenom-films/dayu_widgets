@@ -164,6 +164,7 @@ class MButton(QPushButton):
         self.setStyleSheet(qss)
 
     def _set_button_size(self, value):
+        self.setIconSize(QSize(global_theme.get(value + '_size') * 0.7, global_theme.get(value + '_size') * 0.7))
         self.style().polish(self)
 
     def _set_type(self, value):

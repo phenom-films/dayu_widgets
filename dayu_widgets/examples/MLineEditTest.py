@@ -27,7 +27,7 @@ class MLineEditTest(QWidget):
         line_edit_small.setPlaceholderText('Small Size')
 
         line_edit_icon = MLineEdit(text='Browser', size=MView.SmallSize)
-        button = MButton(icon=MIcon('icon-browser.png'), type=MButton.IconType, size=MView.SmallSize)
+        button = MButton(icon=MIcon('folder_fill.svg', '#cccccc'), type=MButton.IconType, size=MView.SmallSize)
         line_edit_icon.add_suffix_widget(button)
 
         line_edit_error = MLineEdit.error(size=MView.SmallSize)
@@ -37,7 +37,7 @@ class MLineEditTest(QWidget):
         line_edit_search = MLineEdit.search()
         line_edit_search_engine = MLineEdit.search_engine()
         line_edit_search_engine.add_prefix_widget(
-            MButton(icon=MIcon('icon-filter.png'), type=MButton.IconType, size=MView.LargeSize))
+            MButton(icon=MIcon('filter_line.svg', '#cccccc'), type=MButton.IconType, size=MView.LargeSize))
 
         line_edit_file = MLineEdit.file(size=MView.SmallSize)
         line_edit_folder = MLineEdit.folder()
