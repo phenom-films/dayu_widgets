@@ -6,19 +6,17 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from qt import *
-from MTheme import global_theme
-from MFieldMixin import MFieldMixin
 import functools
 
+from MFieldMixin import MFieldMixin
+from MRadio import MRadio
+from MTheme import global_theme
+from qt import *
+
 qss = '''
-QRadioButton, QPushButton {{
+QPushButton#radio{{
     {text_font}
     {font_family}
-}}
-
-
-QPushButton#radio{{
     padding: 4px 12px;
     background-color: {background};
     border: 1px solid {border};
@@ -43,7 +41,7 @@ class MRadioGroup(QWidget, MFieldMixin):
     '''
     props:
         checked: int
-            signal: sig_value_changed
+            signal: sig_checked_changed
 
     '''
     RadioType = 'radio'
@@ -73,9 +71,10 @@ class MRadioGroup(QWidget, MFieldMixin):
             self._main_layout.removeWidget(button)
             button.setVisible(False)
 
-        button_class = QPushButton if self.property('type') == MRadioGroup.ButtonType else QRadioButton
+        button_class = QPushButton if self.property('type') == MRadioGroup.ButtonType else MRadio
         for index, data_dict in enumerate(button_list):
-            button = button_class(self)
+            button = button_class(parent=self)
+            button.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
             button.setObjectName('radio')
             button.setCheckable(True)
             if isinstance(data_dict, basestring):
