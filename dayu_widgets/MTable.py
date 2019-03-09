@@ -119,17 +119,9 @@ class MOptionDelegate(QItemDelegate):
         painter.setRenderHint(QPainter.Antialiasing)
         painter.setPen(Qt.NoPen)
         painter.setBrush(QBrush(Qt.white))
-        pix = MPixmap('icon-down.png')
+        pix = MPixmap('down_fill.svg')
         h = option.rect.height()
-        pix = pix.scaledToWidth(h, Qt.SmoothTransformation)
-        # polygon = QPolygonF(
-        #     [QPointF(option.rect.x() + option.rect.width() - self.arrow_space / 2 - self.arrow_height / 2,
-        #              option.rect.y() + h / 2 - self.arrow_height / 2),
-        #      QPointF(option.rect.x() + option.rect.width() - self.arrow_space / 2 + self.arrow_height / 2,
-        #              option.rect.y() + h / 2 - self.arrow_height / 2),
-        #      QPointF(option.rect.x() + option.rect.width() - self.arrow_space / 2,
-        #              option.rect.y() + h / 2 + self.arrow_height / 2)])
-        # painter.drawPolygon(polygon)
+        pix = pix.scaledToWidth(h * 0.5, Qt.SmoothTransformation)
         painter.drawPixmap(option.rect.x() + option.rect.width() - h,
                            option.rect.y() + h / 4, pix)
         painter.restore()
