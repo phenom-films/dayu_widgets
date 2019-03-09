@@ -12,8 +12,9 @@ from . import STATIC_FOLDERS
 
 qss = '''
 QCheckBox {{
-    spacing: 5px;
+    spacing: 4px;
     {text_font}
+    {font_family}
 }}
 QCheckBox:disabled {{
     color: {disabled};
@@ -61,17 +62,12 @@ qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/'))
 class MCheckBox(QCheckBox):
     def __init__(self, text='', parent=None):
         super(MCheckBox, self).__init__(text=text, parent=parent)
-        self.setCursor(Qt.PointingHandCursor)
         self.setStyleSheet(qss)
-        self.set_value(Qt.Unchecked)
 
-    def set_value(self, value):
-        self.setProperty('value', value)
+    def enterEvent(self, *args, **kwargs):
+        QApplication.setOverrideCursor(Qt.PointingHandCursor if self.isEnabled() else Qt.ForbiddenCursor)
+        return super(MCheckBox, self).enterEvent(*args, **kwargs)
 
-    def _set_value(self, value):
-        if value == 0:
-            self.setCheckState(Qt.Unchecked)
-        elif value == 1:
-            self.setCheckState(Qt.PartiallyChecked)
-        else:
-            self.setCheckState(Qt.Checked)
+    def leaveEvent(self, *args, **kwargs):
+        QApplication.restoreOverrideCursor()
+        return super(MCheckBox, self).leaveEvent(*args, **kwargs)
