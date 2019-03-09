@@ -24,11 +24,11 @@ class MAvatarTest(QWidget, MFieldMixin):
         main_lay.addWidget(MDivider('different size'))
 
         size_list = [MView.LargeSize, MView.DefaultSize, MView.SmallSize, ]
-
+        self.pix_map_list = ['', MPixmap('avatar.png'), MPixmap('app-maya.png'), MPixmap('app-nuke.png'), MPixmap('app-houdini.png')]
         for size in size_list:
             h_lay = QHBoxLayout()
             h_lay.addWidget(MLabel(size))
-            for image in ['', 'avatar.png', 'app-maya.png', 'app-nuke.png', 'app-houdini.png']:
+            for image in self.pix_map_list:
                 h_lay.addWidget(MAvatar(size=size, image=image))
             h_lay.addStretch()
             main_lay.addLayout(h_lay)
@@ -47,7 +47,7 @@ class MAvatarTest(QWidget, MFieldMixin):
 
     def slot_change_image(self):
         import random
-        self.set_field('image', random.choice(['avatar.png', 'app-maya.png', 'app-nuke.png', 'app-houdini.png']))
+        self.set_field('image', random.choice(self.pix_map_list))
 
 
 if __name__ == '__main__':
