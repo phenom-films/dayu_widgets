@@ -14,7 +14,6 @@ from singledispatch import singledispatch
 
 from qt import *
 
-# from static import request_file
 
 MenuEvent = collections.namedtuple('MenuEvent', ['view', 'selection', 'extra'])
 
@@ -203,7 +202,7 @@ def _(data_obj):
         path = get_obj_value(data_obj, attr)
         if path:
             return icon_formatter(formatter.format(path))
-    return icon_formatter('icon-unknown.png')
+    return icon_formatter('confirm_fill.svg')
 
 
 @icon_formatter.register(object)
@@ -214,19 +213,13 @@ def _(data_obj):
         path = get_obj_value(data_obj, attr)
         if path:
             return icon_formatter(formatter.format(path))
-    return icon_formatter('icon-unknown.png')
+    return icon_formatter('confirm_fill.svg')
 
 
 @icon_formatter.register(basestring)
 def _(path):
-    if path.count('/') or path.count('\\'):
-        if os.path.isfile(path):
-            return MIcon(path)
-        else:
-            return MIcon(request_file('icon-unknown.png'))
-    else:
-        path = request_file(path.lower())
-        if os.path.isfile(path):
-            return MIcon(path)
-        else:
-            return MIcon(request_file('icon-unknown.png'))
+    return MIcon(path)
+
+@icon_formatter.register(tuple)
+def _(path):
+    return MIcon(*path)
