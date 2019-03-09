@@ -20,8 +20,10 @@ QComboBox{{
 }}
 
 QComboBox::drop-down {{
-    subcontrol-origin: content;
-    subcontrol-position: top right;
+    subcontrol-origin: border;
+    subcontrol-position: center right;
+    right: 5px;
+    height: 20px;
     width: 20px;
     image: url(down_line.svg);
 }}
@@ -41,6 +43,8 @@ QComboBox[line_size=large]{{
     max-height: {large_size}px;
 }}
 QComboBox[line_size=large]::drop-down{{
+    right: 6px;
+    height: 24px;
     width: 24px;
 }}
 QComboBox[line_size=small]{{
@@ -49,6 +53,8 @@ QComboBox[line_size=small]{{
     max-height: {small_size}px;
 }}
 QComboBox[line_size=small]::drop-down{{
+    right: 4px;
+    height: 18px;
     width: 18px;
 }}
 '''.format(**global_theme)
