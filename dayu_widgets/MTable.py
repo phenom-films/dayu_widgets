@@ -11,6 +11,7 @@ from MHeaderViewPrivate import MHeaderViewPrivate
 import MItemModel
 from MMenu import MMenu
 import utils
+from . import STATIC_FOLDERS
 
 qss = '''
 QTableView{{
@@ -30,7 +31,51 @@ QTableView::item:hover{{
 QTableView::item:selected{{
     background-color: rgba(45, 140, 240, 50);
 }}
+
+QTableView QTableCornerButton::section {{
+    background-color: {background_selected};
+    border: 0px solid {border};
+    border-right: 1px solid {border};
+    border-bottom: 1px solid {border};
+    padding: 1px 6px;
+}}
+
+QTableView::indicator{{
+    width: 13px;
+    height: 13px;
+    border-radius: 2px;
+    border: 1px solid {border};
+    background-color: white;
+}}
+QTableView::indicator:disabled{{
+    border: 1px solid {border};
+    background-color: {background_selected};
+}}
+
+QTableView::indicator:hover{{
+    border: 1px solid {primary_light};
+    background-color: white;
+}}
+
+QTableView::indicator:checked{{
+    background-color: {primary};
+    image: url(check.svg);
+}}
+
+QTableView::indicator:checked:disabled{{
+    background-color: {disabled};
+}}
+
+QTableView::indicator:indeterminate {{
+    background-color: {primary};
+    image: url(minus.svg);
+}}
+
+QTableView::indicator:indeterminate:disabled {{
+    background-color: {disabled};
+}}
 '''.format(**global_theme)
+qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
 
 
 class MOptionDelegate(QItemDelegate):
