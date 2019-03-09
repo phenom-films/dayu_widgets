@@ -39,7 +39,7 @@ class MMessageTest(QWidget, MFieldMixin):
 
         button_duration = MButton(text='show 5s Message')
         button_duration.clicked.connect(functools.partial(self.slot_show_message, MMessage.info,
-                                                          {'content': u'该条消息将显示10秒后关闭',
+                                                          {'content': u'该条消息将显示5秒后关闭',
                                                            'duration': 5
                                                            }))
         button_closable = MButton(text='closable Message')
