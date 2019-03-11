@@ -92,7 +92,7 @@ class MTableModel(QAbstractItemModel):
             return self.header_list[section]['title']
         return None
 
-    def index(self, row, column, parent_index):
+    def index(self, row, column, parent_index=QModelIndex()):
         if parent_index.isValid():
             parent_item = parent_index.internalPointer()
         else:
@@ -236,7 +236,7 @@ class MSortFilterModel(QSortFilterProxyModel):
         self.search_reg.setCaseSensitivity(Qt.CaseInsensitive)
         self.search_reg.setPatternSyntax(QRegExp.Wildcard)
 
-    def set_headers(self, header_list):
+    def set_header_list(self, header_list):
         self.header_list = header_list
         for head in self.header_list:
             reg_exp = QRegExp()
