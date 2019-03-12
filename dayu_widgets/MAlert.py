@@ -15,23 +15,23 @@ from MTheme import global_theme
 from qt import *
 
 qss = '''
-QFrame#alert{{
+QWidget#alert{{
     border: 1px solid {border};
     border-radius: 4px;
 }}
-QFrame#alert[type=info]{{
+QWidget#alert[type=info]{{
     border-color: {primary_light};
     background-color: {primary_opacity};
 }}
-QFrame#alert[type=success]{{
+QWidget#alert[type=success]{{
     border-color: {success_light};
     background-color: {success_opacity};
 }}
-QFrame#alert[type=warning]{{
+QWidget#alert[type=warning]{{
     border-color: {warning_light};
     background-color: {warning_opacity};
 }}
-QFrame#alert[type=error]{{
+QWidget#alert[type=error]{{
     border-color: {error_light};
     background-color: {error_opacity};
 }}
@@ -39,7 +39,7 @@ QFrame#alert[type=error]{{
 
 
 @property_mixin
-class MAlert(QFrame):
+class MAlert(QWidget):
     '''
     自定义 props:
         text:
@@ -52,6 +52,7 @@ class MAlert(QFrame):
 
     def __init__(self, text='', type=None, closable=False, show_icon=True, parent=None, flags=0):
         super(MAlert, self).__init__(parent, flags)
+        self.setAttribute(Qt.WA_StyledBackground)
         self.setObjectName('alert')
         self._icon_label = MAvatar(size=MView.TinySize)
         self._content_label = MLabel()
@@ -82,7 +83,8 @@ class MAlert(QFrame):
         self.setProperty('text', value)
 
     def _set_type(self, value):
-        self._icon_label.set_image(MPixmap('{}_fill.svg'.format(self.property('type')), global_theme.get(self.property('type'))))
+        self._icon_label.set_image(
+            MPixmap('{}_fill.svg'.format(self.property('type')), global_theme.get(self.property('type'))))
         self.style().polish(self)
 
     def set_type(self, value):
