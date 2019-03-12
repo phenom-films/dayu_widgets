@@ -21,12 +21,9 @@ QTabWidget::tab-bar {{
 
 QTabBar[type=line]::tab {{
     {text_font}
-    min-width: 42px;
-    min-height: 24px;
     color: #657180;
     border: 0  solid {border};
     margin-right: 4px;
-    padding: 6px 18px;
 }}
 QTabBar[type=line]::tab:selected {{
     color: {primary};
@@ -43,15 +40,12 @@ QTabWidget[type=card]::pane {{
 }}
 QTabBar[type=card]::tab {{
     {text_font}
-    min-width: 42px;
-    min-height: 24px;
     color: #657180;
     border: 1px solid {border};
     border-bottom: none;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     margin-right: 4px;
-    padding: 6px 18px;
 }}
 QTabBar[type=card]::tab:selected {{
     background-color: {background};
