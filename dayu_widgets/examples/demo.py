@@ -5,9 +5,101 @@ from dayu_widgets import MRadioGroup
 from dayu_widgets.qt import *
 from dayu_widgets import STATIC_FOLDERS
 from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MSpinBox import qss
+from dayu_widgets.MDockWidget import MDockWidget
+
+qss_1 = '''
 
 
-qss = '''
+QScrollBar:horizontal {{
+    border: 0 solid {border};
+    height: 9px;
+    margin: 0 32px 0 0;
+    background-color: {border};
+}}
+
+QScrollBar::handle:horizontal {{
+    background-color: {background_dark};
+    min-width: 10px;
+}}
+
+QScrollBar::add-line:horizontal {{
+    subcontrol-origin: margin;
+    subcontrol-position: right center;
+    background: {border};
+    width: 15px;
+}}
+
+QScrollBar::sub-line:horizontal {{
+    subcontrol-origin: margin;
+    subcontrol-position: right center;
+    background: {border};
+    width: 15px;
+    right: 16px;
+}}
+
+QScrollBar::left-arrow:horizontal {{
+    width: 9px;
+    height: 9px;
+    position: relative;
+    image: url(left_fill.svg)
+}}
+
+QScrollBar::right-arrow:horizontal {{
+    width: 9px;
+    height: 9px;
+    position: relative;
+    image: url(right_fill.svg)
+}}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {{
+    background: none;
+}}
+
+QScrollBar:vertical {{
+    border: 0 solid {border};
+    width: 9px;
+    margin: 0 0 32px 0 ;
+    background-color: {border};
+}}
+
+QScrollBar::handle:vertical {{
+    background-color: {background_dark};
+    min-height: 10px;
+}}
+
+QScrollBar::add-line:vertical {{
+    subcontrol-origin: margin;
+    subcontrol-position: center bottom;
+    background: {border};
+    height: 15px;
+}}
+
+QScrollBar::sub-line:vertical {{
+    subcontrol-origin: margin;
+    subcontrol-position: center bottom;
+    background: {border};
+    height: 15px;
+    bottom: 16px;
+}}
+
+QScrollBar::up-arrow:vertical {{
+    width: 9px;
+    height: 9px;
+    position: relative;
+    image: url(up_fill.svg)
+}}
+
+QScrollBar::down-arrow:vertical {{
+    width: 9px;
+    height: 9px;
+    position: relative;
+    image: url(down_fill.svg)
+}}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {{
+    background: none;
+}}
 
 QSplitter::handle {{
     background-color: {border};
@@ -23,7 +115,9 @@ QSplitter::handle:vertical {{
 }}
 
 '''.format(**global_theme)
-qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
+qss_1 = qss_1.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
+
+qss_1 += qss
 
 
 def get_test_widget():
@@ -40,17 +134,18 @@ def get_test_widget():
     return result
 
 
-class MDemo(QDialog):
+class MDemo(QMainWindow):
     def __init__(self, parent=None):
         super(MDemo, self).__init__(parent)
         self.setWindowTitle('Dayu Widgets Demo')
+        self.setStyleSheet(qss_1)
         self._init_ui()
 
     def _init_ui(self):
-        list_widget = MRadioGroup(type='button', orientation=Qt.Vertical)
-        list_widget.sig_checked_changed.connect(self.slot_change_widget)
-        self.stacked_widget = QStackedWidget()
         self.text_edit = QTextEdit()
+        self.stacked_widget = QStackedWidget()
+        list_widget = MRadioGroup(type='button', orientation=Qt.Vertical, parent=self)
+        list_widget.sig_checked_changed.connect(self.slot_change_widget)
         data_list = []
         for name, cls, code in get_test_widget():
             data_list.append({'text': name, 'date': code})
@@ -66,17 +161,14 @@ class MDemo(QDialog):
         left_lay.addWidget(list_widget)
         left_lay.addStretch()
 
-        splitter = QSplitter()
-        splitter.setStyleSheet(qss)
-        splitter.addWidget(left_widget)
-        splitter.addWidget(self.stacked_widget)
-        splitter.addWidget(self.text_edit)
-        splitter.setStretchFactor(0, 0)
-        splitter.setStretchFactor(1, 30)
-        splitter.setStretchFactor(2, 70)
-        main_lay = QVBoxLayout()
-        main_lay.addWidget(splitter)
-        self.setLayout(main_lay)
+        test_widget = MDockWidget('Example List')
+        test_widget.setWidget(left_widget)
+        self.addDockWidget(Qt.LeftDockWidgetArea, test_widget)
+
+        code_widget = MDockWidget('Example Code')
+        code_widget.setWidget(self.text_edit)
+        self.addDockWidget(Qt.RightDockWidgetArea, code_widget)
+        self.setCentralWidget(self.stacked_widget)
 
     def slot_change_widget(self, index):
         self.stacked_widget.setCurrentIndex(index)
