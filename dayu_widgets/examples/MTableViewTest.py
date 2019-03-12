@@ -5,19 +5,18 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
-from PySide.QtSvg import *
-from dayu_widgets.qt import *
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MTable import MTable
-from dayu_widgets.MTheme import global_theme
-from dayu_widgets.MLineEdit import MLineEdit
 from dayu_widgets.MItemModel import MTableModel, MSortFilterModel
+from dayu_widgets.MLineEdit import MLineEdit
+from dayu_widgets.MTableView import MTableView
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
 
-class MTableTest(QWidget, MFieldMixin):
+class MTableViewTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MTableTest, self).__init__(parent)
+        super(MTableViewTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -123,11 +122,11 @@ class MTableTest(QWidget, MFieldMixin):
                 'order': Qt.DescendingOrder
             },
         ]
-        table_1 = MTable(size=MView.SmallSize, show_row_count=True)
-        table_2 = MTable(size=MView.SmallSize, show_row_count=True)
+        table_1 = MTableView(size=MView.SmallSize, show_row_count=True)
+        table_2 = MTableView(size=MView.SmallSize, show_row_count=True)
         table_2.setShowGrid(True)
-        table_default = MTable(size=MView.DefaultSize, show_row_count=True)
-        table_large = MTable(size=MView.LargeSize, show_row_count=False)
+        table_default = MTableView(size=MView.DefaultSize, show_row_count=True)
+        table_large = MTableView(size=MView.LargeSize, show_row_count=False)
 
         model_1 = MTableModel()
         model_1.set_header_list(header_list)
@@ -169,6 +168,6 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MTableTest()
+    test = MTableViewTest()
     test.show()
     sys.exit(app.exec_())

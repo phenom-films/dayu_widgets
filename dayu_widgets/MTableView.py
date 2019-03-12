@@ -7,7 +7,7 @@
 ###################################################################
 from qt import *
 from MTheme import global_theme
-from MHeaderViewPrivate import MHeaderViewPrivate
+from MHeaderView import MHeaderView
 import MItemModel
 from MMenu import MMenu
 import utils
@@ -231,16 +231,16 @@ class MOptionDelegate(QItemDelegate):
     #     return super(MOptionDelegate, self).eventFilter(obj, event)
 
 
-class MTable(QTableView):
+class MTableView(QTableView):
     sig_context_menu = Signal(object)
 
     def __init__(self, size=None, show_row_count=False, parent=None):
-        super(MTable, self).__init__(parent)
+        super(MTableView, self).__init__(parent)
         size = size or MView.DefaultSize
         ver_header_view = self.verticalHeader()
         ver_header_view.setDefaultSectionSize(global_theme.get(size + '_size'))
         self.header_list = []
-        self.header_view = MHeaderViewPrivate(Qt.Horizontal)
+        self.header_view = MHeaderView(Qt.Horizontal)
         self.header_view.setProperty('line_size', size)
         if not show_row_count:
             ver_header_view.hide()
@@ -259,7 +259,7 @@ class MTable(QTableView):
         self.verticalHeader().setProperty('grid', flag)
         self.header_view.style().polish(self.header_view)
 
-        return super(MTable, self).setShowGrid(flag)
+        return super(MTableView, self).setShowGrid(flag)
 
     def set_header_list(self, header_list):
         self.header_list = header_list

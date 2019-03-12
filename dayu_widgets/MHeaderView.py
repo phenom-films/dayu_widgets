@@ -60,30 +60,29 @@ QHeaderView::focus{{
     border: 0 solid {border};
 }}
 QHeaderView::up-arrow {{
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
     position: relative;
-    bottom: 8;
+    top: -10px;
     right: 50%;
-    color: red;
     image: url(up_line.svg);
 }}
 
 QHeaderView::down-arrow {{
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
     position: relative;
-    bottom: 2px;
-    right: 10px;
+    top: -10px;
+    right: 50%;
     image: url(down_line.svg);
 }}
 '''.format(**global_theme)
 qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
 
 
-class MHeaderViewPrivate(QHeaderView):
+class MHeaderView(QHeaderView):
     def __init__(self, orientation, parent=None):
-        super(MHeaderViewPrivate, self).__init__(orientation, parent)
+        super(MHeaderView, self).__init__(orientation, parent)
         self.setObjectName('test')
 
         self.setMovable(True)
