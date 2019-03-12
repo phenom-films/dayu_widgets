@@ -88,7 +88,8 @@ class MRadioGroup(QWidget, MFieldMixin):
             else:
                 button.setProperty('text', str(data_dict))
             self._button_group.addButton(button, index)
-            self._main_layout.insertWidget(self._main_layout.count() - 1, button)
+            offset = -1 if self._main_layout.direction() == QBoxLayout.LeftToRight else 0
+            self._main_layout.insertWidget(self._main_layout.count() + offset, button)
 
     def _set_checked(self, value):
         assert isinstance(value, int)
