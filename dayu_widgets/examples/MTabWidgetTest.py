@@ -12,9 +12,9 @@ from dayu_widgets.MTabWidget import MTabWidget
 from dayu_widgets.qt import *
 
 
-class QTabWidgetTest(QWidget):
+class MTabWidgetTest(QWidget):
     def __init__(self, parent=None):
-        super(QTabWidgetTest, self).__init__(parent)
+        super(MTabWidgetTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = QTabWidgetTest()
+    test = MTabWidgetTest()
 
     test.show()
     sys.exit(app.exec_())

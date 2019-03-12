@@ -12,9 +12,9 @@ from dayu_widgets.MLabel import MLabel
 from dayu_widgets.qt import *
 
 
-class QAbstractSpinBoxTest(QWidget):
+class MSpinBoxTest(QWidget):
     def __init__(self, parent=None):
-        super(QAbstractSpinBoxTest, self).__init__(parent)
+        super(MSpinBoxTest, self).__init__(parent)
         self.setStyleSheet(qss)
         self._init_ui()
 
@@ -24,13 +24,12 @@ class QAbstractSpinBoxTest(QWidget):
         class_list = [QDateTimeEdit, QDoubleSpinBox, QSpinBox]
         for cls in class_list:
             line_edit_large = cls()
-            line_edit_large.setProperty('line_size', MView.LargeSize)
             line_edit_default = cls()
-            line_edit_default.setProperty('line_size', MView.DefaultSize)
             line_edit_small = cls()
-            line_edit_small.setProperty('line_size', MView.SmallSize)
+            # line_edit_large.setProperty('line_size', MView.LargeSize)
+            # line_edit_default.setProperty('line_size', MView.DefaultSize)
+            # line_edit_small.setProperty('line_size', MView.SmallSize)
             lay = QHBoxLayout()
-            lay.addWidget(MLabel(str(cls.__name__)))
             lay.addWidget(line_edit_large)
             lay.addWidget(line_edit_default)
             lay.addWidget(line_edit_small)
@@ -48,6 +47,6 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = QAbstractSpinBoxTest()
+    test = MSpinBoxTest()
     test.show()
     sys.exit(app.exec_())
