@@ -19,7 +19,6 @@ class QTabWidgetTest(QWidget):
 
     def _init_ui(self):
         main_lay = QVBoxLayout()
-        main_lay.addWidget(MDivider('different size'))
         class_list = [MTabWidget]
         for cls in class_list:
             tab_line = cls(parent=self)
@@ -30,9 +29,10 @@ class QTabWidgetTest(QWidget):
 
             tab_card = cls()
             tab_card.set_type('card')
-            tab_card.addTab(MLabel('test 1'), u'标签一 ttt')
-            tab_card.addTab(MLabel('test 2'), u'标签二 ttt')
-            tab_card.addTab(MLabel('test 3'), u'标签三 ttt')
+            tab_card.addTab(MLabel('test 1'), u'Current Element')
+            tab_card.addTab(MLabel('test 2'), u'Linked Assets')
+            tab_card.addTab(MLabel('test 2'), u'Hero Shots')
+            tab_card.addTab(MLabel('test 3'), u'Linked Metadata')
 
             self.tab_closable = cls()
             self.tab_closable.set_type('card')
@@ -43,8 +43,11 @@ class QTabWidgetTest(QWidget):
             self.tab_closable.tabCloseRequested.connect(self.slot_close_tab)
 
             lay = QVBoxLayout()
+            lay.addWidget(MDivider('type: line'))
             lay.addWidget(tab_line)
+            lay.addWidget(MDivider('type: card'))
             lay.addWidget(tab_card)
+            lay.addWidget(MDivider('type: card closeable'))
             lay.addWidget(self.tab_closable)
             main_lay.addLayout(lay)
 
@@ -54,8 +57,9 @@ class QTabWidgetTest(QWidget):
     @Slot()
     def slot_close_tab(self, index):
         if index > 0:
+            text = self.tab_closable.tabText(index)
             self.tab_closable.removeTab(index)
-            MMessage.info({'content': u'成功关闭一个标签',
+            MMessage.info({'content': u'成功关闭一个标签: {}'.format(text),
                            'closable': True
                            }, parent=self)
         else:
@@ -69,5 +73,6 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     test = QTabWidgetTest()
+
     test.show()
     sys.exit(app.exec_())
