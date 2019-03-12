@@ -63,12 +63,12 @@ qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/'))
 
 
 @property_mixin
-class MSelect(QComboBox):
+class MComboBox(QComboBox):
     Separator = '/'
     sig_value_changed = Signal(list)
 
     def __init__(self, size=None, parent=None):
-        super(MSelect, self).__init__(parent)
+        super(MComboBox, self).__init__(parent)
         size = size or MView.DefaultSize
         self._root_menu = None
         self._display_formatter = utils.default_formatter
@@ -116,4 +116,4 @@ class MSelect(QComboBox):
         if widget is self.lineEdit():
             if event.type() == QEvent.MouseButtonPress:
                 self.showPopup()
-        return super(MSelect, self).eventFilter(widget, event)
+        return super(MComboBox, self).eventFilter(widget, event)

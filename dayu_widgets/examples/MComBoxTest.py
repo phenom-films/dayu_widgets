@@ -8,7 +8,7 @@
 
 from dayu_widgets.qt import *
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MSelect import MSelect
+from dayu_widgets.MComboBox import MComboBox
 from dayu_widgets.MMenu import MMenu
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
@@ -16,23 +16,29 @@ from dayu_widgets.MFieldMixin import MFieldMixin
 import random
 
 
-class MSelectTest(QWidget, MFieldMixin):
+class MComBoxTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MSelectTest, self).__init__(parent)
+        super(MComBoxTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
         self.register_field('button1_selected', u'北京')
         menu1 = MMenu()
         menu1.set_data([u'北京', u'上海', u'广州', u'深圳'])
-        select1 = MSelect()
+        select1 = MComboBox()
         select1.set_menu(menu1)
+        select1_small = MComboBox(size=MView.SmallSize)
+        select1_small.set_menu(menu1)
+        select1_large = MComboBox(size=MView.LargeSize)
+        select1_large.set_menu(menu1)
         self.bind('button1_selected', select1, 'value', signal='sig_value_changed')
+        self.bind('button1_selected', select1_small, 'value', signal='sig_value_changed')
+        self.bind('button1_selected', select1_large, 'value', signal='sig_value_changed')
 
         self.register_field('button2_selected', [u'北京'])
         menu2 = MMenu(exclusive=False)
         menu2.set_data([u'北京', u'上海', u'广州', u'深圳'])
-        select2 = MSelect()
+        select2 = MComboBox()
         select2.set_menu(menu2)
         self.bind('button2_selected', select2, 'value', signal='sig_value_changed')
 
@@ -45,7 +51,7 @@ class MSelectTest(QWidget, MFieldMixin):
         self.register_field('button3_selected', '')
         menu3 = MMenu()
         menu3.set_load_callback(dynamic_get_city)
-        select3 = MSelect()
+        select3 = MComboBox()
         select3.set_menu(menu3)
         self.bind('button3_selected', select3, 'value', signal='sig_value_changed')
 
@@ -67,7 +73,7 @@ class MSelectTest(QWidget, MFieldMixin):
         self.register_field('button4_selected', '')
         menu4 = MMenu(cascader=True)
         menu4.set_data(a)
-        select4 = MSelect()
+        select4 = MComboBox()
         select4.set_menu(menu4)
         select4.set_formatter(lambda x: ' / '.join(x))
         self.bind('button4_selected', select4, 'value', signal='sig_value_changed')
@@ -75,14 +81,16 @@ class MSelectTest(QWidget, MFieldMixin):
         self.register_field('button5_selected', '')
         menu5 = MMenu(exclusive=False)
         menu5.set_data([u'北京', u'上海', u'广州', u'深圳'])
-        select5 = MSelect()
+        select5 = MComboBox()
         select5.set_menu(menu5)
         select5.set_formatter(lambda x: ' & '.join(x))
         self.bind('button5_selected', select5, 'value', signal='sig_value_changed')
 
         sub_lay1 = QHBoxLayout()
         sub_lay1.addWidget(MLabel(u'普通单选'))
+        sub_lay1.addWidget(select1_large)
         sub_lay1.addWidget(select1)
+        sub_lay1.addWidget(select1_small)
         sub_lay1.addStretch()
         sub_lay2 = QHBoxLayout()
         sub_lay2.addWidget(MLabel(u'多选'))
@@ -118,6 +126,6 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MSelectTest()
+    test = MComBoxTest()
     test.show()
     sys.exit(app.exec_())
