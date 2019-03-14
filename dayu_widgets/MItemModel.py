@@ -92,8 +92,8 @@ class MTableModel(QAbstractItemModel):
             return self.header_list[section]['title']
         return None
 
-    def index(self, row, column, parent_index=QModelIndex()):
-        if parent_index.isValid():
+    def index(self, row, column, parent_index=None):
+        if parent_index and parent_index.isValid():
             parent_item = parent_index.internalPointer()
         else:
             parent_item = self.root_item
@@ -122,16 +122,16 @@ class MTableModel(QAbstractItemModel):
         parent_list = get_obj_value(grand_item, 'children')
         return self.createIndex(parent_list.index(parent_item), 0, parent_item)
 
-    def rowCount(self, index=None):
-        if index and index.isValid():
-            parent_item = index.internalPointer()
+    def rowCount(self, parent_index=None):
+        if parent_index and parent_index.isValid():
+            parent_item = parent_index.internalPointer()
         else:
             parent_item = self.root_item
         children_obj = get_obj_value(parent_item, 'children')
         return len(children_obj) if not hasattr(children_obj, 'next') else 0
 
-    def hasChildren(self, parent_index):
-        if parent_index.isValid():
+    def hasChildren(self, parent_index=None):
+        if parent_index and parent_index.isValid():
             parent_data = parent_index.internalPointer()
         else:
             parent_data = self.root_item
@@ -143,7 +143,7 @@ class MTableModel(QAbstractItemModel):
         else:
             return len(children_obj)
 
-    def columnCount(self, index=QModelIndex()):
+    def columnCount(self, parent_index=None):
         return len(self.header_list)
 
     def canFetchMore(self, index):
