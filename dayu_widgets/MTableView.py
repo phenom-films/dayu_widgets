@@ -8,12 +8,16 @@
 from qt import *
 from MTheme import global_theme
 from MHeaderView import MHeaderView
+from MButton import MButton
 import MItemModel
 from MMenu import MMenu
 import utils
 from . import STATIC_FOLDERS
 
 qss = '''
+QListView,
+QTreeView,
+QColumnView,
 QTableView{{
     {text_font}
     background-color: white;
@@ -25,9 +29,16 @@ QTableView{{
     gridline-color: {border};
 }}
 
+QListView::item:hover,
+QTreeView::item:hover,
+QColumnView::item:hover,
 QTableView::item:hover{{
     background-color: rgba(45, 140, 240, 50);
 }}
+
+QListView::item:selected,
+QTreeView::item:selected,
+QColumnView::item:selected,
 QTableView::item:selected{{
     background-color: rgba(45, 140, 240, 50);
 }}
@@ -40,6 +51,9 @@ QTableView QTableCornerButton::section {{
     padding: 1px 6px;
 }}
 
+QListView::indicator,
+QTreeView::indicator,
+QColumnView::indicator,
 QTableView::indicator{{
     width: 13px;
     height: 13px;
@@ -47,30 +61,47 @@ QTableView::indicator{{
     border: 1px solid {border};
     background-color: white;
 }}
+
+QListView::indicator:disabled,
+QTreeView::indicator:disabled,
+QColumnView::indicator:disabled,
 QTableView::indicator:disabled{{
     border: 1px solid {border};
     background-color: {background_selected};
 }}
 
+QListView::indicator:hover,
+QTreeView::indicator:hover,
+QColumnView::indicator:hover,
 QTableView::indicator:hover{{
     border: 1px solid {primary_light};
     background-color: white;
 }}
 
+QListView::indicator:checked,
+QTreeView::indicator:checked,
+QColumnView::indicator:checked,
 QTableView::indicator:checked{{
     background-color: {primary};
     image: url(check.svg);
 }}
-
+QListView::indicator:checked:disabled,
+QTreeView::indicator:checked:disabled,
+QColumnView::indicator:checked:disabled,
 QTableView::indicator:checked:disabled{{
     background-color: {disabled};
 }}
 
+QListView::indicator:indeterminate,
+QTreeView::indicator:indeterminate,
+QColumnView::indicator:indeterminate,
 QTableView::indicator:indeterminate {{
     background-color: {primary};
     image: url(minus.svg);
 }}
-
+QListView::indicator:indeterminate:disabled,
+QTreeView::indicator:indeterminate:disabled,
+QColumnView::indicator:indeterminate:disabled,
 QTableView::indicator:indeterminate:disabled {{
     background-color: {disabled};
 }}
@@ -117,6 +148,8 @@ class MOptionDelegate(QItemDelegate):
     def paint(self, painter, option, index):
         super(MOptionDelegate, self).paint(painter, option, index)
         painter.save()
+        if option.state & QStyle.State_MouseOver:
+            painter.fillRect(option.rect, option.palette.highlight())
         painter.setRenderHint(QPainter.Antialiasing)
         painter.setPen(Qt.NoPen)
         painter.setBrush(QBrush(Qt.white))
