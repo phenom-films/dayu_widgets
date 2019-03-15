@@ -8,6 +8,7 @@
 
 from MTheme import global_theme
 from qt import *
+from . import STATIC_FOLDERS
 
 qss = '''
 QPushButton {{
@@ -134,9 +135,19 @@ QPushButton[button_size=small]{{
     max-height: {small_size}px;
 }}
 
-
+QPushButton::menu-indicator {{
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+    right: 5px;
+    bottom: 5px;
+    height: 10px;
+    width: 10px;
+    image: url(down_fill.svg);
+}}
 
 '''.format(**global_theme)
+
+qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
 
 
 @property_mixin
