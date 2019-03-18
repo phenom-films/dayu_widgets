@@ -6,12 +6,10 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-import os
-
-from MPushButton import MPushButton
-from MToolButton import MToolButton
-from MTheme import global_theme
-from qt import *
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.qt import *
 
 qss = '''
 QToolButton{{
