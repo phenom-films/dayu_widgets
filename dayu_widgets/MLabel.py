@@ -6,8 +6,8 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from MTheme import global_theme
-from qt import *
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
 qss = '''
 QLabel{{
@@ -104,3 +104,19 @@ class MLabel(QLabel):
             elided_text = font_metrics.elidedText(_text, self.elide_mode, self.width() - 2 * 2)
             painter.drawText(QPoint(2, font_metrics.ascent() + 3), elided_text)
             painter.end()
+
+    @classmethod
+    def h1(cls, text=''):
+        return cls(text=text, type=MLabel.MainHeadType)
+
+    @classmethod
+    def h2(cls, text=''):
+        return cls(text=text, type=MLabel.SubHeadType)
+
+    @classmethod
+    def h3(cls, text=''):
+        return cls(text=text, type=MLabel.SmallHeadType)
+
+    @classmethod
+    def help(cls, text=''):
+        return cls(text=text, type=MLabel.HelpType)
