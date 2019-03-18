@@ -27,9 +27,13 @@ class MLineEditTest(QWidget):
         line_edit_small = MLineEdit(size=MView.SmallSize)
         line_edit_small.setPlaceholderText('Small Size')
 
-        line_edit_icon = MLineEdit(text='Browser', size=MView.SmallSize)
-        button = MToolButton(icon=MIcon('female.svg'), size=MView.SmallSize)
-        line_edit_icon.add_suffix_widget(button)
+        line_edit_icon = MLineEdit(text='Xiao Hua', size=MView.SmallSize)
+        tool_button = MToolButton(icon=MIcon('female.svg'), size=MView.SmallSize)
+        line_edit_icon.add_suffix_widget(tool_button)
+
+        line_edit_button = MLineEdit(text='Beijing', size=MView.SmallSize)
+        push_button = MPushButton(text='Go', size=MView.SmallSize, type=MPushButton.PrimaryType)
+        line_edit_button.add_suffix_widget(push_button)
 
         line_edit_error = MLineEdit.error(size=MView.SmallSize)
         line_edit_error.setText('waring: file d:/ddd/ccc.jpg not exists.')
@@ -47,8 +51,9 @@ class MLineEditTest(QWidget):
         main_lay.addWidget(line_edit_large)
         main_lay.addWidget(line_edit_default)
         main_lay.addWidget(line_edit_small)
-        main_lay.addWidget(MDivider('icon'))
+        main_lay.addWidget(MDivider('icon/button'))
         main_lay.addWidget(line_edit_icon)
+        main_lay.addWidget(line_edit_button)
         main_lay.addWidget(MDivider('preset'))
 
         main_lay.addWidget(MLabel('MLineEdit.error()'))

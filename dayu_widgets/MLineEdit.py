@@ -68,6 +68,8 @@ class MLineEdit(QLineEdit):
         self.setTextMargins(2, 0, 2, 0)
 
     def add_prefix_widget(self, widget):
+        if isinstance(widget, MPushButton):
+            widget.setProperty('combine', 'horizontal')
         margin = self.textMargins()
         margin.setLeft(margin.left() + widget.width())
         self.setTextMargins(margin)
@@ -75,6 +77,8 @@ class MLineEdit(QLineEdit):
         return widget
 
     def add_suffix_widget(self, widget):
+        if isinstance(widget, MPushButton):
+            widget.setProperty('combine', 'horizontal')
         margin = self.textMargins()
         margin.setRight(margin.right() + widget.width())
         self.setTextMargins(margin)
@@ -127,7 +131,6 @@ class MLineEdit(QLineEdit):
         size = size or MView.LargeSize
         line_edit = MLineEdit(size=size, parent=parent)
         suffix_button = MPushButton(text='Search', size=size, type=MPushButton.PrimaryType)
-        suffix_button.setProperty('combine', 'horizontal')
         suffix_button.clicked.connect(line_edit.returnPressed)
         suffix_button.setFixedWidth(100)
         line_edit.add_suffix_widget(suffix_button)
