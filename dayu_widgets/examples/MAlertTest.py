@@ -7,7 +7,7 @@
 ###################################################################
 
 from dayu_widgets.qt import *
-from dayu_widgets.MButton import MButton
+from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MAlert import MAlert
@@ -28,10 +28,10 @@ class MAlertTest(QWidget, MFieldMixin):
         main_lay.addWidget(MAlert(text='Normal Message', type=MAlert.InfoType, parent=self))
         main_lay.addWidget(MAlert(text='Success Message', type=MAlert.SuccessType, parent=self))
         main_lay.addWidget(MAlert(text='Warning Message', type=MAlert.WarningType, parent=self))
-        main_lay.addWidget(MAlert(text='Error Message', type=MButton.ErrorType, parent=self))
+        main_lay.addWidget(MAlert(text='Error Message', type=MPushButton.ErrorType, parent=self))
         main_lay.addWidget(MLabel(u'不同的提示信息类型'))
         main_lay.addWidget(MDivider('closable'))
-        main_lay.addWidget(MAlert(text='Error Message', type=MButton.ErrorType, closable=True, parent=self))
+        main_lay.addWidget(MAlert(text='Error Message', type=MPushButton.ErrorType, closable=True, parent=self))
         main_lay.addWidget(MDivider('data bind'))
         self.register_field('msg', '')
         self.register_field('msg_type', MAlert.InfoType)
@@ -43,7 +43,7 @@ class MAlertTest(QWidget, MFieldMixin):
         for text, info, alert_type in [('error', 'password is wrong', MAlert.ErrorType),
                                        ('success', 'login success', MAlert.InfoType),
                                        ('no more error', '', MAlert.InfoType)]:
-            button = MButton(text=text)
+            button = MPushButton(text=text)
             button.clicked.connect(functools.partial(self.slot_change_alert, info, alert_type))
             button_grp.add_button(button)
         main_lay.addWidget(alert)

@@ -9,7 +9,7 @@
 import functools
 
 from MAvatar import MAvatar
-from MButton import MButton
+from MToolButton import MToolButton
 from MLabel import MLabel
 from MTheme import global_theme
 from qt import *
@@ -56,7 +56,7 @@ class MAlert(QWidget):
         self.setObjectName('alert')
         self._icon_label = MAvatar(size=MView.TinySize)
         self._content_label = MLabel()
-        self._close_button = MButton(size=MView.TinySize, icon=MIcon('close_line.svg'), type=MButton.IconType)
+        self._close_button = MToolButton(size=MView.TinySize, icon=MIcon('close_line.svg'))
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
 
         self._main_lay = QHBoxLayout()
