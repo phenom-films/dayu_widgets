@@ -5,10 +5,10 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
-import utils
-from MTheme import global_theme
-from qt import *
-from . import STATIC_FOLDERS
+import dayu_widgets.utils as utils
+from dayu_widgets import STATIC_FOLDERS
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
 qss = '''
 QMenu {{
@@ -105,6 +105,7 @@ class MMenu(QMenu):
         self._action_group.triggered.connect(self.slot_on_action_triggered)
         self._load_data_func = None
         self.set_value('')
+        self.set_data([])
         self.set_separator('/')
         self.setStyleSheet(qss)
 

@@ -6,11 +6,11 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from MTheme import global_theme
-from MButton import MButton
-from MLabel import MLabel
-from MAvatar import MAvatar
-from qt import *
+from dayu_widgets.MAvatar import MAvatar
+from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
 qss = '''
 QWidget#message{{
@@ -53,8 +53,8 @@ class MMessage(QWidget):
         self._content_label = MLabel(parent=self)
         self._content_label.setText(config.get('content'))
 
-        self._close_button = MButton(size=MView.TinySize, icon=MIcon('close_line.svg'), type=MButton.IconType,
-                                     parent=self)
+        self._close_button = MPushButton(size=MView.TinySize, icon=MIcon('close_line.svg'), type=MPushButton.IconType,
+                                         parent=self)
         self._close_button.clicked.connect(self.close)
         self._close_button.setVisible(config.get('closable', False))
 

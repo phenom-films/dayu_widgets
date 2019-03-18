@@ -8,10 +8,11 @@
 
 import functools
 
-from MBrowser import MClickBrowserFileButton, MClickBrowserFolderButton
-from MButton import MButton
-from MTheme import global_theme
-from qt import *
+from dayu_widgets.MBrowser import MClickBrowserFileToolButton, MClickBrowserFolderToolButton
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
 qss = '''
 QLineEdit{{
@@ -71,12 +72,14 @@ class MLineEdit(QLineEdit):
         margin.setLeft(margin.left() + widget.width())
         self.setTextMargins(margin)
         self._main_layout.insertWidget(0, widget)
+        return widget
 
     def add_suffix_widget(self, widget):
         margin = self.textMargins()
         margin.setRight(margin.right() + widget.width())
         self.setTextMargins(margin)
         self._main_layout.addWidget(widget)
+        return widget
 
     def setText(self, text):
         self.setProperty('history', u'{}\n{}'.format(self.property('history'), text))
@@ -90,8 +93,7 @@ class MLineEdit(QLineEdit):
     def search(cls, size=None, parent=None):
         size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
-        suffix_button = MButton(icon=MIcon('close_line.svg'), size=size, type=MButton.IconType, parent=parent)
-        suffix_button.setProperty('combine', 'horizontal')
+        suffix_button = MToolButton(icon=MIcon('close_line.svg'), size=size, parent=parent)
         suffix_button.clicked.connect(line_edit.clear)
         suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
         line_edit.add_suffix_widget(suffix_button)
@@ -115,7 +117,7 @@ class MLineEdit(QLineEdit):
         line_edit = MLineEdit(size=size, parent=parent)
         line_edit.setProperty('type', 'error')
         line_edit.setReadOnly(True)
-        suffix_button = MButton(icon=MIcon('detail_line.svg', '#fff'), size=size, type=MButton.ErrorType)
+        suffix_button = MPushButton(icon=MIcon('detail_line.svg', '#fff'), size=size, type=MPushButton.ErrorType)
         suffix_button.setProperty('combine', 'horizontal')
         suffix_button.clicked.connect(functools.partial(slot_show_detail, line_edit))
         suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
@@ -127,7 +129,7 @@ class MLineEdit(QLineEdit):
     def search_engine(cls, size=None, parent=None):
         size = size or MView.LargeSize
         line_edit = MLineEdit(size=size, parent=parent)
-        suffix_button = MButton(text='Search', size=size, type=MButton.PrimaryType)
+        suffix_button = MPushButton(text='Search', size=size, type=MPushButton.PrimaryType)
         suffix_button.setProperty('combine', 'horizontal')
         suffix_button.clicked.connect(line_edit.returnPressed)
         suffix_button.setFixedWidth(100)
@@ -139,10 +141,9 @@ class MLineEdit(QLineEdit):
     def file(cls, size=None, format=None, parent=None):
         size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
-        suffix_button = MClickBrowserFileButton(size=size)
+        suffix_button = MClickBrowserFileToolButton(size=size)
         suffix_button.sig_file_changed.connect(line_edit.setText)
         suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
-        suffix_button.setProperty('combine', 'horizontal')
         suffix_button.set_format(format or [])
         line_edit.textChanged.connect(suffix_button.set_path)
         line_edit.add_suffix_widget(suffix_button)
@@ -153,11 +154,10 @@ class MLineEdit(QLineEdit):
     def folder(cls, size=None, parent=None):
         size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
-        suffix_button = MClickBrowserFolderButton(size=size)
+        suffix_button = MClickBrowserFolderToolButton(size=size)
         suffix_button.sig_folder_changed.connect(line_edit.setText)
         line_edit.textChanged.connect(suffix_button.set_path)
         suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
-        suffix_button.setProperty('combine', 'horizontal')
         line_edit.add_suffix_widget(suffix_button)
         line_edit.setPlaceholderText('Click button to browser folder')
         return line_edit

@@ -6,9 +6,9 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from MFieldMixin import MFieldMixin
-from MTheme import global_theme
-from qt import *
+from dayu_widgets.MFieldMixin import MFieldMixin
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
 qss = '''
 QProgressBar {{
