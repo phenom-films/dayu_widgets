@@ -8,7 +8,7 @@
 
 from MTheme import global_theme
 from qt import *
-from . import STATIC_FOLDERS
+from dayu_widgets import STATIC_FOLDERS
 
 qss = '''
 QPushButton {{
@@ -21,11 +21,10 @@ QPushButton {{
 
 QPushButton[combine=horizontal]{{
     border-radius: 0;
-    border-left: 1px solid {border};
 }}
 QPushButton[combine=vertical]{{
     border-radius: 0;
-    border-top: 1px solid {border};
+
 }}
 
 QPushButton[type=default]{{
@@ -41,21 +40,6 @@ QPushButton[type=default]:pressed{{
     color: #2b85e4;
     border-color: #2b85e4;
 }}
-
-QPushButton[type=icon]{{
-    background-color: transparent;
-    border: none;
-}}
-QPushButton[type=icon]:checked{{
-    background-color: {primary};
-}}
-QPushButton[type=icon]:hover{{
-    border: 1px solid #5cadff;
-}}
-QPushButton[type=icon]:pressed{{
-    border: 1px solid #2b85e4;
-}}
-
 
 QPushButton[type=primary]{{
     background-color: {primary};
@@ -112,8 +96,6 @@ QPushButton[type=error]:pressed{{
     background-color: {error_dark};
 }}
 
-
-
 QPushButton:disabled{{
     color: {disabled};
     border: 2px dashed {border};
@@ -151,14 +133,13 @@ qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/'))
 
 
 @property_mixin
-class MButton(QPushButton):
+class MPushButton(QPushButton):
     '''
     自定义 props:
         type:
         button_size:
     '''
     DefaultType = 'default'
-    IconType = 'icon'
     PrimaryType = 'primary'
     InfoType = 'info'
     SuccessType = 'success'
@@ -167,11 +148,11 @@ class MButton(QPushButton):
 
     def __init__(self, icon=None, text='', type=None, size=None, parent=None):
         if icon:
-            super(MButton, self).__init__(icon=icon, text=text, parent=parent)
+            super(MPushButton, self).__init__(icon=icon, text=text, parent=parent)
         else:
-            super(MButton, self).__init__(text=text, parent=parent)
+            super(MPushButton, self).__init__(text=text, parent=parent)
         self.set_button_size(size or MView.DefaultSize)
-        self.set_type(type or MButton.DefaultType)
+        self.set_type(type or MPushButton.DefaultType)
         self.setStyleSheet(qss)
 
     def _set_button_size(self, value):
@@ -179,9 +160,6 @@ class MButton(QPushButton):
         self.style().polish(self)
 
     def _set_type(self, value):
-        if value == MButton.IconType:
-            self.setText('')
-            self.setFixedWidth(global_theme.get(self.property('button_size') + '_size'))
         self.style().polish(self)
 
     def set_type(self, value):
