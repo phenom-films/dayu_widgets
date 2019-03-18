@@ -26,10 +26,10 @@ QLineEdit:focus{{
 }}
 
 
-QLineEdit[type=error]{{
+QLineEdit[error=true]{{
     color: {error};
 }}
-QLineEdit[type=error]:focus{{
+QLineEdit[error=true]:focus{{
     border: 1px solid {error};
 }}
 
@@ -95,7 +95,6 @@ class MLineEdit(QLineEdit):
         line_edit = MLineEdit(size=size, parent=parent)
         suffix_button = MToolButton(icon=MIcon('close_line.svg'), size=size, parent=parent)
         suffix_button.clicked.connect(line_edit.clear)
-        suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
         line_edit.add_suffix_widget(suffix_button)
         line_edit.setPlaceholderText('Enter key word to search...')
         return line_edit
@@ -115,12 +114,10 @@ class MLineEdit(QLineEdit):
 
         size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
-        line_edit.setProperty('type', 'error')
+        line_edit.setProperty('error', True)
         line_edit.setReadOnly(True)
-        suffix_button = MPushButton(icon=MIcon('detail_line.svg', '#fff'), size=size, type=MPushButton.ErrorType)
-        suffix_button.setProperty('combine', 'horizontal')
+        suffix_button = MToolButton(icon=MIcon('detail_line.svg', '#f00'), size=size)
         suffix_button.clicked.connect(functools.partial(slot_show_detail, line_edit))
-        suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
         line_edit.add_suffix_widget(suffix_button)
         line_edit.setPlaceholderText('Error information will be here...')
         return line_edit
@@ -143,7 +140,6 @@ class MLineEdit(QLineEdit):
         line_edit = MLineEdit(size=size, parent=parent)
         suffix_button = MClickBrowserFileToolButton(size=size)
         suffix_button.sig_file_changed.connect(line_edit.setText)
-        suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
         suffix_button.set_format(format or [])
         line_edit.textChanged.connect(suffix_button.set_path)
         line_edit.add_suffix_widget(suffix_button)
@@ -157,7 +153,6 @@ class MLineEdit(QLineEdit):
         suffix_button = MClickBrowserFolderToolButton(size=size)
         suffix_button.sig_folder_changed.connect(line_edit.setText)
         line_edit.textChanged.connect(suffix_button.set_path)
-        suffix_button.setFixedWidth(global_theme.get(size + '_size') + 1)
         line_edit.add_suffix_widget(suffix_button)
         line_edit.setPlaceholderText('Click button to browser folder')
         return line_edit

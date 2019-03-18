@@ -8,7 +8,8 @@
 
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MLineEdit import MLineEdit
-from dayu_widgets.MButton import MButton
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.qt import *
 
@@ -27,19 +28,18 @@ class MLineEditTest(QWidget):
         line_edit_small.setPlaceholderText('Small Size')
 
         line_edit_icon = MLineEdit(text='Browser', size=MView.SmallSize)
-        button = MButton(icon=MIcon('folder_fill.svg', '#cccccc'), type=MButton.IconType, size=MView.SmallSize)
+        button = MToolButton(icon=MIcon('female.svg'), size=MView.SmallSize)
         line_edit_icon.add_suffix_widget(button)
 
         line_edit_error = MLineEdit.error(size=MView.SmallSize)
         line_edit_error.setText('waring: file d:/ddd/ccc.jpg not exists.')
-        line_edit_error2 = MLineEdit.error()
 
-        line_edit_search = MLineEdit.search()
+        line_edit_search = MLineEdit.search(size=MView.SmallSize)
         line_edit_search_engine = MLineEdit.search_engine()
         line_edit_search_engine.add_prefix_widget(
-            MButton(icon=MIcon('filter_line.svg', '#cccccc'), type=MButton.IconType, size=MView.LargeSize))
+            MToolButton(icon=MIcon('filter_line.svg', '#cccccc'), size=MView.LargeSize))
 
-        line_edit_file = MLineEdit.file(size=MView.SmallSize)
+        line_edit_file = MLineEdit.file()
         line_edit_folder = MLineEdit.folder()
 
         main_lay = QVBoxLayout()
@@ -53,7 +53,6 @@ class MLineEditTest(QWidget):
 
         main_lay.addWidget(MLabel('MLineEdit.error()'))
         main_lay.addWidget(line_edit_error)
-        main_lay.addWidget(line_edit_error2)
         main_lay.addWidget(MLabel('MLineEdit.search()'))
         main_lay.addWidget(line_edit_search)
         main_lay.addWidget(MLabel('MLineEdit.search_engine()'))
