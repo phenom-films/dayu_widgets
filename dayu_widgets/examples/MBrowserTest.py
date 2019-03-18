@@ -9,9 +9,10 @@
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MButton import MButton
-from dayu_widgets.MBrowser import MClickBrowserFileButton, MClickBrowserFolderButton, MDragFileButton, \
-    MDragFolderButton
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.MBrowser import MClickBrowserFilePushButton,MClickBrowserFileToolButton,\
+    MClickBrowserFolderPushButton, MClickBrowserFolderToolButton, \
+    MDragFileButton, MDragFolderButton
 from dayu_widgets.qt import *
 
 
@@ -21,27 +22,30 @@ class MBrowserTest(QWidget, MFieldMixin):
         self._init_ui()
 
     def _init_ui(self):
-        browser_1 = MClickBrowserFileButton(size=MView.SmallSize, text='Browser File (Small)')
-        browser_2 = MClickBrowserFileButton(size=MView.DefaultSize, text='Browser File (Default)')
-        browser_3 = MClickBrowserFileButton(size=MView.LargeSize, type=MButton.PrimaryType, text='Browser File (Large)')
+        browser_1 = MClickBrowserFilePushButton(size=MView.SmallSize, text='Browser File (Small)')
+        browser_2 = MClickBrowserFolderPushButton(size=MView.DefaultSize, text='Browser Folder (Default)')
+        browser_3 = MClickBrowserFilePushButton(size=MView.LargeSize, type=MPushButton.PrimaryType, text='Browser File (Large)')
         lay_1 = QHBoxLayout()
         lay_1.addWidget(browser_1)
         lay_1.addWidget(browser_2)
         lay_1.addWidget(browser_3)
 
-        browser_4 = MClickBrowserFileButton()
+        browser_4 = MClickBrowserFileToolButton()
         label_4 = MLabel()
         label_4.set_elide_mode(Qt.ElideRight)
         browser_4.sig_file_changed.connect(label_4.setText)
-        browser_5 = MClickBrowserFolderButton(text='Browser Folder')
+
+        browser_5 = MClickBrowserFolderToolButton()
         label_5 = MLabel()
         label_5.set_elide_mode(Qt.ElideRight)
         browser_5.sig_folder_changed.connect(label_5.setText)
+
         browser_6 = MDragFileButton(text='Click or drag file here')
-        browser_7 = MDragFolderButton(text='Click or drag folder here')
         label_6 = MLabel()
         label_6.set_elide_mode(Qt.ElideRight)
         browser_6.sig_file_changed.connect(label_6.setText)
+
+        browser_7 = MDragFolderButton(text='Click or drag folder here')
         label_7 = MLabel()
         label_7.set_elide_mode(Qt.ElideRight)
         browser_7.sig_folder_changed.connect(label_7.setText)
