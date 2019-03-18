@@ -5,12 +5,10 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
-import functools
-from MTheme import global_theme
-from MMenu import MMenu
-import utils
-from qt import *
-from . import STATIC_FOLDERS
+import dayu_widgets.utils as utils
+from dayu_widgets import STATIC_FOLDERS
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
 qss = '''
 QComboBox{{
