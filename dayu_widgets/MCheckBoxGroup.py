@@ -6,11 +6,11 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from qt import *
-from MTheme import global_theme
-from MCheckBox import MCheckBox
-from MMenu import MMenu
 import functools
+
+from dayu_widgets.MCheckBox import MCheckBox
+from dayu_widgets.MMenu import MMenu
+from dayu_widgets.qt import *
 
 
 @property_mixin

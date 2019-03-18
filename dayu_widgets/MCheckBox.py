@@ -6,9 +6,9 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from MTheme import global_theme
-from qt import *
-from . import STATIC_FOLDERS
+from dayu_widgets import STATIC_FOLDERS
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
 qss = '''
 QCheckBox {{
