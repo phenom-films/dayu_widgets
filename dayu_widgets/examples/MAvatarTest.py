@@ -7,7 +7,7 @@
 ###################################################################
 
 from dayu_widgets.MAvatar import MAvatar
-from dayu_widgets.MButton import MButton
+from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
@@ -24,7 +24,8 @@ class MAvatarTest(QWidget, MFieldMixin):
         main_lay.addWidget(MDivider('different size'))
 
         size_list = [MView.LargeSize, MView.DefaultSize, MView.SmallSize, ]
-        self.pix_map_list = ['', MPixmap('avatar.png'), MPixmap('app-maya.png'), MPixmap('app-nuke.png'), MPixmap('app-houdini.png')]
+        self.pix_map_list = ['', MPixmap('avatar.png'), MPixmap('app-maya.png'), MPixmap('app-nuke.png'),
+                             MPixmap('app-houdini.png')]
         for size in size_list:
             h_lay = QHBoxLayout()
             h_lay.addWidget(MLabel(size))
@@ -36,10 +37,9 @@ class MAvatarTest(QWidget, MFieldMixin):
         main_lay.addWidget(MDivider('different image'))
         avatar = MAvatar()
         self.bind('image', avatar, 'image')
-        button = MButton(text='Change Avatar Image', type=MButton.PrimaryType)
+        button = MPushButton(text='Change Avatar Image', type=MPushButton.PrimaryType)
         button.clicked.connect(self.slot_change_image)
 
-        main_lay.addLayout(h_lay)
         main_lay.addWidget(avatar)
         main_lay.addWidget(button)
         main_lay.addStretch()
