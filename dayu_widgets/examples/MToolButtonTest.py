@@ -9,6 +9,7 @@
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.MTheme import global_theme
 from dayu_widgets.qt import *
 
 
@@ -23,10 +24,22 @@ class MToolButtonTest(QWidget, MFieldMixin):
         button5 = MToolButton(icon=MIcon('up_line.svg'), size=MView.SmallSize)
         button6 = MToolButton(icon=MIcon('down_line.svg'), size=MView.TinySize)
 
-        button2 = MToolButton(icon=MIcon('detail_line.svg', '#aaa'))
+        button2 = MToolButton(icon=MIcon('detail_line.svg'))
         button2.setEnabled(False)
-        button7 = MToolButton(icon=MIcon('trash_fill.svg'), icon_checked=MIcon('trash_fill.svg', '#2d8cf0'),
+        button7 = MToolButton(icon=MIcon('trash_line.svg'), icon_checked=MIcon('trash_line.svg', '#2d8cf0'),
                               checkable=True)
+
+        button_trash = MToolButton(icon=MIcon('trash_line.svg'), icon_only=False)
+        button_trash.setText('Delete')
+        button_login = MToolButton(icon=MIcon('user_line.svg'), icon_only=False)
+        button_login.setText('Login')
+        button_male = MToolButton(icon=MIcon('male.svg'), icon_checked=MIcon('male.svg', global_theme.get('male')), icon_only=False, checkable=True)
+        button_male.setText('Male')
+
+        button_lay = QHBoxLayout()
+        button_lay.addWidget(button_trash)
+        button_lay.addWidget(button_login)
+        button_lay.addWidget(button_male)
 
         sub_lay1 = QHBoxLayout()
         sub_lay1.addWidget(button3)
@@ -45,6 +58,8 @@ class MToolButtonTest(QWidget, MFieldMixin):
         main_lay.addWidget(button2)
         main_lay.addWidget(MDivider('checkable'))
         main_lay.addWidget(button7)
+        main_lay.addWidget(MDivider('text icon'))
+        main_lay.addLayout(button_lay)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
