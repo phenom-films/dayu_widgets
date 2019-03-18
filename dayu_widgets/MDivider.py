@@ -6,8 +6,8 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from MLabel import MLabel
-from qt import *
+from dayu_widgets.MLabel import MLabel
+from dayu_widgets.qt import *
 
 
 @property_mixin

@@ -5,14 +5,12 @@
 # Date  : 2019.3
 # Email : muyanru345@163.com
 ###################################################################
-from qt import *
-from MTheme import global_theme
-from MHeaderView import MHeaderView
-from MButton import MButton
-import MItemModel
-from MMenu import MMenu
-import utils
-from . import STATIC_FOLDERS
+import dayu_widgets.utils as utils
+from dayu_widgets import STATIC_FOLDERS
+from dayu_widgets.MHeaderView import MHeaderView
+from dayu_widgets.MMenu import MMenu
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
 qss = '''
 QListView,
@@ -174,6 +172,47 @@ class MOptionDelegate(QItemDelegate):
     #     return super(MOptionDelegate, self).eventFilter(obj, event)
 
 
+def set_header_list(self, header_list):
+    self.header_list = header_list
+    if self.header_view:
+        self.header_view.setSortIndicator(-1, Qt.AscendingOrder)
+        for index, i in enumerate(header_list):
+            self.header_view.setSectionHidden(index, i.get('hide', False))
+            self.header_view.resizeSection(index, i.get('width', 100))
+            if i.get('order', None) is not None:
+                self.header_view.setSortIndicator(index, i.get('order'))
+            if i.get('selectable', False):
+                delegate = MOptionDelegate(parent=self)
+                delegate.set_exclusive(i.get('exclusive', True))
+                self.setItemDelegateForColumn(index, delegate)
+            elif self.itemDelegateForColumn(index):
+                self.setItemDelegateForColumn(index, None)
+
+
+def enable_context_menu(self, enable):
+    if enable:
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.slot_context_menu)
+    else:
+        self.setContextMenuPolicy(Qt.NoContextMenu)
+
+
+@Slot(QPoint)
+def slot_context_menu(self, point):
+    proxy_index = self.indexAt(point)
+    if proxy_index.isValid():
+        need_map = isinstance(self.model(), QSortFilterProxyModel)
+        selection = []
+        for index in self.selectionModel().selectedRows() or self.selectionModel().selectedIndexes():
+            data_obj = self.model().mapToSource(index).internalPointer() if need_map else index.internalPointer()
+            selection.append(data_obj)
+        event = utils.MenuEvent(view=self, selection=selection, extra={})
+        self.sig_context_menu.emit(event)
+    else:
+        event = utils.MenuEvent(view=self, selection=[], extra={})
+        self.sig_context_menu.emit(event)
+
+
 class MTableView(QTableView):
     sig_context_menu = Signal(object)
 
@@ -223,7 +262,7 @@ class MTableView(QTableView):
 
         # setting = {
         #     'key': attr,  # 必填，用来读取 model后台数据结构的属性
-        #     'title': attr.title(),  # 选填，显示在界面的该列的名字
+        #     'label': attr.title(),  # 选填，显示在界面的该列的名字
         #     'width': 100,  # 选填，单元格默认的宽度
         #     'default_filter': False,  # 选填，如果有组合的filter组件，该属性默认是否显示，默认False
         #     'searchable': False,  # 选填，如果有搜索组件，该属性是否可以被搜索，默认False
@@ -253,3 +292,103 @@ class MTableView(QTableView):
         settings = QSettings(QSettings.IniFormat, QSettings.UserScope, 'DAYU', 'dayu_widgets')
         if settings.value('{}/headerState'.format(name)):
             self.header_view.restoreState(settings.value('{}/headerState'.format(name)))
+
+
+class MTreeView(QTreeView):
+    set_header_list = set_header_list
+    enable_context_menu = enable_context_menu
+    slot_context_menu = slot_context_menu
+    sig_context_menu = Signal(object)
+
+    def __init__(self, parent=None):
+        super(MTreeView, self).__init__(parent)
+        self.header_list = []
+        self.header_view = MHeaderView(Qt.Horizontal)
+        self.setHeader(self.header_view)
+        self.setSortingEnabled(True)
+        self.setAlternatingRowColors(True)
+        self.setStyleSheet(qss)
+
+
+class MBigView(QListView):
+    set_header_list = set_header_list
+    enable_context_menu = enable_context_menu
+    slot_context_menu = slot_context_menu
+    sig_context_menu = Signal(object)
+
+    def __init__(self, parent=None):
+        super(MBigView, self).__init__(parent)
+        self.header_list = []
+        self.header_view = None
+        self.setViewMode(QListView.IconMode)
+        self.setResizeMode(QListView.Adjust)
+        self.setMovement(QListView.Static)
+        self.setSpacing(10)
+        self.setIconSize(QSize(128, 128))
+        self.setStyleSheet(qss)
+
+    def wheelEvent(self, event):
+        if event.modifiers() == Qt.ControlModifier:
+            num_degrees = event.delta() / 8.0
+            num_steps = num_degrees / 15.0
+            factor = pow(1.125, num_steps)
+            new_size = self.iconSize() * factor
+            if new_size.width() > 200:
+                new_size = QSize(200, 200)
+            elif new_size.width() < 24:
+                new_size = QSize(24, 24)
+            self.setIconSize(new_size)
+        else:
+            super(MBigView, self).wheelEvent(event)
+
+
+class MListView(QListView):
+    set_header_list = set_header_list
+    enable_context_menu = enable_context_menu
+    slot_context_menu = slot_context_menu
+    sig_context_menu = Signal(object)
+
+    def __init__(self, parent=None):
+        super(MListView, self).__init__(parent)
+        self.header_list = []
+        self.header_view = None
+        self.setModelColumn(0)
+        self.setAlternatingRowColors(True)
+        self.setStyleSheet(qss)
+
+    def set_show_column(self, attr):
+        for index, attr_dict in enumerate(self.header_list):
+            if attr_dict.get('key') == attr:
+                self.setModelColumn(index)
+                break
+        else:
+            self.setModelColumn(0)
+
+    def minimumSizeHint(self, *args, **kwargs):
+        return QSize(200, 50)
+
+    '''
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasFormat("text/uri-list"):
+            event.acceptProposedAction()
+
+    def dragMoveEvent(self, event):
+        event.acceptProposedAction()
+
+    def dropEvent(self, event):
+        file_list = [url.toLocalFile() for url in event.mimeData().urls()]
+        result = []
+        if sys.platform == 'darwin':
+            for url in file_list:
+                p = subprocess.Popen(
+                    'osascript -e \'get posix path of posix file \"file://{}\" -- kthxbai\''.format(url),
+                    stdout=subprocess.PIPE,
+                    shell=True)
+                # print p.communicate()[0].strip()
+                result.append(p.communicate()[0].strip())
+                p.wait()
+        else:
+            result = file_list
+
+        self.emit(SIGNAL('sigDropFile(PyObject)'), result)
+'''

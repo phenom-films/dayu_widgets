@@ -8,11 +8,11 @@
 
 import functools
 
-import utils
-from qt import *
-from MMenu import MMenu
-from MTheme import global_theme
-from . import STATIC_FOLDERS
+import dayu_widgets.utils as utils
+from dayu_widgets import STATIC_FOLDERS
+from dayu_widgets.MMenu import MMenu
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
 qss = '''
 QHeaderView {{

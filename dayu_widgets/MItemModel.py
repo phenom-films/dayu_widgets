@@ -6,8 +6,8 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from qt import *
-from utils import default_formatter, apply_formatter, get_font, icon_formatter, \
+from dayu_widgets.qt import *
+from dayu_widgets.utils import default_formatter, apply_formatter, get_font, icon_formatter, \
     get_obj_value, set_obj_value
 
 SETTING_MAP = {
@@ -89,7 +89,7 @@ class MTableModel(QAbstractItemModel):
         if not self.header_list or section >= len(self.header_list):
             return None
         if role == Qt.DisplayRole:
-            return self.header_list[section]['title']
+            return self.header_list[section]['label']
         return None
 
     def index(self, row, column, parent_index=None):
