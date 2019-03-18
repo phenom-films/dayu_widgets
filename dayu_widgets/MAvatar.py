@@ -6,8 +6,8 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from MTheme import global_theme
-from qt import *
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
 
 @property_mixin
@@ -20,7 +20,7 @@ class MAvatar(QLabel):
 
     def __init__(self, size=None, image=None, parent=None, flags=0):
         super(MAvatar, self).__init__(parent, flags)
-        self._default_pix = MPixmap('user_fill.svg', '#aaa')
+        self._default_pix = MPixmap('user_fill.svg')
         self.setObjectName('avatar')
         self.set_button_size(size or MView.DefaultSize)
         self.set_image(image or '')
