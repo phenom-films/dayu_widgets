@@ -69,7 +69,7 @@ class MClickBrowserFilePushButton(MPushButton):
 
     def __init__(self, icon=None, text='', type=None, size=None, multiple=False, parent=None):
         super(MClickBrowserFilePushButton, self).__init__(
-            icon=icon or MIcon('cloud_fill.svg', '#aaa' if type is None or type == MPushButton.DefaultType else '#fff'),
+            icon=icon or MIcon('cloud_fill.svg', '#555' if type is None or type == MPushButton.DefaultType else '#fff'),
             text=text, type=type, size=size, parent=parent)
         self.setProperty('multiple', multiple)
         self.setCursor(Qt.PointingHandCursor)
@@ -91,7 +91,7 @@ class MClickBrowserFileToolButton(MToolButton):
     slot_browser_file = _slot_browser_file
 
     def __init__(self, icon=None, size=None, multiple=False, parent=None):
-        super(MClickBrowserFileToolButton, self).__init__(icon=icon or MIcon('cloud_fill.svg', '#aaa'),
+        super(MClickBrowserFileToolButton, self).__init__(icon=icon or MIcon('cloud_fill.svg'),
                                                           size=size, parent=parent)
         self.setProperty('multiple', multiple)
         self.setCursor(Qt.PointingHandCursor)
@@ -120,7 +120,7 @@ class MDragFileButton(QToolButton):
         self.setCursor(Qt.PointingHandCursor)
         self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.setText(text)
-        self.setIcon(icon or MIcon('cloud_fill.svg', '#aaa'))
+        self.setIcon(icon or MIcon('cloud_fill.svg'))
         self.setIconSize(QSize(80, 80))
         self.clicked.connect(self.slot_browser_file)
         self.setStyleSheet(qss)
@@ -185,7 +185,7 @@ class MClickBrowserFolderPushButton(MPushButton):
 
     def __init__(self, icon=None, text='', type=None, size=None, multiple=False, parent=None):
         super(MClickBrowserFolderPushButton, self).__init__(
-            icon=icon or MIcon('cloud_fill.svg', '#aaa' if type is None or type == MPushButton.DefaultType else '#fff'),
+            icon=icon or MIcon('folder_fill.svg', '#555' if type is None or type == MPushButton.DefaultType else '#fff'),
             text=text, type=type, size=size, parent=parent)
         self.setProperty('multiple', multiple)
         self.setCursor(Qt.PointingHandCursor)
@@ -208,7 +208,7 @@ class MClickBrowserFolderToolButton(MToolButton):
 
     def __init__(self, icon=None, size=None, multiple=False, parent=None):
         super(MClickBrowserFolderToolButton, self).__init__(
-            icon=icon or MIcon('cloud_fill.svg', '#aaa'), size=size, parent=parent)
+            icon=icon or MIcon('folder_fill.svg'), size=size, parent=parent)
         self.setProperty('multiple', multiple)
         self.setCursor(Qt.PointingHandCursor)
         self.clicked.connect(self.slot_browser_folder)
@@ -235,7 +235,7 @@ class MDragFolderButton(QToolButton):
         self.setProperty('multiple', multiple)
         self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.setText(text)
-        self.setIcon(icon or MIcon('folder_fill.svg', '#aaa'))
+        self.setIcon(icon or MIcon('folder_fill.svg'))
         self.setIconSize(QSize(80, 80))
         self.clicked.connect(self.slot_browser_folder)
         self.setStyleSheet(qss)
