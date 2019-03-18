@@ -13,7 +13,6 @@ from dayu_widgets.MTheme import global_theme
 from dayu_widgets.qt import *
 from dayu_widgets import STATIC_FOLDERS
 
-
 qss = '''
 #qt_calendar_calendarview {{
     background: {background};
@@ -204,7 +203,6 @@ QAbstractSpinBox[line_size=small]::drop-down{{
 qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
 
 
-
 class MCalendarWidgetTest(QWidget):
     def __init__(self, parent=None):
         super(MCalendarWidgetTest, self).__init__(parent)
@@ -214,15 +212,35 @@ class MCalendarWidgetTest(QWidget):
     def _init_ui(self):
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('different size'))
-        date_edit = QDateEdit()
-        date_edit.setProperty('line_size', MView.LargeSize)
-        time_edit = QTimeEdit()
-        time_edit.setProperty('line_size', MView.LargeSize)
-        date_edit.setCalendarPopup(True)
-        lay = QVBoxLayout()
-        lay.addWidget(date_edit)
-        lay.addWidget(time_edit)
-        main_lay.addLayout(lay)
+        date_edit_large = QDateEdit()
+        date_edit_large.setProperty('line_size', MView.LargeSize)
+        date_edit_large.setCalendarPopup(True)
+        date_edit_default = QDateEdit()
+        date_edit_default.setProperty('line_size', MView.DefaultSize)
+        date_edit_default.setCalendarPopup(True)
+        date_edit_small = QDateEdit()
+        date_edit_small.setProperty('line_size', MView.SmallSize)
+        date_edit_small.setCalendarPopup(True)
+
+        time_edit_large = QTimeEdit()
+        time_edit_large.setProperty('line_size', MView.LargeSize)
+        time_edit_default = QTimeEdit()
+        time_edit_default.setProperty('line_size', MView.DefaultSize)
+        time_edit_small = QTimeEdit()
+        time_edit_small.setProperty('line_size', MView.SmallSize)
+
+        lay_date = QHBoxLayout()
+        lay_date.addWidget(date_edit_large)
+        lay_date.addWidget(date_edit_default)
+        lay_date.addWidget(date_edit_small)
+
+        lay_time = QHBoxLayout()
+        lay_time.addWidget(time_edit_large)
+        lay_time.addWidget(time_edit_default)
+        lay_time.addWidget(time_edit_small)
+
+        main_lay.addLayout(lay_date)
+        main_lay.addLayout(lay_time)
 
         main_lay.addStretch()
         self.setLayout(main_lay)
