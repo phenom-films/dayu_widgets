@@ -6,9 +6,9 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from MTheme import global_theme
 from dayu_widgets import STATIC_FOLDERS
-from qt import *
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
 qss = '''
 QToolButton {{
@@ -18,15 +18,11 @@ QToolButton {{
 
 QToolButton[combine=horizontal]{{
     border-radius: 0;
-    border-left: 1px solid {border};
-    border-top: 1px solid {border};
-    border-bottom: 1px solid {border};
+    border: 1px solid {border};
 }}
 QToolButton[combine=vertical]{{
     border-radius: 0;
-    border-top: 1px solid {border};
-    border-left: 1px solid {border};
-    border-right: 1px solid {border};
+    border: 1px solid {border};
 }}
 
 QToolButton:disabled{{
@@ -98,17 +94,22 @@ class MToolButton(QToolButton):
         self.setStyleSheet(qss)
         self.slot_check_state_changed(self.isChecked())
         self.set_button_size(size or MView.DefaultSize)
+        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
 
     @Slot(bool)
     def slot_check_state_changed(self, checked):
         self.setIcon(self._icon_checked if checked else self._icon)
 
     def _set_button_size(self, value):
-        self.setIconSize(QSize(global_theme.get(value + '_size') * 0.9, global_theme.get(value + '_size') * 0.9))
+        self.setIconSize(QSize(global_theme.get(value + '_size') * 0.8, global_theme.get(value + '_size') * 0.8))
         self.style().polish(self)
 
     def set_button_size(self, value):
         self.setProperty('button_size', value)
+
+    def minimumSizeHint(self):
+        num = global_theme.get(self.property('button_size') + '_size')
+        return QSize(num, num)
 
     def enterEvent(self, *args, **kwargs):
         QApplication.setOverrideCursor(Qt.PointingHandCursor if self.isEnabled() else Qt.ForbiddenCursor)
