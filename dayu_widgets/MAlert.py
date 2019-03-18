@@ -8,11 +8,11 @@
 
 import functools
 
-from MAvatar import MAvatar
-from MToolButton import MToolButton
-from MLabel import MLabel
-from MTheme import global_theme
-from qt import *
+from dayu_widgets.MAvatar import MAvatar
+from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.qt import *
 
 qss = '''
 QWidget#alert{{
@@ -89,12 +89,3 @@ class MAlert(QWidget):
 
     def set_type(self, value):
         self.setProperty('type', value or MAlert.InfoType)
-
-
-if __name__ == '__main__':
-    import sys
-
-    app = QApplication(sys.argv)
-    test = MAlert(text='hahahha')
-    test.show()
-    sys.exit(app.exec_())
