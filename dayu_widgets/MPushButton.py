@@ -6,9 +6,10 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from MTheme import global_theme
-from qt import *
+from dayu_widgets.MTheme import global_theme
 from dayu_widgets import STATIC_FOLDERS
+from dayu_widgets.mixin import property_mixin, cursor_mixin
+from dayu_widgets.qt import *
 
 qss = '''
 QPushButton {{
@@ -133,6 +134,7 @@ qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/'))
 
 
 @property_mixin
+@cursor_mixin
 class MPushButton(QPushButton):
     '''
     自定义 props:
