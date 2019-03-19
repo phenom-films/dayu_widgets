@@ -8,6 +8,7 @@
 
 from dayu_widgets import STATIC_FOLDERS
 from dayu_widgets.MTheme import global_theme
+from dayu_widgets.mixin import property_mixin, cursor_mixin
 from dayu_widgets.qt import *
 
 qss = '''
@@ -94,6 +95,7 @@ class MTabWidget(QTabWidget):
 
 
 @property_mixin
+@cursor_mixin
 class MTabBar(QTabBar):
     def __init__(self, size=None, parent=None):
         super(MTabBar, self).__init__(parent=parent)
