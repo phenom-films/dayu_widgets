@@ -8,8 +8,7 @@
 
 import functools
 
-from dayu_widgets.MButton import MButton
-from dayu_widgets.MButtonGroup import MButtonGroup
+from dayu_widgets.MButtonGroup import MPushButtonGroup
 from dayu_widgets.MCircle import MCircle
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
@@ -50,15 +49,14 @@ class MCircleTest(QWidget, MFieldMixin):
         self.bind('percent', circle, 'percent')
         self.bind('color', circle, 'color')
         lay3 = QHBoxLayout()
-        button_grp = MButtonGroup()
-        button1 = MButton(text='+')
-        button2 = MButton(text='-')
-        button1.clicked.connect(functools.partial(self.slot_change_alert, 10))
-        button2.clicked.connect(functools.partial(self.slot_change_alert, -10))
-        button_grp.add_button(button1)
-        button_grp.add_button(button2)
+        button_grp = MPushButtonGroup()
+        button_grp.set_button_list([
+            {'text': '+', 'clicked': functools.partial(self.slot_change_alert, 10)},
+            {'text': '-', 'clicked': functools.partial(self.slot_change_alert, -10)},
+        ])
         lay3.addWidget(circle)
         lay3.addWidget(button_grp)
+        lay3.addStretch()
         main_lay.addLayout(lay3)
 
         custom_widget = QWidget()
