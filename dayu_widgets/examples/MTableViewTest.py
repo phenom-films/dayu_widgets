@@ -9,9 +9,28 @@ from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MItemModel import MTableModel, MSortFilterModel
 from dayu_widgets.MLineEdit import MLineEdit
-from dayu_widgets.MTableView import MTableView
+from dayu_widgets.MItemView import MTableView
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.MMessage import MMessage
 from dayu_widgets.MTheme import global_theme
 from dayu_widgets.qt import *
+
+
+def h(*args):
+    cls = args[0]
+    widget = cls()
+    for i in args:
+        if isinstance(i, dict):
+            for attr, value in i.get('props', {}).items():
+                widget.setProperty(attr, value)
+            for signal, slot in i.get('on', {}).items():
+                widget.connect(widget, SIGNAL(signal), slot)
+        elif isinstance(i, list):
+            lay = QHBoxLayout()
+            for j in i:
+                lay.addWidget(j)
+            widget.setLayout(lay)
+    return widget
 
 
 class MTableViewTest(QWidget, MFieldMixin):
@@ -80,25 +99,25 @@ class MTableViewTest(QWidget, MFieldMixin):
 
         header_list = [
             {
-                'title': 'Name',
+                'label': 'Name',
                 'key': 'name',
                 'checkable': True,
                 'searchable': True,
                 'icon': 'user_fill.svg'
             }, {
-                'title': 'Sex',
+                'label': 'Sex',
                 'key': 'sex',
                 'searchable': True,
                 'selectable': True,
                 'icon': lambda x, y: ('{}.svg'.format(x.lower()), global_theme.get(x.lower()))
             }, {
-                'title': 'Age',
+                'label': 'Age',
                 'key': 'age',
                 'searchable': True,
                 'editable': True,
                 'display': lambda x, y: u'{} 岁'.format(x),
             }, {
-                'title': 'Address',
+                'label': 'Address',
                 'key': 'city',
                 'selectable': True,
                 'searchable': True,
@@ -107,7 +126,7 @@ class MTableViewTest(QWidget, MFieldMixin):
                 'display': lambda x, y: ' & '.join(x) if isinstance(x, list) else x,
                 'bg_color': lambda x, y: 'transparent' if x else global_theme.get('error')
             }, {
-                'title': 'Score',
+                'label': 'Score',
                 'key': 'score',
                 'searchable': True,
                 'editable': True,
@@ -115,7 +134,7 @@ class MTableViewTest(QWidget, MFieldMixin):
                 'color': '#fff'
             },
             {
-                'title': 'Score Copy',
+                'label': 'Score Copy',
                 'key': 'score',
                 'searchable': True,
                 'color': score_color,
