@@ -9,7 +9,7 @@
 from dayu_widgets import STATIC_FOLDERS
 from dayu_widgets.MTheme import global_theme
 from dayu_widgets.mixin import cursor_mixin
-from qt import *
+from dayu_widgets.qt import *
 
 qss = '''
 QRadioButton {{
