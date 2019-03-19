@@ -8,6 +8,7 @@
 
 from dayu_widgets import STATIC_FOLDERS
 from dayu_widgets.MTheme import global_theme
+from dayu_widgets.mixin import property_mixin, cursor_mixin
 from dayu_widgets.qt import *
 
 qss = '''
@@ -52,18 +53,15 @@ QToolButton[icon_only=true]:hover{{
     border:1px solid {primary_light};
 }}
 QToolButton[icon_only=true]:checked{{
-    border: 1px solid {primary};
+    border:1px solid {primary};
 }}
 
 QToolButton[combine=horizontal]{{
     border-radius: 0;
-    border: 1px solid {border};
 }}
 QToolButton[combine=vertical]{{
     border-radius: 0;
-    border: 1px solid {border};
 }}
-
 
 
 QToolButton[button_size=default]{{
@@ -121,31 +119,26 @@ qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/'))
 
 
 @property_mixin
+@cursor_mixin
 class MToolButton(QToolButton):
-    '''
-    自定义 props:
-        type:
-        button_size:
-    '''
-
-    def __init__(self, icon, icon_checked=None, size=None, checkable=False, icon_only=True, parent=None):
+    def __init__(self, icon=None, icon_checked=None, size=None, checkable=False, icon_only=True, parent=None):
         super(MToolButton, self).__init__(parent=parent)
-        self._icon = icon
-        self._icon_checked = icon_checked
-        if checkable:
-            self.setCheckable(checkable)
-            self.toggled.connect(self.slot_check_state_changed)
-            self.setChecked(True)
+        self.setProperty('icon_unchecked', icon)
+        self.setProperty('icon_checked', icon_checked or icon)
         self.setAutoRaise(True)
-        self.slot_check_state_changed(self.isChecked())
+        self.slot_polish_icon()
+        self.toggled.connect(self.slot_polish_icon)
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         self.setStyleSheet(qss)
+        self.setCheckable(checkable)
         self.set_button_size(size or MView.DefaultSize)
         self.set_icon_only(icon_only)
 
     @Slot(bool)
-    def slot_check_state_changed(self, checked):
-        self.setIcon(self._icon_checked if checked else self._icon)
+    def slot_polish_icon(self, checked=None):
+        icon = self.property('icon_checked') if self.isChecked() else self.property('icon_unchecked')
+        if icon:
+            self.setIcon(icon)
 
     def _set_icon_only(self, value):
         self.style().polish(self)
@@ -154,23 +147,7 @@ class MToolButton(QToolButton):
         self.setProperty('icon_only', value)
 
     def _set_button_size(self, value):
-        # config_size = global_theme.get(value + '_size')
-        # self.setIconSize(QSize(config_size * 0.7, config_size * 0.7))
-        # if self.toolButtonStyle() == Qt.ToolButtonIconOnly:
-        #     self.setFixedWidth(config_size)
         self.style().polish(self)
 
     def set_button_size(self, value):
         self.setProperty('button_size', value)
-
-    def minimumSizeHint(self):
-        num = global_theme.get(self.property('button_size') + '_size')
-        return QSize(num, num)
-
-    def enterEvent(self, *args, **kwargs):
-        QApplication.setOverrideCursor(Qt.PointingHandCursor if self.isEnabled() else Qt.ForbiddenCursor)
-        return super(MToolButton, self).enterEvent(*args, **kwargs)
-
-    def leaveEvent(self, *args, **kwargs):
-        QApplication.restoreOverrideCursor()
-        return super(MToolButton, self).leaveEvent(*args, **kwargs)
