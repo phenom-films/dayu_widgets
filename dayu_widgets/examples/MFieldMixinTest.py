@@ -1,8 +1,17 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+###################################################################
+# Author: Mu yanru
+# Date  : 2019.3
+# Email : muyanru345@163.com
+###################################################################
+
 from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.qt import *
-from dayu_widgets.MLineEdit import MLineEdit
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MButton import MButton
+from dayu_widgets.MLineEdit import MLineEdit
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.qt import *
+
 
 class MFieldMixinTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
@@ -18,23 +27,23 @@ class MFieldMixinTest(QWidget, MFieldMixin):
         name2_label = MLabel()
         email_label = MLabel(link=True)
         thumbnail_label = MLabel()
-        enable_button = MButton(type=MButton.PrimaryType)
+        enable_button = MPushButton(type=MPushButton.PrimaryType)
         self.bind('my_name', name2_label, 'text')
         self.bind('email', email_label, 'text')
         self.bind('is_enable', enable_button, 'enabled')
         self.bind('thumbnail_pix_map', thumbnail_label, 'pixmap')
         self.bind('str_enable', enable_button, 'text')
 
-        button = MButton(text='Change Data', type=MButton.PrimaryType)
+        button = MPushButton(text='Change Data', type=MPushButton.PrimaryType)
         button.clicked.connect(self.slot_change_data)
         main_lay = QGridLayout()
-        main_lay.addWidget(MLabel('Avatar:'), 0,0)
+        main_lay.addWidget(MLabel('Avatar:'), 0, 0)
         main_lay.addWidget(thumbnail_label, 0, 1)
-        main_lay.addWidget(MLabel('Name:'), 1,0)
+        main_lay.addWidget(MLabel('Name:'), 1, 0)
         main_lay.addWidget(self.bind('my_name', MLineEdit(), 'text', signal='textEdited'), 1, 1)
-        main_lay.addWidget(MLabel('Email:'), 2,0)
+        main_lay.addWidget(MLabel('Email:'), 2, 0)
         main_lay.addWidget(email_label, 2, 1)
-        main_lay.addWidget(MLabel('Enabled:'), 3,0)
+        main_lay.addWidget(MLabel('Enabled:'), 3, 0)
         main_lay.addWidget(enable_button, 3, 1)
         # for index, i in enumerate(self.field('my_name')):
         #     main_lay.addRow('name{}:'.format(index), self.bind('my_name', QLabel(), 'text', index=index))
