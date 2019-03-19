@@ -14,7 +14,6 @@ from singledispatch import singledispatch
 
 from qt import *
 
-
 MenuEvent = collections.namedtuple('MenuEvent', ['view', 'selection', 'extra'])
 
 
@@ -40,18 +39,18 @@ def from_list_to_nested_dict(input, sep='/'):
     return result
 
 
-def dayu_css(css_content=None):
-    def wrapper1(func):
-        def new_init(*args, **kwargs):
-            result = func(*args, **kwargs)
-            instance = args[0]
-            instance.setStyleSheet(css_content if css_content else default_qss)
-            return result
-
-        return new_init
-
-    return wrapper1
-
+# def dayu_css(css_content=None):
+#     def wrapper1(func):
+#         def new_init(*args, **kwargs):
+#             result = func(*args, **kwargs)
+#             instance = args[0]
+#             instance.setStyleSheet(css_content if css_content else default_qss)
+#             return result
+#
+#         return new_init
+#
+#     return wrapper1
+#
 
 def show_loading():
     def wrapper1(waste_time_func):
@@ -220,6 +219,17 @@ def _(data_obj):
 def _(path):
     return MIcon(path)
 
+
 @icon_formatter.register(tuple)
 def _(path):
     return MIcon(*path)
+
+
+def dump_structure(obj, spaceCount):
+    print "{0}{1} : {2}".format(
+        " " * spaceCount,
+        obj.metaObject().className(),
+        obj.objectName())
+
+    for child in obj.children():
+        dump_structure(child, spaceCount + 4)
