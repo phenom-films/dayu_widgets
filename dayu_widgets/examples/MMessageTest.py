@@ -6,14 +6,15 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import *
-from dayu_widgets.MButton import MButton
+import functools
+
+from dayu_widgets.MButtonGroup import MPushButtonGroup
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MMessage import MMessage
-from dayu_widgets.MButtonGroup import MButtonGroup
 from dayu_widgets.MLabel import MLabel
-import functools
+from dayu_widgets.MMessage import MMessage
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.qt import *
 
 
 class MMessageTest(QWidget, MFieldMixin):
@@ -22,10 +23,10 @@ class MMessageTest(QWidget, MFieldMixin):
         self._init_ui()
 
     def _init_ui(self):
-        button3 = MButton(text='Normal Message', type=MButton.PrimaryType)
-        button4 = MButton(text='Success Message', type=MButton.SuccessType)
-        button5 = MButton(text='Warning Message', type=MButton.WarningType)
-        button6 = MButton(text='Error Message', type=MButton.ErrorType)
+        button3 = MPushButton(text='Normal Message', type=MPushButton.PrimaryType)
+        button4 = MPushButton(text='Success Message', type=MPushButton.SuccessType)
+        button5 = MPushButton(text='Warning Message', type=MPushButton.WarningType)
+        button6 = MPushButton(text='Error Message', type=MPushButton.ErrorType)
         button3.clicked.connect(functools.partial(self.slot_show_message, MMessage.info, {'content': u'这是一条普通提示'}))
         button4.clicked.connect(functools.partial(self.slot_show_message, MMessage.success, {'content': u'恭喜你，成功啦！'}))
         button5.clicked.connect(functools.partial(self.slot_show_message, MMessage.warning, {'content': u'我警告你哦！'}))
@@ -37,12 +38,12 @@ class MMessageTest(QWidget, MFieldMixin):
         sub_lay1.addWidget(button5)
         sub_lay1.addWidget(button6)
 
-        button_duration = MButton(text='show 5s Message')
+        button_duration = MPushButton(text='show 5s Message')
         button_duration.clicked.connect(functools.partial(self.slot_show_message, MMessage.info,
                                                           {'content': u'该条消息将显示5秒后关闭',
                                                            'duration': 5
                                                            }))
-        button_closable = MButton(text='closable Message')
+        button_closable = MPushButton(text='closable Message')
         button_closable.clicked.connect(functools.partial(self.slot_show_message, MMessage.info,
                                                           {'content': u'可手动关闭提示',
                                                            'closable': True
@@ -59,16 +60,17 @@ class MMessageTest(QWidget, MFieldMixin):
         main_lay.addWidget(button_closable)
         main_lay.addWidget(MLabel(u'设置是否可关闭，config中设置closable 为 True'))
 
-        button_grp = MButtonGroup()
-        for text, func, arg in [
-            ('set duration to 1s', MMessage.config, {'duration': 1}),
-            ('set duration to 10s', MMessage.config, {'duration': 10}),
-            ('set top to 5', MMessage.config, {'top': 5}),
-            ('set top to 50', MMessage.config, {'top': 50}),
-        ]:
-            button = MButton(text=text)
-            button.clicked.connect(functools.partial(self.slot_set_config, func, arg))
-            button_grp.add_button(button)
+        button_grp = MPushButtonGroup()
+        button_grp.set_button_list([
+            {'text': 'set duration to 1s',
+             'clicked': functools.partial(self.slot_set_config, MMessage.config, {'duration': 1})},
+            {'text': 'set duration to 10s',
+             'clicked': functools.partial(self.slot_set_config, MMessage.config, {'duration': 10})},
+            {'text': 'set top to 5',
+             'clicked': functools.partial(self.slot_set_config, MMessage.config, {'top': 5})},
+            {'text': 'set top to 50',
+             'clicked': functools.partial(self.slot_set_config, MMessage.config, {'top': 50})},
+        ])
 
         main_lay.addWidget(MDivider('set global setting'))
         main_lay.addWidget(button_grp)

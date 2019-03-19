@@ -8,8 +8,9 @@
 
 from dayu_widgets.MAvatar import MAvatar
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
 
 qss = '''
@@ -43,7 +44,8 @@ class MMessage(QWidget):
     def __init__(self, config, type=None, parent=None):
         super(MMessage, self).__init__(parent)
         self.setObjectName('message')
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.Dialog | Qt.WA_TranslucentBackground)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.Dialog | Qt.WA_TranslucentBackground | Qt.WA_DeleteOnClose)
+        self.setAttribute(Qt.WA_StyledBackground)
 
         if isinstance(config, basestring):
             config = {'content': config}
@@ -53,8 +55,7 @@ class MMessage(QWidget):
         self._content_label = MLabel(parent=self)
         self._content_label.setText(config.get('content'))
 
-        self._close_button = MPushButton(size=MView.TinySize, icon=MIcon('close_line.svg'), type=MPushButton.IconType,
-                                         parent=self)
+        self._close_button = MToolButton(size=MView.TinySize, icon=MIcon('close_line.svg'), parent=self)
         self._close_button.clicked.connect(self.close)
         self._close_button.setVisible(config.get('closable', False))
 
@@ -84,7 +85,12 @@ class MMessage(QWidget):
         msg = MMessage(config=config, type=type, parent=parent)
         parent_geo = parent.geometry()
         pos = parent_geo.topLeft() if parent.parent() is None else parent.mapToGlobal(parent_geo.topLeft())
-        msg.move(pos.x() + parent_geo.width() / 2 - 100, pos.y() + cls.default_config.get('top'))
+        offset = 0
+        for child in parent.children():
+            if isinstance(child, MMessage) and child.isVisible():
+                offset = max(offset, child.y())
+        base = pos.y() + cls.default_config.get('top')
+        msg.move(pos.x() + parent_geo.width() / 2 - 100, (offset + 50) if offset else base)
         msg.show()
 
     @classmethod
