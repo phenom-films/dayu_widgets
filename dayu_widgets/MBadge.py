@@ -62,12 +62,13 @@ class MBadge(QWidget):
         self.setLayout(self._main_lay)
         self.setAttribute(Qt.WA_StyledBackground)
         self.setStyleSheet(qss)
-        if text is not None:
-            self.set_text(text)
-        if count is not None:
-            self.set_count(count)
-
-        self.set_dot(dot)
+        if dot:
+            self.set_dot(dot)
+        else:
+            if text is not None:
+                self.set_text(text)
+            if count is not None:
+                self.set_count(count)
 
     def _set_text(self, value):
         if not self._badge_button.property('dot'):

@@ -50,6 +50,7 @@ class MBadgeTest(QWidget, MFieldMixin):
         sub_lay1.addWidget(badge_1)
         sub_lay1.addWidget(badge_2)
         sub_lay1.addWidget(badge_3)
+        sub_lay1.addStretch()
 
         sub_lay2 = QHBoxLayout()
         sub_lay2.addWidget(badge_hot)
