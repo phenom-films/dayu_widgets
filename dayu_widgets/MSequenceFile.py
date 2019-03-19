@@ -6,12 +6,15 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from MLabel import MLabel
-from MLineEdit import MLineEdit
-from MFieldMixin import MFieldMixin
-from qt import *
 import functools
+
 from dayu_path import DayuPath
+from dayu_widgets.MFieldMixin import MFieldMixin
+from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MLineEdit import MLineEdit
+from dayu_widgets.MCheckBox import MCheckBox
+from dayu_widgets.mixin import property_mixin
+from dayu_widgets.qt import *
 
 
 @property_mixin
@@ -29,7 +32,7 @@ class MSequenceFile(QWidget, MFieldMixin):
         size = size or MView.SmallSize
         self._file_label = MLineEdit(size=size)
         self._file_label.setReadOnly(True)
-        self._is_sequence_check_box = QCheckBox('Sequence')
+        self._is_sequence_check_box = MCheckBox('Sequence')
         self._is_sequence_check_box.toggled.connect(functools.partial(self.setProperty, 'sequence'))
         self._is_sequence_check_box.toggled.connect(self.sig_is_sequence_changed)
 
