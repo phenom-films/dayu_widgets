@@ -8,6 +8,7 @@
 
 from dayu_widgets import STATIC_FOLDERS
 from dayu_widgets.MTheme import global_theme
+from dayu_widgets.mixin import cursor_mixin
 from qt import *
 
 qss = '''
@@ -49,16 +50,8 @@ QRadioButton::indicator:checked:disabled{{
 qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
 
 
-@property_mixin
-class MRadio(QRadioButton):
+@cursor_mixin
+class MRadioButton(QRadioButton):
     def __init__(self, text='', parent=None):
-        super(MRadio, self).__init__(text=text, parent=parent)
+        super(MRadioButton, self).__init__(text=text, parent=parent)
         self.setStyleSheet(qss)
-
-    def enterEvent(self, *args, **kwargs):
-        QApplication.setOverrideCursor(Qt.PointingHandCursor if self.isEnabled() else Qt.ForbiddenCursor)
-        return super(MRadio, self).enterEvent(*args, **kwargs)
-
-    def leaveEvent(self, *args, **kwargs):
-        QApplication.restoreOverrideCursor()
-        return super(MRadio, self).leaveEvent(*args, **kwargs)
