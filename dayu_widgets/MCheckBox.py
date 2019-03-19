@@ -8,6 +8,7 @@
 
 from dayu_widgets import STATIC_FOLDERS
 from dayu_widgets.MTheme import global_theme
+from dayu_widgets.mixin import property_mixin, cursor_mixin
 from dayu_widgets.qt import *
 
 qss = '''
@@ -59,15 +60,8 @@ qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/'))
 
 
 @property_mixin
+@cursor_mixin
 class MCheckBox(QCheckBox):
     def __init__(self, text='', parent=None):
         super(MCheckBox, self).__init__(text=text, parent=parent)
         self.setStyleSheet(qss)
-
-    def enterEvent(self, *args, **kwargs):
-        QApplication.setOverrideCursor(Qt.PointingHandCursor if self.isEnabled() else Qt.ForbiddenCursor)
-        return super(MCheckBox, self).enterEvent(*args, **kwargs)
-
-    def leaveEvent(self, *args, **kwargs):
-        QApplication.restoreOverrideCursor()
-        return super(MCheckBox, self).leaveEvent(*args, **kwargs)

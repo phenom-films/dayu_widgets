@@ -8,6 +8,7 @@
 import dayu_widgets.utils as utils
 from dayu_widgets import STATIC_FOLDERS
 from dayu_widgets.MTheme import global_theme
+from dayu_widgets.mixin import property_mixin, cursor_mixin
 from dayu_widgets.qt import *
 
 qss = '''
@@ -61,6 +62,7 @@ qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/'))
 
 
 @property_mixin
+@cursor_mixin
 class MComboBox(QComboBox):
     Separator = '/'
     sig_value_changed = Signal(list)
