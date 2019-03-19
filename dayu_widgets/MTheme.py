@@ -110,5 +110,9 @@ global_theme = {
     'large_size': 40,
     'default_size': 32,
     'small_size': 24,
-    'tiny_size': 18
+    'tiny_size': 18,
+    'large_icon_size': int(40 * 0.7),
+    'default_icon_size': int(32 * 0.7),
+    'small_icon_size': int(24 * 0.7),
+    'tiny_icon_size': int(18 * 0.7),
 }
