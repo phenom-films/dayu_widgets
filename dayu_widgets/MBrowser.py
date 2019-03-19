@@ -9,6 +9,7 @@
 from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.MTheme import global_theme
 from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
 
 qss = '''
@@ -183,7 +184,8 @@ class MClickBrowserFolderPushButton(MPushButton):
 
     def __init__(self, icon=None, text='', type=None, size=None, multiple=False, parent=None):
         super(MClickBrowserFolderPushButton, self).__init__(
-            icon=icon or MIcon('folder_fill.svg', '#555' if type is None or type == MPushButton.DefaultType else '#fff'),
+            icon=icon or MIcon('folder_fill.svg',
+                               '#555' if type is None or type == MPushButton.DefaultType else '#fff'),
             text=text, type=type, size=size, parent=parent)
         self.setProperty('multiple', multiple)
         self.setCursor(Qt.PointingHandCursor)
