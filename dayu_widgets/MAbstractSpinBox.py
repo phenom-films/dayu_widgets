@@ -2,16 +2,14 @@
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
-# Date  : 2019.3
+# Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.qt import *
-from dayu_widgets.MTheme import global_theme
-from dayu_widgets.qt import *
 from dayu_widgets import STATIC_FOLDERS
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.mixin import cursor_mixin
+from dayu_widgets.qt import *
 
 qss = '''
 #qt_calendar_calendarview {{
@@ -203,57 +201,41 @@ QAbstractSpinBox[line_size=small]::drop-down{{
 qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
 
 
-class MCalendarWidgetTest(QWidget):
-    def __init__(self, parent=None):
-        super(MCalendarWidgetTest, self).__init__(parent)
+@cursor_mixin
+class MSpinBox(QSpinBox):
+    def __init__(self, size=MView.DefaultSize, parent=None):
+        super(MSpinBox, self).__init__(parent=parent)
+        self.setProperty('line_size', size or MView.DefaultSize)
         self.setStyleSheet(qss)
-        self._init_ui()
-
-    def _init_ui(self):
-        main_lay = QVBoxLayout()
-        main_lay.addWidget(MDivider('different size'))
-        date_edit_large = QDateEdit()
-        date_edit_large.setProperty('line_size', MView.LargeSize)
-        date_edit_large.setCalendarPopup(True)
-        date_edit_default = QDateEdit()
-        date_edit_default.setProperty('line_size', MView.DefaultSize)
-        date_edit_default.setCalendarPopup(True)
-        date_edit_small = QDateEdit()
-        date_edit_small.setProperty('line_size', MView.SmallSize)
-        date_edit_small.setCalendarPopup(True)
-
-        time_edit_large = QTimeEdit()
-        time_edit_large.setProperty('line_size', MView.LargeSize)
-        time_edit_default = QTimeEdit()
-        time_edit_default.setProperty('line_size', MView.DefaultSize)
-        time_edit_small = QTimeEdit()
-        time_edit_small.setProperty('line_size', MView.SmallSize)
-
-        lay_date = QHBoxLayout()
-        lay_date.addWidget(date_edit_large)
-        lay_date.addWidget(date_edit_default)
-        lay_date.addWidget(date_edit_small)
-
-        lay_time = QHBoxLayout()
-        lay_time.addWidget(time_edit_large)
-        lay_time.addWidget(time_edit_default)
-        lay_time.addWidget(time_edit_small)
-
-        main_lay.addLayout(lay_date)
-        main_lay.addLayout(lay_time)
-
-        main_lay.addStretch()
-        self.setLayout(main_lay)
-
-    @Slot()
-    def slot_prefix_button_clicked(self):
-        print 'prefix button clicked'
 
 
-if __name__ == '__main__':
-    import sys
+@cursor_mixin
+class MDoubleSpinBox(QDoubleSpinBox):
+    def __init__(self, size=MView.DefaultSize, parent=None):
+        super(MDoubleSpinBox, self).__init__(parent=parent)
+        self.setProperty('line_size', size or MView.DefaultSize)
+        self.setStyleSheet(qss)
 
-    app = QApplication(sys.argv)
-    test = MCalendarWidgetTest()
-    test.show()
-    sys.exit(app.exec_())
+
+@cursor_mixin
+class MDateTimeEdit(QDateTimeEdit):
+    def __init__(self, size=MView.DefaultSize, parent=None):
+        super(MDateTimeEdit, self).__init__(parent=parent)
+        self.setProperty('line_size', size)
+        self.setStyleSheet(qss)
+
+
+@cursor_mixin
+class MDateEdit(QDateEdit):
+    def __init__(self, size=MView.DefaultSize, parent=None):
+        super(MDateEdit, self).__init__(parent=parent)
+        self.setProperty('line_size', size)
+        self.setStyleSheet(qss)
+
+
+@cursor_mixin
+class MTimeEdit(QTimeEdit):
+    def __init__(self, size=MView.DefaultSize, parent=None):
+        super(MTimeEdit, self).__init__(parent=parent)
+        self.setProperty('line_size', size)
+        self.setStyleSheet(qss)
