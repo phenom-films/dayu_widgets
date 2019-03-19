@@ -6,10 +6,10 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import *
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MButton import MButton
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.qt import *
 
 
 class MDividerTest(QWidget, MFieldMixin):
@@ -41,7 +41,7 @@ class MDividerTest(QWidget, MFieldMixin):
         self.register_field('count', 0)
         self.register_field('show_text', self.computed_text)
         divider = MDivider(alignment=Qt.AlignCenter)
-        button = MButton(type=MButton.PrimaryType, text='Change Divider text')
+        button = MPushButton(type=MPushButton.PrimaryType, text='Change Divider text')
         button.clicked.connect(self.slot_change_divider_text)
         self.bind('show_text', divider, 'text')
 

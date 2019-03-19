@@ -6,12 +6,12 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import *
-from dayu_widgets.MButton import MButton
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MMenu import MMenu
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
+from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MMenu import MMenu
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.qt import *
 
 
 class MMenuTest(QWidget, MFieldMixin):
@@ -22,7 +22,7 @@ class MMenuTest(QWidget, MFieldMixin):
     def _init_ui(self):
         self.register_field('button1_selected', u'北京')
         self.register_field('button1_selected_text', lambda: self.field('button1_selected'))
-        button1 = MButton(text='Normal Menu', type=MButton.PrimaryType)
+        button1 = MPushButton(text='Normal Menu', type=MPushButton.PrimaryType)
         menu1 = MMenu()
         menu1.set_data([u'北京', u'上海', u'广州', u'深圳'])
         button1.setMenu(menu1)
@@ -34,7 +34,7 @@ class MMenuTest(QWidget, MFieldMixin):
 
         self.register_field('button2_selected', [u'北京'])
         self.register_field('button2_selected_text', lambda: ', '.join(self.field('button2_selected')))
-        button2 = MButton(text='Multi Select Menu', type=MButton.PrimaryType)
+        button2 = MPushButton(text='Multi Select Menu', type=MPushButton.PrimaryType)
         menu2 = MMenu(exclusive=False)
         menu2.set_data([u'北京', u'上海', u'广州', u'深圳'])
         button2.setMenu(menu2)
@@ -45,7 +45,7 @@ class MMenuTest(QWidget, MFieldMixin):
 
         self.register_field('button3_selected', '')
         self.register_field('button3_selected_text', lambda: self.field('button3_selected'))
-        button3 = MButton(text=u'回调函数获取选项', type=MButton.PrimaryType)
+        button3 = MPushButton(text=u'回调函数获取选项', type=MPushButton.PrimaryType)
         menu3 = MMenu()
         menu3.set_load_callback(lambda: [u'北京', u'上海', u'广州', u'深圳'])
         button3.setMenu(menu3)
@@ -56,7 +56,7 @@ class MMenuTest(QWidget, MFieldMixin):
 
         self.register_field('button4_selected', '')
         self.register_field('button4_selected_text', lambda: ' / '.join(self.field('button4_selected')))
-        button4 = MButton(text=u'级联选择', type=MButton.PrimaryType)
+        button4 = MPushButton(text=u'级联选择', type=MPushButton.PrimaryType)
         menu4 = MMenu(cascader=True)
         menu4.set_data([u'北京/故宫', u'北京/天坛', u'北京/王府井', u'江苏/南京/夫子庙', u'江苏/苏州/拙政园', u'江苏/苏州/狮子林'])
         button4.setMenu(menu4)

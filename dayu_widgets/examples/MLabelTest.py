@@ -6,11 +6,11 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import *
-from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MButton import MButton
+from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.qt import *
 
 
 class MLabelTest(QWidget, MFieldMixin):
@@ -44,9 +44,9 @@ class MLabelTest(QWidget, MFieldMixin):
         self.bind('show_text', data_bind_label, 'text')
         self.bind('is_link', data_bind_label, 'link')
 
-        button = MButton(text='Random An Animal', type=MButton.PrimaryType)
+        button = MPushButton(text='Random An Animal', type=MPushButton.PrimaryType)
         button.clicked.connect(self.slot_change_text)
-        link_button = MButton(text='Link', type=MButton.PrimaryType)
+        link_button = MPushButton(text='Link', type=MPushButton.PrimaryType)
         link_button.clicked.connect(self.slot_link_text)
 
         lay_elide = QVBoxLayout()
