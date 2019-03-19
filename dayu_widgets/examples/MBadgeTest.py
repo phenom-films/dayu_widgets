@@ -6,17 +6,16 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import *
-from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.MAbstractSpinBox import MSpinBox
 from dayu_widgets.MAvatar import MAvatar
 from dayu_widgets.MBadge import MBadge
-from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MComboBox import MComboBox
-from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets.MSpinBox import MSpinBox
+from dayu_widgets.MDivider import MDivider
+from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MMenu import MMenu
-from dayu_widgets.MFieldMixin import MFieldMixin
+from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.qt import *
 
 
 class MBadgeTest(QWidget, MFieldMixin):
