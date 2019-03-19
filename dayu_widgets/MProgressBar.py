@@ -8,6 +8,7 @@
 
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MTheme import global_theme
+from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
 
 qss = '''
@@ -43,8 +44,7 @@ QProgressBar[status=primary]::chunk {{
 class MProgress(QProgressBar, MFieldMixin):
     '''
     props:
-        status: int
-            signal: sig_checked_changed
+        status: str
 
     '''
     ErrorStatus = 'error'
