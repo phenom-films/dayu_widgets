@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+###################################################################
+# Author: Mu yanru
+# Date  : 2019.3
+# Email : muyanru345@163.com
+###################################################################
+
 try:
     from PySide2.QtCore import *
     from PySide2.QtGui import *
@@ -7,19 +15,7 @@ except:
     from PySide.QtGui import *
     from PySide.QtWebKit import *
     from PySide.QtSvg import *
-
-
-def property_mixin(cls):
-    def event(self, event):
-        if event.type() == QEvent.DynamicPropertyChange:
-            p = event.propertyName()
-            if hasattr(self, '_set_{}'.format(p)):
-                callback = getattr(self, '_set_{}'.format(p))
-                callback(self.property(str(p)))
-        return super(cls, self).event(event)
-
-    setattr(cls, 'event', event)
-    return cls
+import os
 
 
 class MView(object):
@@ -57,11 +53,10 @@ class MCacheDict(object):
 
     def __call__(self, path, color=None):
         assert isinstance(path, basestring)
-        import os
         from dayu_widgets import STATIC_FOLDERS
         full_path = next((os.path.join(prefix, path) for prefix in [''] + STATIC_FOLDERS if
                           os.path.isfile(os.path.join(prefix, path))), path)
-        key = unicode(full_path.lower() + (color or ''))
+        key = u'{}{}'.format(full_path.lower(), color or '')
         pix_map = self._cache_pix_dict.get(key, None)
         if pix_map is None:
             if full_path.endswith('svg'):
