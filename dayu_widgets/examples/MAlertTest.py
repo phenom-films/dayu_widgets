@@ -6,14 +6,15 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import *
-from dayu_widgets.MPushButton import MPushButton
+import functools
+
+from dayu_widgets.MAlert import MAlert
+from dayu_widgets.MButtonGroup import MPushButtonGroup
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MAlert import MAlert
-from dayu_widgets.MButtonGroup import MButtonGroup
 from dayu_widgets.MLabel import MLabel
-import functools
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.qt import *
 
 
 class MAlertTest(QWidget, MFieldMixin):
@@ -39,17 +40,16 @@ class MAlertTest(QWidget, MFieldMixin):
 
         self.bind('msg', alert, 'text')
         self.bind('msg_type', alert, 'type')
-        button_grp = MButtonGroup()
-        for text, info, alert_type in [('error', 'password is wrong', MAlert.ErrorType),
-                                       ('success', 'login success', MAlert.InfoType),
-                                       ('no more error', '', MAlert.InfoType)]:
-            button = MPushButton(text=text)
-            button.clicked.connect(functools.partial(self.slot_change_alert, info, alert_type))
-            button_grp.add_button(button)
+        button_grp = MPushButtonGroup()
+        button_grp.set_button_list([
+            {'text': 'error',
+             'clicked': functools.partial(self.slot_change_alert, 'password is wrong', MAlert.ErrorType)},
+            {'text': 'success', 'clicked': functools.partial(self.slot_change_alert, 'login success', MAlert.InfoType)},
+            {'text': 'no more error', 'clicked': functools.partial(self.slot_change_alert, '', MAlert.InfoType)}
+        ])
         main_lay.addWidget(alert)
         main_lay.addWidget(button_grp)
         main_lay.addStretch()
-
 
     def slot_change_alert(self, alert_text, alert_type):
         self.set_field('msg_type', alert_type)

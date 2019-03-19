@@ -6,12 +6,12 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import *
 from dayu_widgets.MCheckBox import MCheckBox
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MButton import MButton
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.qt import *
 
 
 class MCheckBoxTest(QWidget, MFieldMixin):
@@ -55,7 +55,7 @@ class MCheckBoxTest(QWidget, MFieldMixin):
 
         check_box_b = MCheckBox('Data Bind')
         label = MLabel()
-        button = MButton(text='Change State')
+        button = MPushButton(text='Change State')
         button.clicked.connect(lambda :self.set_field('checked', not self.field('checked')))
         self.register_field('checked', True)
         self.register_field('checked_text', lambda :'Yes!' if self.field('checked') else 'No!!')
