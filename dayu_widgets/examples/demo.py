@@ -1,16 +1,12 @@
 import importlib
-import os
 
-from dayu_widgets import MRadioGroup
-from dayu_widgets.qt import *
 from dayu_widgets import STATIC_FOLDERS
-from dayu_widgets.MTheme import global_theme
-from dayu_widgets.MSpinBox import qss
+from dayu_widgets.MButtonGroup import MToolButtonGroup
 from dayu_widgets.MDockWidget import MDockWidget
+from dayu_widgets.MTheme import global_theme
+from dayu_widgets.qt import *
 
-qss_1 = '''
-
-
+qss = '''
 QScrollBar:horizontal {{
     border: 0 solid {border};
     height: 9px;
@@ -115,9 +111,8 @@ QSplitter::handle:vertical {{
 }}
 
 '''.format(**global_theme)
-qss_1 = qss_1.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
+qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
 
-qss_1 += qss
 
 
 def get_test_widget():
@@ -138,31 +133,34 @@ class MDemo(QMainWindow):
     def __init__(self, parent=None):
         super(MDemo, self).__init__(parent)
         self.setWindowTitle('Dayu Widgets Demo')
-        self.setStyleSheet(qss_1)
+        self.setStyleSheet(qss)
         self._init_ui()
 
     def _init_ui(self):
         self.text_edit = QTextEdit()
         self.stacked_widget = QStackedWidget()
-        list_widget = MRadioGroup(type='button', orientation=Qt.Vertical, parent=self)
-        list_widget.sig_checked_changed.connect(self.slot_change_widget)
+
+        list_widget = MToolButtonGroup(orientation=Qt.Vertical, size=MView.SmallSize, icon_only=False, checkable=True,
+                                       parent=self)
+        list_widget.get_button_group().buttonClicked[int].connect(self.slot_change_widget)
         data_list = []
-        for name, cls, code in get_test_widget():
-            data_list.append({'text': name, 'date': code})
+        for index, (name, cls, code) in enumerate(get_test_widget()):
+            data_list.append({'text': name, 'data': code})
+            list_widget.add_button({'text': name, 'data': code}, index)
             widget = cls()
             widget.setProperty('code', code)
             self.stacked_widget.addWidget(widget)
-        list_widget.set_radio_list(data_list)
         list_widget.set_checked(0)
 
         left_widget = QWidget()
         left_lay = QVBoxLayout()
         left_widget.setLayout(left_lay)
         left_lay.addWidget(list_widget)
-        left_lay.addStretch()
+        scroll_area = QScrollArea()
+        scroll_area.setWidget(left_widget)
 
         test_widget = MDockWidget('Example List')
-        test_widget.setWidget(left_widget)
+        test_widget.setWidget(scroll_area)
         self.addDockWidget(Qt.LeftDockWidgetArea, test_widget)
 
         code_widget = MDockWidget('Example Code')
