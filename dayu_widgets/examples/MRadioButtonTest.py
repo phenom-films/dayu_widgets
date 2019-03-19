@@ -6,23 +6,23 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MButton import MButton
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MRadio import MRadio
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.MRadioButton import MRadioButton
 from dayu_widgets.qt import *
 
 
-class MRadioTest(QWidget, MFieldMixin):
+class MRadioButtonTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MRadioTest, self).__init__(parent)
+        super(MRadioButtonTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
-        check_box_1 = MRadio('Maya')
-        check_box_2 = MRadio('Nuke')
-        check_box_3 = MRadio('Houdini')
+        check_box_1 = MRadioButton('Maya')
+        check_box_2 = MRadioButton('Nuke')
+        check_box_3 = MRadioButton('Houdini')
         check_box_2.setChecked(True)
         widget_1 = QWidget()
         lay_1 = QHBoxLayout()
@@ -31,11 +31,11 @@ class MRadioTest(QWidget, MFieldMixin):
         lay_1.addWidget(check_box_3)
         widget_1.setLayout(lay_1)
 
-        check_box_icon_1 = MRadio('Folder')
+        check_box_icon_1 = MRadioButton('Folder')
         check_box_icon_1.setIcon(MIcon('folder_fill.svg'))
-        check_box_icon_2 = MRadio('Media')
+        check_box_icon_2 = MRadioButton('Media')
         check_box_icon_2.setIcon(MIcon('media_fill.svg'))
-        check_box_icon_3 = MRadio('User')
+        check_box_icon_3 = MRadioButton('User')
         check_box_icon_3.setIcon(MIcon('user_fill.svg'))
         check_box_icon_3.setEnabled(False)
         check_box_icon_2.setChecked(True)
@@ -46,7 +46,7 @@ class MRadioTest(QWidget, MFieldMixin):
         lay_2.addWidget(check_box_icon_3)
         widget_2.setLayout(lay_2)
 
-        check_box_single = MRadio(u'支付宝')
+        check_box_single = MRadioButton(u'支付宝')
         check_box_single.setChecked(True)
         check_box_single.setEnabled(False)
         widget_3 = QWidget()
@@ -54,9 +54,9 @@ class MRadioTest(QWidget, MFieldMixin):
         lay_3.addWidget(check_box_single)
         widget_3.setLayout(lay_3)
 
-        check_box_b = MRadio('Data Bind')
+        check_box_b = MRadioButton('Data Bind')
         label = MLabel()
-        button = MButton(text='Change State')
+        button = MPushButton(text='Change State')
         button.clicked.connect(lambda: self.set_field('checked', not self.field('checked')))
         self.register_field('checked', True)
         self.register_field('checked_text', lambda: 'Yes!' if self.field('checked') else 'No!!')
@@ -81,6 +81,6 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MRadioTest()
+    test = MRadioButtonTest()
     test.show()
     sys.exit(app.exec_())
