@@ -6,12 +6,10 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import *
-from dayu_widgets.MSwitch import MSwitch
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MButton import MButton
+from dayu_widgets.MSwitch import MSwitch
+from dayu_widgets.qt import *
 
 
 class MSwitchTest(QWidget, MFieldMixin):
@@ -21,7 +19,7 @@ class MSwitchTest(QWidget, MFieldMixin):
 
     def _init_ui(self):
         check_box_1 = MSwitch()
-        check_box_1.set_checked(True)
+        check_box_1.setChecked(True)
         check_box_2 = MSwitch()
         check_box_3 = MSwitch()
         check_box_3.setEnabled(False)
@@ -31,7 +29,7 @@ class MSwitchTest(QWidget, MFieldMixin):
         lay.addWidget(check_box_3)
 
         check_box_large = MSwitch(size=MView.LargeSize)
-        check_box_large.set_checked(True)
+        check_box_large.setChecked(True)
         check_box_default = MSwitch()
         check_box_small = MSwitch(size=MView.SmallSize)
         lay2 = QHBoxLayout()
@@ -49,7 +47,6 @@ class MSwitchTest(QWidget, MFieldMixin):
         # self.register_field('checked_text', lambda :'Yes!' if self.field('checked') else 'No!!')
         # self.bind('checked', check_box_b, 'checked', signal='stateChanged')
         # self.bind('checked_text', label, 'text')
-
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('Basic'))

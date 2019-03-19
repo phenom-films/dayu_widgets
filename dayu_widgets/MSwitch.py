@@ -8,6 +8,7 @@
 
 from dayu_widgets import STATIC_FOLDERS
 from dayu_widgets.MTheme import global_theme
+from dayu_widgets.mixin import property_mixin, cursor_mixin
 from dayu_widgets.qt import *
 
 qss = '''
@@ -51,45 +52,14 @@ qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/'))
 
 
 @property_mixin
-class MSwitch(QWidget):
-    '''
-    自定义 props:
-        checked
-    '''
-    sig_checked_changed = Signal(bool)
-
+@cursor_mixin
+class MSwitch(QRadioButton):
     def __init__(self, size=None, parent=None):
         super(MSwitch, self).__init__(parent)
         self.setProperty('line_size', size or MView.DefaultSize)
-        self.radio = QRadioButton()
-        self.radio.setProperty('line_size', size or MView.DefaultSize)
-        self.radio.toggled.connect(self.set_checked)
-        self.radio.toggled.connect(self.sig_checked_changed)
-        main_lay = QVBoxLayout()
-        main_lay.setContentsMargins(0, 0, 0, 0)
-        main_lay.addWidget(self.radio)
-        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        self.setLayout(main_lay)
+        self.setAutoExclusive(False)
         self.setStyleSheet(qss)
 
     def minimumSizeHint(self, *args, **kwargs):
         height = global_theme.get(self.property('line_size') + '_size') * 1.2
         return QSize(height, height / 2)
-
-    def _set_checked(self, value):
-        if value != self.radio.isChecked():
-            # 更新来自代码
-            self.radio.setChecked(value)
-            self.sig_checked_changed.emit(value)
-        self.style().polish(self)
-
-    def set_checked(self, flag):
-        self.setProperty('checked', flag)
-
-    def enterEvent(self, *args, **kwargs):
-        QApplication.setOverrideCursor(Qt.PointingHandCursor if self.isEnabled() else Qt.ForbiddenCursor)
-        return super(MSwitch, self).enterEvent(*args, **kwargs)
-
-    def leaveEvent(self, *args, **kwargs):
-        QApplication.restoreOverrideCursor()
-        return super(MSwitch, self).leaveEvent(*args, **kwargs)
