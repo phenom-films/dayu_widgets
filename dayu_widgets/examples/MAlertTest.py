@@ -13,10 +13,12 @@ from dayu_widgets.MButtonGroup import MPushButtonGroup
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MAlertTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MAlertTest, self).__init__(parent)
@@ -44,7 +46,8 @@ class MAlertTest(QWidget, MFieldMixin):
         button_grp.set_button_list([
             {'text': 'error',
              'clicked': functools.partial(self.slot_change_alert, 'password is wrong', MAlert.ErrorType)},
-            {'text': 'success', 'clicked': functools.partial(self.slot_change_alert, 'login success', MAlert.InfoType)},
+            {'text': 'success',
+             'clicked': functools.partial(self.slot_change_alert, 'login success', MAlert.SuccessType)},
             {'text': 'no more error', 'clicked': functools.partial(self.slot_change_alert, '', MAlert.InfoType)}
         ])
         main_lay.addWidget(alert)

@@ -10,36 +10,14 @@ import functools
 
 from dayu_widgets.MAvatar import MAvatar
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.mixin import property_mixin
+from dayu_widgets.mixin import property_mixin, theme_mixin
 from dayu_widgets.qt import *
-
-qss = '''
-QWidget#alert{{
-    border: 1px solid {border};
-    border-radius: 4px;
-}}
-QWidget#alert[type=info]{{
-    border-color: {primary_light};
-    background-color: {primary_opacity};
-}}
-QWidget#alert[type=success]{{
-    border-color: {success_light};
-    background-color: {success_opacity};
-}}
-QWidget#alert[type=warning]{{
-    border-color: {warning_light};
-    background-color: {warning_opacity};
-}}
-QWidget#alert[type=error]{{
-    border-color: {error_light};
-    background-color: {error_opacity};
-}}
-'''.format(**global_theme)
 
 
 @property_mixin
+@theme_mixin
 class MAlert(QWidget):
     '''
     自定义 props:
@@ -54,10 +32,9 @@ class MAlert(QWidget):
     def __init__(self, text='', type=None, closable=False, show_icon=True, parent=None, flags=0):
         super(MAlert, self).__init__(parent, flags)
         self.setAttribute(Qt.WA_StyledBackground)
-        self.setObjectName('alert')
-        self._icon_label = MAvatar(size=MView.TinySize)
+        self._icon_label = MAvatar(size=dayu_theme.size.tiny)
         self._content_label = MLabel()
-        self._close_button = MToolButton(size=MView.TinySize, icon=MIcon('close_line.svg'))
+        self._close_button = MToolButton(size=dayu_theme.size.tiny, icon=MIcon('close_line.svg'))
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
 
         self._main_lay = QHBoxLayout()
@@ -74,8 +51,6 @@ class MAlert(QWidget):
         self.set_type(type or MAlert.InfoType)
         self.set_text(text)
 
-        self.setStyleSheet(qss)
-
     def _set_text(self, value):
         self._content_label.setProperty('text', value)
         self.setVisible(bool(value))
@@ -85,8 +60,8 @@ class MAlert(QWidget):
 
     def _set_type(self, value):
         self._icon_label.set_image(
-            MPixmap('{}_fill.svg'.format(self.property('type')), global_theme.get(self.property('type'))))
-        self.style().polish(self)
+            MPixmap('{}_fill.svg'.format(self.property('type')), dayu_theme.color.get(self.property('type'))))
+        self.polish()
 
     def set_type(self, value):
         self.setProperty('type', value or MAlert.InfoType)
