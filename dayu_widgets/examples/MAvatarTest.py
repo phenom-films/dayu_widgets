@@ -7,13 +7,16 @@
 ###################################################################
 
 from dayu_widgets.MAvatar import MAvatar
-from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.MTheme import dayu_theme
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MAvatarTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MAvatarTest, self).__init__(parent)
@@ -23,12 +26,17 @@ class MAvatarTest(QWidget, MFieldMixin):
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('different size'))
 
-        size_list = [MView.LargeSize, MView.DefaultSize, MView.SmallSize, ]
+        size_list = [('Huge', dayu_theme.size.huge),
+                     ('Large', dayu_theme.size.large),
+                     ('Medium', dayu_theme.size.medium),
+                     ('Small', dayu_theme.size.small),
+                     ('Tiny', dayu_theme.size.tiny)]
+
         self.pix_map_list = ['', MPixmap('avatar.png'), MPixmap('app-maya.png'), MPixmap('app-nuke.png'),
                              MPixmap('app-houdini.png')]
-        for size in size_list:
+        for label, size in size_list:
             h_lay = QHBoxLayout()
-            h_lay.addWidget(MLabel(size))
+            h_lay.addWidget(MLabel(label))
             for image in self.pix_map_list:
                 h_lay.addWidget(MAvatar(size=size, image=image))
             h_lay.addStretch()
