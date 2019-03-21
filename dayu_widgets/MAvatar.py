@@ -23,7 +23,7 @@ class MAvatar(QLabel):
         super(MAvatar, self).__init__(parent, flags)
         self._default_pix = MPixmap('user_fill.svg')
         size = size or dayu_theme.default_size
-        self.setProperty('size', QSize(size, size))
+        self.setFixedSize(QSize(size, size))
         self.set_image(image or '')
 
     def _set_image(self, value):
