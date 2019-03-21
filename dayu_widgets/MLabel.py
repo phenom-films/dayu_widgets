@@ -6,66 +6,20 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MTheme import global_theme
-from dayu_widgets.mixin import property_mixin
+from dayu_widgets.mixin import property_mixin, theme_mixin
 from dayu_widgets.qt import *
-
-qss = '''
-QLabel{{
-    padding: 2px;
-}}
-QLabel[type=main_head]{{
-    {main_head_font}
-    {font_family}
-}}
-QLabel[type=sub_head]{{
-    {sub_head_font}
-    {font_family}
-}}
-QLabel[type=small_head]{{
-    {small_head_font}
-    {font_family}
-}}
-QLabel[type=text]{{
-    {text_font}
-    {font_family}
-}}
-QLabel[type=help]{{
-    {help_font}
-    {font_family}
-}}
-
-QLabel[link=true]{{
-    color: {primary};
-}}
-QLabel[link=true]:hover{{
-    color: {primary_light};
-}}
-QLabel[link=true]:pressed{{
-    color: {primary_dark};
-}}
-
-QLabel[error=true]{{
-    color: {error_light};
-}}
-
-QLabel:disabled{{
-    {disabled_font}
-    {font_family}
-}}
-'''.format(**global_theme)
 
 
 @property_mixin
+@theme_mixin
 class MLabel(QLabel):
     '''
     自定义 props:
-        type: enum
         link: bool
     '''
-    MainHeadType = 'main_head'
-    SubHeadType = 'sub_head'
-    SmallHeadType = 'small_head'
+    H1Type = 'h1'
+    H2Type = 'h2'
+    H3Type = 'h3'
     TextType = 'text'
     HelpType = 'help'
 
@@ -73,14 +27,13 @@ class MLabel(QLabel):
         super(MLabel, self).__init__(text, parent, flags)
         self.setProperty('type', type or MLabel.TextType)
         self.setTextInteractionFlags(Qt.TextBrowserInteraction | Qt.LinksAccessibleByMouse)
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.setStyleSheet(qss)
+        self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
         self.set_link(link)
         self.elide_mode = None
 
     def _set_link(self, value):
         self.setCursor(Qt.PointingHandCursor if value else Qt.ArrowCursor)
-        self.style().polish(self)
+        self.polish()
 
     def set_link(self, value):
         self.setProperty('link', value)
@@ -108,15 +61,15 @@ class MLabel(QLabel):
 
     @classmethod
     def h1(cls, text=''):
-        return cls(text=text, type=MLabel.MainHeadType)
+        return cls(text=text, type=MLabel.H1Type)
 
     @classmethod
     def h2(cls, text=''):
-        return cls(text=text, type=MLabel.SubHeadType)
+        return cls(text=text, type=MLabel.H2Type)
 
     @classmethod
     def h3(cls, text=''):
-        return cls(text=text, type=MLabel.SmallHeadType)
+        return cls(text=text, type=MLabel.H3Type)
 
     @classmethod
     def help(cls, text=''):
