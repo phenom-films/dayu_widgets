@@ -8,9 +8,12 @@
 
 from dayu_widgets.MAbstractSpinBox import MDateTimeEdit, MDoubleSpinBox, MSpinBox, MTimeEdit, MDateEdit
 from dayu_widgets.MDivider import MDivider
+from dayu_widgets.mixin import theme_mixin
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MAbstractSpinBoxTest(QWidget):
     def __init__(self, parent=None):
         super(MAbstractSpinBoxTest, self).__init__(parent)
@@ -19,23 +22,22 @@ class MAbstractSpinBoxTest(QWidget):
     def _init_ui(self):
         main_lay = QVBoxLayout()
         class_list = [MSpinBox, MDoubleSpinBox, MDateTimeEdit, MDateEdit, MTimeEdit]
+        size_list = [dayu_theme.size.huge, dayu_theme.size.large, dayu_theme.size.medium, dayu_theme.size.small,
+                     dayu_theme.size.tiny]
         for cls in class_list:
-            line_edit_large = cls(size=MView.LargeSize)
-            line_edit_default = cls()
-            line_edit_small = cls(size= MView.SmallSize)
             main_lay.addWidget(MDivider(cls.__name__))
             lay = QHBoxLayout()
-            lay.addWidget(line_edit_large)
-            lay.addWidget(line_edit_default)
-            lay.addWidget(line_edit_small)
+            for size in size_list:
+                line_edit_large = cls(size=size)
+                lay.addWidget(line_edit_large)
             main_lay.addLayout(lay)
 
         main_lay.addWidget(MDivider('Pop Calendar Widget'))
-        date_time_edit = MDateTimeEdit(size=MView.SmallSize)
+        date_time_edit = MDateTimeEdit(size=dayu_theme.size.small)
         date_time_edit.setCalendarPopup(True)
-        date_edit = MDateEdit(size=MView.SmallSize)
+        date_edit = MDateEdit(size=dayu_theme.size.small)
         date_edit.setCalendarPopup(True)
-        time_edit = MTimeEdit(size=MView.SmallSize)
+        time_edit = MTimeEdit(size=dayu_theme.size.small)
         time_edit.setCalendarPopup(True)
         date_lay = QHBoxLayout()
         date_lay.addWidget(date_time_edit)
