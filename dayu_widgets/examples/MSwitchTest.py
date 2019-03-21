@@ -8,10 +8,14 @@
 
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
+from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MSwitch import MSwitch
+from dayu_widgets.MTheme import dayu_theme
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MSwitchTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MSwitchTest, self).__init__(parent)
@@ -28,14 +32,17 @@ class MSwitchTest(QWidget, MFieldMixin):
         lay.addWidget(check_box_2)
         lay.addWidget(check_box_3)
 
-        check_box_large = MSwitch(size=MView.LargeSize)
-        check_box_large.setChecked(True)
-        check_box_default = MSwitch()
-        check_box_small = MSwitch(size=MView.SmallSize)
-        lay2 = QHBoxLayout()
-        lay2.addWidget(check_box_large)
-        lay2.addWidget(check_box_default)
-        lay2.addWidget(check_box_small)
+        size_lay = QVBoxLayout()
+        size_list = [('Huge', dayu_theme.size.huge),
+                     ('Large', dayu_theme.size.large),
+                     ('Medium', dayu_theme.size.medium),
+                     ('Small', dayu_theme.size.small),
+                     ('Tiny', dayu_theme.size.tiny)]
+        for label, size in size_list:
+            lay2 = QHBoxLayout()
+            lay2.addWidget(MLabel(label))
+            lay2.addWidget(MSwitch(size=size))
+            size_lay.addLayout(lay2)
         # check_box_icon_1 = MSwitch('Folder')
         # check_box_icon_1.setIcon(MIcon(''))
         #
@@ -51,8 +58,8 @@ class MSwitchTest(QWidget, MFieldMixin):
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('Basic'))
         main_lay.addLayout(lay)
-        main_lay.addWidget(MDivider('size'))
-        main_lay.addLayout(lay2)
+        main_lay.addWidget(MDivider('different size'))
+        main_lay.addLayout(size_lay)
         # main_lay.addWidget(check_box_icon_1)
         # main_lay.addWidget(MDivider('Data Bind'))
         # main_lay.addWidget(check_box_b)
