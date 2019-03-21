@@ -11,9 +11,11 @@ from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.MRadioButton import MRadioButton
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MRadioButtonTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MRadioButtonTest, self).__init__(parent)
@@ -31,12 +33,9 @@ class MRadioButtonTest(QWidget, MFieldMixin):
         lay_1.addWidget(check_box_3)
         widget_1.setLayout(lay_1)
 
-        check_box_icon_1 = MRadioButton('Folder')
-        check_box_icon_1.setIcon(MIcon('folder_fill.svg'))
-        check_box_icon_2 = MRadioButton('Media')
-        check_box_icon_2.setIcon(MIcon('media_fill.svg'))
-        check_box_icon_3 = MRadioButton('User')
-        check_box_icon_3.setIcon(MIcon('user_fill.svg'))
+        check_box_icon_1 = MRadioButton('Folder', icon=MIcon('folder_fill.svg'))
+        check_box_icon_2 = MRadioButton('Media', icon=MIcon('media_fill.svg'))
+        check_box_icon_3 = MRadioButton('User', icon=MIcon('user_fill.svg'))
         check_box_icon_3.setEnabled(False)
         check_box_icon_2.setChecked(True)
         widget_2 = QWidget()
