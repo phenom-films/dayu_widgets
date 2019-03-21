@@ -9,9 +9,12 @@
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.MTheme import dayu_theme
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MPushButtonTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MPushButtonTest, self).__init__(parent)
@@ -26,10 +29,18 @@ class MPushButtonTest(QWidget, MFieldMixin):
         button6 = MPushButton(text='Error', type=MPushButton.ErrorType)
         button7 = MPushButton(text='With Icon', icon=MIcon('trash_fill.svg'), type=MPushButton.DefaultType)
         button7.setCheckable(True)
-        button_large = MPushButton(text='Large', type=MPushButton.PrimaryType, size=MView.LargeSize)
-        button_default = MPushButton(text='Default', type=MPushButton.PrimaryType)
-        button_small = MPushButton(text='Small', type=MPushButton.WarningType, size=MView.SmallSize)
-        button_default.setDisabled(True)
+
+        sub_lay3 = QHBoxLayout()
+        size_list = [('Huge', dayu_theme.size.huge),
+                     ('Large', dayu_theme.size.large),
+                     ('Medium', dayu_theme.size.medium),
+                     ('Small', dayu_theme.size.small),
+                     ('Tiny', dayu_theme.size.tiny)]
+        for label, size in size_list:
+            sub_lay3.addWidget(MPushButton(text=label, type=MPushButton.PrimaryType, size=size))
+
+        disabled_button = MPushButton(text='Disabled')
+        disabled_button.setEnabled(False)
 
         self.register_field('button_type', MPushButton.PrimaryType)
         button_bind = MPushButton()
@@ -47,17 +58,15 @@ class MPushButtonTest(QWidget, MFieldMixin):
         sub_lay2.addWidget(button5)
         sub_lay2.addWidget(button6)
         sub_lay2.addWidget(button7)
-        sub_lay3 = QHBoxLayout()
-        sub_lay3.addWidget(button_large)
-        sub_lay3.addWidget(button_default)
-        sub_lay3.addWidget(button_small)
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('different type'))
         main_lay.addLayout(sub_lay1)
         main_lay.addLayout(sub_lay2)
-        main_lay.addWidget(MDivider('different button_size'))
+        main_lay.addWidget(MDivider('different size'))
         main_lay.addLayout(sub_lay3)
+        main_lay.addWidget(MDivider('disabled'))
+        main_lay.addWidget(disabled_button)
         main_lay.addWidget(MDivider('data bind: click button to change type'))
         main_lay.addWidget(button_bind)
         main_lay.addStretch()
