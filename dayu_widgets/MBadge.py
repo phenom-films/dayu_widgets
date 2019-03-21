@@ -2,45 +2,16 @@
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
-# Date  : 2019.2
+# Date  : 2019.3
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MTheme import global_theme
-from dayu_widgets.mixin import property_mixin
+from dayu_widgets.mixin import property_mixin, theme_mixin
 from dayu_widgets.qt import *
-
-qss = '''
-QWidget{{
-    margin: 0;
-}}
-QPushButton{{
-    font-size:10px;
-    min-height:16px;
-    max-height:16px;
-    min-width:16px;
-    border-radius: 8px;
-    background-color: red;
-    border: none;
-    color: white;
-    font-weight:bold;
-    margin: 0;
-}}
-
-QPushButton[dot=true]{{
-    min-height:8px;
-    max-height:8px;
-    min-width:8px;
-    max-width:8px;
-    border-radius: 4px;
-    padding: 0 0;
-}}
-
-'''.format(**global_theme)
 
 
 @property_mixin
+@theme_mixin
 class MBadge(QWidget):
     '''
     props:
@@ -61,7 +32,6 @@ class MBadge(QWidget):
         self._main_lay.addWidget(self._badge_button, 0, 0, Qt.AlignTop | Qt.AlignRight)
         self.setLayout(self._main_lay)
         self.setAttribute(Qt.WA_StyledBackground)
-        self.setStyleSheet(qss)
         if dot:
             self.set_dot(dot)
         else:

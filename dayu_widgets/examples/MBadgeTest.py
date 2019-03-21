@@ -14,10 +14,13 @@ from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MMenu import MMenu
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MBadgeTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MBadgeTest, self).__init__(parent)
@@ -25,16 +28,16 @@ class MBadgeTest(QWidget, MFieldMixin):
 
     def _init_ui(self):
         button = MToolButton(icon=MIcon('trash_line.svg'))
-        avatar = MAvatar(size=MView.LargeSize, image=MPixmap('avatar.png'))
-        button_alert = MToolButton(icon=MIcon('alert_fill.svg'), size=MView.LargeSize)
+        avatar = MAvatar(size=dayu_theme.size.large, image=MPixmap('avatar.png'))
+        button_alert = MToolButton(icon=MIcon('alert_fill.svg'), size=dayu_theme.size.large)
         badge_1 = MBadge(widget=button, dot=True)
         badge_2 = MBadge(widget=avatar, dot=True)
         badge_3 = MBadge(widget=button_alert)
-        button.clicked.connect(lambda :badge_1.set_dot(False))
+        button.clicked.connect(lambda: badge_1.set_dot(False))
 
         spin_box = MSpinBox()
         spin_box.setRange(0, 9999)
-        spin_box.valueChanged.connect(lambda x:badge_3.set_count(x))
+        spin_box.valueChanged.connect(lambda x: badge_3.set_count(x))
         spin_box.setValue(1)
 
         self.register_field('button1_selected', u'北京')
