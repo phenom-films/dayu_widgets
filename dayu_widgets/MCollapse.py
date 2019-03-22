@@ -8,59 +8,27 @@
 import functools
 
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.mixin import property_mixin
+from dayu_widgets.mixin import property_mixin, theme_mixin
 from dayu_widgets.qt import *
 
-qss = '''
-QWidget#section{{
-    border: 1px solid {border};
-    border-radius: 2px;
-    background-color: {background};
-}}
-QWidget#title {{
-    background-color: {background_dark};
-}}
-QWidget#content {{
-    background-color: white;
-}}
-QToolBox {{
-    border: 1px solid {border};
-    border-radius: 2px;
-    background-color: {background_dark};
-}}
-QToolBox::tab {{
-    background-color: {background_dark};
-    min-height: 80px;
-    max-height: 80px;
-    {text_font}
-    {font_family}
-}}
-
-'''.format(**global_theme)
-
 
 @property_mixin
-class MToolBox(QToolBox):
-    def __init__(self, parent=None):
-        super(MToolBox, self).__init__(parent)
-        self.setStyleSheet(qss)
-
-
-@property_mixin
+@theme_mixin
 class MSectionItem(QWidget):
     sig_context_menu = Signal(object)
 
     def __init__(self, title='', expand=False, widget=None, closeable=False, parent=None):
         super(MSectionItem, self).__init__(parent)
         self._central_widget = None
-        self.setObjectName('section')
         self.setAttribute(Qt.WA_StyledBackground)
         self.title_label = MLabel(parent=self)
         self.expand_icon = MLabel(parent=self)
         self.expand_icon.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        self._close_button = MToolButton(size=MView.TinySize, icon=MIcon('close_line.svg'))
+        self._close_button = MToolButton(type=MToolButton.IconOnlyType,
+                                         size=dayu_theme.size.tiny,
+                                         icon=MIcon('close_line.svg'))
         self._close_button.clicked.connect(self.close)
 
         header_lay = QHBoxLayout()
@@ -80,7 +48,6 @@ class MSectionItem(QWidget):
 
         self.content_widget = QWidget(parent=self)
         self.content_layout = QHBoxLayout()
-        # self.content_layout.setContentsMargins(16, 16, 16, 16)
         self.content_widget.setLayout(self.content_layout)
 
         self.main_lay = QVBoxLayout()
@@ -91,7 +58,6 @@ class MSectionItem(QWidget):
         self.setLayout(self.main_lay)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.setMouseTracking(True)
-        self.setStyleSheet(qss)
         self.set_title(title)
         self.set_closeable(closeable)
         if widget:
@@ -144,7 +110,7 @@ class MCollapse(QWidget):
     def _init_ui(self):
         self._main_layout = QVBoxLayout()
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        self._main_layout.setSpacing(0)
+        self._main_layout.setSpacing(1)
         self._main_layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self._main_layout)
 
