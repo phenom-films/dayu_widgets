@@ -12,16 +12,23 @@ from dayu_widgets.MBreadcrumb import MBreadcrumb
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MMessage import MMessage
-from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MTheme import dayu_theme
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MBreadcrumbTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MBreadcrumbTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
+        size_list = [('Huge', dayu_theme.size.huge),
+                     ('Large', dayu_theme.size.large),
+                     ('Medium', dayu_theme.size.medium),
+                     ('Small', dayu_theme.size.small),
+                     ('Tiny', dayu_theme.size.tiny)]
         entity_list = [
             {'text': 'Demo Project',
              'clicked': functools.partial(self.slot_show_message, MMessage.info, 'Go to "Demo Project"'),
@@ -39,21 +46,23 @@ class MBreadcrumbTest(QWidget, MFieldMixin):
         with_icon_eg = MBreadcrumb()
         with_icon_eg.set_item_list(entity_list)
 
-        small_eg = MBreadcrumb(size=MView.SmallSize)
-        small_eg.set_item_list(entity_list)
-
-        large_eg = MBreadcrumb(size=MView.LargeSize)
-        large_eg.set_item_list(entity_list)
+        separator_eg = MBreadcrumb(separator='=>')
+        separator_eg.set_item_list(entity_list)
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('no icon'))
         main_lay.addWidget(no_icon_eg)
         main_lay.addWidget(MDivider('with icon'))
         main_lay.addWidget(with_icon_eg)
-        main_lay.addWidget(MDivider('size=MView.SmallSize'))
-        main_lay.addWidget(small_eg)
-        main_lay.addWidget(MDivider('size=MView.LargeSize'))
-        main_lay.addWidget(large_eg)
+        main_lay.addWidget(MDivider('separator: =>'))
+        main_lay.addWidget(separator_eg)
+
+        for label, size in size_list:
+            bread = MBreadcrumb(size=size)
+            bread.set_item_list(entity_list)
+            main_lay.addWidget(MDivider(label))
+            main_lay.addWidget(bread)
+
         main_lay.addStretch()
         self.setLayout(main_lay)
 

@@ -6,31 +6,15 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import *
-
-from dayu_widgets.MTheme import global_theme
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.mixin import property_mixin
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
-qss = '''
-QToolButton[breadcrumb=true] {{
-    border: none;
-    background-color: transparent;
-    qproperty-toolButtonStyle: ToolButtonTextBesideIcon;
-}}
-QToolButton[breadcrumb=true]:hover{{
-    color: {primary_light};
-}}
-QToolButton[breadcrumb=true]:pressed{{
-    color: {primary_dark};
-}}
-'''.format(**global_theme)
 
-
+@theme_mixin
 class MBreadcrumb(QWidget):
-    def __init__(self, separator='/', size=MView.DefaultSize, parent=None):
+    def __init__(self, separator='/', size=None, parent=None):
         super(MBreadcrumb, self).__init__(parent)
         self._separator = separator
         self._main_layout = QHBoxLayout()
@@ -56,23 +40,20 @@ class MBreadcrumb(QWidget):
             self.add_item(data_dict, index)
 
     def add_item(self, data_dict, index=None):
-        button = MToolButton(icon_only=False, parent=self)
-        button.setProperty('button_size', self._size)
-        button.setProperty('breadcrumb', True)
         if isinstance(data_dict, basestring):
             data_dict = {'text': data_dict}
         elif isinstance(data_dict, QIcon):
             data_dict = {'icon': data_dict}
-        if data_dict.get('text'):
-            button.setProperty('text', data_dict.get('text'))
-        if data_dict.get('icon'):
-            button.setProperty('icon', data_dict.get('icon'))
+        button = MToolButton(text=data_dict.get('text'),
+                             icon=data_dict.get('icon'),
+                             type=MToolButton.BreadcrumbType,
+                             size=data_dict.get('size') or self._size,
+                             parent=self)
         if data_dict.get('tooltip'):
             button.setProperty('toolTip', data_dict.get('tooltip'))
         if data_dict.get('clicked'):
             button.clicked.connect(data_dict.get('clicked'))
 
-        button.setStyleSheet(u'{}\n{}'.format(button.styleSheet(), qss))
         if len(self._button_group.buttons()) != 0:
             separator = MLabel.help(self._separator)
             self._label_list.append(separator)

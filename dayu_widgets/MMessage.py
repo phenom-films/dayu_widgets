@@ -8,23 +8,14 @@
 
 from dayu_widgets.MAvatar import MAvatar
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.mixin import property_mixin
+from dayu_widgets.mixin import property_mixin, theme_mixin
 from dayu_widgets.qt import *
-
-qss = '''
-QWidget#message{{
-    padding: 2px;
-    border: 1px solid {border};
-    border-radius: 2px;
-    background-color: {background};
-}}
-
-'''.format(**global_theme)
 
 
 @property_mixin
+@theme_mixin
 class MMessage(QWidget):
     '''
     自定义 props:
@@ -50,12 +41,16 @@ class MMessage(QWidget):
         if isinstance(config, basestring):
             config = {'content': config}
 
-        self._icon_label = MAvatar(size=MView.TinySize)
+        self._icon_label = MAvatar(size=dayu_theme.size.tiny)
 
         self._content_label = MLabel(parent=self)
+        self._content_label.set_elide_mode(Qt.ElideMiddle)
         self._content_label.setText(config.get('content'))
 
-        self._close_button = MToolButton(size=MView.TinySize, icon=MIcon('close_line.svg'), parent=self)
+        self._close_button = MToolButton(type=MToolButton.IconOnlyType,
+                                         size=dayu_theme.size.tiny,
+                                         icon=MIcon('close_line.svg'),
+                                         parent=self)
         self._close_button.clicked.connect(self.close)
         self._close_button.setVisible(config.get('closable', False))
 
@@ -65,7 +60,7 @@ class MMessage(QWidget):
         self._main_lay.addStretch()
         self._main_lay.addWidget(self._close_button)
         self.setLayout(self._main_lay)
-        self.setStyleSheet(qss)
+
         self.set_type(type or MMessage.InfoType)
         timer = QTimer(self)
         timer.timeout.connect(self.close)
@@ -74,8 +69,8 @@ class MMessage(QWidget):
 
     def _set_type(self, value):
         self._icon_label.set_image(
-            MPixmap('{}_fill.svg'.format(self.property('type')), global_theme.get(self.property('type'))))
-        self.style().polish(self)
+            MPixmap('{}_fill.svg'.format(self.property('type')), dayu_theme.color.get(self.property('type'))))
+        self.polish()
 
     def set_type(self, value):
         self.setProperty('type', value or MMessage.InfoType)
