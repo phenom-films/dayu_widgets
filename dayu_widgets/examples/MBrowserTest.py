@@ -9,22 +9,26 @@
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
+from dayu_widgets.mixin import theme_mixin
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets.MBrowser import MClickBrowserFilePushButton,MClickBrowserFileToolButton,\
+from dayu_widgets.MBrowser import MClickBrowserFilePushButton, MClickBrowserFileToolButton, \
     MClickBrowserFolderPushButton, MClickBrowserFolderToolButton, \
     MDragFileButton, MDragFolderButton
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MBrowserTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MBrowserTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
-        browser_1 = MClickBrowserFilePushButton(size=MView.SmallSize, text='Browser File (Small)')
-        browser_2 = MClickBrowserFolderPushButton(size=MView.DefaultSize, text='Browser Folder (Default)')
-        browser_3 = MClickBrowserFilePushButton(size=MView.LargeSize, type=MPushButton.PrimaryType, text='Browser File (Large)')
+        browser_1 = MClickBrowserFilePushButton(size=dayu_theme.size.small, text='Browser File (Small)')
+        browser_2 = MClickBrowserFolderPushButton(size=dayu_theme.size.medium, text='Browser Folder (Default)')
+        browser_3 = MClickBrowserFilePushButton(size=dayu_theme.size.large, type=MPushButton.PrimaryType,
+                                                text='Browser File (Large)')
         lay_1 = QHBoxLayout()
         lay_1.addWidget(browser_1)
         lay_1.addWidget(browser_2)

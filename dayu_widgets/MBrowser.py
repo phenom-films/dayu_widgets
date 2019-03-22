@@ -7,29 +7,9 @@
 ###################################################################
 
 from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets.MTheme import global_theme
 from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.mixin import property_mixin
+from dayu_widgets.mixin import property_mixin, cursor_mixin, theme_mixin
 from dayu_widgets.qt import *
-
-qss = '''
-QToolButton{{
-    color: {content};
-    background-color: {background};
-    border: 2px dashed {border};
-    border-radius: 10px;
-    padding: 20px 40px;
-    {text_font};
-}}
-QToolButton:hover{{
-    color: #2d8cf0;
-    border-color: #5cadff;
-}}
-QToolButton:pressed{{
-    color: #2b85e4;
-    border-color: #2b85e4;
-}}
-'''.format(**global_theme)
 
 
 @Slot()
@@ -91,9 +71,9 @@ class MClickBrowserFileToolButton(MToolButton):
 
     def __init__(self, icon=None, size=None, multiple=False, parent=None):
         super(MClickBrowserFileToolButton, self).__init__(icon=icon or MIcon('cloud_fill.svg'),
+                                                          type=MToolButton.IconOnlyType,
                                                           size=size, parent=parent)
         self.setProperty('multiple', multiple)
-        self.setCursor(Qt.PointingHandCursor)
         self.clicked.connect(self.slot_browser_file)
         self.set_path('')
         self.setToolTip('Click to browser file')
@@ -106,6 +86,8 @@ class MClickBrowserFileToolButton(MToolButton):
 
 
 @property_mixin
+@theme_mixin
+@cursor_mixin
 class MDragFileButton(QToolButton):
     sig_file_changed = Signal(str)
     sig_files_changed = Signal(list)
@@ -122,7 +104,6 @@ class MDragFileButton(QToolButton):
         self.setIcon(icon or MIcon('cloud_fill.svg'))
         self.setIconSize(QSize(80, 80))
         self.clicked.connect(self.slot_browser_file)
-        self.setStyleSheet(qss)
         self.set_path('')
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.setToolTip('Click to browser file')
@@ -206,9 +187,10 @@ class MClickBrowserFolderToolButton(MToolButton):
     sig_folders_changed = Signal(list)
     slot_browser_folder = _slot_browser_folder
 
-    def __init__(self, icon=None, size=None, multiple=False, parent=None):
+    def __init__(self, multiple=False, icon=None, size=None, parent=None):
         super(MClickBrowserFolderToolButton, self).__init__(
-            icon=icon or MIcon('folder_fill.svg'), size=size, parent=parent)
+            icon=icon or MIcon('folder_fill.svg'), size=size,
+            type=MToolButton.IconOnlyType, parent=parent)
         self.setProperty('multiple', multiple)
         self.setCursor(Qt.PointingHandCursor)
         self.clicked.connect(self.slot_browser_folder)
@@ -223,6 +205,8 @@ class MClickBrowserFolderToolButton(MToolButton):
 
 
 @property_mixin
+@theme_mixin
+@cursor_mixin
 class MDragFolderButton(QToolButton):
     sig_folder_changed = Signal(str)
     sig_folders_changed = Signal(list)
@@ -238,7 +222,6 @@ class MDragFolderButton(QToolButton):
         self.setIcon(icon or MIcon('folder_fill.svg'))
         self.setIconSize(QSize(80, 80))
         self.clicked.connect(self.slot_browser_folder)
-        self.setStyleSheet(qss)
         self.set_path('')
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.setToolTip('Click to browser folder')
