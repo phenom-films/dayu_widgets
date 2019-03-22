@@ -6,41 +6,14 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
-
-qss = '''
-QFrame#alert{{
-    border: 1px solid {border};
-    border-radius: 4px;
-}}
-QFrame#alert[type=info]{{
-    border-color: {primary_light};
-    background-color: {primary_opacity};
-}}
-QFrame#alert[type=success]{{
-    border-color: {success_light};
-    background-color: {success_opacity};
-}}
-QFrame#alert[type=warning]{{
-    border-color: {warning_light};
-    background-color: {warning_opacity};
-}}
-QFrame#alert[type=error]{{
-    border-color: {error_light};
-    background-color: {error_opacity};
-}}
-'''.format(**global_theme)
 
 
 @property_mixin
 class MCircle(QWidget):
-    '''
-    自定义 props:
-        text:
-        type:
-    '''
     InfoType = 'info'
     SuccessType = 'success'
     WarningType = 'warning'
@@ -49,14 +22,13 @@ class MCircle(QWidget):
     def __init__(self, radius=120, color=None, percent=25, parent=None, flags=0):
         super(MCircle, self).__init__(parent, flags)
         self._main_lay = QHBoxLayout()
-        self._default_label = QLabel()
-        self._default_label.setStyleSheet('color:{}'.format(global_theme.get('content')))
+        self._default_label = MLabel.h3()
         self._default_label.setAlignment(Qt.AlignCenter)
         self._main_lay.addWidget(self._default_label)
         self.setLayout(self._main_lay)
         self.set_radius(radius)
         self.set_percent(percent)
-        self.set_color(color or global_theme.get('primary'))
+        self.set_color(color or dayu_theme.color.get('primary'))
 
     def set_widget(self, widget):
         self._default_label.setVisible(False)
@@ -93,11 +65,12 @@ class MCircle(QWidget):
         rect_background.setTopLeft(QPoint(pen_width, pen_width))
         pen_background = QPen()
         pen_background.setWidth(pen_width)
-        pen_background.setColor(global_theme.get('background_dark'))
+        pen_background.setColor(dayu_theme.color.get('background_dark'))
         pen_foreground = QPen()
         pen_foreground.setWidth(pen_width)
         pen_foreground.setColor(self.property('color'))
         pen_foreground.setCapStyle(Qt.RoundCap)
+
         painter = QPainter(self)
         painter.setRenderHints(QPainter.Antialiasing)
         painter.setPen(pen_background)

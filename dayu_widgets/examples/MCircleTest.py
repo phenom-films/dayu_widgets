@@ -13,10 +13,12 @@ from dayu_widgets.MCircle import MCircle
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MTheme import global_theme
+from dayu_widgets.mixin import theme_mixin
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MCircleTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MCircleTest, self).__init__(parent)
@@ -27,9 +29,9 @@ class MCircleTest(QWidget, MFieldMixin):
         self.setLayout(main_lay)
         main_lay.addWidget(MDivider('different color/percent'))
         lay1 = QHBoxLayout()
-        lay1.addWidget(MCircle(color=global_theme.get('primary'), percent=80, parent=self))
-        lay1.addWidget(MCircle(color=global_theme.get('success'), percent=100, parent=self))
-        lay1.addWidget(MCircle(color=global_theme.get('error'), percent=40, parent=self))
+        lay1.addWidget(MCircle(color=dayu_theme.color.get('primary'), percent=80, parent=self))
+        lay1.addWidget(MCircle(color=dayu_theme.color.get('success'), percent=100, parent=self))
+        lay1.addWidget(MCircle(color=dayu_theme.color.get('error'), percent=40, parent=self))
         main_lay.addLayout(lay1)
         main_lay.addWidget(MLabel(u'基础用法'))
         main_lay.addWidget(MDivider('different radius'))
@@ -64,7 +66,7 @@ class MCircleTest(QWidget, MFieldMixin):
         custom_layout.setContentsMargins(40, 40, 40, 40)
         custom_layout.addStretch()
         custom_widget.setLayout(custom_layout)
-        lab1 = MLabel(text='42,001,776', type=MLabel.MainHeadType)
+        lab1 = MLabel(text='42,001,776', type=MLabel.H1Type)
         lab2 = MLabel(text=u'消费人群规模', type=MLabel.TextType)
         lab3 = MLabel(text=u'总占人数 75%', type=MLabel.TextType)
         lab1.setAlignment(Qt.AlignCenter)
@@ -85,12 +87,12 @@ class MCircleTest(QWidget, MFieldMixin):
     def get_color(self):
         p = self.field('percent')
         if p < 30:
-            return global_theme.get('error')
+            return dayu_theme.color.get('error')
         if p < 60:
-            return global_theme.get('warning')
+            return dayu_theme.color.get('warning')
         if p < 100:
-            return global_theme.get('primary')
-        return global_theme.get('success')
+            return dayu_theme.color.get('primary')
+        return dayu_theme.color.get('success')
 
     def slot_change_alert(self, value):
         self.set_field('percent', max(0, min(self.field('percent') + value, 100)))
