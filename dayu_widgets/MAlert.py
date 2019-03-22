@@ -34,7 +34,8 @@ class MAlert(QWidget):
         self.setAttribute(Qt.WA_StyledBackground)
         self._icon_label = MAvatar(size=dayu_theme.size.tiny)
         self._content_label = MLabel()
-        self._close_button = MToolButton(size=dayu_theme.size.tiny, icon=MIcon('close_line.svg'))
+        self._close_button = MToolButton(type=MToolButton.IconOnlyType,
+                                         size=dayu_theme.size.tiny, icon=MIcon('close_line.svg'))
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
 
         self._main_lay = QHBoxLayout()
