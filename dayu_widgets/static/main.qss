@@ -1,0 +1,992 @@
+/* public*/
+
+*{{
+    {text};
+    font-family: {family};
+    background-color: {background};
+    color: {text_content};
+    selection-color: {text_select};
+    selection-background-color: {primary};
+}}
+
+*::drop-down {{
+    subcontrol-origin: content;
+    subcontrol-position: center right;
+    image: {down};
+}}
+*[dayu_size="{huge}"]::drop-down{{
+    right: 2px;
+    height: 26px;
+    width: 26px;
+}}
+*[dayu_size="{large}"]::drop-down{{
+    right: 2px;
+    height: 20px;
+    width: 20px;
+}}
+*[dayu_size="{medium}"]::drop-down{{
+    right: 2px;
+    height: 18px;
+    width: 18px;
+}}
+*[dayu_size="{small}"]::drop-down{{
+    right: 2px;
+    height: 14px;
+    width: 14px;
+}}
+*[dayu_size="{tiny}"]::drop-down{{
+    right: 2px;
+    height: 12px;
+    width: 12px;
+}}
+*[dayu_size="{huge}"]{{
+    font-size: {huge_font}px;
+    border-radius: {huge_radius}px;
+    min-height: {huge}px;
+    max-height: {huge}px;
+}}
+*[dayu_size="{large}"]{{
+    font-size: 16px;
+    font-size: {large_font}px;
+    border-radius: {large_radius}px;
+    min-height: {large}px;
+    max-height: {large}px;
+}}
+*[dayu_size="{medium}"]{{
+    font-size: {medium_font}px;
+    border-radius: {medium_radius}px;
+    min-height: {medium}px;
+    max-height: {medium}px;
+}}
+*[dayu_size="{small}"]{{
+    font-size: {small_font}px;
+    border-radius: {small_radius}px;
+    min-height: {small}px;
+    max-height: {small}px;
+}}
+*[dayu_size="{tiny}"]{{
+    font-size: {tiny_font}px;
+    border-radius: {tiny_radius}px;
+    min-height: {tiny}px;
+    max-height: {tiny}px;
+}}
+
+
+/* MCalendarWidget*/
+#qt_calendar_calendarview {{
+    background: {background};
+}}
+
+#qt_calendar_navigationbar {{
+    background: {background_selected};
+}}
+
+QCalenderWidget > QToolButton {{
+    icon-size: 18px, 18px;
+    width: 20px;
+    height: 20px;
+    background: {out_background};
+}}
+
+QToolButton#qt_calendar_prevmonth {{
+    qproperty-icon: {left};
+}}
+
+QToolButton#qt_calendar_nextmonth {{
+    qproperty-icon: {right};
+}}
+
+QToolButton#qt_calendar_monthbutton {{
+    padding-right: 20px;
+}}
+
+QToolButton#qt_calendar_yearbutton {{
+    padding-right: 20px;
+}}
+
+QToolButton#qt_calendar_monthbutton::menu-indicator {{
+    subcontrol-origin: padding;
+    subcontrol-position: center right;
+    right: 0;
+    width: 10px;
+}}
+
+QCalenderWidget > QHeaderView::section {{
+    background-color: {primary};
+}}
+
+
+/* QAbstractSpinBox */
+QAbstractSpinBox {{
+    spacing: 4px;
+    border: 1px solid {border};
+    border-radius: 3px;
+    color: {text_content};
+    background-color:{in_background};
+}}
+
+QAbstractSpinBox:focus{{
+    border: 1px solid {primary};
+}}
+
+QAbstractSpinBox::up-button {{
+    subcontrol-origin: border;
+    subcontrol-position: top right;
+    margin-top: 1px;
+    margin-right: 1px;
+    border-left: 1px solid {border};
+    background: {out_background};
+}}
+
+QAbstractSpinBox::down-button {{
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+    margin-bottom: 1px;
+    margin-right: 1px;
+    border-left: 1px solid {border};
+    border-top: 1px solid {border};
+    background: {out_background};
+}}
+
+QAbstractSpinBox::up-button:hover,
+QAbstractSpinBox::down-button:hover {{
+    border-left: 1px solid {primary};
+}}
+
+QAbstractSpinBox::up-arrow {{
+    image: {up};
+}}
+QAbstractSpinBox::down-arrow {{
+    image: {down};
+}}
+QAbstractSpinBox::up-arrow:disabled,
+QAbstractSpinBox::up-arrow:off,
+QAbstractSpinBox::down-arrow:disabled,
+QAbstractSpinBox::down-arrow:off {{
+    background-color: {disabled};
+}}
+
+QAbstractSpinBox[dayu_size="{huge}"]::up-button{{
+    width: 28px;
+    border-top-right-radius: {huge_radius}px;
+}}
+QAbstractSpinBox[dayu_size="{huge}"]::down-button{{
+    width: 28px;
+    border-bottom-right-radius: {huge_radius}px;
+}}
+QAbstractSpinBox[dayu_size="{large}"]::up-button{{
+    width: 26px;
+    border-top-right-radius: {large_radius}px;
+}}
+QAbstractSpinBox[dayu_size="{large}"]::down-button{{
+    width: 26px;
+    border-bottom-right-radius: {large_radius}px;
+}}
+QAbstractSpinBox[dayu_size="{medium}"]::up-button{{
+    width: 24px;
+    border-top-right-radius: {medium_radius}px;
+}}
+QAbstractSpinBox[dayu_size="{medium}"]::down-button{{
+    width: 24px;
+    border-bottom-right-radius: {medium_radius}px;
+}}
+QAbstractSpinBox[dayu_size="{small}"]::up-button{{
+    width: 20px;
+    border-top-right-radius: {small_radius}px;
+}}
+QAbstractSpinBox[dayu_size="{small}"]::down-button{{
+    width: 20px;
+    border-bottom-right-radius: {small_radius}px;
+}}
+QAbstractSpinBox[dayu_size="{tiny}"]::up-button{{
+    width: 18px;
+    border-top-right-radius: {tiny_radius}px;
+}}
+QAbstractSpinBox[dayu_size="{tiny}"]::down-button{{
+    width: 18px;
+    border-bottom-right-radius: {tiny_radius}px;
+}}
+
+QAbstractSpinBox[dayu_size="{huge}"]::up-arrow,
+QAbstractSpinBox[dayu_size="{huge}"]::down-arrow {{
+    width: 14px;
+    height: 14px;
+}}
+QAbstractSpinBox[dayu_size="{large}"]::up-arrow,
+QAbstractSpinBox[dayu_size="{large}"]::down-arrow {{
+    width: 12px;
+    height: 12px;
+}}
+QAbstractSpinBox[dayu_size="{medium}"]::up-arrow,
+QAbstractSpinBox[dayu_size="{medium}"]::down-arrow {{
+    width: 10px;
+    height: 10px;
+}}
+QAbstractSpinBox[dayu_size="{small}"]::up-arrow,
+QAbstractSpinBox[dayu_size="{small}"]::down-arrow {{
+    width: 8px;
+    height: 8px;
+}}
+QAbstractSpinBox[dayu_size="{tiny}"]::up-arrow,
+QAbstractSpinBox[dayu_size="{tiny}"]::down-arrow {{
+    width: 6px;
+    height: 6px;
+}}
+MDateTimeEdit::drop-down, MDateEdit::drop-down{{
+    subcontrol-origin: border;
+    subcontrol-position: center right;
+    image: {calender};
+}}
+
+/* MAlert */
+MAlert{{
+    border: 1px solid {border};
+    border-radius: 4px;
+}}
+MAlert[type=info]{{
+    border-color: {info_light};
+    background-color: {info_opacity};
+}}
+MAlert[type=success]{{
+    border-color: {success_light};
+    background-color: {success_opacity};
+}}
+MAlert[type=warning]{{
+    border-color: {warning_light};
+    background-color: {warning_opacity};
+}}
+MAlert[type=error]{{
+    border-color: {error_light};
+    background-color: {error_opacity};
+}}
+
+/* MAvatar*/
+MAvatar{{
+    background-color: transparent;
+}}
+
+/*MBadge*/
+MBadge{{
+    margin: 0;
+}}
+MBadge > QPushButton{{
+    font-size:10px;
+    min-height:16px;
+    max-height:16px;
+    min-width:16px;
+    border-radius: 8px;
+    background-color: red;
+    border: none;
+    color: white;
+    font-weight:bold;
+    margin: 0;
+}}
+
+MBadge > QPushButton[dot=true]{{
+    min-height:8px;
+    max-height:8px;
+    min-width:8px;
+    max-width:8px;
+    border-radius: 4px;
+    padding: 0 0;
+}}
+
+/* MToolButton*/
+MToolButton {{
+    border: none;
+    padding: 0;
+    background-color: transparent;
+}}
+MToolButton:hover{{
+    color: {primary_light};
+    border: 1px solid {primary_light};
+}}
+MToolButton:pressed{{
+    color: {primary_dark};
+    border: 1px solid {primary_dark};
+}}
+MToolButton:disabled{{
+    background-color: {disabled};
+}}
+
+MToolButton[type=taobao]{{
+    border-radius: 2px;
+    border: 1px solid {border};
+}}
+MToolButton[type=taobao]:checked{{
+    color: {primary};
+    border: 2px solid {primary};
+}}
+
+MToolButton[type=bar]{{
+    border-radius: 0;
+    border:none;
+}}
+MToolButton[type=bar]:checked{{
+    color: {primary};
+    background-color:{background_selected};
+}}
+
+MToolButton[type=icon]:checked{{
+    border:1px solid {primary};
+}}
+
+MToolButton[type=breadcrumb]:hover{{
+    color: {primary_light};
+}}
+MToolButton[type=breadcrumb]:pressed{{
+    color: {primary_dark};
+}}
+
+
+MToolButton[combine=horizontal]{{
+    border-radius: 0;
+}}
+MToolButton[combine=vertical]{{
+    border-radius: 0;
+}}
+
+MToolButton[dayu_size="{huge}"]{{
+    qproperty-iconSize: {huge_icon}px {huge_icon}px;
+}}
+MToolButton[dayu_size="{large}"]{{
+    qproperty-iconSize: {large_icon}px {large_icon}px;
+}}
+MToolButton[dayu_size="{medium}"]{{
+    qproperty-iconSize: {medium_icon}px {medium_icon}px;
+}}
+MToolButton[dayu_size="{small}"]{{
+    qproperty-iconSize: {small_icon}px {small_icon}px;
+}}
+MToolButton[dayu_size="{tiny}"]{{
+    qproperty-iconSize: {tiny_icon}px {tiny_icon}px;
+}}
+
+
+MToolButton::menu-indicator {{
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+    right: 5px;
+    bottom: 5px;
+    height: 10px;
+    width: 10px;
+    image: {down};
+}}
+
+MDragFileButton, MDragFolderButton{{
+    color: {text_content};
+    background-color: {background};
+    border: 2px dashed {border};
+    border-radius: 10px;
+    padding: 20px 40px;
+}}
+MDragFileButton:hover, MDragFolderButton:hover{{
+    color: {primary};
+    border-color: {primary_light};
+}}
+MDragFileButton:pressed, MDragFolderButton:pressed{{
+    color: {primary};
+    border-color: {primary_dark};
+}}
+
+/* MCheckBox */
+MCheckBox {{
+    spacing: 4px;
+}}
+MCheckBox:disabled {{
+    color: {disabled};
+}}
+
+
+MListView::indicator,
+MTreeView::indicator,
+MColumnView::indicator,
+MTableView::indicator,
+MCheckBox::indicator{{
+    width: 13px;
+    height: 13px;
+    border-radius: 2px;
+    border: 1px solid {border};
+    background-color: {in_background};
+}}
+MListView::indicator:disabled,
+MTreeView::indicator:disabled,
+MColumnView::indicator:disabled,
+MTableView::indicator:disabled,
+MCheckBox::indicator:disabled{{
+    border: 1px solid {border};
+    background-color: {background_selected};
+}}
+
+MListView::indicator:hover,
+MTreeView::indicator:hover,
+MColumnView::indicator:hover,
+MTableView::indicator:hover,
+MCheckBox::indicator:hover{{
+    border: 1px solid {primary_light};
+    background-color: {in_background};
+}}
+
+MMListView::indicator:checked,
+MTreeView::indicator:checked,
+MColumnView::indicator:checked,
+MTableView::indicator:checked,
+MCheckBox::indicator:checked{{
+    background-color: {primary};
+    image: {check};
+}}
+MMListView::indicator:checked:disabled,
+MTreeView::indicator:checked:disabled,
+MColumnView::indicator:checked:disabled,
+MTableView::indicator:checked:disabled,
+MCheckBox::indicator:checked:disabled{{
+    background-color: {disabled};
+}}
+MMListView::indicator:indeterminate,
+MTreeView::indicator:indeterminate,
+MColumnView::indicator:indeterminate,
+MTableView::indicator:indeterminate,
+MCheckBox::indicator:indeterminate {{
+    background-color: {primary};
+    image: {minus};
+}}
+
+MMListView::indicator:indeterminate:disabled,
+MTreeView::indicator:indeterminate:disabled,
+MColumnView::indicator:indeterminate:disabled,
+MTableView::indicator:indeterminate:disabled,
+MCheckBox::indicator:indeterminate:disabled {{
+    background-color: {disabled};
+}}
+
+
+/* MPushButton */
+MPushButton {{
+    border-radius: 5%;
+    padding: 1% 10%;
+}}
+
+MPushButton[combine=horizontal]{{
+    border-radius: 0;
+}}
+MPushButton[combine=vertical]{{
+    border-radius: 0;
+
+}}
+
+MPushButton[type=default]{{
+    background-color: {out_background};
+    border: 1px solid {border};
+}}
+MPushButton[type=default]:hover{{
+    color: {primary};
+    border-color: {primary_light};
+}}
+MPushButton[type=default]:pressed{{
+    border-color: {primary_dark};
+}}
+
+MPushButton[type=primary]{{
+    color: white;
+    background-color: {primary};
+}}
+MPushButton[type=primary]:hover{{
+    background-color: {primary_light};
+
+}}
+MPushButton[type=primary]:pressed{{
+    background-color: {primary_dark};
+}}
+
+
+MPushButton[type=info]{{
+    color: white;
+    background-color: {info};
+}}
+MPushButton[type=info]:hover{{
+    background-color: {info_light};
+}}
+MPushButton[type=info]:pressed{{
+    background-color: {info_dark};
+}}
+
+
+MPushButton[type=success]{{
+    color: white;
+    background-color: {success};
+}}
+MPushButton[type=success]:hover{{
+    background-color: {success_light};
+}}
+MPushButton[type=success]:pressed{{
+    background-color: {success_dark};
+}}
+
+
+MPushButton[type=warning]{{
+    color: white;
+    background-color: {warning};
+}}
+MPushButton[type=warning]:hover{{
+    background-color: {warning_light};
+}}
+MPushButton[type=warning]:pressed{{
+    background-color: {warning_dark};
+}}
+
+
+MPushButton[type=error]{{
+    color: white;
+    background-color: {error};
+}}
+MPushButton[type=error]:hover{{
+    background-color: {error_light};
+}}
+MPushButton[type=error]:pressed{{
+    background-color: {error_dark};
+}}
+
+MPushButton:disabled{{
+    color: {disabled};
+    border: 2px dashed {border};
+    padding: none;
+    background-color: {background};
+}}
+
+MPushButton::menu-indicator {{
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+    right: 5px;
+    bottom: 5px;
+    height: 10px;
+    width: 10px;
+    image: {down};
+}}
+
+/*MRadioButton*/
+MRadioButton {{
+    spacing: 4px;
+}}
+MRadioButton:disabled {{
+    color: {disabled};
+}}
+
+MRadioButton::indicator{{
+    width: 14px;
+    height: 14px;
+    border-radius: 8px;
+    border: 1px solid {border};
+    background-color: white;
+}}
+MRadioButton::indicator:disabled{{
+    border: 1px solid {border};
+    background-color: {background_selected};
+}}
+
+MRadioButton::indicator:hover{{
+    border: 1px solid {primary_light};
+    background-color: white;
+}}
+
+MRadioButton::indicator:checked{{
+    background-color: {primary};
+    image: {circle};
+}}
+
+MRadioButton::indicator:checked:disabled{{
+    background-color: {disabled};
+}}
+
+
+/*MSwitch*/
+MSwitch{{
+    spacing: -20px;
+}}
+MSwitch::indicator{{
+    subcontrol-origin: border;
+    subcontrol-position: center left;
+    image: {sphere};
+}}
+MSwitch[dayu_size="{huge}"]::indicator{{
+    width: 58px;
+    height: 30px;
+    border-radius: 15px;
+}}
+MSwitch[dayu_size="{large}"]::indicator{{
+    width: 48px;
+    height: 24px;
+    border-radius: 12px;
+}}
+MSwitch[dayu_size="{medium}"]::indicator{{
+    width: 38px;
+    height: 19px;
+    border-radius: 9px;
+}}
+MSwitch[dayu_size="{small}"]::indicator{{
+    width: 28px;
+    height: 14px;
+    border-radius: 7px;
+}}
+MSwitch[dayu_size="{tiny}"]::indicator{{
+    width: 18px;
+    height: 10px;
+    border-radius: 5px;
+}}
+MSwitch::indicator:checked{{
+    image-position: center right;
+    background-color: {primary};
+}}
+MSwitch::indicator:unchecked{{
+    image-position: center left;
+    background-color: {out_background};
+}}
+MSwitch::indicator:disabled{{
+    background-color: {disabled};
+}}
+
+MComboBox{{
+    border: 1px solid {border};
+    background-color: {out_background};
+}}
+QCombBox > QLineEdit{{
+    background-color: red;
+}}
+
+MComboBox:focus{{
+    border: 1px solid {primary_light};
+}}
+MComboBox:hover{{
+    border: 1px solid {primary_dark};
+}}
+/* MLabel */
+MLabel{{
+    padding: 2px;
+    background-color: transparent;
+    color: {text_content};
+}}
+MLabel[type=h1]{{
+    {h1};
+}}
+MLabel[type=h2]{{
+    {h2};
+}}
+MLabel[type=h3]{{
+    {h3};
+}}
+MLabel[type=text]{{
+    {text};
+}}
+
+MLabel[type=help]{{
+    {help};
+    color: {text_help};
+}}
+MLabel[link=true]{{
+    color: {primary};
+}}
+MLabel[link=true]:hover{{
+    color: {primary_light};
+}}
+MLabel[link=true]:pressed{{
+    color: {primary_dark};
+}}
+
+MLabel[error=true]{{
+    color: {error_light};
+}}
+
+MLabel:disabled{{
+    color:{disabled};
+}}
+
+MMessage{{
+    padding: 2px;
+    border: 1px solid {border};
+    border-radius: 2px;
+    background-color: {background};
+}}
+
+MSectionItem{{
+    border: 1px solid {border};
+    border-radius: 2px;
+    background-color: {background};
+}}
+QWidget#title {{
+    background-color: {background_dark};
+}}
+
+MLineEdit{{
+    border: 1px solid {border};
+    background-color: {in_background};
+}}
+
+MLineEdit:focus{{
+    border: 1px solid {primary};
+}}
+
+MLineEdit[error=true]{{
+    color: {error};
+}}
+MLineEdit[error=true]:focus{{
+    border: 1px solid {error};
+}}
+
+MTabWidget::pane{{
+    top: -2px;
+    background-color: {background};
+}}
+
+MTabWidget[type=line]::pane {{
+    border-top: 1px solid {border};
+}}
+
+MTabWidget[type=card]::pane {{
+    border: 1px solid {border};
+    top: -3px;
+}}
+
+
+MTabBar::close-button {{
+    subcontrol-origin: content;
+    subcontrol-position: right center;
+    margin-right: 5px;
+    image: {close};
+}}
+MTabBar::close-button:hover {{
+    border: 1px solid {primary};
+}}
+
+MTabBar QToolButton {{
+    border: 1px solid {border};
+}}
+MTabBar QToolButton:hover {{
+    border: 1px solid {primary_light};
+}}
+MTabBar QToolButton:disabled {{
+    background-color: {disabled};
+}}
+MTabBar QToolButton::right-arrow {{
+    image: {right};
+}}
+
+MTabBar QToolButton::left-arrow {{
+    image: {left};
+}}
+
+MTabBar[type=line]::tab {{
+    border: 0 solid {border};
+    margin-right: 4px;
+    bottom: 3px;
+}}
+MTabBar[type=line]::tab:selected {{
+    color: {primary};
+    border-bottom: 2px solid {primary};
+}}
+MTabBar[type=line]::tab:hover {{
+    color: {primary_light};
+}}
+
+MTabBar[type=card]::tab {{
+    border: 1px solid {border};
+    border-bottom: none;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    margin-right: 4px;
+    background-color: {in_background};
+}}
+MTabBar[type=card]::tab:selected {{
+    color: {primary};
+    background-color: {background};
+}}
+MTabBar[type=card]::tab:hover {{
+    color: {primary};
+}}
+
+QHeaderView {{
+    background-color: {background_selected};
+    {h3}
+}}
+QHeaderView::section{{
+    background-color: {background_selected};
+    border: 0 solid {border};
+    padding: 1px 6px;
+}}
+
+
+QHeaderView[grid=true][orientation=horizontal]::section{{
+    border-right: 1px solid {border};
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+}}
+
+
+QHeaderView[grid=true][orientation=vertical]::section{{
+    border-bottom: 1px solid {border};
+    border-right: none;
+    border-left: none;
+    border-top: none;
+}}
+
+QHeaderView::section:hover {{
+    color: {primary};
+}}
+QHeaderView::focus{{
+    background-color: red;
+    border: 0 solid {border};
+}}
+QHeaderView::up-arrow {{
+    width: 8px;
+    height: 8px;
+    position: relative;
+    top: -10px;
+    right: 50%;
+    image: {up};
+}}
+
+QHeaderView::down-arrow {{
+    width: 8px;
+    height: 8px;
+    position: relative;
+    top: -10px;
+    right: 50%;
+    image: {down};
+}}
+MListView,
+MTreeView,
+MColumnView,
+MTableView{{
+    background-color: {in_background};
+    alternate-background-color: {background};
+    selection-background-color: rgba(45, 140, 240, 50);
+    selection-color:#1e1e1e;
+    border: 1px solid {border};
+    padding: 0;
+    gridline-color: {border};
+}}
+
+MListView::item:hover,
+MTreeView::item:hover,
+MColumnView::item:hover,
+MTableView::item:hover{{
+    color: {text_select};
+    background-color: {primary_light};
+}}
+
+MListView::item:selected,
+MTreeView::item:selected,
+MColumnView::item:selected,
+MTableView::item:selected{{
+    background-color: {primary};
+}}
+
+MTableView QTableCornerButton::section {{
+    background-color: {background_selected};
+    border: 0px solid {border};
+    border-right: 1px solid {border};
+    border-bottom: 1px solid {border};
+    padding: 1px 6px;
+}}
+
+QScrollBar:horizontal {{
+    border: 0 solid {border};
+    height: 9px;
+    margin: 0 32px 0 0;
+    background-color: {border};
+}}
+
+QScrollBar::handle:horizontal {{
+    background-color: {background_dark};
+    min-width: 10px;
+}}
+
+QScrollBar::add-line:horizontal {{
+    subcontrol-origin: margin;
+    subcontrol-position: right center;
+    background: {border};
+    width: 15px;
+}}
+
+QScrollBar::sub-line:horizontal {{
+    subcontrol-origin: margin;
+    subcontrol-position: right center;
+    background: {border};
+    width: 15px;
+    right: 16px;
+}}
+
+QScrollBar::left-arrow:horizontal {{
+    width: 9px;
+    height: 9px;
+    position: relative;
+    image: {left}
+}}
+
+QScrollBar::right-arrow:horizontal {{
+    width: 9px;
+    height: 9px;
+    position: relative;
+    image: {right}
+}}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {{
+    background: none;
+}}
+
+QScrollBar:vertical {{
+    border: 0 solid {border};
+    width: 9px;
+    margin: 0 0 32px 0 ;
+    background-color: {border};
+}}
+
+QScrollBar::handle:vertical {{
+    background-color: {background_dark};
+    min-height: 10px;
+}}
+
+QScrollBar::add-line:vertical {{
+    subcontrol-origin: margin;
+    subcontrol-position: center bottom;
+    background: {border};
+    height: 15px;
+}}
+
+QScrollBar::sub-line:vertical {{
+    subcontrol-origin: margin;
+    subcontrol-position: center bottom;
+    background: {border};
+    height: 15px;
+    bottom: 16px;
+}}
+
+QScrollBar::up-arrow:vertical {{
+    width: 9px;
+    height: 9px;
+    position: relative;
+    image: {up}
+}}
+
+QScrollBar::down-arrow:vertical {{
+    width: 9px;
+    height: 9px;
+    position: relative;
+    image: {down}
+}}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {{
+    background: none;
+}}
+
+QSplitter::handle {{
+    background-color: {border};
+    image: {splitter}
+}}
+
+QSplitter::handle:horizontal {{
+    width: 2px;
+}}
+
+QSplitter::handle:vertical {{
+    height: 2px;
+}}
