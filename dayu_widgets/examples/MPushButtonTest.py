@@ -42,12 +42,6 @@ class MPushButtonTest(QWidget, MFieldMixin):
         disabled_button = MPushButton(text='Disabled')
         disabled_button.setEnabled(False)
 
-        self.register_field('button_type', MPushButton.PrimaryType)
-        button_bind = MPushButton()
-        button_bind.clicked.connect(self.slot_change_button_type)
-        self.bind('button_type', button_bind, 'type')
-        self.bind('button_type', button_bind, 'text')
-
         sub_lay1 = QHBoxLayout()
         sub_lay1.addWidget(button1)
         sub_lay1.addWidget(button2)
@@ -67,16 +61,8 @@ class MPushButtonTest(QWidget, MFieldMixin):
         main_lay.addLayout(sub_lay3)
         main_lay.addWidget(MDivider('disabled'))
         main_lay.addWidget(disabled_button)
-        main_lay.addWidget(MDivider('data bind: click button to change type'))
-        main_lay.addWidget(button_bind)
         main_lay.addStretch()
         self.setLayout(main_lay)
-
-    def slot_change_button_type(self):
-        import random
-        self.set_field('button_type', random.choice(
-            [MPushButton.DefaultType, MPushButton.PrimaryType, MPushButton.SuccessType, MPushButton.InfoType,
-             MPushButton.WarningType, MPushButton.ErrorType]))
 
 
 if __name__ == '__main__':

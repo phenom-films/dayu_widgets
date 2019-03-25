@@ -7,18 +7,13 @@
 ###################################################################
 
 from dayu_widgets.MTheme import dayu_theme
-from dayu_widgets.mixin import property_mixin, cursor_mixin, theme_mixin
+from dayu_widgets.mixin import property_mixin, cursor_mixin
 from dayu_widgets.qt import *
 
 
 @property_mixin
 @cursor_mixin
-@theme_mixin
 class MPushButton(QPushButton):
-    '''
-    自定义 props:
-        type:
-    '''
     DefaultType = 'default'
     PrimaryType = 'primary'
     InfoType = 'info'
