@@ -11,9 +11,12 @@ from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.MTheme import dayu_theme
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MPushButtonGroupTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MPushButtonGroupTest, self).__init__(parent)
@@ -21,12 +24,11 @@ class MPushButtonGroupTest(QWidget, MFieldMixin):
 
     def _init_ui(self):
         button_config_list = [
-            {'text': 'Delete', 'icon': MIcon('trash_fill.svg', '#dddddd'), 'type': MPushButton.ErrorType},
-            {'text': 'PrimaryType', 'icon': MIcon('search_line.svg', '#dddddd'), 'type': MPushButton.PrimaryType},
-            {'text': 'PrimaryType', 'icon': MIcon('folder_fill.svg', '#dddddd'), 'type': MPushButton.PrimaryType},
-            {'text': 'Up', 'icon': MIcon('up_fill.svg', '#dddddd'), 'type': MPushButton.PrimaryType},
+            {'text': 'Add', 'icon': MIcon('add_line.svg', '#fff'), 'type': MPushButton.PrimaryType},
+            {'text': 'Edit', 'icon': MIcon('edit_fill.svg', '#fff'), 'type': MPushButton.InfoType},
+            {'text': 'Delete', 'icon': MIcon('trash_line.svg', '#fff'), 'type': MPushButton.ErrorType},
         ]
-        button_group_h = MPushButtonGroup(size=MView.LargeSize)
+        button_group_h = MPushButtonGroup(size=dayu_theme.size.small)
         button_group_h.set_button_list(button_config_list)
 
         button_group_v = MPushButtonGroup(orientation=Qt.Vertical)
@@ -34,19 +36,13 @@ class MPushButtonGroupTest(QWidget, MFieldMixin):
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(
-            MLabel(u'MPushButtonGroup is MPushButton or MToolButton collection. they are not exclusive.'))
-        main_lay.addWidget(MDivider('MPushButton group: Horizontal & Large Size'))
+            MLabel(u'MPushButtonGroup is MPushButton collection. they are not exclusive.'))
+        main_lay.addWidget(MDivider('MPushButton group: Horizontal & Small Size'))
         main_lay.addWidget(button_group_h)
         main_lay.addWidget(MDivider('MPushButton group: Vertical & Default Size'))
         main_lay.addWidget(button_group_v)
         main_lay.addStretch()
         self.setLayout(main_lay)
-
-    def slot_change_button_type(self):
-        import random
-        self.set_field('button_type', random.choice(
-            [MPushButton.DefaultType, MPushButton.PrimaryType, MPushButton.SuccessType, MPushButton.InfoType,
-             MPushButton.WarningType, MPushButton.ErrorType]))
 
 
 if __name__ == '__main__':
