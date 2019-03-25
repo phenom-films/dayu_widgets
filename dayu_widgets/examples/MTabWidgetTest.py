@@ -9,9 +9,11 @@ from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MMessage import MMessage
 from dayu_widgets.MTabWidget import MTabWidget
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MTabWidgetTest(QWidget):
     def __init__(self, parent=None):
         super(MTabWidgetTest, self).__init__(parent)
@@ -21,21 +23,18 @@ class MTabWidgetTest(QWidget):
         main_lay = QVBoxLayout()
         class_list = [MTabWidget]
         for cls in class_list:
-            tab_line = cls(parent=self)
-            tab_line.set_type('line')
-            tab_line.addTab(MLabel('test 1'), u'标签一')
+            tab_line = cls(type=MTabWidget.LineType, parent=self)
+            tab_line.addTab(MLabel('test 1'), MIcon('female.svg'), u'标签一')
             tab_line.addTab(MLabel('test 2'), u'标签二')
             tab_line.addTab(MLabel('test 3'), u'标签三')
 
-            tab_card = cls()
-            tab_card.set_type('card')
+            tab_card = cls(type=MTabWidget.CardType)
             tab_card.addTab(MLabel('test 1'), u'Current Element')
             tab_card.addTab(MLabel('test 2'), u'Linked Assets')
             tab_card.addTab(MLabel('test 2'), u'Hero Shots')
             tab_card.addTab(MLabel('test 3'), u'Linked Metadata')
 
-            self.tab_closable = cls()
-            self.tab_closable.set_type('card')
+            self.tab_closable = cls(type=MTabWidget.CardType)
             self.tab_closable.setTabsClosable(True)
             self.tab_closable.addTab(MLabel('test 1'), u'标签一 ttt')
             self.tab_closable.addTab(MLabel('test 2'), u'标签二 ttt')
