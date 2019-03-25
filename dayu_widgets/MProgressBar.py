@@ -7,41 +7,12 @@
 ###################################################################
 
 from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MTheme import global_theme
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
 
-qss = '''
-QProgressBar {{
-    {text_font}
-    {font_family}
-    color: #555;
-    border: 0 solid {border};
-    background-color: {border};
-    min-height: 12px;
-    max-height: 12px;
-    border-radius: 6px;
-}}
-
-QProgressBar::chunk {{
-    min-height: 12px;
-    max-height: 12px;
-    border-radius: 5px;
-}}
-QProgressBar[status=error]::chunk {{
-    background-color: {error};
-}}
-QProgressBar[status=success]::chunk {{
-    background-color: {success};
-}}
-QProgressBar[status=primary]::chunk {{
-    background-color: {primary};
-}}
-'''.format(**global_theme)
-
 
 @property_mixin
-class MProgress(QProgressBar, MFieldMixin):
+class MProgressBar(QProgressBar, MFieldMixin):
     '''
     props:
         status: str
@@ -52,10 +23,9 @@ class MProgress(QProgressBar, MFieldMixin):
     SuccessStatus = 'success'
 
     def __init__(self, status=None, parent=None):
-        super(MProgress, self).__init__(parent=parent)
+        super(MProgressBar, self).__init__(parent=parent)
         self.setAlignment(Qt.AlignCenter)
-        self.set_status(status or MProgress.NormalStatus)
-        self.setStyleSheet(qss)
+        self.set_status(status or MProgressBar.NormalStatus)
 
     def set_status(self, value):
         self.setProperty('status', value)
