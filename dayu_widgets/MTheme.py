@@ -5,114 +5,83 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
+import UserDict
+import json
 
-base_color_theme = {
-    'primary': '#2d8cf0',
-    'primary_light': '#5cadff',
-    'primary_dark': '#2b85e4',
-    'primary_background': '#f0faff',
-    'info': '#2db7f5',
-    'info_light': '#57c5f7',
-    'info_dark': '#2baee9',
-    'success': '#19be6b',
-    'success_light': '#47cb89',
-    'success_dark': '#18b566',
-    'success_background': '#edfff3',
-    'warning': '#ff9900',
-    'warning_light': '#ffad33',
-    'warning_dark': '#f29100',
-    'warning_background': '#fff9e6',
-    'error': '#ed4014',
-    'error_light': '#f16643',
-    'error_dark': '#e13d13',
-    'error_background': '#ffefe6',
+from dayu_widgets.qt import MIcon
 
-    'title': '#17233d',
-    'content': '#515a6e',
-    'sub_color': '#808695',
-    'disabled': '#c5c8ce',
-    'border': '#dcdee2',
-    'background': '#f8f8f9',
-    'background_dark': '#cccccc',
-    'background_selected': '#eee',
-    'female': '#ef5b97',
-    'male': '#4ebbff',
-}
 
-base_font_theme = {
+class MDict(UserDict.UserDict, object):
+    def __init__(self, *args, **kwargs):
+        super(MDict, self).__init__(*args, **kwargs)
 
-}
+    def __getattr__(self, item):
+        return self.data.get(item)
 
-base_size_theme = {
 
-}
+class MIconDict(UserDict.UserDict, object):
+    def __init__(self, *args, **kwargs):
+        super(MIconDict, self).__init__(*args, **kwargs)
 
-global_theme = {
-    'primary': '#2d8cf0',
-    'primary_light': '#5cadff',
-    'primary_dark': '#2b85e4',
-    'primary_opacity': '#f0faff',
-    'info': '#2db7f5',
-    'info_light': '#57c5f7',
-    'info_dark': '#2baee9',
-    'success': '#19be6b',
-    'success_light': '#47cb89',
-    'success_dark': '#18b566',
-    'success_opacity': '#edfff3',
-    'warning': '#ff9900',
-    'warning_light': '#ffad33',
-    'warning_dark': '#f29100',
-    'warning_opacity': '#fff9e6',
-    'error': '#ed4014',
-    'error_light': '#f16643',
-    'error_dark': '#e13d13',
-    'error_opacity': '#ffefe6',
-    'title': '#17233d',
-    'content': '#515a6e',
-    'sub_color': '#808695',
-    'disabled': '#c5c8ce',
-    'border': '#dcdee2',
-    'divider': '#e8eaec',
-    'background': '#f8f8f9',
-    'background_dark': '#cccccc',
-    'background_selected': '#eee',
-    'female': '#ef5b97',
-    'male': '#4ebbff',
-    'font_family': 'font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;',
-    'main_head_font': '''
-    font-weight:bold;
-    font-size: 18px;
-    color: #464c5b;
-    ''',
-    'sub_head_font': '''
-    font-weight:bold;
-    font-size: 14px;
-    color: #464c5b;
-    ''',
-    'small_head_font': '''
-    font-weight:bold;
-    font-size: 12px;
-    color: #464c5b;
-    ''',
-    'text_font': '''
-    font-weight: normal;
-    font-size: 12px;
-    color: #657180;
-    ''',
-    'help_font': '''
-    font-weight: normal;
-    font-size: 12px;
-    color: #9ea7b4;
-    ''',
-    'disabled_font': '''
-    color: #c3cbd6;
-    ''',
-    'large_size': 40,
-    'default_size': 32,
-    'small_size': 24,
-    'tiny_size': 18,
-    'large_icon_size': int(40 * 0.7),
-    'default_icon_size': int(32 * 0.7),
-    'small_icon_size': int(24 * 0.7),
-    'tiny_icon_size': int(18 * 0.7),
-}
+    def __getattr__(self, item):
+        return MIcon(self.data.get(item) + '.svg')
+
+
+class MTheme(object):
+    def __init__(self, theme='light'):
+        super(MTheme, self).__init__()
+        from dayu_widgets import utils
+        default_qss_file = utils.get_static_file('main.qss')
+        with open(default_qss_file, 'r+') as f:
+            self.default_qss = f.read()
+        self.color = None
+        self.font = None
+        self.size = None
+        self.icon = None
+        self.full_dict = None
+        self.set_theme(theme)
+
+    def get_cascading_json(self, json_file, target_dict):
+        from dayu_widgets import utils
+        with open(json_file, 'r') as j_f:
+            data_dict = json.load(j_f)
+            parent_file = data_dict.get('include') and utils.get_static_file(data_dict.get('include'))
+            if parent_file:
+                self.get_cascading_json(parent_file, target_dict)
+            for key in ['color', 'size', 'font', 'icon']:
+                if key in data_dict:
+                    target_dict[key].update(data_dict[key])
+
+    def set_theme(self, theme):
+        from dayu_widgets import utils, STATIC_FOLDERS
+        theme_file = utils.get_static_file('{}.json'.format(theme))
+        target_dict = {'color': {}, 'size': {}, 'font': {}, 'icon': {}}
+        self.get_cascading_json(theme_file, target_dict)
+        for key, icon in target_dict.get('icon').items():
+            target_dict['icon'][key] = 'url({}/{})'.format(STATIC_FOLDERS[0].replace('\\', '/'), icon)
+        self.color = MDict(target_dict.get('color'))
+        self.font = MDict(target_dict.get('font'))
+        self.size = MDict(target_dict.get('size'))
+        self.icon = MDict(target_dict.get('icon'))
+        self.full_dict = target_dict.get('color')
+        self.full_dict.update(target_dict.get('font'))
+        self.full_dict.update(target_dict.get('size'))
+        self.full_dict.update(target_dict.get('icon'))
+        self.default_size = self.size.medium
+
+    def apply(self, widget):
+        widget.setStyleSheet(self.default_qss.format(**self.full_dict))
+
+    def deco(self, cls):
+        original_init__ = cls.__init__
+
+        def my__init__(instance, *args, **kwargs):
+            original_init__(instance, *args, **kwargs)
+            instance.setStyleSheet(self.default_qss.format(**self.full_dict))
+
+        def polish(instance):
+            instance.style().polish(instance)
+
+        setattr(cls, '__init__', my__init__)
+        setattr(cls, 'polish', polish)
+        return cls
