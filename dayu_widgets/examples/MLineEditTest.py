@@ -10,47 +10,55 @@ from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MLineEdit import MLineEdit
 from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.MMessage import MMessage
 from dayu_widgets.MLabel import MLabel
+from dayu_widgets.mixin import theme_mixin
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MLineEditTest(QWidget):
     def __init__(self, parent=None):
         super(MLineEditTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
-        line_edit_large = MLineEdit(size=MView.LargeSize)
-        line_edit_large.setPlaceholderText('Large Size')
-        line_edit_default = MLineEdit()
-        line_edit_default.setPlaceholderText('Default Size')
-        line_edit_small = MLineEdit(size=MView.SmallSize)
-        line_edit_small.setPlaceholderText('Small Size')
+        size_list = [('Huge', dayu_theme.size.huge),
+                     ('Large', dayu_theme.size.large),
+                     ('Medium', dayu_theme.size.medium),
+                     ('Small', dayu_theme.size.small),
+                     ('Tiny', dayu_theme.size.tiny)]
+        size_lay = QVBoxLayout()
+        for label, size in size_list:
+            line_edit_size = MLineEdit(size=size)
+            line_edit_size.setPlaceholderText(label)
+            size_lay.addWidget(line_edit_size)
 
-        line_edit_icon = MLineEdit(text='Xiao Hua', size=MView.SmallSize)
-        tool_button = MToolButton(icon=MIcon('female.svg'), size=MView.SmallSize)
+        line_edit_icon = MLineEdit(text='Xiao Hua', size=dayu_theme.size.small)
+        tool_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('female.svg'), size=dayu_theme.size.small)
         line_edit_icon.add_suffix_widget(tool_button)
 
-        line_edit_button = MLineEdit(text='Beijing', size=MView.SmallSize)
-        push_button = MPushButton(text='Go', size=MView.SmallSize, type=MPushButton.PrimaryType)
+        line_edit_button = MLineEdit(text='Beijing', size=dayu_theme.size.small)
+        push_button = MPushButton(text='Go', size=dayu_theme.size.small, type=MPushButton.PrimaryType)
         line_edit_button.add_suffix_widget(push_button)
 
-        line_edit_error = MLineEdit.error(size=MView.SmallSize)
+        line_edit_error = MLineEdit.error(size=dayu_theme.size.small)
         line_edit_error.setText('waring: file d:/ddd/ccc.jpg not exists.')
 
-        line_edit_search = MLineEdit.search(size=MView.SmallSize)
-        line_edit_search_engine = MLineEdit.search_engine()
-        line_edit_search_engine.add_prefix_widget(
-            MToolButton(icon=MIcon('filter_line.svg', '#cccccc'), size=MView.LargeSize))
+        line_edit_search = MLineEdit.search(size=dayu_theme.size.small)
+        line_edit_search_engine = MLineEdit.search_engine(size=dayu_theme.size.large)
+        line_edit_search_engine.add_prefix_widget(MToolButton(type=MToolButton.IconOnlyType,
+                                                              icon=MIcon('filter_line.svg', '#cccccc'),
+                                                              size=dayu_theme.size.large))
+        line_edit_search_engine.returnPressed.connect(self.slot_search)
 
         line_edit_file = MLineEdit.file()
         line_edit_folder = MLineEdit.folder()
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('different size'))
-        main_lay.addWidget(line_edit_large)
-        main_lay.addWidget(line_edit_default)
-        main_lay.addWidget(line_edit_small)
+        main_lay.addLayout(size_lay)
         main_lay.addWidget(MDivider('icon/button'))
         main_lay.addWidget(line_edit_icon)
         main_lay.addWidget(line_edit_button)
@@ -70,8 +78,8 @@ class MLineEditTest(QWidget):
         self.setLayout(main_lay)
 
     @Slot()
-    def slot_prefix_button_clicked(self):
-        print 'prefix button clicked'
+    def slot_search(self):
+        MMessage.info(u'查无此人', parent=self)
 
 
 if __name__ == '__main__':

@@ -10,48 +10,10 @@ import functools
 
 from dayu_widgets.MBrowser import MClickBrowserFileToolButton, MClickBrowserFolderToolButton
 from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
-
-qss = '''
-QLineEdit{{
-    {text_font}
-    border: 1px solid {border};
-    border-radius: 3px;
-}}
-
-QLineEdit:focus{{
-    border: 1px solid {primary};
-}}
-
-
-QLineEdit[error=true]{{
-    color: {error};
-}}
-QLineEdit[error=true]:focus{{
-    border: 1px solid {error};
-}}
-
-QLineEdit[line_size=default]{{
-    min-height: {default_size}px;
-    max-height: {default_size}px;
-}}
-QLineEdit[line_size=large]{{
-    font-size: 16px;
-    border-radius: 4px;
-    min-height: {large_size}px;
-    max-height: {large_size}px;
-}}
-QLineEdit[line_size=small]{{
-    border-radius: 2px;
-    min-height: {small_size}px;
-    max-height: {small_size}px;
-}}
-
-
-'''.format(**global_theme)
 
 
 @property_mixin
@@ -62,9 +24,8 @@ class MLineEdit(QLineEdit):
         self._main_layout = QHBoxLayout()
         self._main_layout.setContentsMargins(0, 0, 0, 0)
         self._main_layout.addStretch()
-        self.setProperty('line_size', size or MView.DefaultSize)
+        self.setProperty('dayu_size', size or dayu_theme.default_size)
         self.setLayout(self._main_layout)
-        self.setStyleSheet(qss)
         self.setProperty('history', self.property('text'))
         self.setTextMargins(2, 0, 2, 0)
 
@@ -96,9 +57,9 @@ class MLineEdit(QLineEdit):
 
     @classmethod
     def search(cls, size=None, parent=None):
-        size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
-        suffix_button = MToolButton(icon=MIcon('close_line.svg'), size=size, parent=parent)
+        suffix_button = MToolButton(type=MToolButton.IconOnlyType,
+                                    icon=MIcon('close_line.svg'), size=size, parent=parent)
         suffix_button.clicked.connect(line_edit.clear)
         line_edit.add_suffix_widget(suffix_button)
         line_edit.setPlaceholderText('Enter key word to search...')
@@ -117,11 +78,12 @@ class MLineEdit(QLineEdit):
             dialog.setWindowFlags(Qt.Dialog)
             dialog.show()
 
-        size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
         line_edit.setProperty('error', True)
         line_edit.setReadOnly(True)
-        suffix_button = MToolButton(icon=MIcon('detail_line.svg', '#f00'), size=size)
+        suffix_button = MToolButton(type=MToolButton.IconOnlyType,
+                                    icon=MIcon('detail_line.svg', dayu_theme.color.error),
+                                    size=size)
         suffix_button.clicked.connect(functools.partial(slot_show_detail, line_edit))
         line_edit.add_suffix_widget(suffix_button)
         line_edit.setPlaceholderText('Error information will be here...')
@@ -129,7 +91,6 @@ class MLineEdit(QLineEdit):
 
     @classmethod
     def search_engine(cls, size=None, parent=None):
-        size = size or MView.LargeSize
         line_edit = MLineEdit(size=size, parent=parent)
         suffix_button = MPushButton(text='Search', size=size, type=MPushButton.PrimaryType)
         suffix_button.clicked.connect(line_edit.returnPressed)
@@ -140,7 +101,6 @@ class MLineEdit(QLineEdit):
 
     @classmethod
     def file(cls, size=None, format=None, parent=None):
-        size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
         suffix_button = MClickBrowserFileToolButton(size=size)
         suffix_button.sig_file_changed.connect(line_edit.setText)
@@ -152,7 +112,6 @@ class MLineEdit(QLineEdit):
 
     @classmethod
     def folder(cls, size=None, parent=None):
-        size = size or MView.DefaultSize
         line_edit = MLineEdit(size=size, parent=parent)
         suffix_button = MClickBrowserFolderToolButton(size=size)
         suffix_button.sig_folder_changed.connect(line_edit.setText)
