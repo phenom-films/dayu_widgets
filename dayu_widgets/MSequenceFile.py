@@ -23,7 +23,8 @@ class MSequenceFile(QWidget, MFieldMixin):
     '''
     这个类必须依赖 DayuPath
     props:
-        text: basestring
+        path: basestring
+        sequence: bool
     '''
     sig_is_sequence_changed = Signal(bool)
 
@@ -68,10 +69,10 @@ class MSequenceFile(QWidget, MFieldMixin):
         self.setProperty('path', value)
 
     def set_sequence(self, value):
+        assert isinstance(value, bool)
         self.setProperty('sequence', value)
 
     def _set_sequence(self, value):
-        assert isinstance(value, bool)
         if value != self._is_sequence_check_box.isChecked():
             # 更新来自代码
             self._is_sequence_check_box.setChecked(value)
