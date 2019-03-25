@@ -9,82 +9,15 @@
 import functools
 
 import dayu_widgets.utils as utils
-from dayu_widgets import STATIC_FOLDERS
 from dayu_widgets.MMenu import MMenu
-from dayu_widgets.MTheme import global_theme
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
-qss = '''
-QHeaderView {{
-    background-color: {background_selected};
-    {small_head_font}
-}}
-QHeaderView::section{{
-    background-color: {background_selected};
-    border: 0 solid {border};
-    padding: 1px 6px;
-}}
-QHeaderView[line_size=large]::section{{
-    min-height: {large_size}px;
-    max-height: {large_size}px;
-}}
-QHeaderView[line_size=default]::section{{
-    min-height: {default_size}px;
-    max-height: {default_size}px;
-}}
-QHeaderView[line_size=small]::section{{
-    min-height: {small_size}px;
-    max-height: {small_size}px;
-}}
 
-QHeaderView[grid=true][orientation=horizontal]::section{{
-    border-right: 1px solid {border};
-    border-left: none;
-    border-top: none;
-    border-bottom: none;
-}}
-
-
-QHeaderView[grid=true][orientation=vertical]::section{{
-    border-bottom: 1px solid {border};
-    border-right: none;
-    border-left: none;
-    border-top: none;
-}}
-
-QHeaderView::section:hover {{
-    color: {primary};
-}}
-QHeaderView::focus{{
-    background-color: red;
-    border: 0 solid {border};
-}}
-QHeaderView::up-arrow {{
-    width: 8px;
-    height: 8px;
-    position: relative;
-    top: -10px;
-    right: 50%;
-    image: url(up_line.svg);
-}}
-
-QHeaderView::down-arrow {{
-    width: 8px;
-    height: 8px;
-    position: relative;
-    top: -10px;
-    right: 50%;
-    image: url(down_line.svg);
-}}
-'''.format(**global_theme)
-qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
-
-
+@theme_mixin
 class MHeaderView(QHeaderView):
     def __init__(self, orientation, parent=None):
         super(MHeaderView, self).__init__(orientation, parent)
-        self.setObjectName('test')
-
         self.setMovable(True)
         self.setClickable(True)
         self.setSortIndicatorShown(True)
@@ -92,7 +25,6 @@ class MHeaderView(QHeaderView):
         self.customContextMenuRequested.connect(self._slot_context_menu)
         self.setDefaultAlignment(Qt.AlignLeft | Qt.AlignVCenter)
         self.setProperty('orientation', 'horizontal' if orientation == Qt.Horizontal else 'vertical')
-        self.setStyleSheet(qss)
 
     # def enterEvent(self, *args, **kwargs):
     #     # 调整表头宽度的 cursor 就被覆盖了
@@ -121,9 +53,7 @@ class MHeaderView(QHeaderView):
             context_menu.addSeparator()
 
         fit_action = context_menu.addAction(self.tr('Fit Size'))
-        # fit_action.setCheckable(True)
-        # fit_action.setChecked(True if self.resizeMode(0) == QHeaderView.ResizeToContents else False)
-        fit_action.triggered.connect(functools.partial(self._slot_set_resize_mode, True))
+        fit_action.triggered.connsect(functools.partial(self._slot_set_resize_mode, True))
         context_menu.addSeparator()
         for column in range(self.count()):
             action = context_menu.addAction(model.headerData(column, Qt.Horizontal, Qt.DisplayRole))

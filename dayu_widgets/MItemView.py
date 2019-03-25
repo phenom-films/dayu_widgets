@@ -6,109 +6,13 @@
 # Email : muyanru345@163.com
 ###################################################################
 import dayu_widgets.utils as utils
-from dayu_widgets import STATIC_FOLDERS
 from dayu_widgets.MHeaderView import MHeaderView
 from dayu_widgets.MMenu import MMenu
-from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.qt import *
 
-qss = '''
-QListView,
-QTreeView,
-QColumnView,
-QTableView{{
-    {text_font}
-    background-color: white;
-    alternate-background-color: {background};
-    selection-background-color: rgba(45, 140, 240, 50);
-    selection-color:#1e1e1e;
-    border: 1px solid {border};
-    padding: 0;
-    gridline-color: {border};
-}}
 
-QListView::item:hover,
-QTreeView::item:hover,
-QColumnView::item:hover,
-QTableView::item:hover{{
-    background-color: rgba(45, 140, 240, 50);
-}}
-
-QListView::item:selected,
-QTreeView::item:selected,
-QColumnView::item:selected,
-QTableView::item:selected{{
-    background-color: rgba(45, 140, 240, 50);
-}}
-
-QTableView QTableCornerButton::section {{
-    background-color: {background_selected};
-    border: 0px solid {border};
-    border-right: 1px solid {border};
-    border-bottom: 1px solid {border};
-    padding: 1px 6px;
-}}
-
-QListView::indicator,
-QTreeView::indicator,
-QColumnView::indicator,
-QTableView::indicator{{
-    width: 13px;
-    height: 13px;
-    border-radius: 2px;
-    border: 1px solid {border};
-    background-color: white;
-}}
-
-QListView::indicator:disabled,
-QTreeView::indicator:disabled,
-QColumnView::indicator:disabled,
-QTableView::indicator:disabled{{
-    border: 1px solid {border};
-    background-color: {background_selected};
-}}
-
-QListView::indicator:hover,
-QTreeView::indicator:hover,
-QColumnView::indicator:hover,
-QTableView::indicator:hover{{
-    border: 1px solid {primary_light};
-    background-color: white;
-}}
-
-QListView::indicator:checked,
-QTreeView::indicator:checked,
-QColumnView::indicator:checked,
-QTableView::indicator:checked{{
-    background-color: {primary};
-    image: url(check.svg);
-}}
-QListView::indicator:checked:disabled,
-QTreeView::indicator:checked:disabled,
-QColumnView::indicator:checked:disabled,
-QTableView::indicator:checked:disabled{{
-    background-color: {disabled};
-}}
-
-QListView::indicator:indeterminate,
-QTreeView::indicator:indeterminate,
-QColumnView::indicator:indeterminate,
-QTableView::indicator:indeterminate {{
-    background-color: {primary};
-    image: url(minus.svg);
-}}
-QListView::indicator:indeterminate:disabled,
-QTreeView::indicator:indeterminate:disabled,
-QColumnView::indicator:indeterminate:disabled,
-QTableView::indicator:indeterminate:disabled {{
-    background-color: {disabled};
-}}
-
-'''.format(**global_theme)
-qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
-
-
-class MOptionDelegate(QItemDelegate):
+class MOptionDelegate(QStyledItemDelegate):
     def __init__(self, parent=None):
         super(MOptionDelegate, self).__init__(parent)
         self.editor = None
@@ -144,19 +48,21 @@ class MOptionDelegate(QItemDelegate):
         editor.move(self.parent_widget.mapToGlobal(QPoint(option.rect.x(), option.rect.y() + option.rect.height())))
 
     def paint(self, painter, option, index):
-        super(MOptionDelegate, self).paint(painter, option, index)
         painter.save()
         if option.state & QStyle.State_MouseOver:
-            painter.fillRect(option.rect, option.palette.highlight())
+            painter.fillRect(option.rect, dayu_theme.color.primary_opacity)
+        if option.state & QStyle.State_Selected:
+            painter.fillRect(option.rect, dayu_theme.color.primary)
         painter.setRenderHint(QPainter.Antialiasing)
         painter.setPen(Qt.NoPen)
         painter.setBrush(QBrush(Qt.white))
-        pix = MPixmap('down_fill.svg')
+        pix = MPixmap('down_fill.svg', dayu_theme.color.icon)
         h = option.rect.height()
         pix = pix.scaledToWidth(h * 0.5, Qt.SmoothTransformation)
         painter.drawPixmap(option.rect.x() + option.rect.width() - h,
                            option.rect.y() + h / 4, pix)
         painter.restore()
+        super(MOptionDelegate, self).paint(painter, option, index)
 
     @Slot(object)
     def _slot_finish_edit(self, obj):
@@ -218,23 +124,22 @@ class MTableView(QTableView):
 
     def __init__(self, size=None, show_row_count=False, parent=None):
         super(MTableView, self).__init__(parent)
-        size = size or MView.DefaultSize
-        ver_header_view = self.verticalHeader()
-        ver_header_view.setDefaultSectionSize(global_theme.get(size + '_size'))
+        size = size or dayu_theme.default_size
+        ver_header_view = MHeaderView(Qt.Vertical, parent=self)
+        ver_header_view.setDefaultSectionSize(size)
+        self.setVerticalHeader(ver_header_view)
         self.header_list = []
-        self.header_view = MHeaderView(Qt.Horizontal)
-        self.header_view.setProperty('line_size', size)
+        self.header_view = MHeaderView(Qt.Horizontal, parent=self)
+        self.header_view.setFixedHeight(size)
         if not show_row_count:
             ver_header_view.hide()
         else:
             ver_header_view.setProperty('orientation', 'vertical')
-            ver_header_view.setStyleSheet(self.header_view.styleSheet())
         self.setHorizontalHeader(self.header_view)
         self.setSortingEnabled(True)
         self.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.setAlternatingRowColors(True)
         self.setShowGrid(False)
-        self.setStyleSheet(qss)
 
     def setShowGrid(self, flag):
         self.header_view.setProperty('grid', flag)
@@ -307,7 +212,6 @@ class MTreeView(QTreeView):
         self.setHeader(self.header_view)
         self.setSortingEnabled(True)
         self.setAlternatingRowColors(True)
-        self.setStyleSheet(qss)
 
 
 class MBigView(QListView):
@@ -325,7 +229,6 @@ class MBigView(QListView):
         self.setMovement(QListView.Static)
         self.setSpacing(10)
         self.setIconSize(QSize(128, 128))
-        self.setStyleSheet(qss)
 
     def wheelEvent(self, event):
         if event.modifiers() == Qt.ControlModifier:
@@ -354,7 +257,6 @@ class MListView(QListView):
         self.header_view = None
         self.setModelColumn(0)
         self.setAlternatingRowColors(True)
-        self.setStyleSheet(qss)
 
     def set_show_column(self, attr):
         for index, attr_dict in enumerate(self.header_list):
