@@ -6,12 +6,11 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.mixin import property_mixin, theme_mixin
+from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
 
 
 @property_mixin
-@theme_mixin
 class MBadge(QWidget):
     '''
     props:

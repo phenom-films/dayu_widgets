@@ -12,12 +12,11 @@ from dayu_widgets.MAvatar import MAvatar
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.mixin import property_mixin, theme_mixin
+from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
 
 
 @property_mixin
-@theme_mixin
 class MAlert(QWidget):
     '''
     自定义 props:
@@ -62,7 +61,7 @@ class MAlert(QWidget):
     def _set_type(self, value):
         self._icon_label.set_image(
             MPixmap('{}_fill.svg'.format(self.property('type')), dayu_theme.color.get(self.property('type'))))
-        self.polish()
+        self.style().polish(self)
 
     def set_type(self, value):
         self.setProperty('type', value or MAlert.InfoType)

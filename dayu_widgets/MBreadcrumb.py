@@ -8,11 +8,9 @@
 
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
-@theme_mixin
 class MBreadcrumb(QWidget):
     def __init__(self, separator='/', size=None, parent=None):
         super(MBreadcrumb, self).__init__(parent)
