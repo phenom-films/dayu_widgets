@@ -8,18 +8,20 @@
 
 import collections
 import datetime as dt
-import os
-
-from singledispatch import singledispatch
 
 from qt import *
+from singledispatch import singledispatch
 
-MenuEvent = collections.namedtuple('MenuEvent', ['view', 'selection', 'extra'])
+ItemViewMenuEvent = collections.namedtuple('ItemViewMenuEvent', ['view', 'selection', 'extra'])
 
 
-# default_qss_file = request_file('qss/main.qss')
-# with open(default_qss_file, 'r+') as f:
-#     default_qss = f.read().replace('url(', 'url({}/'.format(os.path.dirname(default_qss_file).replace('\\', '/')))
+def get_static_file(path):
+    from dayu_widgets import STATIC_FOLDERS
+    full_path = next((os.path.join(prefix, path) for prefix in [''] + STATIC_FOLDERS if
+                      os.path.isfile(os.path.join(prefix, path))), path)
+    if os.path.isfile(full_path):
+        return full_path
+    return None
 
 
 def from_list_to_nested_dict(input, sep='/'):
@@ -37,41 +39,6 @@ def from_list_to_nested_dict(input, sep='/'):
             if i == component_count - 1:
                 atom.pop('children')
     return result
-
-
-# def dayu_css(css_content=None):
-#     def wrapper1(func):
-#         def new_init(*args, **kwargs):
-#             result = func(*args, **kwargs)
-#             instance = args[0]
-#             instance.setStyleSheet(css_content if css_content else default_qss)
-#             return result
-#
-#         return new_init
-#
-#     return wrapper1
-#
-
-def show_loading():
-    def wrapper1(waste_time_func):
-        def new_init(*args, **kwargs):
-            from loading_widget import MLoadingWidget, MLoadingThread
-            instance = args[0]
-            loading_widget = MLoadingWidget(instance)
-            print instance.pos(), instance.mapFromParent(instance.pos()), instance.mapToGlobal(instance.pos())
-            start_point = instance.pos()  # instance.mapToGlobal(instance.pos())
-            loading_widget.setGeometry(start_point.x(), start_point.y(), instance.width(), instance.height())
-            loading_widget.show()
-            th = MLoadingThread(instance)
-            th.set_func(waste_time_func, *args, **kwargs)
-            th.sig_finished.connect(getattr(instance, waste_time_func.__name__ + '_finished'))
-            th.finished.connect(loading_widget.close)
-            th.start()
-            return
-
-        return new_init
-
-    return wrapper1
 
 
 @singledispatch
@@ -206,8 +173,7 @@ def _(data_obj):
 
 @icon_formatter.register(object)
 def _(data_obj):
-    setting_list = [('icon', '{}'), ('thumbnail_path', '{}'), ('meaning', 'icon-{}.png'),
-                    ('__tablename__', 'icon-{}.png')]
+    setting_list = [('icon', '{}'), ('thumbnail_path', '{}'), ('__tablename__', 'entity_{}.svg')]
     for attr, formatter in setting_list:
         path = get_obj_value(data_obj, attr)
         if path:
@@ -233,3 +199,14 @@ def dump_structure(obj, spaceCount):
 
     for child in obj.children():
         dump_structure(child, spaceCount + 4)
+
+
+if __name__ == '__main__':
+    import sys
+    from dayu_widgets import MComboBox
+
+    app = QApplication(sys.argv)
+    button = MComboBox()
+    dump_structure(button, 4)
+    button.show()
+    sys.exit(app.exec_())
