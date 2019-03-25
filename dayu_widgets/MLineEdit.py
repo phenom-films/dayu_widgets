@@ -10,7 +10,7 @@ import functools
 
 from dayu_widgets.MBrowser import MClickBrowserFileToolButton, MClickBrowserFolderToolButton
 from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets.MTheme import dayu_theme
+from dayu_widgets import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *

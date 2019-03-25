@@ -13,7 +13,7 @@ from dayu_widgets.MCheckBox import MCheckBox
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MLineEdit import MLineEdit
-from dayu_widgets.MTheme import dayu_theme
+from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
 

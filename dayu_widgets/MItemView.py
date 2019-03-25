@@ -8,7 +8,8 @@
 import dayu_widgets.utils as utils
 from dayu_widgets.MHeaderView import MHeaderView
 from dayu_widgets.MMenu import MMenu
-from dayu_widgets.MTheme import dayu_theme
+from dayu_widgets import dayu_theme
+from dayu_widgets.mixin import loading_mixin
 from dayu_widgets.qt import *
 
 
@@ -112,13 +113,13 @@ def slot_context_menu(self, point):
         for index in self.selectionModel().selectedRows() or self.selectionModel().selectedIndexes():
             data_obj = self.model().mapToSource(index).internalPointer() if need_map else index.internalPointer()
             selection.append(data_obj)
-        event = utils.MenuEvent(view=self, selection=selection, extra={})
+        event = utils.ItemViewMenuEvent(view=self, selection=selection, extra={})
         self.sig_context_menu.emit(event)
     else:
-        event = utils.MenuEvent(view=self, selection=[], extra={})
+        event = utils.ItemViewMenuEvent(view=self, selection=[], extra={})
         self.sig_context_menu.emit(event)
 
-
+@loading_mixin
 class MTableView(QTableView):
     sig_context_menu = Signal(object)
 

@@ -8,7 +8,7 @@
 
 from dayu_widgets.MAvatar import MAvatar
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MTheme import dayu_theme
+from dayu_widgets import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
