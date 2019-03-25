@@ -7,91 +7,8 @@
 ###################################################################
 
 import dayu_widgets.utils as utils
-from dayu_widgets import STATIC_FOLDERS
-from dayu_widgets.MTheme import global_theme
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
-
-qss = '''
-QMenu {{
-    {text_font}
-    background-color: {background};
-    padding: 0;
-    border-radius: 2px;
-    border: 1px solid {border};
-}} 
-QMenu[checked=true]{{
-    color: {primary};
-    background-color: {background_selected};
-}}
-QMenu::item {{
-    padding: 2px 2px;
-}}
-QMenu::item {{
-    padding: 8px auto;
-}}
-QMenu::item:checked  {{
-    color: {primary};
-    background-color: {background_selected};
-}}
-QMenu::item:selected  {{
-    background-color: {background_selected};
-}}
-
-QMenu::indicator {{
-    left: 6px;
-}}
-QMenu::indicator:non-exclusive {{
-    width: 13px;
-    height: 13px;
-    border-radius: 2px;
-    border: 1px solid {border};
-    background-color: white;
-}}
-QMenu::indicator:non-exclusive:disabled{{
-    border: 1px solid {border};
-    background-color: {background_selected};
-}}
-QMenu::indicator:non-exclusive:hover {{
-    border: 1px solid {primary_light};
-    background-color: white;
-}}
-
-QMenu::indicator:non-exclusive:checked {{
-    background-color: {primary};
-    image: url(check.svg);
-}}
-QMenu::indicator:non-exclusive:checked:disabled{{
-    background-color: {disabled};
-}}
-
-QMenu::indicator:exclusive {{
-    width: 14px;
-    height: 14px;
-    border-radius: 8px;
-    border: 1px solid {border};
-    background-color: white;
-}}
-
-QMenu::indicator:exclusive:disabled{{
-    border: 1px solid {border};
-    background-color: {background_selected};
-}}
-
-QMenu::indicator:exclusive:hover {{
-    border: 1px solid {primary_light};
-    background-color: white;
-}}
-
-QMenu::indicator:exclusive:checked {{
-    background-color: {primary};
-    image: url(circle.svg);
-}}
-QMenu::indicator:exclusive:checked:disabled{{
-    background-color: {disabled};
-}}
-'''.format(**global_theme)
-qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
 
 
 @property_mixin
@@ -109,7 +26,6 @@ class MMenu(QMenu):
         self.set_value('')
         self.set_data([])
         self.set_separator('/')
-        self.setStyleSheet(qss)
 
     def set_separator(self, chr):
         self.setProperty('separator', chr)
@@ -145,7 +61,7 @@ class MMenu(QMenu):
 
     def _add_menu(self, parent_menu, data_dict):
         if 'children' in data_dict:
-            menu = QMenu(title=data_dict.get('label'), parent=self)
+            menu = MMenu(title=data_dict.get('label'), parent=self)
             menu.setProperty('value', data_dict.get('value'))
             parent_menu.addMenu(menu)
             if not (parent_menu is self):
