@@ -18,13 +18,6 @@ except:
 import os
 
 
-class MView(object):
-    LargeSize = 'large'
-    DefaultSize = 'default'
-    SmallSize = 'small'
-    TinySize = 'tiny'
-
-
 class MCacheDict(object):
     _render = QSvgRenderer()
 
@@ -34,6 +27,8 @@ class MCacheDict(object):
         self._cache_pix_dict = {}
 
     def _render_svg(self, svg_path, replace_color=None):
+        from dayu_widgets import dayu_theme
+        replace_color = replace_color or dayu_theme.color.icon
         if (self.cls is QIcon) and (replace_color is None):
             return QIcon(svg_path)
         with open(svg_path, 'r+') as f:
