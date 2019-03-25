@@ -6,14 +6,14 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+from dayu_widgets.MBrowser import MDragFileButton
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MSequenceFile import MSequenceFile
-from dayu_widgets.MBrowser import MDragFileButton
-from dayu_widgets.MLabel import MLabel
-
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MSequenceFileTest(QWidget):
     def __init__(self, parent=None):
         super(MSequenceFileTest, self).__init__(parent)

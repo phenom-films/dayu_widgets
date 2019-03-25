@@ -9,10 +9,11 @@
 import functools
 
 from dayu_path import DayuPath
+from dayu_widgets.MCheckBox import MCheckBox
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MLineEdit import MLineEdit
-from dayu_widgets.MCheckBox import MCheckBox
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
 
@@ -29,7 +30,7 @@ class MSequenceFile(QWidget, MFieldMixin):
     def __init__(self, size=None, parent=None):
         super(MSequenceFile, self).__init__(parent)
         self.sequence_obj = None
-        size = size or MView.SmallSize
+        size = size or dayu_theme.size.small
         self._file_label = MLineEdit(size=size)
         self._file_label.setReadOnly(True)
         self._is_sequence_check_box = MCheckBox('Sequence')
