@@ -6,15 +6,15 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.mixin import theme_mixin
-from dayu_widgets.MTheme import dayu_theme
-from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.MBrowser import MClickBrowserFilePushButton, MClickBrowserFileToolButton, \
     MClickBrowserFolderPushButton, MClickBrowserFolderToolButton, \
     MDragFileButton, MDragFolderButton
+from dayu_widgets.MDivider import MDivider
+from dayu_widgets.MFieldMixin import MFieldMixin
+from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.MTheme import dayu_theme
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
@@ -36,17 +36,17 @@ class MBrowserTest(QWidget, MFieldMixin):
 
         browser_4 = MClickBrowserFileToolButton()
         label_4 = MLabel()
-        label_4.set_elide_mode(Qt.ElideRight)
+        label_4.set_elide_mode(Qt.ElideMiddle)
         browser_4.sig_file_changed.connect(label_4.setText)
 
         browser_5 = MClickBrowserFolderToolButton()
         label_5 = MLabel()
-        label_5.set_elide_mode(Qt.ElideRight)
+        label_5.set_elide_mode(Qt.ElideMiddle)
         browser_5.sig_folder_changed.connect(label_5.setText)
 
         browser_6 = MDragFileButton(text='Click or drag file here')
         label_6 = MLabel()
-        label_6.set_elide_mode(Qt.ElideRight)
+        label_6.set_elide_mode(Qt.ElideMiddle)
         browser_6.sig_file_changed.connect(label_6.setText)
 
         browser_7 = MDragFolderButton(text='Click or drag folder here')
@@ -82,10 +82,6 @@ class MBrowserTest(QWidget, MFieldMixin):
         main_lay.addWidget(browser_8_label)
         main_lay.addStretch()
         self.setLayout(main_lay)
-
-    @Slot()
-    def slot_prefix_button_clicked(self):
-        print 'prefix button clicked'
 
 
 if __name__ == '__main__':

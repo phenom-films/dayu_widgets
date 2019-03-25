@@ -8,7 +8,7 @@
 
 from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.mixin import property_mixin, cursor_mixin, theme_mixin
+from dayu_widgets.mixin import property_mixin, cursor_mixin
 from dayu_widgets.qt import *
 
 
@@ -86,7 +86,6 @@ class MClickBrowserFileToolButton(MToolButton):
 
 
 @property_mixin
-@theme_mixin
 @cursor_mixin
 class MDragFileButton(QToolButton):
     sig_file_changed = Signal(str)
@@ -205,7 +204,6 @@ class MClickBrowserFolderToolButton(MToolButton):
 
 
 @property_mixin
-@theme_mixin
 @cursor_mixin
 class MDragFolderButton(QToolButton):
     sig_folder_changed = Signal(str)
