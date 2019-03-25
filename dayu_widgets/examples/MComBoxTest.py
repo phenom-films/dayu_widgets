@@ -6,14 +6,15 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import *
-from dayu_widgets.MLabel import MLabel
+import random
+
 from dayu_widgets.MComboBox import MComboBox
-from dayu_widgets.MMenu import MMenu
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
-
-import random
+from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MMenu import MMenu
+from dayu_widgets.MTheme import dayu_theme
+from dayu_widgets.qt import *
 
 
 class MComBoxTest(QWidget, MFieldMixin):
@@ -25,15 +26,17 @@ class MComBoxTest(QWidget, MFieldMixin):
         self.register_field('button1_selected', u'北京')
         menu1 = MMenu()
         menu1.set_data([u'北京', u'上海', u'广州', u'深圳'])
-        select1 = MComboBox()
-        select1.set_menu(menu1)
-        select1_small = MComboBox(size=MView.SmallSize)
-        select1_small.set_menu(menu1)
-        select1_large = MComboBox(size=MView.LargeSize)
-        select1_large.set_menu(menu1)
-        self.bind('button1_selected', select1, 'value', signal='sig_value_changed')
-        self.bind('button1_selected', select1_small, 'value', signal='sig_value_changed')
-        self.bind('button1_selected', select1_large, 'value', signal='sig_value_changed')
+        size_list = [('Huge', dayu_theme.size.huge),
+                     ('Large', dayu_theme.size.large),
+                     ('Medium', dayu_theme.size.medium),
+                     ('Small', dayu_theme.size.small),
+                     ('Tiny', dayu_theme.size.tiny)]
+        size_lay = QHBoxLayout()
+        for label, size in size_list:
+            combo_box = MComboBox(size=size)
+            combo_box.set_menu(menu1)
+            size_lay.addWidget(combo_box)
+            self.bind('button1_selected', combo_box, 'value', signal='sig_value_changed')
 
         self.register_field('button2_selected', [u'北京'])
         menu2 = MMenu(exclusive=False)
@@ -87,10 +90,8 @@ class MComBoxTest(QWidget, MFieldMixin):
         self.bind('button5_selected', select5, 'value', signal='sig_value_changed')
 
         sub_lay1 = QHBoxLayout()
-        sub_lay1.addWidget(MLabel(u'普通单选'))
-        sub_lay1.addWidget(select1_large)
-        sub_lay1.addWidget(select1)
-        sub_lay1.addWidget(select1_small)
+        sub_lay1.addWidget(MLabel(u'普通单选各种尺寸'))
+        sub_lay1.addLayout(size_lay)
         sub_lay1.addStretch()
         sub_lay2 = QHBoxLayout()
         sub_lay2.addWidget(MLabel(u'多选'))
@@ -127,5 +128,7 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     test = MComBoxTest()
+    from dayu_widgets.MTheme import apply_theme
+    apply_theme(test)
     test.show()
     sys.exit(app.exec_())

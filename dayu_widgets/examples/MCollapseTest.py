@@ -8,10 +8,8 @@
 
 from dayu_widgets.MCollapse import MCollapse
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
-@theme_mixin
 class MCollapseTest(QWidget):
     def __init__(self, parent=None):
         super(MCollapseTest, self).__init__(parent)
@@ -52,5 +50,7 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     test = MCollapseTest()
+    from dayu_widgets.MTheme import apply_theme
+    apply_theme(test)
     test.show()
     sys.exit(app.exec_())

@@ -9,11 +9,9 @@
 from dayu_widgets.MBrowser import MDragFileButton
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MSequenceFile import MSequenceFile
-from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
-@theme_mixin
 class MSequenceFileTest(QWidget):
     def __init__(self, parent=None):
         super(MSequenceFileTest, self).__init__(parent)
@@ -42,5 +40,7 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     test = MSequenceFileTest()
+    from dayu_widgets.MTheme import apply_theme
+    apply_theme(test)
     test.show()
     sys.exit(app.exec_())

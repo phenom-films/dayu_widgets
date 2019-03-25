@@ -1,118 +1,10 @@
 import importlib
 
-from dayu_widgets import STATIC_FOLDERS
 from dayu_widgets.MButtonGroup import MToolButtonGroup
 from dayu_widgets.MDockWidget import MDockWidget
-from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MTheme import dayu_theme, theme_mixin
+from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.qt import *
-
-qss = '''
-QScrollBar:horizontal {{
-    border: 0 solid {border};
-    height: 9px;
-    margin: 0 32px 0 0;
-    background-color: {border};
-}}
-
-QScrollBar::handle:horizontal {{
-    background-color: {background_dark};
-    min-width: 10px;
-}}
-
-QScrollBar::add-line:horizontal {{
-    subcontrol-origin: margin;
-    subcontrol-position: right center;
-    background: {border};
-    width: 15px;
-}}
-
-QScrollBar::sub-line:horizontal {{
-    subcontrol-origin: margin;
-    subcontrol-position: right center;
-    background: {border};
-    width: 15px;
-    right: 16px;
-}}
-
-QScrollBar::left-arrow:horizontal {{
-    width: 9px;
-    height: 9px;
-    position: relative;
-    image: url(left_fill.svg)
-}}
-
-QScrollBar::right-arrow:horizontal {{
-    width: 9px;
-    height: 9px;
-    position: relative;
-    image: url(right_fill.svg)
-}}
-
-QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {{
-    background: none;
-}}
-
-QScrollBar:vertical {{
-    border: 0 solid {border};
-    width: 9px;
-    margin: 0 0 32px 0 ;
-    background-color: {border};
-}}
-
-QScrollBar::handle:vertical {{
-    background-color: {background_dark};
-    min-height: 10px;
-}}
-
-QScrollBar::add-line:vertical {{
-    subcontrol-origin: margin;
-    subcontrol-position: center bottom;
-    background: {border};
-    height: 15px;
-}}
-
-QScrollBar::sub-line:vertical {{
-    subcontrol-origin: margin;
-    subcontrol-position: center bottom;
-    background: {border};
-    height: 15px;
-    bottom: 16px;
-}}
-
-QScrollBar::up-arrow:vertical {{
-    width: 9px;
-    height: 9px;
-    position: relative;
-    image: url(up_fill.svg)
-}}
-
-QScrollBar::down-arrow:vertical {{
-    width: 9px;
-    height: 9px;
-    position: relative;
-    image: url(down_fill.svg)
-}}
-
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {{
-    background: none;
-}}
-
-QSplitter::handle {{
-    background-color: {border};
-    image: url(splitter.svg);
-}}
-
-QSplitter::handle:horizontal {{
-    width: 2px;
-}}
-
-QSplitter::handle:vertical {{
-    height: 2px;
-}}
-
-'''.format(**global_theme)
-qss = qss.replace('url(', 'url({}/'.format(STATIC_FOLDERS[0].replace('\\', '/')))
-
 
 
 def get_test_widget():
@@ -129,27 +21,30 @@ def get_test_widget():
     return result
 
 
+@theme_mixin
 class MDemo(QMainWindow):
     def __init__(self, parent=None):
         super(MDemo, self).__init__(parent)
         self.setWindowTitle('Dayu Widgets Demo')
-        self.setStyleSheet(qss)
         self._init_ui()
 
     def _init_ui(self):
         self.text_edit = QTextEdit()
         self.stacked_widget = QStackedWidget()
 
-        list_widget = MToolButtonGroup(orientation=Qt.Vertical, size=MView.SmallSize, icon_only=False, checkable=True,
+        list_widget = MToolButtonGroup(orientation=Qt.Vertical,
+                                       size=dayu_theme.size.small,
+                                       type=MToolButton.TaoBaoType,
+                                       exclusive=True,
                                        parent=self)
-        list_widget.get_button_group().buttonClicked[int].connect(self.slot_change_widget)
+        list_widget.sig_checked_changed.connect(self.slot_change_widget)
         data_list = []
         for index, (name, cls, code) in enumerate(get_test_widget()):
-            data_list.append({'text': name, 'data': code})
-            list_widget.add_button({'text': name, 'data': code}, index)
+            data_list.append({'text': name, 'data': code, 'checkable': True})
             widget = cls()
             widget.setProperty('code', code)
             self.stacked_widget.addWidget(widget)
+        list_widget.set_button_list(data_list)
         list_widget.set_checked(0)
 
         left_widget = QWidget()
@@ -160,7 +55,7 @@ class MDemo(QMainWindow):
         scroll_area.setWidget(left_widget)
 
         test_widget = MDockWidget('Example List')
-        test_widget.setWidget(scroll_area)
+        test_widget.setWidget(left_widget)
         self.addDockWidget(Qt.LeftDockWidgetArea, test_widget)
 
         code_widget = MDockWidget('Example Code')

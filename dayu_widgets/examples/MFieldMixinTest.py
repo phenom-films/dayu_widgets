@@ -79,5 +79,7 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     test = MFieldMixinTest()
+    from dayu_widgets.MTheme import apply_theme
+    apply_theme(test)
     test.show()
     sys.exit(app.exec_())

@@ -13,12 +13,10 @@ from dayu_widgets.MButtonGroup import MPushButtonGroup
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.qt import *
 
 
-@theme_mixin
 class MAlertTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MAlertTest, self).__init__(parent)
@@ -61,8 +59,9 @@ class MAlertTest(QWidget, MFieldMixin):
 
 if __name__ == '__main__':
     import sys
-
+    from dayu_widgets.MTheme import apply_theme
     app = QApplication(sys.argv)
     test = MAlertTest()
+    apply_theme(test)
     test.show()
     sys.exit(app.exec_())

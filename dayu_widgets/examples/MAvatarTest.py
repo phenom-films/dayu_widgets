@@ -12,11 +12,9 @@ from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.MTheme import dayu_theme
-from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
-@theme_mixin
 class MAvatarTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MAvatarTest, self).__init__(parent)
@@ -60,8 +58,9 @@ class MAvatarTest(QWidget, MFieldMixin):
 
 if __name__ == '__main__':
     import sys
-
     app = QApplication(sys.argv)
     test = MAvatarTest()
+    from dayu_widgets.MTheme import apply_theme
+    apply_theme(test)
     test.show()
     sys.exit(app.exec_())

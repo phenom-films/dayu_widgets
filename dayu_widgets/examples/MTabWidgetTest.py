@@ -9,11 +9,9 @@ from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MMessage import MMessage
 from dayu_widgets.MTabWidget import MTabWidget
-from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
-@theme_mixin
 class MTabWidgetTest(QWidget):
     def __init__(self, parent=None):
         super(MTabWidgetTest, self).__init__(parent)
@@ -73,5 +71,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     test = MTabWidgetTest()
 
+    from dayu_widgets.MTheme import apply_theme
+    apply_theme(test)
     test.show()
     sys.exit(app.exec_())

@@ -12,10 +12,9 @@ from dayu_widgets.MButtonGroup import MRadioButtonGroup
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
-@theme_mixin
+
 class MRadioButtonGroupTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MRadioButtonGroupTest, self).__init__(parent)
@@ -96,5 +95,7 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     test = MRadioButtonGroupTest()
+    from dayu_widgets.MTheme import apply_theme
+    apply_theme(test)
     test.show()
     sys.exit(app.exec_())

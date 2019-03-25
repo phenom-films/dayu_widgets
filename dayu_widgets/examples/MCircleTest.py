@@ -13,12 +13,10 @@ from dayu_widgets.MCircle import MCircle
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.qt import *
 
 
-@theme_mixin
 class MCircleTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MCircleTest, self).__init__(parent)
@@ -103,5 +101,7 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     test = MCircleTest()
+    from dayu_widgets.MTheme import apply_theme
+    apply_theme(test)
     test.show()
     sys.exit(app.exec_())
