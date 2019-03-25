@@ -6,12 +6,11 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.mixin import property_mixin, theme_mixin
+from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
 
 
 @property_mixin
-@theme_mixin
 class MLabel(QLabel):
     '''
     自定义 props:
@@ -33,7 +32,7 @@ class MLabel(QLabel):
 
     def _set_link(self, value):
         self.setCursor(Qt.PointingHandCursor if value else Qt.ArrowCursor)
-        self.polish()
+        self.style().polish(self)
 
     def set_link(self, value):
         self.setProperty('link', value)
@@ -49,7 +48,7 @@ class MLabel(QLabel):
         if self.elide_mode is None:
             return QLabel.paintEvent(self, event)
         else:
-            # TODO: no interaction( can't select text)
+            # TODO: can not interaction( can't select text)
             _text = self.text()
             if not _text:
                 return
