@@ -10,12 +10,11 @@ from dayu_widgets.MAvatar import MAvatar
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.mixin import property_mixin, theme_mixin
+from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
 
 
 @property_mixin
-@theme_mixin
 class MMessage(QWidget):
     '''
     自定义 props:
@@ -61,19 +60,12 @@ class MMessage(QWidget):
         self._main_lay.addWidget(self._close_button)
         self.setLayout(self._main_lay)
 
-        self.set_type(type or MMessage.InfoType)
+        type = type or MMessage.InfoType
+        self._icon_label.set_image(MPixmap('{}_fill.svg'.format(type), dayu_theme.color.get(type)))
         timer = QTimer(self)
         timer.timeout.connect(self.close)
         timer.setInterval(config.get('duration', self.default_config.get('duration')) * 1000)
         timer.start()
-
-    def _set_type(self, value):
-        self._icon_label.set_image(
-            MPixmap('{}_fill.svg'.format(self.property('type')), dayu_theme.color.get(self.property('type'))))
-        self.polish()
-
-    def set_type(self, value):
-        self.setProperty('type', value or MMessage.InfoType)
 
     @classmethod
     def _show(cls, config, type, parent):

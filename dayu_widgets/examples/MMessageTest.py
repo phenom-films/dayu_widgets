@@ -14,9 +14,11 @@ from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MMessage import MMessage
 from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MMessageTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MMessageTest, self).__init__(parent)
