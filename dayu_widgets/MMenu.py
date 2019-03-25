@@ -8,10 +8,12 @@
 
 import dayu_widgets.utils as utils
 from dayu_widgets.mixin import property_mixin
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.qt import *
 
 
 @property_mixin
+@dayu_theme.deco
 class MMenu(QMenu):
     sig_value_changed = Signal(list)
 

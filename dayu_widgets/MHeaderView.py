@@ -10,11 +10,11 @@ import functools
 
 import dayu_widgets.utils as utils
 from dayu_widgets.MMenu import MMenu
-from dayu_widgets.mixin import theme_mixin
+from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.qt import *
 
 
-@theme_mixin
+@dayu_theme.deco
 class MHeaderView(QHeaderView):
     def __init__(self, orientation, parent=None):
         super(MHeaderView, self).__init__(orientation, parent)
