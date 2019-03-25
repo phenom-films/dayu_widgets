@@ -12,9 +12,10 @@ from dayu_widgets.MButtonGroup import MRadioButtonGroup
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
-
+@theme_mixin
 class MRadioButtonGroupTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MRadioButtonGroupTest, self).__init__(parent)
@@ -23,6 +24,9 @@ class MRadioButtonGroupTest(QWidget, MFieldMixin):
     def _init_ui(self):
         radio_group_h = MRadioButtonGroup()
         radio_group_h.set_button_list(['Apple', {'text': 'Banana'}, {'text': 'Pear'}])
+        radio_grp_1_lay = QHBoxLayout()
+        radio_grp_1_lay.addWidget(radio_group_h)
+        radio_grp_1_lay.addStretch()
 
         app_data = [
             {'text': 'Maya', 'icon': MIcon('app-maya.png')},
@@ -35,39 +39,42 @@ class MRadioButtonGroupTest(QWidget, MFieldMixin):
 
         radio_group_button_h = MRadioButtonGroup()
         radio_group_button_h.set_button_list(app_data)
+        radio_grp_h_lay = QHBoxLayout()
+        radio_grp_h_lay.addWidget(radio_group_button_h)
+        radio_grp_h_lay.addStretch()
 
         radio_group_button_v = MRadioButtonGroup(orientation=Qt.Vertical)
         radio_group_button_v.set_button_list(app_data)
 
         self.register_field('value1', -1)
         self.register_field('value1_text', functools.partial(self.value_to_text, 'value1', app_data))
-        # self.register_field('value2', 0)
-        # self.register_field('value2_text', functools.partial(self.value_to_text, 'value2', app_data))
+        self.register_field('value2', 0)
+        self.register_field('value2_text', functools.partial(self.value_to_text, 'value2', app_data))
         self.register_field('value3', -1)
         self.register_field('value3_text', functools.partial(self.value_to_text, 'value3', app_data))
 
-        button1 = MPushButton(text='Group 1', type=MPushButton.PrimaryType)
-        button2 = MPushButton(text='Group 2', type=MPushButton.PrimaryType)
-        button3 = MPushButton(text='Group 3', type=MPushButton.PrimaryType)
+        button1 = MPushButton(text='Group 1')
+        button2 = MPushButton(text='Group 2')
+        button3 = MPushButton(text='Group 3')
         button1.clicked.connect(functools.partial(self.slot_change_value, 'value1'))
         button2.clicked.connect(functools.partial(self.slot_change_value, 'value2'))
         button3.clicked.connect(functools.partial(self.slot_change_value, 'value3'))
 
         self.bind('value1', radio_group_v, 'checked', signal='sig_checked_changed')
-        # self.bind('value2', radio_group_button_h, 'checked', signal='sig_checked_changed')
+        self.bind('value2', radio_group_button_h, 'checked', signal='sig_checked_changed')
         self.bind('value3', radio_group_button_v, 'checked', signal='sig_checked_changed')
         self.bind('value1_text', button1, 'text')
-        # self.bind('value2_text', button2, 'text')
+        self.bind('value2_text', button2, 'text')
         self.bind('value3_text', button3, 'text')
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('MRadioButtonGroup: orientation=Qt.Horizontal '))
-        main_lay.addWidget(radio_group_h)
+        main_lay.addLayout(radio_grp_1_lay)
         main_lay.addWidget(MDivider('MRadioButtonGroup: orientation=Qt.Vertical'))
         main_lay.addWidget(radio_group_v)
         main_lay.addWidget(button1)
         main_lay.addWidget(MDivider('MRadioButtonGroup: orientation=Qt.Horizontal type=button'))
-        main_lay.addWidget(radio_group_button_h)
+        main_lay.addLayout(radio_grp_h_lay)
         main_lay.addWidget(button2)
         main_lay.addWidget(MDivider('MRadioButtonGroup: orientation=Qt.Vertical, type=button'))
         main_lay.addWidget(radio_group_button_v)
