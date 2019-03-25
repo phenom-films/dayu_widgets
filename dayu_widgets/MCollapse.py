@@ -2,20 +2,20 @@
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
-# Date  : 2018.5
+# Date  : 2019.3
 # Email : muyanru345@163.com
 ###################################################################
+
 import functools
 
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MTheme import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.mixin import property_mixin, theme_mixin
+from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
 
 
 @property_mixin
-@theme_mixin
 class MSectionItem(QWidget):
     sig_context_menu = Signal(object)
 
@@ -105,9 +105,6 @@ class MCollapse(QWidget):
     def __init__(self, parent=None):
         super(MCollapse, self).__init__(parent)
         self._section_list = []
-        self._init_ui()
-
-    def _init_ui(self):
         self._main_layout = QVBoxLayout()
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         self._main_layout.setSpacing(1)
