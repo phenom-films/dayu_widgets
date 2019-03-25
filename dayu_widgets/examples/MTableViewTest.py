@@ -10,9 +10,8 @@ from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MItemModel import MTableModel, MSortFilterModel
 from dayu_widgets.MLineEdit import MLineEdit
 from dayu_widgets.MItemView import MTableView
-from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets.MMessage import MMessage
-from dayu_widgets.MTheme import global_theme
+from dayu_widgets.MTheme import dayu_theme
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
@@ -32,7 +31,7 @@ def h(*args):
             widget.setLayout(lay)
     return widget
 
-
+@theme_mixin
 class MTableViewTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MTableViewTest, self).__init__(parent)
@@ -90,12 +89,12 @@ class MTableViewTest(QWidget, MFieldMixin):
 
         def score_color(score, y):
             if score < 60:
-                return global_theme.get('error')
+                return dayu_theme.color.get('error')
             elif score < 80:
-                return global_theme.get('warning')
+                return dayu_theme.color.get('warning')
             elif score >= 90:
-                return global_theme.get('success')
-            return global_theme.get('info')
+                return dayu_theme.color.get('success')
+            return dayu_theme.color.get('info')
 
         header_list = [
             {
@@ -109,7 +108,7 @@ class MTableViewTest(QWidget, MFieldMixin):
                 'key': 'sex',
                 'searchable': True,
                 'selectable': True,
-                'icon': lambda x, y: ('{}.svg'.format(x.lower()), global_theme.get(x.lower()))
+                'icon': lambda x, y: ('{}.svg'.format(x.lower()), dayu_theme.color.get(x.lower()))
             }, {
                 'label': 'Age',
                 'key': 'age',
@@ -124,7 +123,7 @@ class MTableViewTest(QWidget, MFieldMixin):
                 'exclusive': False,
                 'width': 140,
                 'display': lambda x, y: ' & '.join(x) if isinstance(x, list) else x,
-                'bg_color': lambda x, y: 'transparent' if x else global_theme.get('error')
+                'bg_color': lambda x, y: 'transparent' if x else dayu_theme.color.get('error')
             }, {
                 'label': 'Score',
                 'key': 'score',
@@ -141,11 +140,11 @@ class MTableViewTest(QWidget, MFieldMixin):
                 'order': Qt.DescendingOrder
             },
         ]
-        table_1 = MTableView(size=MView.SmallSize, show_row_count=True)
-        table_2 = MTableView(size=MView.SmallSize, show_row_count=True)
+        table_1 = MTableView(size=dayu_theme.size.small, show_row_count=True)
+        table_2 = MTableView(size=dayu_theme.size.small, show_row_count=True)
         table_2.setShowGrid(True)
-        table_default = MTableView(size=MView.DefaultSize, show_row_count=True)
-        table_large = MTableView(size=MView.LargeSize, show_row_count=False)
+        table_default = MTableView(size=dayu_theme.size.medium, show_row_count=True)
+        table_large = MTableView(size=dayu_theme.size.large, show_row_count=False)
 
         model_1 = MTableModel()
         model_1.set_header_list(header_list)
@@ -166,7 +165,7 @@ class MTableViewTest(QWidget, MFieldMixin):
         table_large.set_header_list(header_list)
         model_1.set_data_list(data_list)
 
-        line_edit = MLineEdit.search(size=MView.SmallSize)
+        line_edit = MLineEdit.search(size=dayu_theme.size.small)
         line_edit.textChanged.connect(model_sort.set_search_pattern)
 
         main_lay = QVBoxLayout()
