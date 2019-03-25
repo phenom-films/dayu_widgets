@@ -322,6 +322,10 @@ MToolButton[type=bar]{{
     border-radius: 0;
     border:none;
 }}
+MToolButton[type=bar]:hover{{
+    color: {primary};
+    background-color:{background_selected};
+}}
 MToolButton[type=bar]:checked{{
     color: {primary};
     background-color:{background_selected};
@@ -346,19 +350,19 @@ MToolButton[combine=vertical]{{
     border-radius: 0;
 }}
 
-MToolButton[dayu_size="{huge}"]{{
+MToolButton[dayu_size="{huge}"], MPushButton[dayu_size="{huge}"]{{
     qproperty-iconSize: {huge_icon}px {huge_icon}px;
 }}
-MToolButton[dayu_size="{large}"]{{
+MToolButton[dayu_size="{large}"], MPushButton[dayu_size="{large}"]{{
     qproperty-iconSize: {large_icon}px {large_icon}px;
 }}
-MToolButton[dayu_size="{medium}"]{{
+MToolButton[dayu_size="{medium}"], MPushButton[dayu_size="{medium}"]{{
     qproperty-iconSize: {medium_icon}px {medium_icon}px;
 }}
-MToolButton[dayu_size="{small}"]{{
+MToolButton[dayu_size="{small}"], MPushButton[dayu_size="{small}"]{{
     qproperty-iconSize: {small_icon}px {small_icon}px;
 }}
-MToolButton[dayu_size="{tiny}"]{{
+MToolButton[dayu_size="{tiny}"], MPushButton[dayu_size="{tiny}"]{{
     qproperty-iconSize: {tiny_icon}px {tiny_icon}px;
 }}
 
@@ -398,6 +402,7 @@ MCheckBox:disabled {{
 }}
 
 
+MMenu::indicator:non-exclusive,
 MListView::indicator,
 MTreeView::indicator,
 MColumnView::indicator,
@@ -409,6 +414,7 @@ MCheckBox::indicator{{
     border: 1px solid {border};
     background-color: {in_background};
 }}
+MMenu::indicator:non-exclusive:disabled,
 MListView::indicator:disabled,
 MTreeView::indicator:disabled,
 MColumnView::indicator:disabled,
@@ -417,7 +423,7 @@ MCheckBox::indicator:disabled{{
     border: 1px solid {border};
     background-color: {background_selected};
 }}
-
+MMenu::indicator:non-exclusive:hover,
 MListView::indicator:hover,
 MTreeView::indicator:hover,
 MColumnView::indicator:hover,
@@ -426,7 +432,7 @@ MCheckBox::indicator:hover{{
     border: 1px solid {primary_light};
     background-color: {in_background};
 }}
-
+MMenu::indicator:non-exclusive:checked,
 MMListView::indicator:checked,
 MTreeView::indicator:checked,
 MColumnView::indicator:checked,
@@ -435,6 +441,7 @@ MCheckBox::indicator:checked{{
     background-color: {primary};
     image: {check};
 }}
+MMenu::indicator:non-exclusive:checked:disabled,
 MMListView::indicator:checked:disabled,
 MTreeView::indicator:checked:disabled,
 MColumnView::indicator:checked:disabled,
@@ -442,6 +449,7 @@ MTableView::indicator:checked:disabled,
 MCheckBox::indicator:checked:disabled{{
     background-color: {disabled};
 }}
+
 MMListView::indicator:indeterminate,
 MTreeView::indicator:indeterminate,
 MColumnView::indicator:indeterminate,
@@ -548,7 +556,7 @@ MPushButton[type=error]:pressed{{
 
 MPushButton:disabled{{
     color: {disabled};
-    border: 2px dashed {border};
+    border: 2px dashed {disabled};
     padding: none;
     background-color: {background};
 }}
@@ -571,28 +579,30 @@ MRadioButton:disabled {{
     color: {disabled};
 }}
 
+MMenu::indicator:exclusive,
 MRadioButton::indicator{{
     width: 14px;
     height: 14px;
     border-radius: 8px;
     border: 1px solid {border};
-    background-color: white;
+    background-color: {in_background};
 }}
+MMenu::indicator:exclusive:disabled,
 MRadioButton::indicator:disabled{{
     border: 1px solid {border};
     background-color: {background_selected};
 }}
 
+MMenu::indicator:exclusive:hover,
 MRadioButton::indicator:hover{{
     border: 1px solid {primary_light};
-    background-color: white;
 }}
-
+MMenu::indicator:exclusive:checked,
 MRadioButton::indicator:checked{{
     background-color: {primary};
     image: {circle};
 }}
-
+MMenu::indicator:exclusive:checked:disabled,
 MRadioButton::indicator:checked:disabled{{
     background-color: {disabled};
 }}
@@ -646,7 +656,7 @@ MSwitch::indicator:disabled{{
 
 MComboBox{{
     border: 1px solid {border};
-    background-color: {out_background};
+    background-color: {in_background};
 }}
 QCombBox > QLineEdit{{
     background-color: red;
@@ -802,18 +812,18 @@ MTabBar[type=card]::tab:hover {{
     color: {primary};
 }}
 
-QHeaderView {{
+MHeaderView {{
     background-color: {background_selected};
     {h3}
 }}
-QHeaderView::section{{
+MHeaderView::section{{
     background-color: {background_selected};
     border: 0 solid {border};
     padding: 1px 6px;
 }}
 
 
-QHeaderView[grid=true][orientation=horizontal]::section{{
+MHeaderView[grid=true][orientation=horizontal]::section{{
     border-right: 1px solid {border};
     border-left: none;
     border-top: none;
@@ -821,21 +831,21 @@ QHeaderView[grid=true][orientation=horizontal]::section{{
 }}
 
 
-QHeaderView[grid=true][orientation=vertical]::section{{
+MHeaderView[grid=true][orientation=vertical]::section{{
     border-bottom: 1px solid {border};
     border-right: none;
     border-left: none;
     border-top: none;
 }}
 
-QHeaderView::section:hover {{
+MHeaderView::section:hover {{
     color: {primary};
 }}
-QHeaderView::focus{{
+MHeaderView::focus{{
     background-color: red;
     border: 0 solid {border};
 }}
-QHeaderView::up-arrow {{
+MHeaderView::up-arrow {{
     width: 8px;
     height: 8px;
     position: relative;
@@ -844,7 +854,7 @@ QHeaderView::up-arrow {{
     image: {up};
 }}
 
-QHeaderView::down-arrow {{
+MHeaderView::down-arrow {{
     width: 8px;
     height: 8px;
     position: relative;
@@ -989,4 +999,140 @@ QSplitter::handle:horizontal {{
 
 QSplitter::handle:vertical {{
     height: 2px;
+}}
+
+
+MToolBar {{
+    background: {background};
+    spacing: 3px;
+    border-radius: 0;
+    border: 1px solid {border}
+}}
+MToolBar QMenu{{
+    background-color: red;
+}}
+MToolBar::separator  {{
+    image: {splitter};
+}}
+
+QToolBarExtension{{
+    background-color: black;
+}}
+
+MSlider::groove:horizontal {{
+    border-radius: 3px;
+    height: 4px;
+}}
+
+MSlider::handle {{
+    background: {in_background};
+    border: 2px solid {primary};
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+}}
+MSlider::handle:horizontal {{
+    margin: -4px 0;
+}}
+MSlider::groove:vertical {{
+    border-radius: 3px;
+    width: 4px;
+}}
+
+MSlider::handle:vertical {{
+    margin: 0 -4px;
+}}
+
+MSlider::add-page:horizontal {{
+    background: {border};
+}}
+
+MSlider::sub-page:horizontal {{
+    background: {primary};
+}}
+
+MSlider::add-page:vertical {{
+    background: {primary};
+}}
+
+MSlider::sub-page:vertical {{
+    background: {border};
+}}
+MDockWidget {{
+    {h3};
+    titlebar-close-icon: {close};
+    titlebar-normal-icon: {float};
+
+}}
+MDockWidget::title {{
+    background: {background_dark};
+    text-align: left;
+    padding-left: 10px;
+}}
+
+MDockWidget::close-button {{
+    subcontrol-origin: margin;
+    subcontrol-position: right center;
+    right: 8px;
+}}
+
+MDockWidget::float-button {{
+    subcontrol-origin: margin;
+    subcontrol-position: right center;
+    right: 30px;
+}}
+MDockWidget::close-button:hover, MDockWidget::float-button:hover {{
+    border: 1px solid {primary};
+}}
+
+MProgressBar {{
+    color: #555;
+    border: 0 solid {border};
+    background-color: {border};
+    min-height: 12px;
+    max-height: 12px;
+    border-radius: 6px;
+}}
+
+MProgressBar::chunk {{
+    min-height: 12px;
+    max-height: 12px;
+    border-radius: 5px;
+}}
+MProgressBar[status=error]::chunk {{
+    background-color: {error};
+}}
+MProgressBar[status=success]::chunk {{
+    background-color: {success};
+}}
+MProgressBar[status=primary]::chunk {{
+    background-color: {primary};
+}}
+
+MMenu {{
+    background-color: {background};
+    padding: 0;
+    border-radius: 2px;
+    border: 1px solid {border};
+}}
+MMenu[checked=true]{{
+    color: {primary};
+    background-color: {background_selected};
+}}
+MMenu::item {{
+    padding: 2px 2px;
+}}
+MMenu::item {{
+    padding: 8px auto;
+}}
+MMenu::item:checked  {{
+    color: {primary};
+    background-color: {background_selected};
+}}
+MMenu::item:selected  {{
+    background-color: {background_selected};
+}}
+
+MMenu::indicator {{
+    left: 6px;
 }}

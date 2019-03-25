@@ -29,7 +29,7 @@
     "divider": "#e8eaec",
     "background": "#f8f8f9",
     "in_background": "#ffffff",
-    "out_background": "#bdbdbd",
+    "out_background": "#eee",
     "background_dark": "#cccccc",
     "background_light": "#ffffff",
     "background_selected": "#eeeeee",
@@ -43,10 +43,10 @@
     "medium": 32,
     "small": 24,
     "tiny": 18,
-    "huge_icon": 34,
-    "large_icon": 28,
-    "medium_icon": 22,
-    "small_icon": 16,
+    "huge_icon": 30,
+    "large_icon": 24,
+    "medium_icon": 20,
+    "small_icon": 14,
     "tiny_icon": 10,
     "huge_radius": 6,
     "large_radius": 5,
@@ -73,11 +73,12 @@
     "left": "left_line.svg",
     "right": "right_line.svg",
     "close": "close_line.svg",
-    "calender": "calendar_line.svg",
+    "calender": "calendar_fill.svg",
     "check": "check.svg",
     "minus": "minus.svg",
     "circle": "circle.svg",
     "sphere": "sphere.svg",
-    "splitter": "splitter.svg"
+    "splitter": "splitter.svg",
+    "float": "float.svg"
   }
 }

@@ -27,7 +27,8 @@
     "left": "left_line_dark.svg",
     "right": "right_line_dark.svg",
     "close": "close_line_dark.svg",
-    "calender": "calendar_line_dark.svg",
+    "calender": "calendar_fill_dark.svg",
+    "float": "float_dark.svg",
     "splitter": "splitter_dark.svg"
   }
 }
