@@ -7,13 +7,12 @@
 ###################################################################
 
 from dayu_widgets.MTheme import dayu_theme
-from dayu_widgets.mixin import property_mixin, cursor_mixin, theme_mixin
+from dayu_widgets.mixin import property_mixin, cursor_mixin
 from dayu_widgets.qt import *
 
 
 @property_mixin
 @cursor_mixin
-@theme_mixin
 class MSwitch(QRadioButton):
     def __init__(self, size=None, parent=None):
         super(MSwitch, self).__init__(parent)
