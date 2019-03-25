@@ -109,7 +109,7 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     test = MMenuTest()
-    from dayu_widgets.MTheme import apply_theme
-    apply_theme(test)
+    from dayu_widgets import dayu_theme
+    dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())

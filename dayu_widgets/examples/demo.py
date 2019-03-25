@@ -2,7 +2,7 @@ import importlib
 
 from dayu_widgets.MButtonGroup import MToolButtonGroup
 from dayu_widgets.MDockWidget import MDockWidget
-from dayu_widgets.MTheme import dayu_theme, theme_mixin
+from dayu_widgets import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.qt import *
 
@@ -21,7 +21,7 @@ def get_test_widget():
     return result
 
 
-@theme_mixin
+@dayu_theme.deco
 class MDemo(QMainWindow):
     def __init__(self, parent=None):
         super(MDemo, self).__init__(parent)
@@ -73,6 +73,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
+    dayu_theme.set_theme('light')
     test = MDemo()
     test.show()
     sys.exit(app.exec_())

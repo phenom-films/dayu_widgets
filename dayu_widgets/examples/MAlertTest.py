@@ -59,9 +59,9 @@ class MAlertTest(QWidget, MFieldMixin):
 
 if __name__ == '__main__':
     import sys
-    from dayu_widgets.MTheme import apply_theme
+    from dayu_widgets import dayu_theme
     app = QApplication(sys.argv)
     test = MAlertTest()
-    apply_theme(test)
+    dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())
