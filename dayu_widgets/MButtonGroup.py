@@ -19,9 +19,7 @@ from dayu_widgets.qt import *
 
 @property_mixin
 class MButtonGroupBase(QWidget):
-    button_class = MPushButton
-
-    def __init__(self, orientation=Qt.Horizontal, size=MView.DefaultSize, parent=None):
+    def __init__(self, orientation=Qt.Horizontal, parent=None):
         super(MButtonGroupBase, self).__init__(parent=parent)
         self._main_layout = QBoxLayout(
             QBoxLayout.LeftToRight if orientation == Qt.Horizontal else QBoxLayout.TopToBottom)
@@ -30,10 +28,6 @@ class MButtonGroupBase(QWidget):
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         self._button_group = QButtonGroup()
         self._orientation = 'horizontal' if orientation == Qt.Horizontal else 'vertical'
-        self._size = size
-
-    def _set_exclusive(self, value):
-        self._button_group.setExclusive(value)
 
     def set_spacing(self, value):
         self._main_layout.setSpacing(value)
@@ -41,18 +35,16 @@ class MButtonGroupBase(QWidget):
     def get_button_group(self):
         return self._button_group
 
+    def create_button(self, data_dict):
+        raise NotImplementedError()
+
     def add_button(self, data_dict, index=None):
-        button = self.button_class(parent=self)
-        button.setProperty('combine', self._orientation)
-        button.setProperty('button_size', self._size)
         if isinstance(data_dict, basestring):
             data_dict = {'text': data_dict}
         elif isinstance(data_dict, QIcon):
             data_dict = {'icon': data_dict}
-        if data_dict.get('text'):
-            button.setProperty('text', data_dict.get('text'))
-        if data_dict.get('icon'):
-            button.setProperty('icon', data_dict.get('icon'))
+        button = self.create_button(data_dict)
+        button.setProperty('combine', self._orientation)
         if data_dict.get('data'):
             button.setProperty('data', data_dict.get('data'))
         if data_dict.get('checked'):
@@ -66,12 +58,10 @@ class MButtonGroupBase(QWidget):
         if data_dict.get('toggled'):
             button.toggled.connect(data_dict.get('toggled'))
 
-        self._after_created(button, data_dict)
         if index is None:
             self._button_group.addButton(button)
         else:
             self._button_group.addButton(button, index)
-        # offset = -1 if self._main_layout.direction() == QBoxLayout.LeftToRight else 0
         self._main_layout.insertWidget(self._main_layout.count(), button)
 
     def set_button_list(self, button_list):
@@ -82,37 +72,43 @@ class MButtonGroupBase(QWidget):
         for index, data_dict in enumerate(button_list):
             self.add_button(data_dict, index)
 
-    def _after_created(self, button, data_dict):
-        pass
-
 
 class MPushButtonGroup(MButtonGroupBase):
-    button_class = MPushButton
-
-    def __init__(self, orientation=Qt.Horizontal, size=MView.DefaultSize, parent=None):
-        super(MPushButtonGroup, self).__init__(orientation=orientation, size=size, parent=parent)
+    def __init__(self, size=None, type=None, orientation=Qt.Horizontal, parent=None):
+        super(MPushButtonGroup, self).__init__(orientation=orientation, parent=parent)
         self.set_spacing(1)
-        self._set_exclusive(False)
+        self._type = type
+        self._size = size
+        self._button_group.setExclusive(False)
 
-    def _after_created(self, button, data_dict):
-        if data_dict.get('type'):
-            button.set_type(data_dict.get('type'))
+    def create_button(self, data_dict):
+        return MPushButton(text=data_dict.get('text'),
+                           icon=data_dict.get('icon'),
+                           size=data_dict.get('size') or self._size,
+                           type=data_dict.get('type') or self._type,
+                           parent=self
+                           )
 
 
 class MCheckBoxGroup(MButtonGroupBase):
-    button_class = MCheckBox
     sig_checked_changed = Signal(list)
 
     def __init__(self, orientation=Qt.Horizontal, parent=None):
         super(MCheckBoxGroup, self).__init__(orientation=orientation, parent=parent)
         self.set_spacing(15)
-        self._set_exclusive(False)
+        self._button_group.setExclusive(False)
 
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self._slot_context_menu)
 
         self._button_group.buttonClicked[int].connect(self._slot_map_signal)
-        self.set_value(-1)
+        self.set_value([])
+
+    def create_button(self, data_dict):
+        return MCheckBox(text=data_dict.get('text'),
+                         icon=data_dict.get('icon'),
+                         parent=self
+                         )
 
     @Slot(QPoint)
     def _slot_context_menu(self, point):
@@ -158,16 +154,21 @@ class MCheckBoxGroup(MButtonGroupBase):
 
 
 class MRadioButtonGroup(MButtonGroupBase):
-    button_class = MRadioButton
     sig_checked_changed = Signal(int)
 
     def __init__(self, orientation=Qt.Horizontal, parent=None):
         super(MRadioButtonGroup, self).__init__(orientation=orientation, parent=parent)
         self.set_spacing(15)
-        self._set_exclusive(True)
+        self._button_group.setExclusive(True)
         self._button_group.buttonClicked[int].connect(functools.partial(self.setProperty, 'checked'))
         self._button_group.buttonClicked[int].connect(self.sig_checked_changed)
         self.set_checked(-1)
+
+    def create_button(self, data_dict):
+        return MRadioButton(text=data_dict.get('text'),
+                            icon=data_dict.get('icon'),
+                            parent=self
+                            )
 
     def _set_checked(self, value):
         assert isinstance(value, int)
@@ -183,19 +184,30 @@ class MRadioButtonGroup(MButtonGroupBase):
 
 
 class MToolButtonGroup(MButtonGroupBase):
-    button_class = MToolButton
-
     sig_checked_changed = Signal(int)
 
-    def __init__(self, orientation=Qt.Horizontal, size=MView.DefaultSize, icon_only=True, checkable=False, parent=None):
-        super(MToolButtonGroup, self).__init__(orientation=orientation, size=size, parent=parent)
+    def __init__(self, size=None, type=None, exclusive=False, orientation=Qt.Horizontal, parent=None):
+        super(MToolButtonGroup, self).__init__(orientation=orientation, parent=parent)
         self.set_spacing(1)
-        self._set_exclusive(True)
-        self._checkable = checkable
+        self._button_group.setExclusive(exclusive)
         self._size = size
-        self._icon_only = icon_only
+        self._type = type
         self._button_group.buttonClicked[int].connect(self.set_checked)
         self._button_group.buttonClicked[int].connect(self.sig_checked_changed)
+        self.set_checked(-1)
+
+    def create_button(self, data_dict):
+        button = MToolButton(text=data_dict.get('text'),
+                             icon=data_dict.get('icon'),
+                             type=data_dict.get('type') or self._type,
+                             size=data_dict.get('size') or self._size,
+                             parent=self
+                             )
+        button.setCheckable(data_dict.get('checkable', False))
+        if data_dict.get('icon_checked'):
+            button.setProperty('icon_checked', data_dict.get('icon_checked'))
+            button.setProperty('icon_unchecked', data_dict.get('icon'))
+        return button
 
     def _set_checked(self, value):
         assert isinstance(value, int)
@@ -208,11 +220,3 @@ class MToolButtonGroup(MButtonGroupBase):
 
     def set_checked(self, value):
         self.setProperty('checked', value)
-
-    def _after_created(self, button, data_dict):
-        button.setCheckable(self._checkable)
-        button.set_icon_only(self._icon_only)
-        button.set_button_size(self._size)
-        if data_dict.get('icon_checked'):
-            button.setProperty('icon_checked', data_dict.get('icon_checked'))
-            button.setProperty('icon_unchecked', data_dict.get('icon'))
