@@ -12,9 +12,11 @@ from dayu_widgets.MButtonGroup import MCheckBoxGroup
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
+from dayu_widgets.mixin import theme_mixin
 from dayu_widgets.qt import *
 
 
+@theme_mixin
 class MCheckBoxGroupTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MCheckBoxGroupTest, self).__init__(parent)
@@ -22,9 +24,9 @@ class MCheckBoxGroupTest(QWidget, MFieldMixin):
 
     def _init_ui(self):
         self.app_data = [
-            {'text': 'Maya', 'icon': 'app-maya'},
-            {'text': 'Nuke', 'icon': 'app-nuke'},
-            {'text': 'Houdini', 'icon': 'app-houdini'}
+            {'text': 'Maya', 'icon': MIcon('app-maya.png')},
+            {'text': 'Nuke', 'icon': MIcon('app-nuke.png')},
+            {'text': 'Houdini', 'icon': MIcon('app-houdini.png')}
         ]
         radio_group_h = MCheckBoxGroup()
         radio_group_v = MCheckBoxGroup(orientation=Qt.Vertical)
