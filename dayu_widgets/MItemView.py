@@ -7,6 +7,7 @@
 ###################################################################
 import dayu_widgets.utils as utils
 from dayu_widgets.MHeaderView import MHeaderView
+from dayu_widgets.MItemModel import MTableModel, MSortFilterModel
 from dayu_widgets.MMenu import MMenu
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import loading_mixin
@@ -119,9 +120,22 @@ def slot_context_menu(self, point):
         event = utils.ItemViewMenuEvent(view=self, selection=[], extra={})
         self.sig_context_menu.emit(event)
 
+
+def drawEmptyText(self, text):
+    model = utils.real_model(self.model())
+    if model and isinstance(model, MTableModel):
+        if not model.get_data_list():
+            painter = QPainter(self.viewport())
+            font_metrics = painter.fontMetrics()
+            painter.setPen(QPen(dayu_theme.color.text_help))
+            painter.drawText(self.width() / 2 - font_metrics.width(text) / 2, self.height() / 2 - 10, text)
+            painter.end()
+
+
 @loading_mixin
 class MTableView(QTableView):
     sig_context_menu = Signal(object)
+    _no_data_text = 'No Data'
 
     def __init__(self, size=None, show_row_count=False, parent=None):
         super(MTableView, self).__init__(parent)
@@ -141,6 +155,9 @@ class MTableView(QTableView):
         self.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.setAlternatingRowColors(True)
         self.setShowGrid(False)
+
+    def set_no_data_text(self, text):
+        self._no_data_text = text
 
     def setShowGrid(self, flag):
         self.header_view.setProperty('grid', flag)
@@ -190,6 +207,10 @@ class MTableView(QTableView):
         #     'edit': None
         # }
 
+    def paintEvent(self, event):
+        drawEmptyText(self, self._no_data_text)
+        return super(MTableView, self).paintEvent(event)
+
     def save_state(self, name):
         settings = QSettings(QSettings.IniFormat, QSettings.UserScope, 'DAYU', 'dayu_widgets')
         settings.setValue('{}/headerState'.format(name, self.header_view.saveState()))
@@ -205,6 +226,7 @@ class MTreeView(QTreeView):
     enable_context_menu = enable_context_menu
     slot_context_menu = slot_context_menu
     sig_context_menu = Signal(object)
+    _no_data_text = 'No Data'
 
     def __init__(self, parent=None):
         super(MTreeView, self).__init__(parent)
@@ -214,12 +236,20 @@ class MTreeView(QTreeView):
         self.setSortingEnabled(True)
         self.setAlternatingRowColors(True)
 
+    def paintEvent(self, event):
+        drawEmptyText(self, self._no_data_text)
+        return super(MTreeView, self).paintEvent(event)
+
+    def set_no_data_text(self, text):
+        self._no_data_text = text
+
 
 class MBigView(QListView):
     set_header_list = set_header_list
     enable_context_menu = enable_context_menu
     slot_context_menu = slot_context_menu
     sig_context_menu = Signal(object)
+    _no_data_text = 'No Data'
 
     def __init__(self, parent=None):
         super(MBigView, self).__init__(parent)
@@ -245,12 +275,20 @@ class MBigView(QListView):
         else:
             super(MBigView, self).wheelEvent(event)
 
+    def paintEvent(self, event):
+        drawEmptyText(self, self._no_data_text)
+        return super(MBigView, self).paintEvent(event)
+
+    def set_no_data_text(self, text):
+        self._no_data_text = text
+
 
 class MListView(QListView):
     set_header_list = set_header_list
     enable_context_menu = enable_context_menu
     slot_context_menu = slot_context_menu
     sig_context_menu = Signal(object)
+    _no_data_text = 'No Data'
 
     def __init__(self, parent=None):
         super(MListView, self).__init__(parent)
@@ -266,6 +304,13 @@ class MListView(QListView):
                 break
         else:
             self.setModelColumn(0)
+
+    def paintEvent(self, event):
+        drawEmptyText(self, self._no_data_text)
+        return super(MListView, self).paintEvent(event)
+
+    def set_no_data_text(self, text):
+        self._no_data_text = text
 
     def minimumSizeHint(self, *args, **kwargs):
         return QSize(200, 50)
