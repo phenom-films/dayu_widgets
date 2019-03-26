@@ -31,6 +31,8 @@ class MCacheDict(object):
         replace_color = replace_color or dayu_theme.color.icon
         if (self.cls is QIcon) and (replace_color is None):
             return QIcon(svg_path)
+        if not os.path.isfile(svg_path):
+            return None
         with open(svg_path, 'r+') as f:
             data_content = f.read()
             if replace_color is not None:
