@@ -9,7 +9,6 @@ from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MMessage import MMessage
 from dayu_widgets.MTabWidget import MTabWidget
-from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
 
 
