@@ -19,6 +19,7 @@ class MToolButton(QToolButton):
     IconOnlyType = 'icon'
     BarType = 'bar'
     BreadcrumbType = 'breadcrumb'
+    LineType = 'line'
 
     def __init__(self, text='', icon=None, icon_checked=None, type=None, size=None, parent=None):
         super(MToolButton, self).__init__(parent=parent)
