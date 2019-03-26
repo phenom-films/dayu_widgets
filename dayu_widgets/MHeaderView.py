@@ -53,7 +53,7 @@ class MHeaderView(QHeaderView):
             context_menu.addSeparator()
 
         fit_action = context_menu.addAction(self.tr('Fit Size'))
-        fit_action.triggered.connsect(functools.partial(self._slot_set_resize_mode, True))
+        fit_action.triggered.connect(functools.partial(self._slot_set_resize_mode, True))
         context_menu.addSeparator()
         for column in range(self.count()):
             action = context_menu.addAction(model.headerData(column, Qt.Horizontal, Qt.DisplayRole))
