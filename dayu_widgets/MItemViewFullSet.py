@@ -6,19 +6,17 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-import dayu_widgets.utils as utils
+from dayu_widgets import dayu_theme
 from dayu_widgets.MButtonGroup import MToolButtonGroup
 from dayu_widgets.MItemModel import MSortFilterModel, MTableModel
-from dayu_widgets.MItemView import MTableView, MTreeView, MListView, MBigView
+from dayu_widgets.MItemView import MTableView, MBigView
 from dayu_widgets.MLineEdit import MLineEdit
-from dayu_widgets.MSwitch import MSwitch
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MTheme import global_theme
-from dayu_widgets.filter_tool_box import MFilterToolBox
+from dayu_widgets.MPage import MPage
+from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.qt import *
 
 
-class MItemViewSet(QWidget):
+class MItemViewFullSet(QWidget):
     sig_double_clicked = Signal(QModelIndex)
     sig_left_clicked = Signal(QModelIndex)
     sig_current_changed = Signal(QModelIndex, QModelIndex)
@@ -27,17 +25,15 @@ class MItemViewSet(QWidget):
     sig_selection_changed = Signal(QItemSelection, QItemSelection)
     sig_context_menu = Signal(object)
 
-    def __init__(self, table_view=True, list_view=False, big_view=False, tree_view=False, parent=None):
-        super(MItemViewSet, self).__init__(parent)
-        self.has_filter = False
-        self.has_search = True
+    def __init__(self, table_view=True, big_view=False, parent=None):
+        super(MItemViewFullSet, self).__init__(parent)
         self.sort_filter_model = MSortFilterModel()
         self.source_model = MTableModel()
         self.sort_filter_model.setSourceModel(self.source_model)
 
         self.stack_widget = QStackedWidget()
 
-        self.view_button_grp = MToolButtonGroup(checkable=True)
+        self.view_button_grp = MToolButtonGroup(type=MToolButton.IconOnlyType, exclusive=True)
         data_group = []
         if table_view:
             self.table_view = MTableView(show_row_count=True)
@@ -46,17 +42,9 @@ class MItemViewSet(QWidget):
             self.table_view.setModel(self.sort_filter_model)
             self.stack_widget.addWidget(self.table_view)
             data_group.append({'icon': MIcon('table_view.svg'),
-                               'icon_checked': MIcon('table_view.svg', global_theme.get('primary')),
+                               'icon_checked': MIcon('table_view.svg', dayu_theme.color.get('primary')),
+                               'checkable': True,
                                'tooltip': u'Table View'})
-        if list_view:
-            self.list_view = MListView()
-            self.list_view.doubleClicked.connect(self.sig_double_clicked)
-            self.list_view.pressed.connect(self.slot_left_clicked)
-            self.list_view.setModel(self.sort_filter_model)
-            self.stack_widget.addWidget(self.list_view)
-            data_group.append({'icon': MIcon('list_view.svg'),
-                               'icon_checked': MIcon('list_view.svg', global_theme.get('primary')),
-                               'tooltip': u'List View'})
         if big_view:
             self.big_view = MBigView()
             self.big_view.doubleClicked.connect(self.sig_double_clicked)
@@ -64,17 +52,9 @@ class MItemViewSet(QWidget):
             self.big_view.setModel(self.sort_filter_model)
             self.stack_widget.addWidget(self.big_view)
             data_group.append({'icon': MIcon('big_view.svg'),
-                               'icon_checked': MIcon('big_view.svg', global_theme.get('primary')),
+                               'icon_checked': MIcon('big_view.svg', dayu_theme.color.get('primary')),
+                               'checkable': True,
                                'tooltip': u'Big View'})
-        if tree_view:
-            self.tree_view = MTreeView()
-            self.tree_view.doubleClicked.connect(self.sig_double_clicked)
-            self.tree_view.pressed.connect(self.slot_left_clicked)
-            self.tree_view.setModel(self.sort_filter_model)
-            self.stack_widget.addWidget(self.tree_view)
-            data_group.append({'icon': MIcon('tree_view.svg'),
-                               'icon_checked': MIcon('tree_view.svg', global_theme.get('primary')),
-                               'tooltip': u'Tree View'})
 
         # 设置多个view 共享 MItemSelectionModel
         leader_view = self.stack_widget.widget(0)
@@ -90,36 +70,33 @@ class MItemViewSet(QWidget):
         self.selection_model.currentColumnChanged.connect(self.sig_current_column_changed)
         self.selection_model.selectionChanged.connect(self.sig_selection_changed)
 
-        self.status_bar = MLabel()
-        self.status_bar.setVisible(False)
-
-        self.row_count_bar = MLabel()
-        self.row_count_bar.setVisible(False)
-
         self.tool_bar = QWidget()
         self.top_lay = QHBoxLayout()
         self.top_lay.setContentsMargins(0, 0, 0, 0)
-        self.top_lay.addStretch()
-        self.top_lay.addWidget(self.status_bar)
-        self.top_lay.addStretch()
-        self.top_lay.addWidget(self.row_count_bar)
-        self.tool_bar.setLayout(self.top_lay)
-
-        if len(data_group) > 1:
+        if data_group and len(data_group) > 1:
             self.view_button_grp.sig_checked_changed.connect(self.stack_widget.setCurrentIndex)
             self.view_button_grp.set_button_list(data_group)
             self.view_button_grp.set_checked(0)
             self.top_lay.addWidget(self.view_button_grp)
+        search_size = dayu_theme.size.small
+        self.search_line_edit = MLineEdit.search(size=search_size)
+        self.search_attr_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('down_fill.svg'),
+                                              size=search_size)
+        self.search_line_edit.add_prefix_widget(self.search_attr_button)
+        self.search_line_edit.textChanged.connect(self.sort_filter_model.set_search_pattern)
 
+        self.top_lay.addStretch()
+        self.top_lay.addWidget(self.search_line_edit)
+        self.tool_bar.setLayout(self.top_lay)
+
+        self.page_set = MPage()
         self.main_lay = QVBoxLayout()
         self.main_lay.setSpacing(5)
         self.main_lay.setContentsMargins(0, 0, 0, 0)
         self.main_lay.addWidget(self.tool_bar)
         self.main_lay.addWidget(self.stack_widget)
+        self.main_lay.addWidget(self.page_set)
         self.setLayout(self.main_lay)
-
-    def show_row_count(self, flag):
-        self.row_count_bar.setVisible(flag)
 
     def enable_context_menu(self):
         for index in range(self.stack_widget.count()):
@@ -127,18 +104,15 @@ class MItemViewSet(QWidget):
             view.enable_context_menu(True)
             view.sig_context_menu.connect(self.sig_context_menu)
 
+    def set_no_data_text(self, text):
+        for index in range(self.stack_widget.count()):
+            view = self.stack_widget.widget(index)
+            view.set_no_data_text(text)
+
     def set_selection_mode(self, mode):
         for index in range(self.stack_widget.count()):
             view = self.stack_widget.widget(index)
             view.setSelectionMode(mode)
-
-    def enable_search(self):
-        search_line_edit = MLineEdit.search(size=MView.SmallSize)
-        search_line_edit.textChanged.connect(self.sort_filter_model.set_search_pattern)
-        self.tool_bar_insert_widget(search_line_edit)
-
-    def enable_status_bar(self):
-        self.status_bar.setVisible(True)
 
     def tool_bar_visible(self, flag):
         self.tool_bar.setVisible(flag)
@@ -164,16 +138,15 @@ class MItemViewSet(QWidget):
     def tool_bar_insert_widget(self, widget):
         self.top_lay.insertWidget(0, widget)
 
-    def current_view(self):
-        return self.stack_widget.currentWidget()
-
     @Slot()
     def setup_data(self, data_list):
         self.source_model.clear()
         if data_list:
             self.source_model.set_data_list(data_list)
-        self.row_count_bar.setText(self.tr('Total: ') + str(self.source_model.rowCount()))
-        # self.status_bar.setText(self.tr('Total: ') + str(self.source_model.root_item.child_count()))
+
+    @Slot(int)
+    def set_record_count(self, total):
+        self.page_set.set_field('total', total)
 
     def get_data(self):
         return self.source_model.get_data_list()
@@ -183,7 +156,8 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MItemViewSet(list_view=True)
+    test = MItemViewFullSet()
+    dayu_theme.apply(test)
     test.set_header_list(
         [{'label': 'Name', 'key': 'name', 'editable': True, 'selectable': True, 'exclusive': False, 'width': 200,
           }])
@@ -192,8 +166,5 @@ if __name__ == '__main__':
     # only_work_check_box.stateChanged.connect(test.slot_update)
     # test.add_button(only_work_check_box)
     test.setup_data([{'name': ['xiaoming'], 'name_list': ['li', 'haha', 'xiaoming']}])
-    test.enable_search()
-    # test.enable_filter()
-    test.show_row_count(True)
     test.show()
     sys.exit(app.exec_())
