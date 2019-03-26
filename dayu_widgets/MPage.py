@@ -6,39 +6,47 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.MComboBox import MComboBox
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MMenu import MMenu
+import functools
+import math
+
 from dayu_widgets import dayu_theme
 from dayu_widgets.MAbstractSpinBox import MSpinBox
+from dayu_widgets.MComboBox import MComboBox
+from dayu_widgets.MFieldMixin import MFieldMixin
+from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MMenu import MMenu
+from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.qt import *
-import math
-import functools
 
 
 class MPage(QWidget, MFieldMixin):
-    sig_current_page_changed  = Signal(int)
+    sig_need_update = Signal()
+
     def __init__(self, parent=None):
         super(MPage, self).__init__(parent)
-        size = dayu_theme.size.small
+        size = dayu_theme.size.tiny
         self.register_field('page_size_selected', 25)
-        self.register_field('page_size_list', [{'label': '25 - Fastest', 'value': 25},
-                                               {'label': '50 - Fast', 'value': 50},
-                                               {'label': '75 - Medium', 'value': 75},
-                                               {'label': '100 - Slow', 'value': 100}])
-        self.register_field('total', 1)
-        self.register_field('current_page', 1)
+        self.register_field('page_size_list',
+                            [{'label': '25 - Fastest', 'value': 25},
+                             {'label': '50 - Fast', 'value': 50},
+                             {'label': '75 - Medium', 'value': 75},
+                             {'label': '100 - Slow', 'value': 100}])
+        self.register_field('total', 0)
+        self.register_field('current_page', 0)
         self.register_field('total_page',
                             lambda: math.ceil(1.0 * self.field('total') / self.field('page_size_selected')))
-        self.register_field('display_text', lambda: '{start} - {end} of {total}'.format(
-            start=self.field('current_page') * self.field('page_size_selected') + 1,
-            end=min(self.field('total'), (self.field('current_page') + 1) * self.field('page_size_selected')),
-            total=self.field('total')))
-        self.register_field('can_pre', lambda: self.field('current_page') > 1)
-        self.register_field('can_next', lambda: self.field('current_page') < self.field('total_page'))
+        self.register_field('display_text',
+                            lambda: '{start} - {end} of {total}'.format(
+                                start=(self.field('current_page') * self.field('page_size_selected') + 1) if self.field(
+                                    'current_page') else 0,
+                                end=min(self.field('total'),
+                                        (self.field('current_page') + 1) * self.field('page_size_selected')),
+                                total=self.field('total')))
+        self.register_field('can_pre',
+                            lambda: self.field('current_page') > 1)
+        self.register_field('can_next',
+                            lambda: self.field('current_page') < self.field('total_page'))
+        self.register_field('anything_changed', self.anything_changed)
         menu1 = MMenu(parent=self)
 
         self._display_label = MLabel()
@@ -54,7 +62,7 @@ class MPage(QWidget, MFieldMixin):
         self._next_button.clicked.connect(functools.partial(self._slot_change_current_page, 1))
         self._current_page_spin_box = MSpinBox(size=size)
         self._current_page_spin_box.setMinimum(1)
-        self._current_page_spin_box.valueChanged.connect(self.sig_current_page_changed)
+        # self._current_page_spin_box.valueChanged.connect(self.sig_current_page_changed)
         self._total_page_label = MLabel()
 
         self.bind('page_size_list', menu1, 'data')
@@ -68,6 +76,7 @@ class MPage(QWidget, MFieldMixin):
         self.bind('can_next', self._next_button, 'enabled')
 
         main_lay = QHBoxLayout()
+        main_lay.setContentsMargins(0, 0, 0, 0)
         main_lay.setSpacing(2)
         main_lay.addStretch()
         main_lay.addWidget(self._display_label)
