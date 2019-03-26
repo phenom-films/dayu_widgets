@@ -330,6 +330,25 @@ MToolButton[type=bar]:checked{{
     color: {primary};
     background-color:{background_selected};
 }}
+MToolButton[type=line]{{
+    border-radius: 0;
+    border:none;
+    padding: 6px 10px;
+    border-style: solid;
+    border-color: transparent;
+    border-width: 0 0 2px 0;
+}}
+MToolButton[type=line]:hover{{
+    color: {primary};
+    border-color: {primary};
+    border-width: 0 0 2px 0;
+}}
+MToolButton[type=line]:checked{{
+    color: {primary};
+    border-color: {primary};
+    border-width: 0 0 2px 0;
+}}
+
 
 MToolButton[type=icon]:checked{{
     border:1px solid {primary};
@@ -403,7 +422,7 @@ MCheckBox:disabled {{
 
 
 MMenu::indicator:non-exclusive,
-MListView::indicator,
+BigView::indicator,
 MTreeView::indicator,
 MColumnView::indicator,
 MTableView::indicator,
@@ -415,7 +434,7 @@ MCheckBox::indicator{{
     background-color: {in_background};
 }}
 MMenu::indicator:non-exclusive:disabled,
-MListView::indicator:disabled,
+BigView::indicator:disabled,
 MTreeView::indicator:disabled,
 MColumnView::indicator:disabled,
 MTableView::indicator:disabled,
@@ -424,7 +443,7 @@ MCheckBox::indicator:disabled{{
     background-color: {background_selected};
 }}
 MMenu::indicator:non-exclusive:hover,
-MListView::indicator:hover,
+BigView::indicator:hover,
 MTreeView::indicator:hover,
 MColumnView::indicator:hover,
 MTableView::indicator:hover,
@@ -433,7 +452,7 @@ MCheckBox::indicator:hover{{
     background-color: {in_background};
 }}
 MMenu::indicator:non-exclusive:checked,
-MMListView::indicator:checked,
+MBigView::indicator:checked,
 MTreeView::indicator:checked,
 MColumnView::indicator:checked,
 MTableView::indicator:checked,
@@ -442,7 +461,7 @@ MCheckBox::indicator:checked{{
     image: {check};
 }}
 MMenu::indicator:non-exclusive:checked:disabled,
-MMListView::indicator:checked:disabled,
+MBigView::indicator:checked:disabled,
 MTreeView::indicator:checked:disabled,
 MColumnView::indicator:checked:disabled,
 MTableView::indicator:checked:disabled,
@@ -450,7 +469,7 @@ MCheckBox::indicator:checked:disabled{{
     background-color: {disabled};
 }}
 
-MMListView::indicator:indeterminate,
+MBigView::indicator:indeterminate,
 MTreeView::indicator:indeterminate,
 MColumnView::indicator:indeterminate,
 MTableView::indicator:indeterminate,
@@ -459,7 +478,7 @@ MCheckBox::indicator:indeterminate {{
     image: {minus};
 }}
 
-MMListView::indicator:indeterminate:disabled,
+MBigView::indicator:indeterminate:disabled,
 MTreeView::indicator:indeterminate:disabled,
 MColumnView::indicator:indeterminate:disabled,
 MTableView::indicator:indeterminate:disabled,
@@ -741,21 +760,40 @@ MLineEdit[error=true]:focus{{
     border: 1px solid {error};
 }}
 
-MTabWidget::pane{{
-    top: -2px;
+
+MTabWidget::pane {{ /* The tab widget frame */
+    border: 1px solid black;
+    border-radius: 3px;
+    top: -1px;
     background-color: {background};
 }}
-
-MTabWidget[type=line]::pane {{
-    border-top: 1px solid {border};
+MTabWidget::tab-bar {{
+    padding: 5px;
 }}
-
-MTabWidget[type=card]::pane {{
+ /* Style the tab using the tab sub-control. Note that
+     it reads QTabBar _not_ QTabWidget */
+MTabBar::tab {{
     border: 1px solid {border};
-    top: -3px;
+    border-bottom: none;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background-color: {in_background};
 }}
 
+QTabBar::tab:selected{{
+    background: #323232;
+    border-bottom: none;
+    color: {primary};
+    background-color: {background};
+}}
+QTabBar::tab:!selected {{
+    margin-top: 2px;
+    border-bottom: 1px solid {border};
+}}
 
+MTabBar::tab:hover {{
+    color: {primary};
+}}
 MTabBar::close-button {{
     subcontrol-origin: content;
     subcontrol-position: right center;
@@ -783,35 +821,7 @@ MTabBar QToolButton::left-arrow {{
     image: {left};
 }}
 
-MTabBar[type=line]::tab {{
-    border: 0 solid {border};
-    margin-right: 4px;
-    bottom: 3px;
-}}
-MTabBar[type=line]::tab:selected {{
-    color: {primary};
-    border-bottom: 2px solid {primary};
-}}
-MTabBar[type=line]::tab:hover {{
-    color: {primary_light};
-}}
-
-MTabBar[type=card]::tab {{
-    border: 1px solid {border};
-    border-bottom: none;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    margin-right: 4px;
-    background-color: {in_background};
-}}
-MTabBar[type=card]::tab:selected {{
-    color: {primary};
-    background-color: {background};
-}}
-MTabBar[type=card]::tab:hover {{
-    color: {primary};
-}}
-
+/* MHeaderView */
 MHeaderView {{
     background-color: {background_selected};
     {h3}
@@ -862,7 +872,7 @@ MHeaderView::down-arrow {{
     right: 50%;
     image: {down};
 }}
-MListView,
+BigView,
 MTreeView,
 MColumnView,
 MTableView{{
@@ -875,7 +885,7 @@ MTableView{{
     gridline-color: {border};
 }}
 
-MListView::item:hover,
+BigView::item:hover,
 MTreeView::item:hover,
 MColumnView::item:hover,
 MTableView::item:hover{{
@@ -883,7 +893,7 @@ MTableView::item:hover{{
     background-color: {primary_light};
 }}
 
-MListView::item:selected,
+BigView::item:selected,
 MTreeView::item:selected,
 MColumnView::item:selected,
 MTableView::item:selected{{
