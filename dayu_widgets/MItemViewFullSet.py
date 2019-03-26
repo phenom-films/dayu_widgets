@@ -143,10 +143,11 @@ class MItemViewFullSet(QWidget):
         self.source_model.clear()
         if data_list:
             self.source_model.set_data_list(data_list)
+        self.set_record_count(len(data_list))
 
     @Slot(int)
     def set_record_count(self, total):
-        self.page_set.set_field('total', total)
+        self.page_set.set_total(total)
 
     def get_data(self):
         return self.source_model.get_data_list()
