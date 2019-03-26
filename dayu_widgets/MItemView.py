@@ -281,3 +281,36 @@ class MBigView(QListView):
 
     def set_no_data_text(self, text):
         self._no_data_text = text
+
+
+class MListView(QListView):
+    set_header_list = set_header_list
+    enable_context_menu = enable_context_menu
+    slot_context_menu = slot_context_menu
+    sig_context_menu = Signal(object)
+    _no_data_text = 'No Data'
+
+    def __init__(self, parent=None):
+        super(MListView, self).__init__(parent)
+        self.header_list = []
+        self.header_view = None
+        self.setModelColumn(0)
+        self.setAlternatingRowColors(True)
+
+    def set_show_column(self, attr):
+        for index, attr_dict in enumerate(self.header_list):
+            if attr_dict.get('key') == attr:
+                self.setModelColumn(index)
+                break
+        else:
+            self.setModelColumn(0)
+
+    def paintEvent(self, event):
+        drawEmptyText(self, self._no_data_text)
+        return super(MListView, self).paintEvent(event)
+
+    def set_no_data_text(self, text):
+        self._no_data_text = text
+
+    def minimumSizeHint(self, *args, **kwargs):
+        return QSize(200, 50)
