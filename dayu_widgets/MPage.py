@@ -37,16 +37,16 @@ class MPage(QWidget, MFieldMixin):
                             lambda: math.ceil(1.0 * self.field('total') / self.field('page_size_selected')))
         self.register_field('display_text',
                             lambda: '{start} - {end} of {total}'.format(
-                                start=(self.field('current_page') * self.field('page_size_selected') + 1) if self.field(
+                                start=((self.field('current_page')-1) * self.field('page_size_selected') + 1) if self.field(
                                     'current_page') else 0,
                                 end=min(self.field('total'),
-                                        (self.field('current_page') + 1) * self.field('page_size_selected')),
+                                        self.field('current_page') * self.field('page_size_selected')),
                                 total=self.field('total')))
         self.register_field('can_pre',
                             lambda: self.field('current_page') > 1)
         self.register_field('can_next',
                             lambda: self.field('current_page') < self.field('total_page'))
-        self.register_field('anything_changed', self.anything_changed)
+        # self.register_field('anything_changed', self.anything_changed)
         menu1 = MMenu(parent=self)
 
         self._display_label = MLabel()
@@ -94,6 +94,7 @@ class MPage(QWidget, MFieldMixin):
 
     def set_total(self, value):
         self.set_field('total', value)
+        self.set_field('current_page', 1)
 
     def _slot_change_current_page(self, offset):
         self.set_field('current_page', self.field('current_page') + offset)
