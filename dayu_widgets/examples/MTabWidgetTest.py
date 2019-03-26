@@ -9,6 +9,7 @@ from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets.MMessage import MMessage
 from dayu_widgets.MTabWidget import MTabWidget
+from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
 
 
@@ -19,35 +20,23 @@ class MTabWidgetTest(QWidget):
 
     def _init_ui(self):
         main_lay = QVBoxLayout()
-        class_list = [MTabWidget]
-        for cls in class_list:
-            tab_line = cls(type=MTabWidget.LineType, parent=self)
-            tab_line.addTab(MLabel('test 1'), MIcon('female.svg'), u'标签一')
-            tab_line.addTab(MLabel('test 2'), u'标签二')
-            tab_line.addTab(MLabel('test 3'), u'标签三')
 
-            tab_card = cls(type=MTabWidget.CardType)
-            tab_card.addTab(MLabel('test 1'), u'Current Element')
-            tab_card.addTab(MLabel('test 2'), u'Linked Assets')
-            tab_card.addTab(MLabel('test 2'), u'Hero Shots')
-            tab_card.addTab(MLabel('test 3'), u'Linked Metadata')
+        tab_card = MTabWidget()
+        tab_card.addTab(MLabel('test 1'), u'Current Element')
+        tab_card.addTab(MLabel('test 2'), u'Linked Assets')
+        tab_card.addTab(MLabel('test 2'), u'Hero Shots')
+        tab_card.addTab(MLabel('test 3'), u'Linked Metadata')
 
-            self.tab_closable = cls(type=MTabWidget.CardType)
-            self.tab_closable.setTabsClosable(True)
-            self.tab_closable.addTab(MLabel('test 1'), u'标签一 ttt')
-            self.tab_closable.addTab(MLabel('test 2'), u'标签二 ttt')
-            self.tab_closable.addTab(MLabel('test 3'), u'标签三 ttt')
-            self.tab_closable.tabCloseRequested.connect(self.slot_close_tab)
-
-            lay = QVBoxLayout()
-            lay.addWidget(MDivider('type: line'))
-            lay.addWidget(tab_line)
-            lay.addWidget(MDivider('type: card'))
-            lay.addWidget(tab_card)
-            lay.addWidget(MDivider('type: card closeable'))
-            lay.addWidget(self.tab_closable)
-            main_lay.addLayout(lay)
-
+        self.tab_closable = MTabWidget()
+        self.tab_closable.setTabsClosable(True)
+        self.tab_closable.addTab(MLabel('test 1'), u'标签一')
+        self.tab_closable.addTab(MLabel('test 2'), u'标签二')
+        self.tab_closable.addTab(MLabel('test 3'), u'标签三')
+        self.tab_closable.tabCloseRequested.connect(self.slot_close_tab)
+        main_lay.addWidget(MDivider('Normal'))
+        main_lay.addWidget(tab_card)
+        main_lay.addWidget(MDivider('Closeable'))
+        main_lay.addWidget(self.tab_closable)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
@@ -72,6 +61,7 @@ if __name__ == '__main__':
     test = MTabWidgetTest()
 
     from dayu_widgets import dayu_theme
+
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())

@@ -6,18 +6,15 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import cursor_mixin
 from dayu_widgets.qt import *
 
 
 @cursor_mixin
 class MTabBar(QTabBar):
-    def __init__(self, size=None, parent=None):
+    def __init__(self, parent=None):
         super(MTabBar, self).__init__(parent=parent)
-        self.setProperty('dayu_size', size or dayu_theme.default_size)
         self.setDrawBase(False)
-        self.setElideMode(Qt.ElideRight)
 
     def tabSizeHint(self, index):
         tab_text = self.tabText(index)
@@ -28,12 +25,7 @@ class MTabBar(QTabBar):
 
 
 class MTabWidget(QTabWidget):
-    CardType = 'card'
-    LineType = 'line'
-
-    def __init__(self, type=None, parent=None):
+    def __init__(self, parent=None):
         super(MTabWidget, self).__init__(parent=parent)
         self.bar = MTabBar()
         self.setTabBar(self.bar)
-        self.setProperty('type', type or MTabWidget.CardType)
-        self.bar.setProperty('type', type or MTabWidget.CardType)
