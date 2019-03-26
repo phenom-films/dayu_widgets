@@ -320,16 +320,18 @@ MToolButton[type=taobao]:checked{{
 
 MToolButton[type=bar]{{
     border-radius: 0;
+    padding: 2px 10px;
     border:none;
 }}
 MToolButton[type=bar]:hover{{
     color: {primary};
-    background-color:{background_selected};
+    background-color:{background_dark};
 }}
 MToolButton[type=bar]:checked{{
     color: {primary};
-    background-color:{background_selected};
+    background-color:{background_dark};
 }}
+
 MToolButton[type=line]{{
     border-radius: 0;
     border:none;
@@ -356,6 +358,7 @@ MToolButton[type=icon]:checked{{
 
 MToolButton[type=breadcrumb]:hover{{
     color: {primary_light};
+    border: none;
 }}
 MToolButton[type=breadcrumb]:pressed{{
     color: {primary_dark};
@@ -1010,23 +1013,11 @@ QSplitter::handle:horizontal {{
 QSplitter::handle:vertical {{
     height: 2px;
 }}
-
-
-MToolBar {{
-    background: {background};
+MMenuTabWidget QWidget#bar_widget{{
+    background: {background_selected};
     spacing: 3px;
     border-radius: 0;
-    border: 1px solid {border}
-}}
-MToolBar QMenu{{
-    background-color: red;
-}}
-MToolBar::separator  {{
-    image: {splitter};
-}}
-
-QToolBarExtension{{
-    background-color: black;
+    border: 1px solid {border};
 }}
 
 MSlider::groove:horizontal {{
