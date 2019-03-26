@@ -70,7 +70,12 @@ class MFieldMixin(object):
         index = data_dict['index']
         widget_property = data_dict['widget_property']
         callback = data_dict['callback']
-        value = self.field(data_name) if index is None else self.field(data_name)[index]
+        if index is None:
+            value = self.field(data_name)
+        elif isinstance(self.field(data_name), dict):
+            value = self.field(data_name).get(index)
+        elif isinstance(self.field(data_name), list):
+            value = len(self.field(data_name))[index] if index < len(self.field(data_name)) else None
         if widget.metaObject().indexOfProperty(widget_property) > -1 or widget_property in map(str,
                                                                                                widget.dynamicPropertyNames()):
             widget.setProperty(widget_property, value)
