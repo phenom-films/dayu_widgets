@@ -425,7 +425,8 @@ MCheckBox:disabled {{
 
 
 MMenu::indicator:non-exclusive,
-BigView::indicator,
+MBigView::indicator,
+MListView::indicator,
 MTreeView::indicator,
 MColumnView::indicator,
 MTableView::indicator,
@@ -437,7 +438,8 @@ MCheckBox::indicator{{
     background-color: {in_background};
 }}
 MMenu::indicator:non-exclusive:disabled,
-BigView::indicator:disabled,
+MBigView::indicator:disabled,
+MListView::indicator:disabled,
 MTreeView::indicator:disabled,
 MColumnView::indicator:disabled,
 MTableView::indicator:disabled,
@@ -446,7 +448,8 @@ MCheckBox::indicator:disabled{{
     background-color: {background_selected};
 }}
 MMenu::indicator:non-exclusive:hover,
-BigView::indicator:hover,
+MBigView::indicator:hover,
+MListView::indicator:hover,
 MTreeView::indicator:hover,
 MColumnView::indicator:hover,
 MTableView::indicator:hover,
@@ -456,6 +459,7 @@ MCheckBox::indicator:hover{{
 }}
 MMenu::indicator:non-exclusive:checked,
 MBigView::indicator:checked,
+MListView::indicator:checked,
 MTreeView::indicator:checked,
 MColumnView::indicator:checked,
 MTableView::indicator:checked,
@@ -465,6 +469,7 @@ MCheckBox::indicator:checked{{
 }}
 MMenu::indicator:non-exclusive:checked:disabled,
 MBigView::indicator:checked:disabled,
+MListView::indicator:checked:disabled,
 MTreeView::indicator:checked:disabled,
 MColumnView::indicator:checked:disabled,
 MTableView::indicator:checked:disabled,
@@ -473,6 +478,7 @@ MCheckBox::indicator:checked:disabled{{
 }}
 
 MBigView::indicator:indeterminate,
+MListView::indicator:indeterminate,
 MTreeView::indicator:indeterminate,
 MColumnView::indicator:indeterminate,
 MTableView::indicator:indeterminate,
@@ -482,6 +488,7 @@ MCheckBox::indicator:indeterminate {{
 }}
 
 MBigView::indicator:indeterminate:disabled,
+MListView::indicator:indeterminate:disabled,
 MTreeView::indicator:indeterminate:disabled,
 MColumnView::indicator:indeterminate:disabled,
 MTableView::indicator:indeterminate:disabled,
@@ -765,7 +772,7 @@ MLineEdit[error=true]:focus{{
 
 
 MTabWidget::pane {{ /* The tab widget frame */
-    border: 1px solid black;
+    border: 1px solid {border};
     border-radius: 3px;
     top: -1px;
     background-color: {background};
@@ -875,7 +882,8 @@ MHeaderView::down-arrow {{
     right: 50%;
     image: {down};
 }}
-BigView,
+MBigView,
+MListView,
 MTreeView,
 MColumnView,
 MTableView{{
@@ -888,7 +896,8 @@ MTableView{{
     gridline-color: {border};
 }}
 
-BigView::item:hover,
+MBigView::item:hover,
+MListView::item:hover,
 MTreeView::item:hover,
 MColumnView::item:hover,
 MTableView::item:hover{{
@@ -896,7 +905,8 @@ MTableView::item:hover{{
     background-color: {primary_light};
 }}
 
-BigView::item:selected,
+MBigView::item:selected,
+MListView::item:selected,
 MTreeView::item:selected,
 MColumnView::item:selected,
 MTableView::item:selected{{
