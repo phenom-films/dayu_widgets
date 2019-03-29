@@ -41,6 +41,82 @@ def from_list_to_nested_dict(input, sep='/'):
     return result
 
 
+def generate_color(primary_color, index):
+    # 这里生成颜色的算法，来自 Ant Design, 只做了语言的转换，和颜色的类型的转换，没对算法做任何修改
+    # https://github.com/ant-design/ant-design/blob/master/components/style/color/colorPalette.less
+    # https://zhuanlan.zhihu.com/p/32422584
+
+    hue_step = 2
+    saturation_step = 16
+    saturation_step2 = 5
+    brightness_step1 = 5
+    brightness_step2 = 15
+    light_color_count = 5
+    dark_color_count = 4
+
+    def get_hue(color, i, is_light):
+        h = color.hue()
+        if h >= 60 and h <= 240:
+            hue = h - hue_step * i if is_light else h + hue_step * i
+        else:
+            hue = h + hue_step * i if is_light else h - hue_step * i
+        if hue < 0:
+            hue += 359
+        elif hue >= 359:
+            hue -= 359
+        return hue / 359.0
+
+    def get_saturation(color, i, is_light):
+        s = color.saturationF() * 100
+        if is_light:
+            saturation = s - saturation_step * i
+        elif i == dark_color_count:
+            saturation = s + saturation_step
+        else:
+            saturation = s + saturation_step2 * i
+        saturation = min(100.0, saturation)
+        if is_light and i == light_color_count and saturation > 10:
+            saturation = 10
+        saturation = max(6.0, saturation)
+        return round(saturation * 10) / 1000.0
+
+    def get_value(color, i, is_light):
+        v = color.valueF()
+        if is_light:
+            return min((v * 100 + brightness_step1 * i) / 100, 1.0)
+        return max((v * 100 - brightness_step2 * i) / 100, 0.0)
+
+    light = index <= 6
+    hsv_color = primary_color
+    index = light_color_count + 1 - index if light else index - light_color_count - 1
+    return QColor.fromHsvF(
+        get_hue(hsv_color, index, light),
+        get_saturation(hsv_color, index, light),
+        get_value(hsv_color, index, light)
+    ).name()
+
+
+def draw_empty_content(view, text=None, pix_map=None):
+    from dayu_widgets import dayu_theme
+    pix_map = pix_map or MPixmap('empty.svg', dayu_theme.color.icon_disabled)
+    text = text or view.tr('No Data')
+    painter = QPainter(view)
+    font_metrics = painter.fontMetrics()
+    painter.setPen(QPen(dayu_theme.color.text_help))
+    content_height = pix_map.height() + font_metrics.height()
+    padding = 10
+    proper_min_size = min(view.height() - padding * 2, view.width() - padding * 2, content_height)
+    if proper_min_size < content_height:
+        pix_map = pix_map.scaledToHeight(proper_min_size - font_metrics.height(), Qt.SmoothTransformation)
+        content_height = proper_min_size
+    painter.drawText(view.width() / 2 - font_metrics.width(text) / 2,
+                     view.height() / 2 + content_height / 2 - font_metrics.height() / 2,
+                     text)
+    painter.drawPixmap(view.width() / 2 - pix_map.width() / 2,
+                       view.height() / 2 - content_height / 2, pix_map)
+    painter.end()
+
+
 @singledispatch
 def real_model(obj):
     return obj
@@ -191,14 +267,14 @@ def _(path):
     return MIcon(*path)
 
 
-def dump_structure(obj, spaceCount):
+def dump_structure(obj, space_count):
     print "{0}{1} : {2}".format(
-        " " * spaceCount,
+        " " * space_count,
         obj.metaObject().className(),
         obj.objectName())
 
     for child in obj.children():
-        dump_structure(child, spaceCount + 4)
+        dump_structure(child, space_count + 4)
 
 
 if __name__ == '__main__':
