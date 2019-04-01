@@ -62,7 +62,7 @@ class MLineEdit(QLineEdit):
                                     icon=MIcon('close_line.svg'), size=size, parent=parent)
         suffix_button.clicked.connect(line_edit.clear)
         line_edit.add_suffix_widget(suffix_button)
-        line_edit.setPlaceholderText('Enter key word to search...')
+        line_edit.setPlaceholderText(line_edit.tr('Enter key word to search...'))
         return line_edit
 
     @classmethod
@@ -82,11 +82,11 @@ class MLineEdit(QLineEdit):
         line_edit.setProperty('error', True)
         line_edit.setReadOnly(True)
         suffix_button = MToolButton(type=MToolButton.IconOnlyType,
-                                    icon=MIcon('detail_line.svg', dayu_theme.color.error),
+                                    icon=MIcon('detail_line.svg', dayu_theme.error_color),
                                     size=size)
         suffix_button.clicked.connect(functools.partial(slot_show_detail, line_edit))
         line_edit.add_suffix_widget(suffix_button)
-        line_edit.setPlaceholderText('Error information will be here...')
+        line_edit.setPlaceholderText(line_edit.tr('Error information will be here...'))
         return line_edit
 
     @classmethod
@@ -96,7 +96,7 @@ class MLineEdit(QLineEdit):
         suffix_button.clicked.connect(line_edit.returnPressed)
         suffix_button.setFixedWidth(100)
         line_edit.add_suffix_widget(suffix_button)
-        line_edit.setPlaceholderText('Enter key word to search...')
+        line_edit.setPlaceholderText(line_edit.tr('Enter key word to search...'))
         return line_edit
 
     @classmethod
@@ -107,7 +107,7 @@ class MLineEdit(QLineEdit):
         suffix_button.set_format(format or [])
         line_edit.textChanged.connect(suffix_button.set_path)
         line_edit.add_suffix_widget(suffix_button)
-        line_edit.setPlaceholderText('Click button to browser files')
+        line_edit.setPlaceholderText(line_edit.tr('Click button to browser files'))
         return line_edit
 
     @classmethod
@@ -117,5 +117,5 @@ class MLineEdit(QLineEdit):
         suffix_button.sig_folder_changed.connect(line_edit.setText)
         line_edit.textChanged.connect(suffix_button.set_path)
         line_edit.add_suffix_widget(suffix_button)
-        line_edit.setPlaceholderText('Click button to browser folder')
+        line_edit.setPlaceholderText(line_edit.tr('Click button to browser folder'))
         return line_edit
