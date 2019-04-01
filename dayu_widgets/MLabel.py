@@ -19,6 +19,7 @@ class MLabel(QLabel):
     H1Type = 'h1'
     H2Type = 'h2'
     H3Type = 'h3'
+    H4Type = 'h4'
     TextType = 'text'
     HelpType = 'help'
 
@@ -69,6 +70,10 @@ class MLabel(QLabel):
     @classmethod
     def h3(cls, text=''):
         return cls(text=text, type=MLabel.H3Type)
+
+    @classmethod
+    def h4(cls, text=''):
+        return cls(text=text, type=MLabel.H4Type)
 
     @classmethod
     def help(cls, text=''):
