@@ -20,11 +20,11 @@ class MToolButtonTest(QWidget, MFieldMixin):
         self._init_ui()
 
     def _init_ui(self):
-        size_list = [('Huge', dayu_theme.size.huge),
-                     ('Large', dayu_theme.size.large),
-                     ('Medium', dayu_theme.size.medium),
-                     ('Small', dayu_theme.size.small),
-                     ('Tiny', dayu_theme.size.tiny)]
+        size_list = [
+            ('Large', dayu_theme.large),
+            ('Medium', dayu_theme.medium),
+            ('Small', dayu_theme.small),
+        ]
 
         size_lay = QVBoxLayout()
         for label, size in size_list:
@@ -39,7 +39,7 @@ class MToolButtonTest(QWidget, MFieldMixin):
         button2 = MToolButton(icon=MIcon('detail_line.svg'), type=MToolButton.IconOnlyType)
         button2.setEnabled(False)
         button7 = MToolButton(icon=MIcon('trash_line.svg'),
-                              icon_checked=MIcon('trash_line.svg', dayu_theme.color.primary),
+                              icon_checked=MIcon('trash_line.svg', dayu_theme.primary_color),
                               type=MToolButton.IconOnlyType)
         button7.setCheckable(True)
 
@@ -51,13 +51,13 @@ class MToolButtonTest(QWidget, MFieldMixin):
         button_grp.set_button_list([
             {
                 'icon': MIcon('male.svg'),
-                'icon_checked': MIcon('male.svg', dayu_theme.color.male),
+                'icon_checked': MIcon('male.svg', dayu_theme.male_color),
                 'checkable': True,
                 'text': u'男款 (37~42均码)',
                 'type': MToolButton.TaoBaoType},
             {
                 'icon': MIcon('female.svg'),
-                'icon_checked': MIcon('female.svg', dayu_theme.color.female),
+                'icon_checked': MIcon('female.svg', dayu_theme.female_color),
                 'checkable': True,
                 'text': u'女款 (35~39均码)',
                 'type': MToolButton.TaoBaoType
@@ -93,6 +93,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     test = MToolButtonTest()
     from dayu_widgets import dayu_theme
+
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())
