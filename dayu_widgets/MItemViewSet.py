@@ -8,7 +8,7 @@
 
 from dayu_widgets import dayu_theme
 from dayu_widgets.MItemModel import MSortFilterModel, MTableModel
-from dayu_widgets.MItemView import MTableView, MTreeView, MBigView
+from dayu_widgets.MItemView import MTableView, MTreeView, MBigView, MListView
 from dayu_widgets.MLineEdit import MLineEdit
 from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.qt import *
@@ -20,6 +20,7 @@ class MItemViewSet(QWidget):
     TableViewType = MTableView
     BigViewType = MBigView
     TreeViewType = MTreeView
+    ListViewType = MListView
 
     def __init__(self, type=None, searchable=False, parent=None):
         super(MItemViewSet, self).__init__(parent)
@@ -37,7 +38,7 @@ class MItemViewSet(QWidget):
         self.item_view.setModel(self.sort_filter_model)
 
         if searchable:
-            search_size = dayu_theme.size.small
+            search_size = dayu_theme.small
             self.search_line_edit = MLineEdit.search(size=search_size)
             self.search_attr_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('down_fill.svg'),
                                                   size=search_size)
@@ -68,20 +69,3 @@ class MItemViewSet(QWidget):
 
     def get_data(self):
         return self.source_model.get_data_list()
-
-
-if __name__ == '__main__':
-    import sys
-
-    app = QApplication(sys.argv)
-    test = MItemViewSet(type=MItemViewSet.ListViewType)
-    test.set_header_list(
-        [{'label': 'Name', 'key': 'name', 'editable': True, 'selectable': True, 'exclusive': False, 'width': 200,
-          }])
-    # only_work_check_box = QCheckBox('Show Special Tasks')
-    # only_work_check_box.setChecked(False)
-    # only_work_check_box.stateChanged.connect(test.slot_update)
-    # test.add_button(only_work_check_box)
-    test.setup_data([{'name': ['xiaoming'], 'name_list': ['li', 'haha', 'xiaoming']}])
-    test.show()
-    sys.exit(app.exec_())

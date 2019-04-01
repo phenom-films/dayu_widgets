@@ -42,7 +42,7 @@ class MItemViewFullSet(QWidget):
             self.table_view.setModel(self.sort_filter_model)
             self.stack_widget.addWidget(self.table_view)
             data_group.append({'icon': MIcon('table_view.svg'),
-                               'icon_checked': MIcon('table_view.svg', dayu_theme.color.get('primary')),
+                               'icon_checked': MIcon('table_view.svg', dayu_theme.primary_color),
                                'checkable': True,
                                'tooltip': u'Table View'})
         if big_view:
@@ -52,7 +52,7 @@ class MItemViewFullSet(QWidget):
             self.big_view.setModel(self.sort_filter_model)
             self.stack_widget.addWidget(self.big_view)
             data_group.append({'icon': MIcon('big_view.svg'),
-                               'icon_checked': MIcon('big_view.svg', dayu_theme.color.get('primary')),
+                               'icon_checked': MIcon('big_view.svg', dayu_theme.primary_color),
                                'checkable': True,
                                'tooltip': u'Big View'})
 
@@ -78,7 +78,7 @@ class MItemViewFullSet(QWidget):
             self.view_button_grp.set_button_list(data_group)
             self.view_button_grp.set_checked(0)
             self.top_lay.addWidget(self.view_button_grp)
-        search_size = dayu_theme.size.small
+        search_size = dayu_theme.small
         self.search_line_edit = MLineEdit.search(size=search_size)
         self.search_attr_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('down_fill.svg'),
                                               size=search_size)
@@ -151,21 +151,3 @@ class MItemViewFullSet(QWidget):
 
     def get_data(self):
         return self.source_model.get_data_list()
-
-
-if __name__ == '__main__':
-    import sys
-
-    app = QApplication(sys.argv)
-    test = MItemViewFullSet()
-    dayu_theme.apply(test)
-    test.set_header_list(
-        [{'label': 'Name', 'key': 'name', 'editable': True, 'selectable': True, 'exclusive': False, 'width': 200,
-          }])
-    # only_work_check_box = QCheckBox('Show Special Tasks')
-    # only_work_check_box.setChecked(False)
-    # only_work_check_box.stateChanged.connect(test.slot_update)
-    # test.add_button(only_work_check_box)
-    test.setup_data([{'name': ['xiaoming'], 'name_list': ['li', 'haha', 'xiaoming']}])
-    test.show()
-    sys.exit(app.exec_())
