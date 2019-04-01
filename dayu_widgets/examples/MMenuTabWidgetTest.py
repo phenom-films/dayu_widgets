@@ -37,7 +37,8 @@ class MMenuTabWidgetTest(QWidget):
         for data_dict in item_list:
             tool_bar.add_menu(data_dict)
             tool_bar_small.add_menu(data_dict)
-            stack_lay.addWidget(MLabel(data_dict.get('text')))
+            label = MLabel(data_dict.get('text'), parent=self)
+            stack_lay.addWidget(label)
             tool_bar_large.add_menu(data_dict, stack_lay.count() - 1)
         tool_bar_large.tool_button_group.sig_checked_changed.connect(stack_lay.setCurrentIndex)
 
