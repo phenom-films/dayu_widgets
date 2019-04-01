@@ -5,79 +5,211 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
-import UserDict
-import json
+import string
 
-from dayu_widgets.qt import MIcon
-
-
-class MDict(UserDict.UserDict, object):
-    def __init__(self, *args, **kwargs):
-        super(MDict, self).__init__(*args, **kwargs)
-
-    def __getattr__(self, item):
-        return self.data.get(item)
+from dayu_widgets.utils import generate_color, fade_color
 
 
-class MIconDict(UserDict.UserDict, object):
-    def __init__(self, *args, **kwargs):
-        super(MIconDict, self).__init__(*args, **kwargs)
-
-    def __getattr__(self, item):
-        return MIcon(self.data.get(item) + '.svg')
+class QssTemplate(string.Template):
+    delimiter = '@'
+    idpattern = r'[_a-z][_a-z0-9]*'
 
 
 class MTheme(object):
-    def __init__(self, theme='light'):
+    def __init__(self, theme='light', primary_color='#2d8cf0'):
         super(MTheme, self).__init__()
         from dayu_widgets import utils
         default_qss_file = utils.get_static_file('main.qss')
         with open(default_qss_file, 'r+') as f:
-            self.default_qss = f.read()
-        self.color = None
-        self.font = None
-        self.size = None
-        self.icon = None
-        self.full_dict = None
+            self.default_qss = QssTemplate(f.read())
+        self._init_preset_color()
+        self.set_primary_color(primary_color)
         self.set_theme(theme)
+        self._init_font()
+        self._init_size()
+        self.unit = 'px'
+        self.default_size = self.medium
 
-    def get_cascading_json(self, json_file, target_dict):
-        from dayu_widgets import utils
-        with open(json_file, 'r') as j_f:
-            data_dict = json.load(j_f)
-            parent_file = data_dict.get('include') and utils.get_static_file(data_dict.get('include'))
-            if parent_file:
-                self.get_cascading_json(parent_file, target_dict)
-            for key in ['color', 'size', 'font', 'icon']:
-                if key in data_dict:
-                    target_dict[key].update(data_dict[key])
+        self.text_error_color = self.error_7
+        self.text_color_inverse = "#fff"
+        self.text_warning_color = self.warning_7
+        self.female_color = "#ef5b97"
+        self.male_color = "#4ebbff"
 
     def set_theme(self, theme):
-        from dayu_widgets import utils, STATIC_FOLDERS
-        theme_file = utils.get_static_file('{}.json'.format(theme))
-        target_dict = {'color': {}, 'size': {}, 'font': {}, 'icon': {}}
-        self.get_cascading_json(theme_file, target_dict)
-        for key, icon in target_dict.get('icon').items():
-            target_dict['icon'][key] = 'url({}/{})'.format(STATIC_FOLDERS[0].replace('\\', '/'), icon)
-        self.color = MDict(target_dict.get('color'))
-        self.font = MDict(target_dict.get('font'))
-        self.size = MDict(target_dict.get('size'))
-        self.icon = MDict(target_dict.get('icon'))
-        self.full_dict = target_dict.get('color')
-        self.full_dict.update(target_dict.get('font'))
-        self.full_dict.update(target_dict.get('size'))
-        self.full_dict.update(target_dict.get('icon'))
-        self.default_size = self.size.medium
+        if theme == 'light':
+            self._light()
+        else:
+            self._dark()
+        self._init_icon(theme)
+
+    def set_primary_color(self, color):
+        self.primary_color = color
+        self.primary_1 = generate_color(color, 1)
+        self.primary_2 = generate_color(color, 2)
+        self.primary_3 = generate_color(color, 3)
+        self.primary_4 = generate_color(color, 4)
+        self.primary_5 = generate_color(color, 5)
+        self.primary_6 = generate_color(color, 6)
+        self.primary_7 = generate_color(color, 7)
+        self.primary_8 = generate_color(color, 8)
+        self.primary_9 = generate_color(color, 9)
+        self.primary_10 = generate_color(color, 10)
+        # item
+        self.item_hover_bg = self.primary_1
+        self.item_hover_bg = self.primary_1
+
+    def _init_icon(self, theme):
+        # icon
+        from dayu_widgets import STATIC_FOLDERS
+        url_prefix = '{}/{{}}{}.svg'.format(STATIC_FOLDERS[0].replace('\\', '/'), '' if theme == 'light' else '_dark')
+        url_prefix_2 = '{}/{{}}.svg'.format(STATIC_FOLDERS[0].replace('\\', '/'))
+        self.icon_down = url_prefix.format('down_line')
+        self.icon_up = url_prefix.format('up_line')
+        self.icon_left = url_prefix.format('left_line')
+        self.icon_right = url_prefix.format('right_line')
+        self.icon_close = url_prefix.format('close_line')
+        self.icon_calender = url_prefix.format('calendar_fill')
+        self.icon_splitter = url_prefix.format('splitter')
+        self.icon_float = url_prefix.format('float')
+
+        self.icon_check = url_prefix_2.format('check')
+        self.icon_minus = url_prefix_2.format('minus')
+        self.icon_circle = url_prefix_2.format('circle')
+        self.icon_sphere = url_prefix_2.format('sphere')
+
+    def _init_preset_color(self):
+        self.blue = '#1890ff'
+        self.purple = '#722ed1'
+        self.cyan = '#13c2c2'
+        self.green = '#52c41a'
+        self.magenta = '#eb2f96'
+        self.pink = '#pink'
+        self.red = '#f5222d'
+        self.orange = '#fa8c16'
+        self.yellow = '#fadb14'
+        self.volcano = '#fa541c'
+        self.geekblue = '#2f54eb'
+        self.lime = '#a0d911'
+        self.gold = '#faad14'
+
+        self.info_color = self.blue
+        self.success_color = self.green
+        self.processing_color = self.blue
+        self.error_color = self.red
+        self.warning_color = self.gold
+
+        self.info_1 = fade_color(self.info_color, '15%')
+        self.info_2 = generate_color(self.info_color, 2)
+        self.info_3 = fade_color(self.info_color, '35%')
+        self.info_4 = generate_color(self.info_color, 4)
+        self.info_5 = generate_color(self.info_color, 5)
+        self.info_6 = generate_color(self.info_color, 6)
+        self.info_7 = generate_color(self.info_color, 7)
+        self.info_8 = generate_color(self.info_color, 8)
+        self.info_9 = generate_color(self.info_color, 9)
+        self.info_10 = generate_color(self.info_color, 10)
+
+        self.success_1 = fade_color(self.success_color, '15%')
+        self.success_2 = generate_color(self.success_color, 2)
+        self.success_3 = fade_color(self.success_color, '35%')
+        self.success_4 = generate_color(self.success_color, 4)
+        self.success_5 = generate_color(self.success_color, 5)
+        self.success_6 = generate_color(self.success_color, 6)
+        self.success_7 = generate_color(self.success_color, 7)
+        self.success_8 = generate_color(self.success_color, 8)
+        self.success_9 = generate_color(self.success_color, 9)
+        self.success_10 = generate_color(self.success_color, 10)
+
+        self.warning_1 = fade_color(self.warning_color, '15%')
+        self.warning_2 = generate_color(self.warning_color, 2)
+        self.warning_3 = fade_color(self.warning_color, '35%')
+        self.warning_4 = generate_color(self.warning_color, 4)
+        self.warning_5 = generate_color(self.warning_color, 5)
+        self.warning_6 = generate_color(self.warning_color, 6)
+        self.warning_7 = generate_color(self.warning_color, 7)
+        self.warning_8 = generate_color(self.warning_color, 8)
+        self.warning_9 = generate_color(self.warning_color, 9)
+        self.warning_10 = generate_color(self.warning_color, 10)
+
+        self.error_1 = fade_color(self.error_color, '15%')
+        self.error_2 = generate_color(self.error_color, 2)
+        self.error_3 = fade_color(self.error_color, '35%')
+        self.error_4 = generate_color(self.error_color, 4)
+        self.error_5 = generate_color(self.error_color, 5)
+        self.error_6 = generate_color(self.error_color, 6)
+        self.error_7 = generate_color(self.error_color, 7)
+        self.error_8 = generate_color(self.error_color, 8)
+        self.error_9 = generate_color(self.error_color, 9)
+        self.error_10 = generate_color(self.error_color, 10)
+
+    def _init_font(self):
+        # font
+        self.font_family = 'BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif'
+        self.font_size_base = 14
+        self.font_size_large = self.font_size_base + 2
+        self.font_size_small = self.font_size_base - 2
+        self.h1_size = int(self.font_size_base * 2.71)
+        self.h2_size = int(self.font_size_base * 2.12)
+        self.h3_size = int(self.font_size_base * 1.71)
+        self.h4_size = int(self.font_size_base * 1.41)
+
+    def _init_size(self):
+        # border
+        self.border_radius_large = 6
+        self.border_radius_base = 4
+        self.border_radius_small = 2
+
+        self.huge = 48
+        self.large = 40
+        self.medium = 32
+        self.small = 24
+        self.tiny = 18
+        self.huge_icon = self.huge - 20
+        self.large_icon = self.large - 16
+        self.medium_icon = self.medium - 12
+        self.small_icon = self.small - 10
+        self.tiny_icon = self.tiny - 8
+
+    def _dark(self):
+        self.title_color = "#ffffff"
+        self.primary_text_color = "#d9d9d9"
+        self.secondary_text_color = "#a6a6a6"
+        self.disable_color = "#737373"
+        self.border_color = "#1e1e1e"
+        self.divider_color = "#262626"
+        self.header_color = "#0a0a0a"
+        self.icon_color = "#a6a6a6"
+
+        self.background_color = "#323232"
+        self.background_selected_color = "#292929"
+        self.in_background_color = "#3a3a3a"
+        self.out_background_color = "#494949"
+
+    def _light(self):
+        self.title_color = "#262626"
+        self.primary_text_color = "#595959"
+        self.secondary_text_color = "#8c8c8c"
+        self.disable_color = "#e5e5e5"
+        self.border_color = "#d9d9d9"
+        self.divider_color = "#e8e8e8"
+        self.header_color = "#fafafa"
+        self.icon_color = "#8c8c8c"
+
+        self.background_color = "#f8f8f9"
+        self.background_selected_color = "#bfbfbf"
+        self.in_background_color = "#ffffff"
+        self.out_background_color = "#eeeeee"
 
     def apply(self, widget):
-        widget.setStyleSheet(self.default_qss.format(**self.full_dict))
+        widget.setStyleSheet(self.default_qss.substitute(vars(self)))
 
     def deco(self, cls):
         original_init__ = cls.__init__
 
         def my__init__(instance, *args, **kwargs):
             original_init__(instance, *args, **kwargs)
-            instance.setStyleSheet(self.default_qss.format(**self.full_dict))
+            instance.setStyleSheet(self.default_qss.substitute(vars(self)))
 
         def polish(instance):
             instance.style().polish(instance)
