@@ -9,8 +9,8 @@
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
+from dayu_widgets import dayu_theme
 
 
 class MPushButtonTest(QWidget, MFieldMixin):
@@ -20,20 +20,17 @@ class MPushButtonTest(QWidget, MFieldMixin):
 
     def _init_ui(self):
         button1 = MPushButton(text='Default')
-        button2 = MPushButton(text='Primary', type=MPushButton.PrimaryType)
-        button3 = MPushButton(text='Info', type=MPushButton.InfoType)
-        button4 = MPushButton(text='Success', type=MPushButton.SuccessType)
-        button5 = MPushButton(text='Warning', type=MPushButton.WarningType)
-        button6 = MPushButton(text='Error', type=MPushButton.ErrorType)
-        button7 = MPushButton(text='With Icon', icon=MIcon('trash_fill.svg'), type=MPushButton.DefaultType)
+        button2 = MPushButton.primary(text='Primary')
+        button4 = MPushButton.success(text='Success')
+        button5 = MPushButton.warning(text='Warning')
+        button6 = MPushButton.error(text='Error')
+        button7 = MPushButton(text='With Icon', icon=MIcon('trash_fill.svg'))
         button7.setCheckable(True)
 
         sub_lay3 = QHBoxLayout()
-        size_list = [('Huge', dayu_theme.size.huge),
-                     ('Large', dayu_theme.size.large),
-                     ('Medium', dayu_theme.size.medium),
-                     ('Small', dayu_theme.size.small),
-                     ('Tiny', dayu_theme.size.tiny)]
+        size_list = [('Large', dayu_theme.large),
+                     ('Medium', dayu_theme.medium),
+                     ('Small', dayu_theme.small)]
         for label, size in size_list:
             sub_lay3.addWidget(MPushButton(text=label, type=MPushButton.PrimaryType, size=size))
 
@@ -43,7 +40,6 @@ class MPushButtonTest(QWidget, MFieldMixin):
         sub_lay1 = QHBoxLayout()
         sub_lay1.addWidget(button1)
         sub_lay1.addWidget(button2)
-        sub_lay1.addWidget(button3)
         sub_lay1.addStretch()
         sub_lay2 = QHBoxLayout()
         sub_lay2.addWidget(button4)
@@ -69,6 +65,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     test = MPushButtonTest()
     from dayu_widgets import dayu_theme
+
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())
