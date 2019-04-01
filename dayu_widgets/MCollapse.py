@@ -27,7 +27,7 @@ class MSectionItem(QWidget):
         self.expand_icon = MLabel(parent=self)
         self.expand_icon.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         self._close_button = MToolButton(type=MToolButton.IconOnlyType,
-                                         size=dayu_theme.size.tiny,
+                                         size=dayu_theme.tiny,
                                          icon=MIcon('close_line.svg'))
         self._close_button.clicked.connect(self.close)
 
