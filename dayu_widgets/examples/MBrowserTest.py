@@ -23,9 +23,9 @@ class MBrowserTest(QWidget, MFieldMixin):
         self._init_ui()
 
     def _init_ui(self):
-        browser_1 = MClickBrowserFilePushButton(size=dayu_theme.size.small, text='Browser File (Small)')
-        browser_2 = MClickBrowserFolderPushButton(size=dayu_theme.size.medium, text='Browser Folder (Default)')
-        browser_3 = MClickBrowserFilePushButton(size=dayu_theme.size.large, type=MPushButton.PrimaryType,
+        browser_1 = MClickBrowserFilePushButton(size=dayu_theme.small, text='Browser File (Small)')
+        browser_2 = MClickBrowserFolderPushButton(size=dayu_theme.medium, text='Browser Folder (Default)')
+        browser_3 = MClickBrowserFilePushButton.primary(size=dayu_theme.large,
                                                 text='Browser File (Large)')
         lay_1 = QHBoxLayout()
         lay_1.addWidget(browser_1)
