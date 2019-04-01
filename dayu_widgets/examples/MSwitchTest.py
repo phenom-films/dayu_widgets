@@ -31,11 +31,10 @@ class MSwitchTest(QWidget, MFieldMixin):
         lay.addWidget(check_box_3)
 
         size_lay = QVBoxLayout()
-        size_list = [('Huge', dayu_theme.size.huge),
-                     ('Large', dayu_theme.size.large),
-                     ('Medium', dayu_theme.size.medium),
-                     ('Small', dayu_theme.size.small),
-                     ('Tiny', dayu_theme.size.tiny)]
+        size_list = [
+                     ('Large', dayu_theme.large),
+                     ('Medium', dayu_theme.medium),
+                     ('Small', dayu_theme.small)]
         for label, size in size_list:
             lay2 = QHBoxLayout()
             lay2.addWidget(MLabel(label))
@@ -56,7 +55,6 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     test = MSwitchTest()
-    from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())
