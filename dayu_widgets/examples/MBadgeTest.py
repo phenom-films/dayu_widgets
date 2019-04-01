@@ -26,8 +26,8 @@ class MBadgeTest(QWidget, MFieldMixin):
 
     def _init_ui(self):
         button = MToolButton(icon=MIcon('trash_line.svg'))
-        avatar = MAvatar(size=dayu_theme.size.large, image=MPixmap('avatar.png'))
-        button_alert = MToolButton(icon=MIcon('alert_fill.svg'), size=dayu_theme.size.large)
+        avatar = MAvatar(size=dayu_theme.large, image=MPixmap('avatar.png'))
+        button_alert = MToolButton(icon=MIcon('alert_fill.svg'), size=dayu_theme.large)
         badge_1 = MBadge(widget=button, dot=True)
         badge_2 = MBadge(widget=avatar, dot=True)
         badge_3 = MBadge(widget=button_alert)
@@ -73,7 +73,6 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     test = MBadgeTest()
-    from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())
