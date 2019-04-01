@@ -20,7 +20,7 @@ class MToolButtonGroupTest(QWidget, MFieldMixin):
         self._init_ui()
 
     def _init_ui(self):
-        tool_group_h = MToolButtonGroup(size=dayu_theme.size.small)
+        tool_group_h = MToolButtonGroup(size=dayu_theme.small)
         tool_group_h.set_button_list(['Apple', {'text': 'Banana'}, {'text': 'Pear'}])
         tool_1_lay = QHBoxLayout()
         tool_1_lay.addWidget(tool_group_h)
@@ -34,7 +34,7 @@ class MToolButtonGroupTest(QWidget, MFieldMixin):
 
         tool_group_v = MToolButtonGroup(type=MToolButton.TaoBaoType,
                                         exclusive=True,
-                                        size=dayu_theme.size.small,
+                                        size=dayu_theme.small,
                                         orientation=Qt.Vertical)
         tool_group_v.set_button_list(app_data)
 
@@ -47,16 +47,16 @@ class MToolButtonGroupTest(QWidget, MFieldMixin):
         tool_grp_excl_true = MToolButtonGroup(orientation=Qt.Horizontal, exclusive=True, type=MToolButton.IconOnlyType)
         tool_grp_excl_true.set_button_list([
             {'icon': MIcon('table_view.svg'), 'checkable': True,
-             'icon_checked': MIcon('table_view.svg', dayu_theme.color.get('primary')),
+             'icon_checked': MIcon('table_view.svg', dayu_theme.primary_color),
              'tooltip': u'Table View'},
             {'icon': MIcon('list_view.svg'), 'checkable': True,
-             'icon_checked': MIcon('list_view.svg', dayu_theme.color.get('primary')),
+             'icon_checked': MIcon('list_view.svg', dayu_theme.primary_color),
              'tooltip': u'List View'},
             {'icon': MIcon('tree_view.svg'), 'checkable': True,
-             'icon_checked': MIcon('tree_view.svg', dayu_theme.color.get('primary')),
+             'icon_checked': MIcon('tree_view.svg', dayu_theme.primary_color),
              'tooltip': u'Tree View'},
             {'icon': MIcon('big_view.svg'), 'checkable': True,
-             'icon_checked': MIcon('big_view.svg', dayu_theme.color.get('primary')),
+             'icon_checked': MIcon('big_view.svg', dayu_theme.primary_color),
              'tooltip': u'Big View'},
         ])
         tool_grp_excl_true.set_checked(0)
@@ -71,11 +71,11 @@ class MToolButtonGroupTest(QWidget, MFieldMixin):
         tool_grp_excl_false.set_button_list(
             [
                 {'tooltip': u'加粗', 'icon': MIcon('bold.svg'),
-                 'icon_checked': MIcon('bold.svg', dayu_theme.color.get('primary')), 'checkable': True},
+                 'icon_checked': MIcon('bold.svg', dayu_theme.primary_color), 'checkable': True},
                 {'tooltip': u'倾斜', 'icon': MIcon('italic.svg'),
-                 'icon_checked': MIcon('italic.svg', dayu_theme.color.get('primary')), 'checkable': True},
+                 'icon_checked': MIcon('italic.svg', dayu_theme.primary_color), 'checkable': True},
                 {'tooltip': u'下划线', 'icon': MIcon('underline.svg'),
-                 'icon_checked': MIcon('underline.svg', dayu_theme.color.get('primary')), 'checkable': True},
+                 'icon_checked': MIcon('underline.svg', dayu_theme.primary_color), 'checkable': True},
             ])
         tool_excl_2_lay = QHBoxLayout()
         tool_excl_2_lay.addWidget(tool_grp_excl_false)
@@ -101,7 +101,6 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     test = MToolButtonGroupTest()
-    from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())
