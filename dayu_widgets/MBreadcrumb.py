@@ -23,13 +23,6 @@ class MBreadcrumb(QWidget):
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         self._button_group = QButtonGroup()
         self._size = size or dayu_theme.default_size
-        self.separator_class_dict = {
-            dayu_theme.size.huge: MLabel.h1,
-            dayu_theme.size.large: MLabel.h2,
-            dayu_theme.size.medium: MLabel.h3,
-            dayu_theme.size.small: MLabel,
-            dayu_theme.size.tiny: MLabel.help,
-        }
         self._label_list = []
 
     def set_item_list(self, data_list):
@@ -61,7 +54,7 @@ class MBreadcrumb(QWidget):
             button.clicked.connect(data_dict.get('clicked'))
 
         if len(self._button_group.buttons()) != 0:
-            separator = self.separator_class_dict.get(self._size)(self._separator)
+            separator = MLabel.help(self._separator)
             self._label_list.append(separator)
             self._main_layout.insertWidget(self._main_layout.count() - 1, separator)
         self._main_layout.insertWidget(self._main_layout.count() - 1, button)
