@@ -16,7 +16,6 @@ from dayu_widgets.qt import *
 class MPushButton(QPushButton):
     DefaultType = 'default'
     PrimaryType = 'primary'
-    InfoType = 'info'
     SuccessType = 'success'
     WarningType = 'warning'
     ErrorType = 'error'
@@ -27,4 +26,20 @@ class MPushButton(QPushButton):
         else:
             super(MPushButton, self).__init__(text=text, parent=parent)
         self.setProperty('dayu_size', size or dayu_theme.default_size)
-        self.setProperty('type', type or MPushButton.DefaultType)
+        self.setProperty('type', type or 'default')
+
+    @classmethod
+    def primary(cls, text='', icon=None, size=None, parent=None):
+        return cls(text=text, icon=icon, size=size, type='primary', parent=parent)
+
+    @classmethod
+    def success(cls, text='', icon=None, size=None, parent=None):
+        return cls(text=text, icon=icon, size=size, type='success', parent=parent)
+
+    @classmethod
+    def warning(cls, text='', icon=None, size=None, parent=None):
+        return cls(text=text, icon=icon, size=size, type='warning', parent=parent)
+
+    @classmethod
+    def error(cls, text='', icon=None, size=None, parent=None):
+        return cls(text=text, icon=icon, size=size, type='error', parent=parent)
