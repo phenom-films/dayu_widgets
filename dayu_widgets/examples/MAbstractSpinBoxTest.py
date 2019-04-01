@@ -20,8 +20,7 @@ class MAbstractSpinBoxTest(QWidget):
     def _init_ui(self):
         main_lay = QVBoxLayout()
         class_list = [MSpinBox, MDoubleSpinBox, MDateTimeEdit, MDateEdit, MTimeEdit]
-        size_list = [dayu_theme.size.huge, dayu_theme.size.large, dayu_theme.size.medium, dayu_theme.size.small,
-                     dayu_theme.size.tiny]
+        size_list = [dayu_theme.large, dayu_theme.medium, dayu_theme.small]
         for cls in class_list:
             main_lay.addWidget(MDivider(cls.__name__))
             lay = QHBoxLayout()
@@ -31,11 +30,11 @@ class MAbstractSpinBoxTest(QWidget):
             main_lay.addLayout(lay)
 
         main_lay.addWidget(MDivider('Pop Calendar Widget'))
-        date_time_edit = MDateTimeEdit(size=dayu_theme.size.small)
+        date_time_edit = MDateTimeEdit(size=dayu_theme.small)
         date_time_edit.setCalendarPopup(True)
-        date_edit = MDateEdit(size=dayu_theme.size.small)
+        date_edit = MDateEdit(size=dayu_theme.small)
         date_edit.setCalendarPopup(True)
-        time_edit = MTimeEdit(size=dayu_theme.size.small)
+        time_edit = MTimeEdit(size=dayu_theme.small)
         time_edit.setCalendarPopup(True)
         date_lay = QHBoxLayout()
         date_lay.addWidget(date_time_edit)
