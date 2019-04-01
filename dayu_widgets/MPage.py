@@ -24,7 +24,7 @@ class MPage(QWidget, MFieldMixin):
 
     def __init__(self, parent=None):
         super(MPage, self).__init__(parent)
-        size = dayu_theme.tiny
+        size = dayu_theme.small
         self.register_field('page_size_selected', 25)
         self.register_field('page_size_list',
                             [{'label': '25 - Fastest', 'value': 25},
