@@ -22,33 +22,31 @@ class MLineEditTest(QWidget):
         self._init_ui()
 
     def _init_ui(self):
-        size_list = [('Huge', dayu_theme.size.huge),
-                     ('Large', dayu_theme.size.large),
-                     ('Medium', dayu_theme.size.medium),
-                     ('Small', dayu_theme.size.small),
-                     ('Tiny', dayu_theme.size.tiny)]
+        size_list = [('Large', dayu_theme.large),
+                     ('Medium', dayu_theme.medium),
+                     ('Small', dayu_theme.small)]
         size_lay = QVBoxLayout()
         for label, size in size_list:
             line_edit_size = MLineEdit(size=size)
             line_edit_size.setPlaceholderText(label)
             size_lay.addWidget(line_edit_size)
 
-        line_edit_icon = MLineEdit(text='Xiao Hua', size=dayu_theme.size.small)
-        tool_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('female.svg'), size=dayu_theme.size.small)
+        line_edit_icon = MLineEdit(text='Xiao Hua', size=dayu_theme.small)
+        tool_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('female.svg'), size=dayu_theme.small)
         line_edit_icon.add_suffix_widget(tool_button)
 
-        line_edit_button = MLineEdit(text='Beijing', size=dayu_theme.size.small)
-        push_button = MPushButton(text='Go', size=dayu_theme.size.small, type=MPushButton.PrimaryType)
+        line_edit_button = MLineEdit(text='Beijing', size=dayu_theme.small)
+        push_button = MPushButton(text='Go', size=dayu_theme.small, type='primary')
         line_edit_button.add_suffix_widget(push_button)
 
-        line_edit_error = MLineEdit.error(size=dayu_theme.size.small)
+        line_edit_error = MLineEdit.error(size=dayu_theme.small)
         line_edit_error.setText('waring: file d:/ddd/ccc.jpg not exists.')
 
-        line_edit_search = MLineEdit.search(size=dayu_theme.size.small)
-        line_edit_search_engine = MLineEdit.search_engine(size=dayu_theme.size.large)
+        line_edit_search = MLineEdit.search(size=dayu_theme.small)
+        line_edit_search_engine = MLineEdit.search_engine(size=dayu_theme.large)
         line_edit_search_engine.add_prefix_widget(MToolButton(type=MToolButton.IconOnlyType,
                                                               icon=MIcon('filter_line.svg', '#cccccc'),
-                                                              size=dayu_theme.size.large))
+                                                              size=dayu_theme.large))
         line_edit_search_engine.returnPressed.connect(self.slot_search)
 
         line_edit_file = MLineEdit.file()
