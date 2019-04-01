@@ -28,7 +28,7 @@ class MCircle(QWidget):
         self.setLayout(self._main_lay)
         self.set_radius(radius)
         self.set_percent(percent)
-        self.set_color(color or dayu_theme.color.get('primary'))
+        self.set_color(color or dayu_theme.primary_color)
 
     def set_widget(self, widget):
         self._default_label.setVisible(False)
@@ -65,7 +65,7 @@ class MCircle(QWidget):
         rect_background.setTopLeft(QPoint(pen_width, pen_width))
         pen_background = QPen()
         pen_background.setWidth(pen_width)
-        pen_background.setColor(dayu_theme.color.get('background_dark'))
+        pen_background.setColor(dayu_theme.background_selected_color)
         pen_foreground = QPen()
         pen_foreground.setWidth(pen_width)
         pen_foreground.setColor(self.property('color'))
