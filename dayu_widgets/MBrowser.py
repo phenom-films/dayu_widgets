@@ -48,12 +48,12 @@ class MClickBrowserFilePushButton(MPushButton):
 
     def __init__(self, icon=None, text='', type=None, size=None, multiple=False, parent=None):
         super(MClickBrowserFilePushButton, self).__init__(
-            icon=icon or MIcon('cloud_line.svg', None if type is None or type == MPushButton.DefaultType else '#fff'),
+            icon=icon or MIcon('cloud_line.svg', None if type is None or type == 'default' else '#fff'),
             text=text, type=type, size=size, parent=parent)
         self.setProperty('multiple', multiple)
         self.setCursor(Qt.PointingHandCursor)
         self.clicked.connect(self.slot_browser_file)
-        self.setToolTip('Click to browser file')
+        self.setToolTip(self.tr('Click to browser file'))
         self.set_path('')
 
     def set_format(self, value):
@@ -76,7 +76,7 @@ class MClickBrowserFileToolButton(MToolButton):
         self.setProperty('multiple', multiple)
         self.clicked.connect(self.slot_browser_file)
         self.set_path('')
-        self.setToolTip('Click to browser file')
+        self.setToolTip(self.tr('Click to browser file'))
 
     def set_format(self, value):
         self.setProperty('format', value)
@@ -105,7 +105,7 @@ class MDragFileButton(QToolButton):
         self.clicked.connect(self.slot_browser_file)
         self.set_path('')
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.setToolTip('Click to browser file')
+        self.setToolTip(self.tr('Click to browser file'))
 
     def set_format(self, value):
         self.setProperty('format', value)
@@ -171,7 +171,7 @@ class MClickBrowserFolderPushButton(MPushButton):
         self.setCursor(Qt.PointingHandCursor)
         self.clicked.connect(self.slot_browser_folder)
         self.set_path('')
-        self.setToolTip('Click to browser folder')
+        self.setToolTip(self.tr('Click to browser folder'))
 
     def set_format(self, value):
         self.setProperty('format', value)
@@ -194,7 +194,7 @@ class MClickBrowserFolderToolButton(MToolButton):
         self.setCursor(Qt.PointingHandCursor)
         self.clicked.connect(self.slot_browser_folder)
         self.set_path('')
-        self.setToolTip('Click to browser folder')
+        self.setToolTip(self.tr('Click to browser folder'))
 
     def set_format(self, value):
         self.setProperty('format', value)
@@ -222,7 +222,7 @@ class MDragFolderButton(QToolButton):
         self.clicked.connect(self.slot_browser_folder)
         self.set_path('')
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.setToolTip('Click to browser folder')
+        self.setToolTip(self.tr('Click to browser folder'))
 
     def set_format(self, value):
         self.setProperty('format', value)
