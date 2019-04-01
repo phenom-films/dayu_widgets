@@ -22,11 +22,10 @@ class MBreadcrumbTest(QWidget, MFieldMixin):
         self._init_ui()
 
     def _init_ui(self):
-        size_list = [('Huge', dayu_theme.size.huge),
-                     ('Large', dayu_theme.size.large),
-                     ('Medium', dayu_theme.size.medium),
-                     ('Small', dayu_theme.size.small),
-                     ('Tiny', dayu_theme.size.tiny)]
+        size_list = [
+                     ('Large', dayu_theme.large),
+                     ('Medium', dayu_theme.medium),
+                     ('Small', dayu_theme.small)]
         entity_list = [
             {'text': 'Demo Project',
              'clicked': functools.partial(self.slot_show_message, MMessage.info, 'Go to "Demo Project"'),
