@@ -25,9 +25,10 @@ class MLabelTest(QWidget, MFieldMixin):
 
         grid_lay = QGridLayout()
         data_list = [
-            (MLabel.H1Type, u'主标题', 'H1 Type', True, False),
-            (MLabel.H2Type, u'次级标题', 'H2 Type', True, False),
-            (MLabel.H3Type, u'小标题', 'H3 Type', True, False),
+            (MLabel.H1Type, u'一级标题', 'H1 Type', True, False),
+            (MLabel.H2Type, u'二级标题', 'H2 Type', True, False),
+            (MLabel.H3Type, u'三级标题', 'H3 Type', True, False),
+            (MLabel.H4Type, u'四级标题', 'H4 Type', True, False),
             (MLabel.TextType, u'正文', 'Text Type', True, False),
             (MLabel.HelpType, u'辅助文字', 'Help Type', True, False),
         ]
@@ -44,9 +45,9 @@ class MLabelTest(QWidget, MFieldMixin):
         self.bind('show_text', data_bind_label, 'text')
         self.bind('is_link', data_bind_label, 'link')
 
-        button = MPushButton(text='Random An Animal', type=MPushButton.PrimaryType)
+        button = MPushButton.primary(text='Random An Animal')
         button.clicked.connect(self.slot_change_text)
-        link_button = MPushButton(text='Link', type=MPushButton.PrimaryType)
+        link_button = MPushButton.primary(text='Link')
         link_button.clicked.connect(self.slot_link_text)
 
         lay_elide = QVBoxLayout()
