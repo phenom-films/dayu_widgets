@@ -28,7 +28,7 @@ class MCacheDict(object):
 
     def _render_svg(self, svg_path, replace_color=None):
         from dayu_widgets import dayu_theme
-        replace_color = replace_color or dayu_theme.color.icon
+        replace_color = replace_color or dayu_theme.icon_color
         if (self.cls is QIcon) and (replace_color is None):
             return QIcon(svg_path)
         if not os.path.isfile(svg_path):
