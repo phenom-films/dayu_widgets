@@ -31,10 +31,10 @@ class MSequenceFile(QWidget, MFieldMixin):
     def __init__(self, size=None, parent=None):
         super(MSequenceFile, self).__init__(parent)
         self.sequence_obj = None
-        size = size or dayu_theme.size.small
+        size = size or dayu_theme.small
         self._file_label = MLineEdit(size=size)
         self._file_label.setReadOnly(True)
-        self._is_sequence_check_box = MCheckBox('Sequence')
+        self._is_sequence_check_box = MCheckBox(self.tr('Sequence'))
         self._is_sequence_check_box.toggled.connect(functools.partial(self.setProperty, 'sequence'))
         self._is_sequence_check_box.toggled.connect(self.sig_is_sequence_changed)
 
