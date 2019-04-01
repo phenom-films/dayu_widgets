@@ -13,7 +13,6 @@ from dayu_widgets.MButtonGroup import MPushButtonGroup
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.qt import *
 
 
@@ -29,10 +28,10 @@ class MAlertTest(QWidget, MFieldMixin):
         main_lay.addWidget(MAlert(text='Normal Message', type=MAlert.InfoType, parent=self))
         main_lay.addWidget(MAlert(text='Success Message', type=MAlert.SuccessType, parent=self))
         main_lay.addWidget(MAlert(text='Warning Message', type=MAlert.WarningType, parent=self))
-        main_lay.addWidget(MAlert(text='Error Message', type=MPushButton.ErrorType, parent=self))
+        main_lay.addWidget(MAlert(text='Error Message', type=MAlert.ErrorType, parent=self))
         main_lay.addWidget(MLabel(u'不同的提示信息类型'))
         main_lay.addWidget(MDivider('closable'))
-        main_lay.addWidget(MAlert(text='Error Message', type=MPushButton.ErrorType, closable=True, parent=self))
+        main_lay.addWidget(MAlert(text='Error Message', type=MAlert.ErrorType, closable=True, parent=self))
         main_lay.addWidget(MDivider('data bind'))
         self.register_field('msg', '')
         self.register_field('msg_type', MAlert.InfoType)
