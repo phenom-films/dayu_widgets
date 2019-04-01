@@ -33,7 +33,7 @@ class MComboBox(QComboBox):
         line_edit.installEventFilter(self)
         self._has_custom_view = False
         self.set_value('')
-        self.set_placeholder(u'请选择')
+        self.set_placeholder(self.tr('Please Select'))
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
 
     def set_formatter(self, func):
