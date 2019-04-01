@@ -24,11 +24,11 @@ class MAvatarTest(QWidget, MFieldMixin):
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('different size'))
 
-        size_list = [('Huge', dayu_theme.size.huge),
-                     ('Large', dayu_theme.size.large),
-                     ('Medium', dayu_theme.size.medium),
-                     ('Small', dayu_theme.size.small),
-                     ('Tiny', dayu_theme.size.tiny)]
+        size_list = [('Huge', dayu_theme.huge),
+                     ('Large', dayu_theme.large),
+                     ('Medium', dayu_theme.medium),
+                     ('Small', dayu_theme.small),
+                     ('Tiny', dayu_theme.tiny)]
 
         self.pix_map_list = ['', MPixmap('avatar.png'), MPixmap('app-maya.png'), MPixmap('app-nuke.png'),
                              MPixmap('app-houdini.png')]
@@ -60,7 +60,6 @@ if __name__ == '__main__':
     import sys
     app = QApplication(sys.argv)
     test = MAvatarTest()
-    from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())
