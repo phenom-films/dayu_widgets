@@ -31,10 +31,10 @@ class MAlert(QWidget):
     def __init__(self, text='', type=None, closable=False, show_icon=True, parent=None, flags=0):
         super(MAlert, self).__init__(parent, flags)
         self.setAttribute(Qt.WA_StyledBackground)
-        self._icon_label = MAvatar(size=dayu_theme.size.tiny)
-        self._content_label = MLabel()
+        self._icon_label = MAvatar(size=dayu_theme.tiny)
+        self._content_label = MLabel.help()
         self._close_button = MToolButton(type=MToolButton.IconOnlyType,
-                                         size=dayu_theme.size.tiny, icon=MIcon('close_line.svg'))
+                                         size=dayu_theme.tiny, icon=MIcon('close_line.svg'))
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
 
         self._main_lay = QHBoxLayout()
@@ -59,9 +59,8 @@ class MAlert(QWidget):
         self.setProperty('text', value)
 
     def _set_type(self, value):
-        self._icon_label.set_image(
-            MPixmap('{}_fill.svg'.format(self.property('type')), dayu_theme.color.get(self.property('type'))))
+        self._icon_label.set_image(MPixmap('{}_fill.svg'.format(value), vars(dayu_theme).get(value + '_color')))
         self.style().polish(self)
 
     def set_type(self, value):
-        self.setProperty('type', value or MAlert.InfoType)
+        self.setProperty('type', value)
