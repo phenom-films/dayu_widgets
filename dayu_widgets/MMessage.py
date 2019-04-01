@@ -40,14 +40,14 @@ class MMessage(QWidget):
         if isinstance(config, basestring):
             config = {'content': config}
 
-        self._icon_label = MAvatar(size=dayu_theme.size.tiny)
+        self._icon_label = MAvatar(size=dayu_theme.tiny)
 
         self._content_label = MLabel(parent=self)
         self._content_label.set_elide_mode(Qt.ElideMiddle)
         self._content_label.setText(config.get('content'))
 
         self._close_button = MToolButton(type=MToolButton.IconOnlyType,
-                                         size=dayu_theme.size.tiny,
+                                         size=dayu_theme.tiny,
                                          icon=MIcon('close_line.svg'),
                                          parent=self)
         self._close_button.clicked.connect(self.close)
@@ -60,12 +60,17 @@ class MMessage(QWidget):
         self._main_lay.addWidget(self._close_button)
         self.setLayout(self._main_lay)
 
-        type = type or MMessage.InfoType
-        self._icon_label.set_image(MPixmap('{}_fill.svg'.format(type), dayu_theme.color.get(type)))
+        self.set_type(type or MMessage.InfoType)
         timer = QTimer(self)
         timer.timeout.connect(self.close)
         timer.setInterval(config.get('duration', self.default_config.get('duration')) * 1000)
         timer.start()
+
+    def set_type(self, value):
+        self.setProperty('type', value)
+
+    def _set_type(self, value):
+        self._icon_label.set_image(MPixmap('{}_fill.svg'.format(value), vars(dayu_theme).get(value + '_color')))
 
     @classmethod
     def _show(cls, config, type, parent):
