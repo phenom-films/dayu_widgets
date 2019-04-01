@@ -33,7 +33,7 @@ class MDemo(QMainWindow):
         self.stacked_widget = QStackedWidget()
 
         list_widget = MToolButtonGroup(orientation=Qt.Vertical,
-                                       size=dayu_theme.size.small,
+                                       size=dayu_theme.small,
                                        type=MToolButton.TaoBaoType,
                                        exclusive=True,
                                        parent=self)
