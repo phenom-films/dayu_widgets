@@ -24,7 +24,7 @@ class MPage(QWidget, MFieldMixin):
 
     def __init__(self, parent=None):
         super(MPage, self).__init__(parent)
-        size = dayu_theme.size.tiny
+        size = dayu_theme.tiny
         self.register_field('page_size_selected', 25)
         self.register_field('page_size_list',
                             [{'label': '25 - Fastest', 'value': 25},
@@ -56,9 +56,9 @@ class MPage(QWidget, MFieldMixin):
         self._change_page_size_button.set_menu(menu1)
         self._change_page_size_button.set_formatter(lambda x: u'{} per page'.format(x))
 
-        self._pre_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('left_fill.svg'), size=size)
+        self._pre_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('left_line.svg'), size=size)
         self._pre_button.clicked.connect(functools.partial(self._slot_change_current_page, -1))
-        self._next_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('right_fill.svg'), size=size)
+        self._next_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('right_line.svg'), size=size)
         self._next_button.clicked.connect(functools.partial(self._slot_change_current_page, 1))
         self._current_page_spin_box = MSpinBox(size=size)
         self._current_page_spin_box.setMinimum(1)
