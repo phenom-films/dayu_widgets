@@ -26,11 +26,10 @@ class MComBoxTest(QWidget, MFieldMixin):
         self.register_field('button1_selected', u'北京')
         menu1 = MMenu()
         menu1.set_data([u'北京', u'上海', u'广州', u'深圳'])
-        size_list = [('Huge', dayu_theme.size.huge),
-                     ('Large', dayu_theme.size.large),
-                     ('Medium', dayu_theme.size.medium),
-                     ('Small', dayu_theme.size.small),
-                     ('Tiny', dayu_theme.size.tiny)]
+        size_list = [('Large', dayu_theme.large),
+                     ('Medium', dayu_theme.medium),
+                     ('Small', dayu_theme.small)
+                     ]
         size_lay = QHBoxLayout()
         for label, size in size_list:
             combo_box = MComboBox(size=size)
