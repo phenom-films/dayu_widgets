@@ -7,15 +7,16 @@
 ###################################################################
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MMessage import MMessage
-from dayu_widgets.MToolBar import MToolBar
+from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MMenuTabWidget import MMenuTabWidget
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
 import functools
 
 
-class MToolBarTest(QWidget):
+class MMenuTabWidgetTest(QWidget):
     def __init__(self, parent=None):
-        super(MToolBarTest, self).__init__(parent)
+        super(MMenuTabWidgetTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -28,17 +29,29 @@ class MToolBarTest(QWidget):
             {'text': u'Notice', 'icon': MIcon('alert_line.svg'),
              'clicked': functools.partial(MMessage.info, u'查看通知', parent=self)},
         ]
-        tool_bar = MToolBar()
-        tool_bar_small = MToolBar(size=dayu_theme.size.small)
-        tool_bar_large = MToolBar(size=dayu_theme.size.large)
-        tool_bar.set_item_list(item_list)
-        tool_bar_small.set_item_list(item_list)
-        tool_bar_large.set_item_list(item_list)
+        tool_bar = MMenuTabWidget()
+        tool_bar_small = MMenuTabWidget(size=dayu_theme.small)
+        tool_bar_large = MMenuTabWidget(size=dayu_theme.large)
+        tool_bar_large.tool_bar_insert_widget(MLabel.h3('DEMO'))
+        stack_lay = QStackedLayout()
+        for data_dict in item_list:
+            tool_bar.add_menu(data_dict)
+            tool_bar_small.add_menu(data_dict)
+            stack_lay.addWidget(MLabel(data_dict.get('text')))
+            tool_bar_large.add_menu(data_dict, stack_lay.count() - 1)
+        tool_bar_large.tool_button_group.sig_checked_changed.connect(stack_lay.setCurrentIndex)
 
+        tool_bar.tool_button_group.set_checked(0)
+        tool_bar_small.tool_button_group.set_checked(0)
+        tool_bar_large.tool_button_group.set_checked(0)
         lay = QVBoxLayout()
-        lay.addWidget(tool_bar)
+        lay.addWidget(MDivider('size small'))
         lay.addWidget(tool_bar_small)
+        lay.addWidget(MDivider('size medium'))
+        lay.addWidget(tool_bar)
+        lay.addWidget(MDivider('size large'))
         lay.addWidget(tool_bar_large)
+        lay.addLayout(stack_lay)
         main_lay.addLayout(lay)
 
         main_lay.addStretch()
@@ -49,8 +62,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MToolBarTest()
-    from dayu_widgets import dayu_theme
+    test = MMenuTabWidgetTest()
     dayu_theme.apply(test)
 
     test.show()
