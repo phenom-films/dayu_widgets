@@ -41,6 +41,11 @@ def from_list_to_nested_dict(input, sep='/'):
     return result
 
 
+def fade_color(color, alpha):
+    c = QColor(color)
+    return 'rgba({}, {}, {}, {})'.format(c.red(), c.green(), c.blue(), alpha)
+
+
 def generate_color(primary_color, index):
     # 这里生成颜色的算法，来自 Ant Design, 只做了语言的转换，和颜色的类型的转换，没对算法做任何修改
     # https://github.com/ant-design/ant-design/blob/master/components/style/color/colorPalette.less
@@ -87,7 +92,7 @@ def generate_color(primary_color, index):
         return max((v * 100 - brightness_step2 * i) / 100, 0.0)
 
     light = index <= 6
-    hsv_color = primary_color
+    hsv_color = QColor(primary_color) if isinstance(primary_color, basestring) else primary_color
     index = light_color_count + 1 - index if light else index - light_color_count - 1
     return QColor.fromHsvF(
         get_hue(hsv_color, index, light),
@@ -98,11 +103,11 @@ def generate_color(primary_color, index):
 
 def draw_empty_content(view, text=None, pix_map=None):
     from dayu_widgets import dayu_theme
-    pix_map = pix_map or MPixmap('empty.svg', dayu_theme.color.icon_disabled)
+    pix_map = pix_map or MPixmap('empty.svg')
     text = text or view.tr('No Data')
     painter = QPainter(view)
     font_metrics = painter.fontMetrics()
-    painter.setPen(QPen(dayu_theme.color.text_help))
+    painter.setPen(QPen(dayu_theme.secondary_text_color))
     content_height = pix_map.height() + font_metrics.height()
     padding = 10
     proper_min_size = min(view.height() - padding * 2, view.width() - padding * 2, content_height)
