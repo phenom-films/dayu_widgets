@@ -364,12 +364,13 @@ MToolButton[type=line]{
     border-color: transparent;
 }
 MToolButton[type=line]:hover{
-    color: @primary_color;
-    border-color: @primary_color;
+    color: @primary_5;
+    border-color: @primary_5;
     border-width: 0 0 2px 0;
 }
 MToolButton[type=line]:checked{
     color: @primary_color;
+    border-style: solid;
     border-color: @primary_color;
     border-width: 0 0 2px 0;
 }
@@ -777,7 +778,7 @@ MSectionItem{
     background-color: @background_color;
 }
 QWidget#title {
-    background-color: @background_selected_color;
+    background-color: @out_background_color;
 }
 
 MLineEdit{
