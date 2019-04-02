@@ -113,7 +113,7 @@ QCalenderWidget > QToolButton {
     icon-size: 18px, 18px;
     width: 20px;
     height: 20px;
-    background: @out_background_color;
+    background: @background_out_color;
 }
 
 QToolButton#qt_calendar_prevmonth {
@@ -150,7 +150,7 @@ QAbstractSpinBox {
     border: 1px solid @border_color;
     border-radius: 3px;
     color: @primary_text_color;
-    background-color:@in_background_color;
+    background-color:@background_in_color;
 }
 
 QAbstractSpinBox:focus{
@@ -163,7 +163,7 @@ QAbstractSpinBox::up-button {
     margin-top: 1px;
     margin-right: 1px;
     border-left: 1px solid @border_color;
-    background: @out_background_color;
+    background: @background_out_color;
 }
 
 QAbstractSpinBox::down-button {
@@ -173,7 +173,7 @@ QAbstractSpinBox::down-button {
     margin-right: 1px;
     border-left: 1px solid @border_color;
     border-top: 1px solid @border_color;
-    background: @out_background_color;
+    background: @background_out_color;
 }
 
 QAbstractSpinBox::up-button:hover,
@@ -459,7 +459,7 @@ MCheckBox::indicator{
     height: 13px;
     border-radius: 2px;
     border: 1px solid @border_color;
-    background-color: @in_background_color;
+    background-color: @background_in_color;
 }
 MMenu::indicator:non-exclusive:disabled,
 MBigView::indicator:disabled,
@@ -479,7 +479,7 @@ MColumnView::indicator:hover,
 MTableView::indicator:hover,
 MCheckBox::indicator:hover{
     border: 1px solid @primary_5;
-    background-color: @in_background_color;
+    background-color: @background_in_color;
 }
 MMenu::indicator:non-exclusive:checked,
 MBigView::indicator:checked,
@@ -537,7 +537,7 @@ MPushButton[combine=vertical]{
 }
 
 MPushButton[type=default]{
-    background-color: @out_background_color;
+    background-color: @background_out_color;
     border: 1px solid @border_color;
 }
 MPushButton[type=default]:hover{
@@ -627,7 +627,7 @@ MRadioButton::indicator{
     height: 14px;
     border-radius: 8px;
     border: 1px solid @border_color;
-    background-color: @in_background_color;
+    background-color: @background_in_color;
 }
 MMenu::indicator:exclusive:disabled,
 MRadioButton::indicator:disabled{
@@ -698,7 +698,7 @@ MSwitch::indicator:disabled{
 
 MComboBox{
     border: 1px solid @border_color;
-    background-color: @in_background_color;
+    background-color: @background_in_color;
 }
 QCombBox > QLineEdit{
     background-color: red;
@@ -778,12 +778,12 @@ MSectionItem{
     background-color: @background_color;
 }
 QWidget#title {
-    background-color: @out_background_color;
+    background-color: @background_out_color;
 }
 
 MLineEdit{
     border: 1px solid @border_color;
-    background-color: @in_background_color;
+    background-color: @background_in_color;
 }
 
 MLineEdit:focus{
@@ -814,7 +814,7 @@ MTabBar::tab {
     border-bottom: none;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
-    background-color: @in_background_color;
+    background-color: @background_in_color;
 }
 
 QTabBar::tab:selected{
@@ -860,13 +860,13 @@ MTabBar QToolButton::left-arrow {
 
 /* MHeaderView */
 MHeaderView {
-    background-color: @out_background_color;
+    background-color: @background_out_color;
     font-size: @h3_size;
     font-weight: 500;
     color: @title_color;
 }
 MHeaderView::section{
-    background-color: @out_background_color;
+    background-color: @background_out_color;
     border: 0 solid @border_color;
     padding: 1px 6px;
 }
@@ -933,7 +933,7 @@ MListView,
 MTreeView,
 MColumnView,
 MTableView{
-    background-color: @in_background_color;
+    background-color: @background_in_color;
     alternate-background-color: @background_color;
     selection-background-color: rgba(45, 140, 240, 50);
     selection-color:#1e1e1e;
@@ -960,7 +960,7 @@ MTableView::item:selected{
 }
 
 MTableView QTableCornerButton::section {
-    background-color: @out_background_color;
+    background-color: @background_out_color;
     border: 0px solid @border_color;
     border-right: 1px solid @border_color;
     border-bottom: 1px solid @border_color;
@@ -1070,7 +1070,7 @@ QSplitter::handle:vertical {
     height: 2px;
 }
 MMenuTabWidget QWidget#bar_widget{
-    background: @out_background_color;
+    background: @background_out_color;
     spacing: 3px;
     border-radius: 0;
 }
@@ -1081,7 +1081,7 @@ MSlider::groove:horizontal {
 }
 
 MSlider::handle {
-    background: @in_background_color;
+    background: @background_in_color;
     border: 2px solid @primary_color;
     width: 8px;
     height: 8px;
@@ -1175,7 +1175,7 @@ MMenu {
 }
 MMenu[checked=true]{
     color: @primary_color;
-    background-color: @out_background_color;
+    background-color: @background_out_color;
 }
 MMenu::item {
     padding: 2px 2px;
@@ -1185,10 +1185,10 @@ MMenu::item {
 }
 MMenu::item:checked  {
     color: @primary_color;
-    background-color: @out_background_color;
+    background-color: @background_out_color;
 }
 MMenu::item:selected  {
-    background-color: @out_background_color;
+    background-color: @background_out_color;
 }
 
 MMenu::indicator {

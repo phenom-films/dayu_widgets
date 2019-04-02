@@ -183,8 +183,8 @@ class MTheme(object):
 
         self.background_color = "#323232"
         self.background_selected_color = "#292929"
-        self.in_background_color = "#3a3a3a"
-        self.out_background_color = "#494949"
+        self.background_in_color = "#3a3a3a"
+        self.background_out_color = "#494949"
 
     def _light(self):
         self.title_color = "#262626"
@@ -198,8 +198,8 @@ class MTheme(object):
 
         self.background_color = "#f8f8f9"
         self.background_selected_color = "#bfbfbf"
-        self.in_background_color = "#ffffff"
-        self.out_background_color = "#eeeeee"
+        self.background_in_color = "#ffffff"
+        self.background_out_color = "#eeeeee"
 
     def apply(self, widget):
         widget.setStyleSheet(self.default_qss.substitute(vars(self)))
