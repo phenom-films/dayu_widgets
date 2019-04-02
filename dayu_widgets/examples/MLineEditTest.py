@@ -37,6 +37,7 @@ class MLineEditTest(QWidget):
 
         line_edit_button = MLineEdit(text='Beijing', size=dayu_theme.small)
         push_button = MPushButton(text='Go', size=dayu_theme.small, type='primary')
+        push_button.setFixedWidth(40)
         line_edit_button.add_suffix_widget(push_button)
 
         line_edit_error = MLineEdit.error(size=dayu_theme.small)
