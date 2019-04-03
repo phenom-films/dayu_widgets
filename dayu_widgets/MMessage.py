@@ -7,6 +7,7 @@
 ###################################################################
 
 from dayu_widgets.MAvatar import MAvatar
+from dayu_widgets.MLoading import MLoading
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
@@ -31,27 +32,29 @@ class MMessage(QWidget):
         'top': 24
     }
 
-    def __init__(self, config, type=None, parent=None):
+    sig_closed = Signal()
+
+    def __init__(self, text, duration=None, type=None, closable=False, parent=None):
         super(MMessage, self).__init__(parent)
         self.setObjectName('message')
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.Dialog | Qt.WA_TranslucentBackground | Qt.WA_DeleteOnClose)
         self.setAttribute(Qt.WA_StyledBackground)
 
-        if isinstance(config, basestring):
-            config = {'content': config}
-
-        self._icon_label = MAvatar(size=dayu_theme.tiny)
+        if type == MMessage.LoadingType:
+            self._icon_label = MLoading(size=dayu_theme.tiny)
+        else:
+            self._icon_label = MAvatar(size=dayu_theme.tiny)
 
         self._content_label = MLabel(parent=self)
         self._content_label.set_elide_mode(Qt.ElideMiddle)
-        self._content_label.setText(config.get('content'))
+        self._content_label.setText(text)
 
         self._close_button = MToolButton(type=MToolButton.IconOnlyType,
                                          size=dayu_theme.tiny,
                                          icon=MIcon('close_line.svg'),
                                          parent=self)
         self._close_button.clicked.connect(self.close)
-        self._close_button.setVisible(config.get('closable', False))
+        self._close_button.setVisible(closable or False)
 
         self._main_lay = QHBoxLayout()
         self._main_lay.addWidget(self._icon_label)
@@ -61,20 +64,53 @@ class MMessage(QWidget):
         self.setLayout(self._main_lay)
 
         self.set_type(type or MMessage.InfoType)
-        timer = QTimer(self)
-        timer.timeout.connect(self.close)
-        timer.setInterval(config.get('duration', self.default_config.get('duration')) * 1000)
-        timer.start()
+        close_timer = QTimer(self)
+        close_timer.setSingleShot(True)
+        close_timer.timeout.connect(self.close)
+        close_timer.timeout.connect(self.sig_closed)
+        close_timer.setInterval((duration or self.default_config.get('duration')) * 1000)
+
+        ani_timer = QTimer(self)
+        ani_timer.timeout.connect(self._fade_out)
+        ani_timer.setInterval((duration or self.default_config.get('duration')) * 1000 - 300)
+
+        close_timer.start()
+        ani_timer.start()
+
+        self.pos_ani = QPropertyAnimation(self)
+        self.pos_ani.setTargetObject(self)
+        self.pos_ani.setEasingCurve(QEasingCurve.OutCubic)
+        self.pos_ani.setDuration(300)
+        self.pos_ani.setPropertyName('pos')
+
+        self.opacity_ani = QPropertyAnimation()
+        self.opacity_ani.setTargetObject(self)
+        self.opacity_ani.setDuration(300)
+        self.opacity_ani.setEasingCurve(QEasingCurve.OutCubic)
+        self.opacity_ani.setPropertyName('windowOpacity')
+        self.opacity_ani.setStartValue(0.0)
+        self.opacity_ani.setEndValue(1.0)
+
+    def _fade_out(self):
+        self.pos_ani.setDirection(QAbstractAnimation.Backward)
+        self.pos_ani.start()
+        self.opacity_ani.setDirection(QAbstractAnimation.Backward)
+        self.opacity_ani.start()
+
+    def _fade_int(self):
+        self.pos_ani.start()
+        self.opacity_ani.start()
 
     def set_type(self, value):
         self.setProperty('type', value)
 
     def _set_type(self, value):
-        self._icon_label.set_image(MPixmap('{}_fill.svg'.format(value), vars(dayu_theme).get(value + '_color')))
+        if isinstance(self._icon_label, MAvatar):
+            self._icon_label.set_image(MPixmap('{}_fill.svg'.format(value), vars(dayu_theme).get(value + '_color')))
 
     @classmethod
-    def _show(cls, config, type, parent):
-        msg = MMessage(config=config, type=type, parent=parent)
+    def _show(cls, text, duration=None, type=None, closable=False, parent=None):
+        msg = MMessage(text=text, duration=duration, type=type, closable=closable, parent=parent)
         parent_geo = parent.geometry()
         pos = parent_geo.topLeft() if parent.parent() is None else parent.mapToGlobal(parent_geo.topLeft())
         offset = 0
@@ -82,24 +118,33 @@ class MMessage(QWidget):
             if isinstance(child, MMessage) and child.isVisible():
                 offset = max(offset, child.y())
         base = pos.y() + cls.default_config.get('top')
-        msg.move(pos.x() + parent_geo.width() / 2 - 100, (offset + 50) if offset else base)
+        target_x = pos.x() + parent_geo.width() / 2 - 100
+        target_y = (offset + 50) if offset else base
         msg.show()
+        msg.pos_ani.setStartValue(QPoint(target_x, target_y - 40))
+        msg.pos_ani.setEndValue(QPoint(target_x, target_y))
+        msg._fade_int()
+        return msg
 
     @classmethod
-    def info(cls, config, parent):
-        cls._show(config, type=MMessage.InfoType, parent=parent)
+    def info(cls, text, parent, duration=None, closable=None):
+        return cls._show(text, type=MMessage.InfoType, duration=duration, closable=closable, parent=parent)
 
     @classmethod
-    def success(cls, config, parent):
-        cls._show(config, type=MMessage.SuccessType, parent=parent)
+    def success(cls, text, parent, duration=None, closable=None):
+        return cls._show(text, type=MMessage.SuccessType, duration=duration, closable=closable, parent=parent)
 
     @classmethod
-    def warning(cls, config, parent):
-        cls._show(config, type=MMessage.WarningType, parent=parent)
+    def warning(cls, text, parent, duration=None, closable=None):
+        return cls._show(text, type=MMessage.WarningType, duration=duration, closable=closable, parent=parent)
 
     @classmethod
-    def error(cls, config, parent):
-        cls._show(config, type=MMessage.ErrorType, parent=parent)
+    def error(cls, text, parent, duration=None, closable=None):
+        return cls._show(text, type=MMessage.ErrorType, duration=duration, closable=closable, parent=parent)
+
+    @classmethod
+    def loading(cls, text, parent, duration=None, closable=None):
+        return cls._show(text, type=MMessage.LoadingType, duration=duration, closable=closable, parent=parent)
 
     @classmethod
     def config(cls, duration=None, top=None):
