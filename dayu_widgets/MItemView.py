@@ -10,7 +10,6 @@ from dayu_widgets import dayu_theme
 from dayu_widgets.MHeaderView import MHeaderView
 from dayu_widgets.MItemModel import MTableModel
 from dayu_widgets.MMenu import MMenu
-from dayu_widgets.mixin import loading_mixin
 from dayu_widgets.qt import *
 
 
@@ -155,10 +154,9 @@ def mouseReleaseEvent(self, event):
                     self.emit(SIGNAL('sigLinkClicked(PyObject)'), i)
 
 
-@loading_mixin
 class MTableView(QTableView):
     sig_context_menu = Signal(object)
-
+    set_header_list = set_header_list
     def __init__(self, size=None, show_row_count=False, parent=None):
         super(MTableView, self).__init__(parent)
         self._no_date_image = None
@@ -172,8 +170,6 @@ class MTableView(QTableView):
         self.header_view.setFixedHeight(size)
         if not show_row_count:
             ver_header_view.hide()
-        else:
-            ver_header_view.setProperty('orientation', 'vertical')
         self.setHorizontalHeader(self.header_view)
         self.setSortingEnabled(True)
         self.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -192,23 +188,6 @@ class MTableView(QTableView):
         self.header_view.style().polish(self.header_view)
 
         return super(MTableView, self).setShowGrid(flag)
-
-    def set_header_list(self, header_list):
-        self.header_list = header_list
-        if self.header_view:
-            self.header_view.setSortIndicator(-1, Qt.AscendingOrder)
-            for index, i in enumerate(header_list):
-                self.header_view.setSectionHidden(index, i.get('hide', False))
-                self.header_view.resizeSection(index, i.get('width', 100))
-                if i.get('order', None) is not None:
-                    self.header_view.setSortIndicator(index, i.get('order'))
-                if i.get('selectable', False):
-                    # self.setIndexWidget()
-                    delegate = MOptionDelegate(parent=self)
-                    delegate.set_exclusive(i.get('exclusive', True))
-                    self.setItemDelegateForColumn(index, delegate)
-                # elif self.itemDelegateForColumn(index):
-                #     self.setItemDelegateForColumn(index, None)
 
         # setting = {
         #     'key': attr,  # 必填，用来读取 model后台数据结构的属性
