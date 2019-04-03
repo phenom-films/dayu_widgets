@@ -5,15 +5,18 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
+import functools
+
 import dayu_widgets.examples._mock_data as mock
+from dayu_widgets import dayu_theme
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MItemModel import MTableModel, MSortFilterModel
 from dayu_widgets.MItemView import MTableView
 from dayu_widgets.MLineEdit import MLineEdit
+from dayu_widgets.MLoading import MLoadingWrapper
 from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.qt import *
-from dayu_widgets import dayu_theme
 
 
 def h(*args):
@@ -32,33 +35,50 @@ def h(*args):
             widget.setLayout(lay)
     return widget
 
+
+class MFetchDataThread(QThread):
+    def __init__(self, parent=None):
+        super(MFetchDataThread, self).__init__(parent)
+
+    def run(self, *args, **kwargs):
+        import time
+        time.sleep(4)
+
+
 class MTableViewTest(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MTableViewTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
-        table_1 = MTableView(size=dayu_theme.small, show_row_count=True, parent=self)
-        self.table_2 = MTableView(size=dayu_theme.small, show_row_count=True)
-        self.table_2.setShowGrid(True)
-        table_default = MTableView(size=dayu_theme.medium, show_row_count=True)
-        table_large = MTableView(size=dayu_theme.large, show_row_count=False)
-
         model_1 = MTableModel()
         model_1.set_header_list(mock.header_list)
         model_sort = MSortFilterModel()
         model_sort.setSourceModel(model_1)
-        table_1.setModel(model_sort)
-        table_1.load_state('table_test_1')
-        self.table_2.setModel(model_sort)
-        self.table_2.load_state('table_test_1')
-        table_default.setModel(model_sort)
-        table_default.load_state('table_test_default')
+
+        table_small = MTableView(size=dayu_theme.small, show_row_count=True, parent=self)
+        table_grid = MTableView(size=dayu_theme.small, show_row_count=True)
+        table_grid.setShowGrid(True)
+        table_default = MTableView(size=dayu_theme.medium, show_row_count=True)
+        thread = MFetchDataThread(self)
+
+        self.loading_wrapper = MLoadingWrapper(widget=table_default, loading=False)
+        thread.started.connect(functools.partial(self.loading_wrapper.set_loading, True))
+        thread.finished.connect(functools.partial(self.loading_wrapper.set_loading, False))
+        thread.finished.connect(functools.partial(table_default.setModel, model_sort))
+        button = MPushButton(text='Get Data: 4s')
+        button.clicked.connect(thread.start)
+        switch_lay = QHBoxLayout()
+        switch_lay.addWidget(button)
+        switch_lay.addStretch()
+        table_large = MTableView(size=dayu_theme.large, show_row_count=False)
+
+        table_small.setModel(model_sort)
+        table_grid.setModel(model_sort)
         table_large.setModel(model_sort)
-        table_large.load_state('table_test_large')
         model_sort.set_header_list(mock.header_list)
-        table_1.set_header_list(mock.header_list)
-        self.table_2.set_header_list(mock.header_list)
+        table_small.set_header_list(mock.header_list)
+        table_grid.set_header_list(mock.header_list)
         table_default.set_header_list(mock.header_list)
         table_large.set_header_list(mock.header_list)
         model_1.set_data_list(mock.data_list)
@@ -66,24 +86,20 @@ class MTableViewTest(QWidget, MFieldMixin):
         line_edit = MLineEdit.search(size=dayu_theme.small)
         line_edit.textChanged.connect(model_sort.set_search_pattern)
 
-        button = MPushButton(text='show loading')
-        button.clicked.connect(self.slot_show_loading)
         main_lay = QVBoxLayout()
         main_lay.addWidget(line_edit)
         main_lay.addWidget(MDivider('Small Size'))
-        main_lay.addWidget(table_1)
+        main_lay.addWidget(table_small)
         main_lay.addWidget(MDivider('Default Size'))
-        main_lay.addWidget(table_default)
+        main_lay.addLayout(switch_lay)
+        main_lay.addWidget(self.loading_wrapper)
         main_lay.addWidget(MDivider('Large Size (Hide Row Count)'))
         main_lay.addWidget(table_large)
         main_lay.addWidget(MDivider('With Grid'))
-        main_lay.addWidget(self.table_2)
-        main_lay.addWidget(button)
+        main_lay.addWidget(table_grid)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
-    def slot_show_loading(self):
-        self.table_2.show_loading()
 
 if __name__ == '__main__':
     import sys
