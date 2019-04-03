@@ -56,7 +56,7 @@ class MTableViewTest(QWidget, MFieldMixin):
         model_sort = MSortFilterModel()
         model_sort.setSourceModel(model_1)
 
-        table_small = MTableView(size=dayu_theme.small, show_row_count=True, parent=self)
+        table_small = MTableView(size=dayu_theme.small, show_row_count=True)
         table_grid = MTableView(size=dayu_theme.small, show_row_count=True)
         table_grid.setShowGrid(True)
         table_default = MTableView(size=dayu_theme.medium, show_row_count=True)
