@@ -34,6 +34,7 @@ header_list = [
     }, {
         'label': 'Age',
         'key': 'age',
+        'width': 90,
         'searchable': True,
         'editable': True,
         'display': lambda x, y: u'{} 岁'.format(x),
@@ -43,7 +44,7 @@ header_list = [
         'selectable': True,
         'searchable': True,
         'exclusive': False,
-        'width': 140,
+        'width': 120,
         'display': lambda x, y: ' & '.join(x) if isinstance(x, list) else x,
         'bg_color': lambda x, y: 'transparent' if x else dayu_theme.error_color
     }, {
