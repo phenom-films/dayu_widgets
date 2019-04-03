@@ -7,12 +7,13 @@
 ###################################################################
 import dayu_widgets.utils as utils
 from dayu_widgets import dayu_theme
-from dayu_widgets.mixin import property_mixin, cursor_mixin
+from dayu_widgets.mixin import property_mixin, cursor_mixin, focus_shadow_mixin
 from dayu_widgets.qt import *
 
 
 @property_mixin
 @cursor_mixin
+@focus_shadow_mixin
 class MComboBox(QComboBox):
     Separator = '/'
     sig_value_changed = Signal(list)
