@@ -7,14 +7,14 @@
 ###################################################################
 
 from dayu_widgets import dayu_theme
-from dayu_widgets.mixin import property_mixin, cursor_mixin
+from dayu_widgets.mixin import property_mixin, cursor_mixin, focus_shadow_mixin
 from dayu_widgets.qt import *
 
 
 @property_mixin
 @cursor_mixin
+@focus_shadow_mixin
 class MPushButton(QPushButton):
-    DefaultType = 'default'
     PrimaryType = 'primary'
     SuccessType = 'success'
     WarningType = 'warning'
@@ -26,7 +26,7 @@ class MPushButton(QPushButton):
         else:
             super(MPushButton, self).__init__(text=text, parent=parent)
         self.setProperty('dayu_size', size or dayu_theme.default_size)
-        self.setProperty('type', type or 'default')
+        self.setProperty('type', type or '')
 
     @classmethod
     def primary(cls, text='', icon=None, size=None, parent=None):
