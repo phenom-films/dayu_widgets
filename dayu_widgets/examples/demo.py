@@ -40,7 +40,7 @@ class MDemo(QMainWindow):
         list_widget.sig_checked_changed.connect(self.slot_change_widget)
         data_list = []
         for index, (name, cls, code) in enumerate(get_test_widget()):
-            data_list.append({'text': name, 'data': code, 'checkable': True})
+            data_list.append({'text': name[:-4], 'data': code, 'checkable': True})
             widget = cls()
             widget.setProperty('code', code)
             self.stacked_widget.addWidget(widget)
@@ -73,7 +73,6 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    dayu_theme.set_theme('light')
     test = MDemo()
     test.show()
     sys.exit(app.exec_())
