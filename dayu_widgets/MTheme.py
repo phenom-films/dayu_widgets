@@ -16,14 +16,30 @@ class QssTemplate(string.Template):
 
 
 class MTheme(object):
-    def __init__(self, theme='light', primary_color='#2d8cf0'):
+    blue = '#1890ff'
+    purple = '#722ed1'
+    cyan = '#13c2c2'
+    green = '#52c41a'
+    magenta = '#eb2f96'
+    pink = '#pink'
+    red = '#f5222d'
+    orange = '#fa8c16'
+    yellow = '#fadb14'
+    volcano = '#fa541c'
+    geekblue = '#2f54eb'
+    lime = '#a0d911'
+    gold = '#faad14'
+    female_color = "#ef5b97"
+    male_color = "#4ebbff"
+
+    def __init__(self, theme='light', primary_color=None):
         super(MTheme, self).__init__()
         from dayu_widgets import utils
         default_qss_file = utils.get_static_file('main.qss')
         with open(default_qss_file, 'r+') as f:
             self.default_qss = QssTemplate(f.read())
-        self._init_preset_color()
-        self.set_primary_color(primary_color)
+        self._init_color()
+        self.set_primary_color(primary_color or MTheme.blue)
         self.set_theme(theme)
         self._init_font()
         self._init_size()
@@ -33,8 +49,6 @@ class MTheme(object):
         self.text_error_color = self.error_7
         self.text_color_inverse = "#fff"
         self.text_warning_color = self.warning_7
-        self.female_color = "#ef5b97"
-        self.male_color = "#4ebbff"
 
     def set_theme(self, theme):
         if theme == 'light':
@@ -78,21 +92,7 @@ class MTheme(object):
         self.icon_circle = url_prefix_2.format('circle')
         self.icon_sphere = url_prefix_2.format('sphere')
 
-    def _init_preset_color(self):
-        self.blue = '#1890ff'
-        self.purple = '#722ed1'
-        self.cyan = '#13c2c2'
-        self.green = '#52c41a'
-        self.magenta = '#eb2f96'
-        self.pink = '#pink'
-        self.red = '#f5222d'
-        self.orange = '#fa8c16'
-        self.yellow = '#fadb14'
-        self.volcano = '#fa541c'
-        self.geekblue = '#2f54eb'
-        self.lime = '#a0d911'
-        self.gold = '#faad14'
-
+    def _init_color(self):
         self.info_color = self.blue
         self.success_color = self.green
         self.processing_color = self.blue
@@ -185,6 +185,7 @@ class MTheme(object):
         self.background_selected_color = "#292929"
         self.background_in_color = "#3a3a3a"
         self.background_out_color = "#494949"
+        self.mask_color = fade_color(self.background_color, '90%')
 
     def _light(self):
         self.title_color = "#262626"
@@ -200,6 +201,7 @@ class MTheme(object):
         self.background_selected_color = "#bfbfbf"
         self.background_in_color = "#ffffff"
         self.background_out_color = "#eeeeee"
+        self.mask_color = fade_color(self.background_color, '90%')
 
     def apply(self, widget):
         widget.setStyleSheet(self.default_qss.substitute(vars(self)))
