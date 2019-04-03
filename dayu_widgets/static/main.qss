@@ -8,7 +8,8 @@
     selection-color: @text_color_inverse;
     selection-background-color: @primary_color;
 }
-
+MDateTimeEdit::drop-down,
+MDateEdit::drop-down,
 MComboBox::drop-down {
     subcontrol-origin: content;
     subcontrol-position: center right;
@@ -17,37 +18,32 @@ MComboBox::drop-down {
 MDateTimeEdit[dayu_size="@huge"]::drop-down,
 MDateEdit[dayu_size="@huge"]::drop-down,
 MComboBox[dayu_size="@huge"]::drop-down{
-    right: 2px;
-    height: 26px;
-    width: 26px;
+    width: @huge@unit;
+    height: @huge_icon@unit;
 }
 MDateTimeEdit[dayu_size="@large"]::drop-down,
 MDateEdit[dayu_size="@large"]::drop-down,
 MComboBox[dayu_size="@large"]::drop-down{
-    right: 2px;
-    height: 20px;
-    width: 20px;
+    width: @large@unit;
+    height: @large_icon@unit;
 }
 MDateTimeEdit[dayu_size="@medium"]::drop-down,
 MDateEdit[dayu_size="@medium"]::drop-down,
 MComboBox[dayu_size="@medium"]::drop-down{
-    right: 2px;
-    height: 18px;
-    width: 18px;
+    width: @medium@unit;
+    height: @medium_icon@unit;
 }
 MDateTimeEdit[dayu_size="@small"]::drop-down,
 MDateEdit[dayu_size="@small"]::drop-down,
 MComboBox[dayu_size="@small"]::drop-down{
-    right: 2px;
-    height: 14px;
-    width: 14px;
+    width: @small@unit;
+    height: @small_icon@unit;
 }
 MDateTimeEdit[dayu_size="@tiny"]::drop-down,
 MDateEdit[dayu_size="@tiny"]::drop-down,
 MComboBox[dayu_size="@tiny"]::drop-down{
-    right: 2px;
-    height: 12px;
-    width: 12px;
+    width: @tiny@unit;
+    height: @tiny_icon@unit;
 }
 
 QAbstractButton[dayu_size="@huge"],
@@ -100,19 +96,35 @@ QLineEdit[dayu_size="@tiny"]{
 }
 
 
+MComboBox[dayu_size="@huge"]::drop-down{
+    height: 20px;
+}
+MComboBox[dayu_size="@large"]::drop-down{
+    height: 16px;
+}
+MComboBox[dayu_size="@medium"]::drop-down{
+    height: 14px;
+}
+MComboBox[dayu_size="@small"]::drop-down{
+    height: 10px;
+}
+MComboBox[dayu_size="@tiny"]::drop-down{
+    height: 8px;
+}
+
 /* MCalendarWidget*/
 #qt_calendar_calendarview {
     background: @background_color;
 }
 
 #qt_calendar_navigationbar {
-    background: @background_selected_color;
+    background: @background_color;
 }
 
 QCalenderWidget > QToolButton {
-    icon-size: 18px, 18px;
-    width: 20px;
-    height: 20px;
+    icon-size: 14px, 14px;
+    width: 16px;
+    height: 16px;
     background: @background_out_color;
 }
 
@@ -139,8 +151,8 @@ QToolButton#qt_calendar_monthbutton::menu-indicator {
     width: 10px;
 }
 
-QCalenderWidget > QHeaderView::section {
-    background-color: @primary_color;
+QCalendarWidget QWidget {
+  alternate-background-color: @background_out_color;
 }
 
 
@@ -526,6 +538,17 @@ MPushButton {
     font-weight: 400;
     border-radius: 5%;
     padding: 1% 10%;
+    background-color: @background_out_color;
+    border: 1px solid @border_color;
+}
+
+MPushButton:hover{
+    color: @primary_5;
+    border-color: @primary_5;
+}
+MPushButton:pressed{
+    color: @primary_7;
+    border-color: @primary_7;
 }
 
 MPushButton[combine=horizontal]{
@@ -536,25 +559,14 @@ MPushButton[combine=vertical]{
 
 }
 
-MPushButton[type=default]{
-    background-color: @background_out_color;
-    border: 1px solid @border_color;
-}
-MPushButton[type=default]:hover{
-    color: @primary_color;
-    border-color: @primary_5;
-}
-MPushButton[type=default]:pressed{
-    border-color: @primary_7;
-}
 
 MPushButton[type=primary]{
-    color: white;
+    border: none;
+    color: @text_color_inverse;
     background-color: @primary_color;
 }
 MPushButton[type=primary]:hover{
     background-color: @primary_5;
-
 }
 MPushButton[type=primary]:pressed{
     background-color: @primary_7;
@@ -562,7 +574,8 @@ MPushButton[type=primary]:pressed{
 
 
 MPushButton[type=success]{
-    color: white;
+    border: none;
+    color: @text_color_inverse;
     background-color: @success_6;
 }
 MPushButton[type=success]:hover{
@@ -574,7 +587,8 @@ MPushButton[type=success]:pressed{
 
 
 MPushButton[type=warning]{
-    color: white;
+    border: none;
+    color: @text_color_inverse;
     background-color: @warning_6;
 }
 MPushButton[type=warning]:hover{
@@ -586,6 +600,7 @@ MPushButton[type=warning]:pressed{
 
 
 MPushButton[type=error]{
+    border: none;
     color: white;
     background-color: @error_6;
 }
@@ -790,10 +805,10 @@ MLineEdit:focus{
     border: 1px solid @primary_color;
 }
 
-MLineEdit[error=true]{
+MLineEdit[type=error]{
     color: @error_7;
 }
-MLineEdit[error=true]:focus{
+MLineEdit[type=error]:focus{
     border: 1px solid @error_5;
 }
 
@@ -890,10 +905,7 @@ MHeaderView[grid=true][orientation=vertical]::section{
 MHeaderView::section:hover {
     color: @primary_color;
 }
-MHeaderView::focus{
-    background-color: red;
-    border: 0 solid @border_color;
-}
+
 MHeaderView::up-arrow {
     width: 8px;
     height: 8px;
@@ -1198,4 +1210,12 @@ MMenu::indicator {
 QToolTip {
     border: none;
     background-color: @background_selected_color;
+}
+
+MLoading {
+    background-color: transparent;
+}
+
+MLoadingWrapper #mask{
+    background-color: @mask_color;
 }
