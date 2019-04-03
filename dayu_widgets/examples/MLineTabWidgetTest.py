@@ -53,13 +53,9 @@ class MLineTabWidgetTest(QWidget):
         if index > 0:
             text = self.tab_left.tabText(index)
             self.tab_left.removeTab(index)
-            MMessage.info({'content': u'成功关闭一个标签: {}'.format(text),
-                           'closable': True
-                           }, parent=self)
+            MMessage.info(u'成功关闭一个标签: {}'.format(text), closable=True, parent=self)
         else:
-            MMessage.warning({'content': u'请不要关闭第一个标签',
-                              'closable': True
-                              }, parent=self)
+            MMessage.warning(u'请不要关闭第一个标签', closable=True, parent=self)
 
 
 if __name__ == '__main__':
