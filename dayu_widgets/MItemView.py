@@ -215,7 +215,9 @@ class MTableView(QTableView):
 
     def paintEvent(self, event):
         model = utils.real_model(self.model())
-        if model and isinstance(model, MTableModel):
+        if model is None:
+            utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+        elif isinstance(model, MTableModel):
             if not model.get_data_list():
                 utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
         return super(MTableView, self).paintEvent(event)
@@ -248,7 +250,9 @@ class MTreeView(QTreeView):
 
     def paintEvent(self, event):
         model = utils.real_model(self.model())
-        if model and isinstance(model, MTableModel):
+        if model is None:
+            utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+        elif isinstance(model, MTableModel):
             if not model.get_data_list():
                 utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
         return super(MTreeView, self).paintEvent(event)
@@ -291,7 +295,9 @@ class MBigView(QListView):
 
     def paintEvent(self, event):
         model = utils.real_model(self.model())
-        if model and isinstance(model, MTableModel):
+        if model is None:
+            utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+        elif isinstance(model, MTableModel):
             if not model.get_data_list():
                 utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
         return super(MBigView, self).paintEvent(event)
@@ -326,7 +332,9 @@ class MListView(QListView):
 
     def paintEvent(self, event):
         model = utils.real_model(self.model())
-        if model and isinstance(model, MTableModel):
+        if model is None:
+            utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+        elif isinstance(model, MTableModel):
             if not model.get_data_list():
                 utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
         return super(MListView, self).paintEvent(event)
