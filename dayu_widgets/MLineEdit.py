@@ -8,15 +8,16 @@
 
 import functools
 
+from dayu_widgets import dayu_theme
 from dayu_widgets.MBrowser import MClickBrowserFileToolButton, MClickBrowserFolderToolButton
 from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.mixin import property_mixin
+from dayu_widgets.mixin import property_mixin, focus_shadow_mixin
 from dayu_widgets.qt import *
 
 
 @property_mixin
+@focus_shadow_mixin
 class MLineEdit(QLineEdit):
 
     def __init__(self, text='', size=None, parent=None):
@@ -79,7 +80,7 @@ class MLineEdit(QLineEdit):
             dialog.show()
 
         line_edit = MLineEdit(size=size, parent=parent)
-        line_edit.setProperty('error', True)
+        line_edit.setProperty('type', 'error')
         line_edit.setReadOnly(True)
         suffix_button = MToolButton(type=MToolButton.IconOnlyType,
                                     icon=MIcon('detail_line.svg', dayu_theme.error_color),
