@@ -22,8 +22,7 @@ class MGuid(QFrame):
 
     def set_checked(self, value):
         self.setStyleSheet(
-            'background-color:{}'.format(
-                dayu_theme.background_selected_color if value else dayu_theme.background_color))
+            'background-color:{}'.format(dayu_theme.primary_color if value else dayu_theme.background_color))
         self.setFixedSize(20 if value else 16, 4)
 
     def mousePressEvent(self, event):
