@@ -6,7 +6,7 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MTag import MTag, MCheckableTag, MAddTag
+from dayu_widgets.MTag import MTag, MCheckableTag, MNewTag
 from dayu_widgets.MFlowLayout import MFlowLayout
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MLabel import MLabel
@@ -23,7 +23,7 @@ class MTagTest(QWidget):
         self.default_lay = MFlowLayout()
         for t in ['Tag 1', 'Tag 2', 'Tag 3']:
             self.default_lay.addWidget(MTag(text=t))
-        add_tag = MAddTag('Add Tag')
+        add_tag = MNewTag('New Tag')
         add_tag.sig_add_tag.connect(self.slot_add_tag)
         self.default_lay.addWidget(add_tag)
 
@@ -70,7 +70,7 @@ class MTagTest(QWidget):
         main_lay.addLayout(self.default_lay)
         main_lay.addWidget(MDivider('Colorful'))
         main_lay.addLayout(color_lay)
-        main_lay.addWidget(MDivider('No Border'))
+        main_lay.addWidget(MDivider('No Border & Click'))
         main_lay.addLayout(no_border_lay)
         main_lay.addWidget(MDivider('Checkable'))
         main_lay.addLayout(topic_lay)

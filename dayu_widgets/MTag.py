@@ -122,10 +122,10 @@ class MCheckableTag(QCheckBox):
         self.setCheckable(True)
 
 @cursor_mixin
-class MAddTag(QWidget):
+class MNewTag(QWidget):
     sig_add_tag = Signal(str)
-    def __init__(self, text, parent=None):
-        super(MAddTag, self).__init__(parent)
+    def __init__(self, text='New Tag', parent=None):
+        super(MNewTag, self).__init__(parent)
         self.setAttribute(Qt.WA_StyledBackground)
         self._add_button = MToolButton(size=dayu_theme.tiny, icon=MIcon('add_line.svg'), text=text)
         self._add_button.clicked.connect(self._slot_show_edit)
