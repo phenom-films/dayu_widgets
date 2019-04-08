@@ -66,3 +66,30 @@ def focus_shadow_mixin(cls):
     setattr(cls, 'focusInEvent', focusInEvent)
     setattr(cls, 'focusOutEvent', focusOutEvent)
     return cls
+
+def hover_shadow_mixin(cls):
+    old_enter_event = cls.enterEvent
+    old_leave_event = cls.leaveEvent
+    def enterEvent(self, *args, **kwargs):
+        old_enter_event(self, *args, **kwargs)
+        if not self.graphicsEffect():
+            from dayu_widgets import dayu_theme
+            shadow_effect = QGraphicsDropShadowEffect(self)
+            dayu_type = self.property('type')
+            color = vars(dayu_theme).get('{}_color'.format(dayu_type or 'primary'))
+            shadow_effect.setColor(color)
+            shadow_effect.setOffset(0, 0)
+            shadow_effect.setBlurRadius(5)
+            shadow_effect.setEnabled(False)
+            self.setGraphicsEffect(shadow_effect)
+        if self.isEnabled():
+            self.graphicsEffect().setEnabled(True)
+
+    def leaveEvent(self, *args, **kwargs):
+        old_leave_event(self, *args, **kwargs)
+        if self.graphicsEffect():
+            self.graphicsEffect().setEnabled(False)
+
+    setattr(cls, 'enterEvent', enterEvent)
+    setattr(cls, 'leaveEvent', leaveEvent)
+    return cls
