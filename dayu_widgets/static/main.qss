@@ -1257,3 +1257,10 @@ MNewTag{
 MNewTag MToolButton:hover{
     border:none;
 }
+
+MCard{
+    border: 1px solid @border_color;
+    border-radius: @border_radius_small@unit;
+    background-color: @background_in_color;
+}
+
