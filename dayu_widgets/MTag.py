@@ -108,12 +108,6 @@ class MTag(QLabel):
         self._is_pressed = False
         return super(MTag, self).mouseReleaseEvent(event)
 
-    # def _set_text(self, value):
-    #     self._content_label.setProperty('text', value)
-    #
-    # def set_text(self, value):
-    #     self.setProperty('text', value)
-
 
 @cursor_mixin
 class MCheckableTag(QCheckBox):
