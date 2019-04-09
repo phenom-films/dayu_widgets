@@ -25,6 +25,7 @@ def property_mixin(cls):
 def cursor_mixin(cls):
     old_enter_event = cls.enterEvent
     old_leave_event = cls.leaveEvent
+
     def enterEvent(self, *args, **kwargs):
         old_enter_event(self, *args, **kwargs)
         QApplication.setOverrideCursor(Qt.PointingHandCursor if self.isEnabled() else Qt.ForbiddenCursor)
@@ -43,6 +44,7 @@ def cursor_mixin(cls):
 def focus_shadow_mixin(cls):
     old_focus_in_event = cls.focusInEvent
     old_focus_out_event = cls.focusOutEvent
+
     def focusInEvent(self, *args, **kwargs):
         old_focus_in_event(self, *args, **kwargs)
         if not self.graphicsEffect():
@@ -67,9 +69,11 @@ def focus_shadow_mixin(cls):
     setattr(cls, 'focusOutEvent', focusOutEvent)
     return cls
 
+
 def hover_shadow_mixin(cls):
     old_enter_event = cls.enterEvent
     old_leave_event = cls.leaveEvent
+
     def enterEvent(self, *args, **kwargs):
         old_enter_event(self, *args, **kwargs)
         if not self.graphicsEffect():
@@ -92,4 +96,51 @@ def hover_shadow_mixin(cls):
 
     setattr(cls, 'enterEvent', enterEvent)
     setattr(cls, 'leaveEvent', leaveEvent)
+    return cls
+
+
+def stacked_animation_mixin(cls):
+    old_init = cls.__init__
+
+    def new_init(self, *args, **kwargs):
+        old_init(self, *args, **kwargs)
+        self._previous_index = 0
+        self._to_show_pos_ani = QPropertyAnimation()
+        self._to_show_pos_ani.setDuration(400)
+        self._to_show_pos_ani.setPropertyName('pos')
+        self._to_show_pos_ani.setEndValue(QPoint(0, 0))
+        self._to_show_pos_ani.setEasingCurve(QEasingCurve.OutCubic)
+
+        self._to_hide_pos_ani = QPropertyAnimation()
+        self._to_hide_pos_ani.setDuration(400)
+        self._to_hide_pos_ani.setPropertyName('pos')
+        self._to_hide_pos_ani.setEndValue(QPoint(0, 0))
+        self._to_hide_pos_ani.setEasingCurve(QEasingCurve.OutCubic)
+
+        self._opacity_eff = QGraphicsOpacityEffect()
+        self._opacity_ani = QPropertyAnimation()
+        self._opacity_ani.setDuration(400)
+        self._opacity_ani.setEasingCurve(QEasingCurve.InCubic)
+        self._opacity_ani.setPropertyName('opacity')
+        self._opacity_ani.setStartValue(0.0)
+        self._opacity_ani.setEndValue(1.0)
+        self._opacity_ani.setTargetObject(self._opacity_eff)
+        self.currentChanged.connect(self._play_anim)
+
+    def _play_anim(self, index):
+        current_widget = self.widget(index)
+        if self._previous_index < index:
+            self._to_show_pos_ani.setStartValue(QPoint(self.width(), 0))
+            self._to_show_pos_ani.setTargetObject(current_widget)
+            self._to_show_pos_ani.start()
+        else:
+            self._to_hide_pos_ani.setStartValue(QPoint(-self.width(), 0))
+            self._to_hide_pos_ani.setTargetObject(current_widget)
+            self._to_hide_pos_ani.start()
+        current_widget.setGraphicsEffect(self._opacity_eff)
+        self._opacity_ani.start()
+        self._previous_index = index
+
+    setattr(cls, '__init__', new_init)
+    setattr(cls, '_play_anim', _play_anim)
     return cls
