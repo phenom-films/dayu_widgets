@@ -7,6 +7,7 @@
 ###################################################################
 
 from dayu_widgets.qt import *
+import functools
 
 
 def property_mixin(cls):
@@ -125,6 +126,7 @@ def stacked_animation_mixin(cls):
         self._opacity_ani.setStartValue(0.0)
         self._opacity_ani.setEndValue(1.0)
         self._opacity_ani.setTargetObject(self._opacity_eff)
+        self._opacity_ani.finished.connect(self._disable_opacity)
         self.currentChanged.connect(self._play_anim)
 
     def _play_anim(self, index):
@@ -138,9 +140,16 @@ def stacked_animation_mixin(cls):
             self._to_hide_pos_ani.setTargetObject(current_widget)
             self._to_hide_pos_ani.start()
         current_widget.setGraphicsEffect(self._opacity_eff)
+        current_widget.graphicsEffect().setEnabled(True)
         self._opacity_ani.start()
         self._previous_index = index
 
+    def _disable_opacity(self):
+        # 如果不关掉effect，会跟子控件的 effect 或 paintEvent 冲突引起 crash
+        # QPainter::begin: A paint device can only be painted by one painter at a time.
+        self.currentWidget().graphicsEffect().setEnabled(False)
+
     setattr(cls, '__init__', new_init)
     setattr(cls, '_play_anim', _play_anim)
+    setattr(cls, '_disable_opacity', _disable_opacity)
     return cls
