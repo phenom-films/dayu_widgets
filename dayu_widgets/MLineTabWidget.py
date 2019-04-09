@@ -7,11 +7,11 @@
 ###################################################################
 
 
-from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.MButtonGroup import MButtonGroupBase
 from dayu_widgets.MDivider import MDivider
+from dayu_widgets.MStackedWidget import MStackedWidget
+from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.qt import *
-from dayu_widgets import dayu_theme
 
 
 class MLineButtonGroup(MButtonGroupBase):
@@ -69,17 +69,17 @@ class MLineTabWidget(QWidget):
         elif alignment == Qt.AlignRight:
             self.bar_layout.addStretch()
             self.bar_layout.addWidget(self.tool_button_group)
-        self.stack_lay = QStackedLayout()
-        self.tool_button_group.sig_checked_changed.connect(self.stack_lay.setCurrentIndex)
+        self.stack_widget = MStackedWidget()
+        self.tool_button_group.sig_checked_changed.connect(self.stack_widget.setCurrentIndex)
         main_lay = QVBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
         main_lay.setSpacing(0)
         main_lay.addLayout(self.bar_layout)
         main_lay.addWidget(MDivider())
         main_lay.addSpacing(5)
-        main_lay.addLayout(self.stack_lay)
+        main_lay.addWidget(self.stack_widget)
         self.setLayout(main_lay)
 
     def add_tab(self, widget, data_dict):
-        self.stack_lay.addWidget(widget)
-        self.tool_button_group.add_button(data_dict, self.stack_lay.count() - 1)
+        self.stack_widget.addWidget(widget)
+        self.tool_button_group.add_button(data_dict, self.stack_widget.count() - 1)
