@@ -144,6 +144,7 @@ class MMessage(QWidget):
 
     @classmethod
     def loading(cls, text, parent, duration=None, closable=None):
+        # TODO: 一般是不需要设置 duration 的,需要等待线程完成信号再关闭
         return cls._show(text, type=MMessage.LoadingType, duration=duration, closable=closable, parent=parent)
 
     @classmethod
