@@ -121,9 +121,11 @@ class MCheckableTag(QCheckBox):
         super(MCheckableTag, self).__init__(text, parent)
         self.setCheckable(True)
 
+
 @cursor_mixin
 class MNewTag(QWidget):
     sig_add_tag = Signal(str)
+
     def __init__(self, text='New Tag', parent=None):
         super(MNewTag, self).__init__(parent)
         self.setAttribute(Qt.WA_StyledBackground)
@@ -138,6 +140,9 @@ class MNewTag(QWidget):
         self._main_lay.addWidget(self._add_button, 0, 0)
         self._main_lay.addWidget(self._line_edit, 0, 0)
         self.setLayout(self._main_lay)
+
+    def set_completer(self, completer):
+        self._line_edit.setCompleter(completer)
 
     def _slot_show_edit(self):
         self._line_edit.setVisible(True)
