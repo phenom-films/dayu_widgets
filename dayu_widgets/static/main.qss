@@ -787,6 +787,16 @@ MMessage{
     background-color: @background_color;
 }
 
+
+MToast{
+    background-color: @toast_color;
+}
+
+MToast QLabel{
+    color: @text_color_inverse;
+    background-color: transparent;
+}
+
 MSectionItem{
     border: 1px solid @border_color;
     border-radius: 2px;
@@ -1264,3 +1274,8 @@ MCard{
     background-color: @background_in_color;
 }
 
+MMeta {
+    border: 1px solid @border_color;
+    border-radius: @border_radius_small@unit;
+    background-color: @background_in_color;
+}
