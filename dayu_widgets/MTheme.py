@@ -186,6 +186,7 @@ class MTheme(object):
         self.background_in_color = "#3a3a3a"
         self.background_out_color = "#494949"
         self.mask_color = fade_color(self.background_color, '90%')
+        self.toast_color = "#555555"
 
     def _light(self):
         self.title_color = "#262626"
@@ -202,6 +203,7 @@ class MTheme(object):
         self.background_in_color = "#ffffff"
         self.background_out_color = "#eeeeee"
         self.mask_color = fade_color(self.background_color, '90%')
+        self.toast_color = "#333333"
 
     def apply(self, widget):
         widget.setStyleSheet(self.default_qss.substitute(vars(self)))
