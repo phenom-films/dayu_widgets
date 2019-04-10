@@ -9,6 +9,7 @@
 from dayu_widgets.MCarousel import MCarousel
 from dayu_widgets.MSwitch import MSwitch
 from dayu_widgets.MLabel import MLabel
+from dayu_widgets.MSlider import MSlider
 from dayu_widgets.qt import *
 
 
@@ -20,15 +21,17 @@ class MCarouselTest(QWidget):
     def _init_ui(self):
         switch = MSwitch()
         switch.setChecked(True)
-        switch_lay = QHBoxLayout()
-        switch_lay.addWidget(MLabel('AutoPlay'))
-        switch_lay.addWidget(switch)
-        switch_lay.addStretch()
+        slider = MSlider()
+        slider.setRange(1, 10)
+        switch_lay = QFormLayout()
+        switch_lay.addRow(MLabel('AutoPlay'), switch)
+        switch_lay.addRow(MLabel('Interval'), slider)
         test = MCarousel([MPixmap('app-{}.png'.format(a)) for a in ['maya', 'nuke', 'houdini']],
                          width=300,
                          height=300,
                          autoplay=True)
         switch.toggled.connect(test.set_autoplay)
+        slider.valueChanged.connect(lambda x: test.set_interval(x * 1000))
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(test)
@@ -38,9 +41,9 @@ class MCarouselTest(QWidget):
 
 
 if __name__ == '__main__':
-
     import sys
     from dayu_widgets import dayu_theme
+
     app = QApplication(sys.argv)
     test = MCarouselTest()
     dayu_theme.apply(test)
