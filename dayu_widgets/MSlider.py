@@ -12,3 +12,7 @@ from dayu_widgets.qt import *
 class MSlider(QSlider):
     def __init__(self, orientation=Qt.Horizontal, parent=None):
         super(MSlider, self).__init__(orientation, parent=parent)
+
+    def mouseMoveEvent(self, event):
+        QToolTip.showText(event.globalPos(), str(self.value()), self)
+        return super(MSlider, self).mouseMoveEvent(event)
