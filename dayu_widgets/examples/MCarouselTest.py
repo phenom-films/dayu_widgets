@@ -32,6 +32,7 @@ class MCarouselTest(QWidget):
                          autoplay=True)
         switch.toggled.connect(test.set_autoplay)
         slider.valueChanged.connect(lambda x: test.set_interval(x * 1000))
+        slider.setValue(3)
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(test)
