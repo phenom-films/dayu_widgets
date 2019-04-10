@@ -12,11 +12,12 @@ from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
 from dayu_widgets.mixin import property_mixin
 
-class MGuid(QFrame):
+
+class MGuidPrivate(QFrame):
     sig_go_to_page = Signal()
 
     def __init__(self, parent=None):
-        super(MGuid, self).__init__(parent)
+        super(MGuidPrivate, self).__init__(parent)
         self.setCursor(Qt.PointingHandCursor)
         self.set_checked(False)
 
@@ -28,7 +29,8 @@ class MGuid(QFrame):
     def mousePressEvent(self, event):
         if event.buttons() == Qt.LeftButton:
             self.sig_go_to_page.emit()
-        return super(MGuid, self).mousePressEvent(event)
+        return super(MGuidPrivate, self).mousePressEvent(event)
+
 
 @property_mixin
 class MCarousel(QGraphicsView):
@@ -64,7 +66,7 @@ class MCarousel(QGraphicsView):
             pix_item.setPos(pos)
             pix_item.setTransformationMode(Qt.SmoothTransformation)
             pos.setX(pos.x() + width)
-            line_item = MGuid()
+            line_item = MGuidPrivate()
             line_item.sig_go_to_page.connect(functools.partial(self.go_to_page, index))
             self.navigate_lay.addWidget(line_item)
             self.scene.addItem(pix_item)
@@ -80,9 +82,9 @@ class MCarousel(QGraphicsView):
         self.loading_ani.setEasingCurve(QEasingCurve.InOutQuad)
         self.loading_ani.setDuration(500)
         self.loading_ani.setPropertyName('value')
-        self.auotplay_timer = QTimer(self)
-        self.auotplay_timer.setInterval(2000)
-        self.auotplay_timer.timeout.connect(self.next_page)
+        self.autoplay_timer = QTimer(self)
+        self.autoplay_timer.setInterval(2000)
+        self.autoplay_timer.timeout.connect(self.next_page)
 
         self.current_index = 0
         self.go_to_page(0)
@@ -93,9 +95,12 @@ class MCarousel(QGraphicsView):
 
     def _set_autoplay(self, value):
         if value:
-            self.auotplay_timer.start()
+            self.autoplay_timer.start()
         else:
-            self.auotplay_timer.stop()
+            self.autoplay_timer.stop()
+
+    def set_interval(self, ms):
+        self.autoplay_timer.setInterval(ms)
 
     def next_page(self):
         index = self.current_index + 1 if self.current_index + 1 < self.page_count else 0
@@ -113,4 +118,3 @@ class MCarousel(QGraphicsView):
         for i in range(self.navigate_lay.count()):
             frame = self.navigate_lay.itemAt(i).widget()
             frame.set_checked(i == self.current_index)
-
