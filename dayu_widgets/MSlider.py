@@ -10,5 +10,5 @@ from dayu_widgets.qt import *
 
 
 class MSlider(QSlider):
-    def __init__(self, orientation=None, parent=None):
+    def __init__(self, orientation=Qt.Horizontal, parent=None):
         super(MSlider, self).__init__(orientation, parent=parent)
