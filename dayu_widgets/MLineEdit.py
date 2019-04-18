@@ -19,6 +19,7 @@ from dayu_widgets.qt import *
 @property_mixin
 @focus_shadow_mixin
 class MLineEdit(QLineEdit):
+    sig_delay_text_changed = Signal(unicode)
 
     def __init__(self, text='', size=None, parent=None):
         super(MLineEdit, self).__init__(text, parent)
@@ -29,6 +30,17 @@ class MLineEdit(QLineEdit):
         self.setLayout(self._main_layout)
         self.setProperty('history', self.property('text'))
         self.setTextMargins(2, 0, 2, 0)
+        self.delay_timer = QTimer()
+        self.delay_timer.setInterval(500)
+        self.delay_timer.setSingleShot(True)
+        self.delay_timer.timeout.connect(self._slot_delay_text_changed)
+
+    def set_delay_duration(self, ms):
+        self.delay_timer.setInterval(ms)
+
+    @Slot()
+    def _slot_delay_text_changed(self):
+        self.sig_delay_text_changed.emit(self.text())
 
     def add_prefix_widget(self, widget):
         if isinstance(widget, MPushButton):
@@ -55,6 +67,13 @@ class MLineEdit(QLineEdit):
     def clear(self):
         self.setProperty('history', '')
         return super(MLineEdit, self).clear()
+
+    def keyPressEvent(self, event):
+        if event.key() not in [Qt.Key_Enter, Qt.Key_Tab]:
+            if self.delay_timer.isActive():
+                self.delay_timer.stop()
+            self.delay_timer.start()
+        super(MLineEdit, self).keyPressEvent(event)
 
     @classmethod
     def search(cls, size=None, parent=None):
