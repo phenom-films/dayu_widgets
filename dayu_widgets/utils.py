@@ -208,7 +208,7 @@ def _(obj):
     elif 'code' in obj.keys():
         return default_formatter(obj.get('code'))
     else:
-        return str(dict)
+        return str(obj)
 
 
 @default_formatter.register(list)
@@ -234,6 +234,16 @@ def _(obj):
 @default_formatter.register(type(None))
 def _(obj):
     return '--'
+
+
+@default_formatter.register(int)
+def _(obj):
+    return str(obj)
+
+
+@default_formatter.register(float)
+def _(obj):
+    return '{:.2f}'.format(round(obj, 2))
 
 
 @default_formatter.register(object)
