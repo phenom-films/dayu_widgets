@@ -198,7 +198,12 @@ def apply_formatter(obj, *args, **kwargs):
 
 @singledispatch
 def default_formatter(obj):
-    return obj
+    '''
+    Format any input value to a string.
+    :param obj: any type value
+    :return: basestring
+    '''
+    return str(obj)
 
 
 @default_formatter.register(dict)
