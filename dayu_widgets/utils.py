@@ -16,6 +16,15 @@ ItemViewMenuEvent = collections.namedtuple('ItemViewMenuEvent', ['view', 'select
 
 
 def get_static_file(path):
+    '''
+    A convenient function to get the file in dayu_widgets/static,
+    User just give the name of the file.
+    eg. get_static_file('add_line.svg')
+    :param path: file name
+    :return: if input file found, return the full path, else return None
+    '''
+    if not isinstance(path, basestring):
+        raise TypeError("Input argument 'path' should be basestring type, but get {}".format(type(path)))
     from dayu_widgets import STATIC_FOLDERS
     full_path = next((os.path.join(prefix, path) for prefix in [''] + STATIC_FOLDERS if
                       os.path.isfile(os.path.join(prefix, path))), path)
@@ -24,9 +33,20 @@ def get_static_file(path):
     return None
 
 
-def from_list_to_nested_dict(input, sep='/'):
+def from_list_to_nested_dict(input_arg, sep='/'):
+    '''
+    A help function to convert the list of string to nested dict
+    :param input_arg: a list/tuple/set of string
+    :param sep: a separator to split input string
+    :return: a list of nested dict
+    '''
+    if not isinstance(input_arg, (list, tuple, set)):
+        raise TypeError("Input argument 'input' should be list or tuple or set, but get {}".format(type(input_arg)))
+    if not isinstance(sep, basestring):
+        raise TypeError("Input argument 'sep' should be basestring, but get {}".format(type(sep)))
+
     result = []
-    for item in input:
+    for item in input_arg:
         components = item.strip(sep).split(sep)
         component_count = len(components)
         current = result
