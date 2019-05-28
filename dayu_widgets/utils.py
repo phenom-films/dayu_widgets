@@ -94,7 +94,7 @@ def generate_color(primary_color, index):
 
     def get_hue(color, i, is_light):
         h = color.hue()
-        if h >= 60 and h <= 240:
+        if 60 <= h <= 240:
             hue = h - hue_step * i if is_light else h + hue_step * i
         else:
             hue = h + hue_step * i if is_light else h - hue_step * i
@@ -211,11 +211,11 @@ def apply_formatter(obj, *args, **kwargs):
 
 @singledispatch
 def default_formatter(obj):
-    '''
+    """
     Format any input value to a string.
     :param obj: any type value
     :return: basestring
-    '''
+    """
     return str(obj)
 
 
