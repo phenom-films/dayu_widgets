@@ -16,13 +16,13 @@ ItemViewMenuEvent = collections.namedtuple('ItemViewMenuEvent', ['view', 'select
 
 
 def get_static_file(path):
-    '''
+    """
     A convenient function to get the file in dayu_widgets/static,
     User just give the name of the file.
     eg. get_static_file('add_line.svg')
     :param path: file name
     :return: if input file found, return the full path, else return None
-    '''
+    """
     if not isinstance(path, basestring):
         raise TypeError("Input argument 'path' should be basestring type, but get {}".format(type(path)))
     from dayu_widgets import STATIC_FOLDERS
@@ -34,12 +34,12 @@ def get_static_file(path):
 
 
 def from_list_to_nested_dict(input_arg, sep='/'):
-    '''
+    """
     A help function to convert the list of string to nested dict
     :param input_arg: a list/tuple/set of string
     :param sep: a separator to split input string
     :return: a list of nested dict
-    '''
+    """
     if not isinstance(input_arg, (list, tuple, set)):
         raise TypeError("Input argument 'input' should be list or tuple or set, but get {}".format(type(input_arg)))
     if not isinstance(sep, basestring):
@@ -62,11 +62,24 @@ def from_list_to_nested_dict(input_arg, sep='/'):
 
 
 def fade_color(color, alpha):
+    """
+    Fade color with given alpha.
+    eg. fade_color('#ff0000', '10%) => 'rgba(255, 0, 0, 10%)'
+    :param color: string, hex digit format '#RRGGBB'
+    :param alpha: string, percent 'number%'
+    :return: qss/css color format rgba(r, g, b, a)
+    """
     c = QColor(color)
     return 'rgba({}, {}, {}, {})'.format(c.red(), c.green(), c.blue(), alpha)
 
 
 def generate_color(primary_color, index):
+    """
+    Reference to ant-design color system algorithm.
+    :param primary_color: base color. #RRGGBB
+    :param index: color step. 1-10 from light to dark
+    :return: result color
+    """
     # 这里生成颜色的算法，来自 Ant Design, 只做了语言的转换，和颜色的类型的转换，没对算法做任何修改
     # https://github.com/ant-design/ant-design/blob/master/components/style/color/colorPalette.less
     # https://zhuanlan.zhihu.com/p/32422584
