@@ -23,5 +23,4 @@ def callable_for_test(*args, **kwargs):
         (100, 100, (1, 2), {'age': 19}),
 ))
 def test_apply_formatter(formatter, result, args, kwargs):
-    print formatter, result, args, kwargs
     assert utils.apply_formatter(formatter, *args, **kwargs) == result
