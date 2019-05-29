@@ -5,12 +5,33 @@
 # Date  : 2019.3
 # Email : muyanru345@163.com
 ###################################################################
-import dayu_widgets.utils as utils
 from dayu_widgets import dayu_theme
+from dayu_widgets import utils
 from dayu_widgets.MHeaderView import MHeaderView
 from dayu_widgets.MItemModel import MTableModel
 from dayu_widgets.MMenu import MMenu
 from dayu_widgets.qt import *
+
+
+def draw_empty_content(view, text=None, pix_map=None):
+    from dayu_widgets import dayu_theme
+    pix_map = pix_map or MPixmap('empty.svg')
+    text = text or view.tr('No Data')
+    painter = QPainter(view)
+    font_metrics = painter.fontMetrics()
+    painter.setPen(QPen(dayu_theme.secondary_text_color))
+    content_height = pix_map.height() + font_metrics.height()
+    padding = 10
+    proper_min_size = min(view.height() - padding * 2, view.width() - padding * 2, content_height)
+    if proper_min_size < content_height:
+        pix_map = pix_map.scaledToHeight(proper_min_size - font_metrics.height(), Qt.SmoothTransformation)
+        content_height = proper_min_size
+    painter.drawText(view.width() / 2 - font_metrics.width(text) / 2,
+                     view.height() / 2 + content_height / 2 - font_metrics.height() / 2,
+                     text)
+    painter.drawPixmap(view.width() / 2 - pix_map.width() / 2,
+                       view.height() / 2 - content_height / 2, pix_map)
+    painter.end()
 
 
 class MOptionDelegate(QStyledItemDelegate):
@@ -123,32 +144,34 @@ def slot_context_menu(self, point):
         self.sig_context_menu.emit(event)
 
 
-def mouseMoveEvent(self, event):
+def mouse_move_event(self, event):
     index = self.indexAt(event.pos())
-    realIndex = self.sortFilterModel.mapToSource(index)
-    if self.headerList[realIndex.column()].get('is_link', False):
-        value = self.realModel.currentData(realIndex)
-        if value and value != '--':
+    real_index = utils.real_index(index)
+    if self.header_list[real_index.column()].get('is_link', False):
+        key_name = self.header_list[real_index.column()]['attr']
+        data_obj = utils.real_model(self.model()).data_list[real_index.row()]
+        value = utils.get_obj_value(data_obj, key_name)
+        if value:
             self.setCursor(Qt.PointingHandCursor)
             return
     self.setCursor(Qt.ArrowCursor)
 
 
-def mouseReleaseEvent(self, event):
+def mouse_release_event(self, event):
     if event.button() != Qt.LeftButton:
         QTableView.mouseReleaseEvent(self, event)
         return
     index = self.indexAt(event.pos())
-    realIndex = self.sortFilterModel.mapToSource(index)
-    if self.headerList[realIndex.column()].get('is_link', False):
-        keyName = self.headerList[realIndex.column()]['attr']
-        dataORM = self.realModel.dataList[realIndex.row()]
-        value = dataORM.get(keyName) if isinstance(dataORM, dict) else getattr(dataORM, keyName)
+    real_index = utils.real_index(index)
+    if self.headerList[real_index.column()].get('is_link', False):
+        key_name = self.header_list[real_index.column()]['attr']
+        data_obj = utils.real_model(self.model()).data_list[real_index.row()]
+        value = utils.get_obj_value(data_obj, key_name)
         if value:
             if isinstance(value, dict):
                 self.emit(SIGNAL('sigLinkClicked(PyObject)'), value)
             elif isinstance(value, basestring):
-                self.emit(SIGNAL('sigLinkClicked(PyObject)'), dataORM)
+                self.emit(SIGNAL('sigLinkClicked(PyObject)'), data_obj)
             elif isinstance(value, list):
                 for i in value:
                     self.emit(SIGNAL('sigLinkClicked(PyObject)'), i)
@@ -157,9 +180,10 @@ def mouseReleaseEvent(self, event):
 class MTableView(QTableView):
     sig_context_menu = Signal(object)
     set_header_list = set_header_list
+
     def __init__(self, size=None, show_row_count=False, parent=None):
         super(MTableView, self).__init__(parent)
-        self._no_date_image = None
+        self._no_data_image = None
         self._no_data_text = self.tr('No Data')
         size = size or dayu_theme.default_size
         ver_header_view = MHeaderView(Qt.Vertical, parent=self)
@@ -216,10 +240,10 @@ class MTableView(QTableView):
     def paintEvent(self, event):
         model = utils.real_model(self.model())
         if model is None:
-            utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+            draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+                draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         return super(MTableView, self).paintEvent(event)
 
     def save_state(self, name):
@@ -251,10 +275,10 @@ class MTreeView(QTreeView):
     def paintEvent(self, event):
         model = utils.real_model(self.model())
         if model is None:
-            utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+            draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+                draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
         return super(MTreeView, self).paintEvent(event)
 
     def set_no_data_text(self, text):
@@ -296,10 +320,10 @@ class MBigView(QListView):
     def paintEvent(self, event):
         model = utils.real_model(self.model())
         if model is None:
-            utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+            draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+                draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
         return super(MBigView, self).paintEvent(event)
 
     def set_no_data_text(self, text):
@@ -333,10 +357,10 @@ class MListView(QListView):
     def paintEvent(self, event):
         model = utils.real_model(self.model())
         if model is None:
-            utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+            draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                utils.draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+                draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
         return super(MListView, self).paintEvent(event)
 
     def set_no_data_text(self, text):
