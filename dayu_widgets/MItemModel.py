@@ -7,19 +7,19 @@
 ###################################################################
 
 from dayu_widgets.qt import *
-from dayu_widgets.utils import default_formatter, apply_formatter, get_font, icon_formatter, \
+from dayu_widgets.utils import display_formatter, apply_formatter, font_formatter, icon_formatter, \
     get_obj_value, set_obj_value
 
 SETTING_MAP = {
     Qt.BackgroundRole: {'config': 'bg_color', 'formatter': QColor},
-    Qt.DisplayRole: {'config': 'display', 'formatter': default_formatter},
+    Qt.DisplayRole: {'config': 'display', 'formatter': display_formatter},
     Qt.EditRole: {'config': 'edit', 'formatter': None},
     Qt.TextAlignmentRole: {'config': 'alignment',
                            'formatter': {'right': Qt.AlignRight, 'left': Qt.AlignLeft, 'center': Qt.AlignCenter}},
     Qt.ForegroundRole: {'config': 'color', 'formatter': QColor},
-    Qt.FontRole: {'config': 'font', 'formatter': get_font},
+    Qt.FontRole: {'config': 'font', 'formatter': font_formatter},
     Qt.DecorationRole: {'config': 'icon', 'formatter': icon_formatter},
-    Qt.ToolTipRole: {'config': 'tooltip', 'formatter': default_formatter},
+    Qt.ToolTipRole: {'config': 'tooltip', 'formatter': display_formatter},
     Qt.InitialSortOrderRole: {'config': 'order', 'formatter': {'asc': Qt.AscendingOrder, 'des': Qt.DescendingOrder}},
     Qt.SizeHintRole: {'config': 'size', 'formatter': lambda args: QSize(*args)},
     Qt.UserRole: {'config': 'data'},  # anything

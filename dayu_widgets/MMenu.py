@@ -72,7 +72,7 @@ class MMenu(QMenu):
             for i in data_dict.get('children'):
                 self._add_menu(menu, i)
         else:
-            action = self._action_group.addAction(utils.default_formatter(data_dict.get('label')))
+            action = self._action_group.addAction(utils.display_formatter(data_dict.get('label')))
             action.setProperty('value', data_dict.get('value'))
             action.setCheckable(True)
             # 用来将来获取父层级数据
@@ -81,10 +81,11 @@ class MMenu(QMenu):
 
     def set_data(self, option_list):
         assert isinstance(option_list, list)
-        if all(isinstance(i, basestring) for i in option_list):
-            option_list = utils.from_list_to_nested_dict(option_list, sep=self.property('separator'))
-        if all(isinstance(i, (int, float)) for i in option_list):
-            option_list = [{'value': i, 'label': str(i)} for i in option_list]
+        if option_list:
+            if all(isinstance(i, basestring) for i in option_list):
+                option_list = utils.from_list_to_nested_dict(option_list, sep=self.property('separator'))
+            if all(isinstance(i, (int, float)) for i in option_list):
+                option_list = [{'value': i, 'label': str(i)} for i in option_list]
         # 全部转换成 dict 类型的 list
         self.setProperty('data', option_list)
 

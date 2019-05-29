@@ -22,7 +22,7 @@ class MComboBox(QComboBox):
         super(MComboBox, self).__init__(parent)
         size = size or dayu_theme.default_size
         self._root_menu = None
-        self._display_formatter = utils.default_formatter
+        self._display_formatter = utils.display_formatter
         self.setProperty('dayu_size', size)
         self.setEditable(True)
         line_edit = self.lineEdit()
