@@ -7,7 +7,7 @@
 ###################################################################
 import string
 
-from dayu_widgets.utils import generate_color, fade_color
+from dayu_widgets import utils, DEFAULT_STATIC_FOLDER
 
 
 class QssTemplate(string.Template):
@@ -34,10 +34,13 @@ class MTheme(object):
 
     def __init__(self, theme='light', primary_color=None):
         super(MTheme, self).__init__()
-        from dayu_widgets import utils
         default_qss_file = utils.get_static_file('main.qss')
         with open(default_qss_file, 'r+') as f:
             self.default_qss = QssTemplate(f.read())
+        self.primary_color, self.item_hover_bg = (None, None)
+        self.primary_1, self.primary_2, self.primary_3, self.primary_4, self.primary_5, = (None, None, None, None, None)
+        self.primary_6, self.primary_7, self.primary_8, self.primary_9, self.primary_10 = (None, None, None, None, None)
+
         self._init_color()
         self.set_primary_color(primary_color or MTheme.blue)
         self.set_theme(theme)
@@ -59,25 +62,25 @@ class MTheme(object):
 
     def set_primary_color(self, color):
         self.primary_color = color
-        self.primary_1 = generate_color(color, 1)
-        self.primary_2 = generate_color(color, 2)
-        self.primary_3 = generate_color(color, 3)
-        self.primary_4 = generate_color(color, 4)
-        self.primary_5 = generate_color(color, 5)
-        self.primary_6 = generate_color(color, 6)
-        self.primary_7 = generate_color(color, 7)
-        self.primary_8 = generate_color(color, 8)
-        self.primary_9 = generate_color(color, 9)
-        self.primary_10 = generate_color(color, 10)
+        self.primary_1 = utils.generate_color(color, 1)
+        self.primary_2 = utils.generate_color(color, 2)
+        self.primary_3 = utils.generate_color(color, 3)
+        self.primary_4 = utils.generate_color(color, 4)
+        self.primary_5 = utils.generate_color(color, 5)
+        self.primary_6 = utils.generate_color(color, 6)
+        self.primary_7 = utils.generate_color(color, 7)
+        self.primary_8 = utils.generate_color(color, 8)
+        self.primary_9 = utils.generate_color(color, 9)
+        self.primary_10 = utils.generate_color(color, 10)
         # item
-        self.item_hover_bg = self.primary_1
         self.item_hover_bg = self.primary_1
 
     def _init_icon(self, theme):
         # icon
-        from dayu_widgets import STATIC_FOLDERS
-        url_prefix = '{}/{{}}{}.svg'.format(STATIC_FOLDERS[0].replace('\\', '/'), '' if theme == 'light' else '_dark')
-        url_prefix_2 = '{}/{{}}.svg'.format(STATIC_FOLDERS[0].replace('\\', '/'))
+        pre_str = DEFAULT_STATIC_FOLDER.replace('\\', '/')
+        suf_str = '' if theme == 'light' else '_dark'
+        url_prefix = '{pre}/{{}}{suf}.svg'.format(pre=pre_str, suf=suf_str)
+        url_prefix_2 = '{pre}/{{}}.svg'.format(pre=pre_str)
         self.icon_down = url_prefix.format('down_line')
         self.icon_up = url_prefix.format('up_line')
         self.icon_left = url_prefix.format('left_line')
@@ -99,53 +102,54 @@ class MTheme(object):
         self.error_color = self.red
         self.warning_color = self.gold
 
-        self.info_1 = fade_color(self.info_color, '15%')
-        self.info_2 = generate_color(self.info_color, 2)
-        self.info_3 = fade_color(self.info_color, '35%')
-        self.info_4 = generate_color(self.info_color, 4)
-        self.info_5 = generate_color(self.info_color, 5)
-        self.info_6 = generate_color(self.info_color, 6)
-        self.info_7 = generate_color(self.info_color, 7)
-        self.info_8 = generate_color(self.info_color, 8)
-        self.info_9 = generate_color(self.info_color, 9)
-        self.info_10 = generate_color(self.info_color, 10)
+        self.info_1 = utils.fade_color(self.info_color, '15%')
+        self.info_2 = utils.generate_color(self.info_color, 2)
+        self.info_3 = utils.fade_color(self.info_color, '35%')
+        self.info_4 = utils.generate_color(self.info_color, 4)
+        self.info_5 = utils.generate_color(self.info_color, 5)
+        self.info_6 = utils.generate_color(self.info_color, 6)
+        self.info_7 = utils.generate_color(self.info_color, 7)
+        self.info_8 = utils.generate_color(self.info_color, 8)
+        self.info_9 = utils.generate_color(self.info_color, 9)
+        self.info_10 = utils.generate_color(self.info_color, 10)
 
-        self.success_1 = fade_color(self.success_color, '15%')
-        self.success_2 = generate_color(self.success_color, 2)
-        self.success_3 = fade_color(self.success_color, '35%')
-        self.success_4 = generate_color(self.success_color, 4)
-        self.success_5 = generate_color(self.success_color, 5)
-        self.success_6 = generate_color(self.success_color, 6)
-        self.success_7 = generate_color(self.success_color, 7)
-        self.success_8 = generate_color(self.success_color, 8)
-        self.success_9 = generate_color(self.success_color, 9)
-        self.success_10 = generate_color(self.success_color, 10)
+        self.success_1 = utils.fade_color(self.success_color, '15%')
+        self.success_2 = utils.generate_color(self.success_color, 2)
+        self.success_3 = utils.fade_color(self.success_color, '35%')
+        self.success_4 = utils.generate_color(self.success_color, 4)
+        self.success_5 = utils.generate_color(self.success_color, 5)
+        self.success_6 = utils.generate_color(self.success_color, 6)
+        self.success_7 = utils.generate_color(self.success_color, 7)
+        self.success_8 = utils.generate_color(self.success_color, 8)
+        self.success_9 = utils.generate_color(self.success_color, 9)
+        self.success_10 = utils.generate_color(self.success_color, 10)
 
-        self.warning_1 = fade_color(self.warning_color, '15%')
-        self.warning_2 = generate_color(self.warning_color, 2)
-        self.warning_3 = fade_color(self.warning_color, '35%')
-        self.warning_4 = generate_color(self.warning_color, 4)
-        self.warning_5 = generate_color(self.warning_color, 5)
-        self.warning_6 = generate_color(self.warning_color, 6)
-        self.warning_7 = generate_color(self.warning_color, 7)
-        self.warning_8 = generate_color(self.warning_color, 8)
-        self.warning_9 = generate_color(self.warning_color, 9)
-        self.warning_10 = generate_color(self.warning_color, 10)
+        self.warning_1 = utils.fade_color(self.warning_color, '15%')
+        self.warning_2 = utils.generate_color(self.warning_color, 2)
+        self.warning_3 = utils.fade_color(self.warning_color, '35%')
+        self.warning_4 = utils.generate_color(self.warning_color, 4)
+        self.warning_5 = utils.generate_color(self.warning_color, 5)
+        self.warning_6 = utils.generate_color(self.warning_color, 6)
+        self.warning_7 = utils.generate_color(self.warning_color, 7)
+        self.warning_8 = utils.generate_color(self.warning_color, 8)
+        self.warning_9 = utils.generate_color(self.warning_color, 9)
+        self.warning_10 = utils.generate_color(self.warning_color, 10)
 
-        self.error_1 = fade_color(self.error_color, '15%')
-        self.error_2 = generate_color(self.error_color, 2)
-        self.error_3 = fade_color(self.error_color, '35%')
-        self.error_4 = generate_color(self.error_color, 4)
-        self.error_5 = generate_color(self.error_color, 5)
-        self.error_6 = generate_color(self.error_color, 6)
-        self.error_7 = generate_color(self.error_color, 7)
-        self.error_8 = generate_color(self.error_color, 8)
-        self.error_9 = generate_color(self.error_color, 9)
-        self.error_10 = generate_color(self.error_color, 10)
+        self.error_1 = utils.fade_color(self.error_color, '15%')
+        self.error_2 = utils.generate_color(self.error_color, 2)
+        self.error_3 = utils.fade_color(self.error_color, '35%')
+        self.error_4 = utils.generate_color(self.error_color, 4)
+        self.error_5 = utils.generate_color(self.error_color, 5)
+        self.error_6 = utils.generate_color(self.error_color, 6)
+        self.error_7 = utils.generate_color(self.error_color, 7)
+        self.error_8 = utils.generate_color(self.error_color, 8)
+        self.error_9 = utils.generate_color(self.error_color, 9)
+        self.error_10 = utils.generate_color(self.error_color, 10)
 
     def _init_font(self):
         # font
-        self.font_family = 'BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif'
+        self.font_family = 'BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",' \
+                           '"Helvetica Neue",Helvetica,Arial,sans-serif'
         self.font_size_base = 14
         self.font_size_large = self.font_size_base + 2
         self.font_size_small = self.font_size_base - 2
@@ -185,7 +189,7 @@ class MTheme(object):
         self.background_selected_color = "#292929"
         self.background_in_color = "#3a3a3a"
         self.background_out_color = "#494949"
-        self.mask_color = fade_color(self.background_color, '90%')
+        self.mask_color = utils.fade_color(self.background_color, '90%')
         self.toast_color = "#555555"
 
     def _light(self):
@@ -202,7 +206,7 @@ class MTheme(object):
         self.background_selected_color = "#bfbfbf"
         self.background_in_color = "#ffffff"
         self.background_out_color = "#eeeeee"
-        self.mask_color = fade_color(self.background_color, '90%')
+        self.mask_color = utils.fade_color(self.background_color, '90%')
         self.toast_color = "#333333"
 
     def apply(self, widget):
