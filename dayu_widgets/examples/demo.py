@@ -5,6 +5,7 @@ from dayu_widgets.MDockWidget import MDockWidget
 from dayu_widgets import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.qt import *
+import os
 
 
 def get_test_widget():
