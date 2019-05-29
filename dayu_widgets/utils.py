@@ -156,21 +156,27 @@ def draw_empty_content(view, text=None, pix_map=None):
 
 
 @singledispatch
-def real_model(obj):
-    return obj
+def real_model(source_model):
+    """
+    Get the source model whenever user give a source index or proxy index or proxy model.
+    """
+    return source_model
 
 
 @real_model.register(QSortFilterProxyModel)
-def _(obj):
-    return obj.sourceModel()
+def _(proxy_model):
+    return proxy_model.sourceModel()
 
 
 @real_model.register(QModelIndex)
-def _(obj):
-    return real_model(obj.model())
+def _(index):
+    return real_model(index.model())
 
 
 def real_index(index):
+    """
+    Get the source index whenever user give a source index or proxy index.
+    """
     model = index.model()
     if isinstance(model, QSortFilterProxyModel):
         return model.mapToSource(index)
@@ -218,72 +224,72 @@ def apply_formatter(formatter, *args, **kwargs):
 
 
 @singledispatch
-def default_formatter(obj):
+def default_formatter(input_other_type):
     """
     Format any input value to a string.
-    :param obj: any type value
+    :param input_other_type: any type value
     :return: basestring
     """
-    return str(obj)
+    return str(input_other_type)
 
 
 @default_formatter.register(dict)
-def _(obj):
-    if 'name' in obj.keys():
-        return default_formatter(obj.get('name'))
-    elif 'code' in obj.keys():
-        return default_formatter(obj.get('code'))
+def _(input_dict):
+    if 'name' in input_dict.keys():
+        return default_formatter(input_dict.get('name'))
+    elif 'code' in input_dict.keys():
+        return default_formatter(input_dict.get('code'))
     else:
-        return str(obj)
+        return str(input_dict)
 
 
 @default_formatter.register(list)
-def _(obj):
+def _(input_list):
     result = []
-    for i in obj:
+    for i in input_list:
         result.append(default_formatter(i))
     return ','.join(result)
 
 
 @default_formatter.register(str)
-def _(obj):
+def _(input_str):
     # ['utf-8', 'windows-1250', 'windows-1252', 'ISO-8859-1']
-    return obj.decode('windows-1252')
+    return input_str.decode('windows-1252')
     # return obj.decode()
 
 
 @default_formatter.register(unicode)
-def _(obj):
-    return obj
+def _(input_unicode):
+    return input_unicode
 
 
 @default_formatter.register(type(None))
-def _(obj):
+def _(input_none):
     return '--'
 
 
 @default_formatter.register(int)
-def _(obj):
-    return str(obj)
+def _(input_int):
+    return str(input_int)
 
 
 @default_formatter.register(float)
-def _(obj):
-    return '{:.2f}'.format(round(obj, 2))
+def _(input_float):
+    return '{:.2f}'.format(round(input_float, 2))
 
 
 @default_formatter.register(object)
-def _(obj):
-    if hasattr(obj, 'name'):
-        return default_formatter(getattr(obj, 'name'))
-    if hasattr(obj, 'code'):
-        return default_formatter(getattr(obj, 'code'))
-    return str(obj)
+def _(input_object):
+    if hasattr(input_object, 'name'):
+        return default_formatter(getattr(input_object, 'name'))
+    if hasattr(input_object, 'code'):
+        return default_formatter(getattr(input_object, 'code'))
+    return str(input_object)
 
 
 @default_formatter.register(dt.datetime)
-def _(obj):
-    return obj.strftime('%Y-%m-%d %H:%M:%S')
+def _(input_datetime):
+    return input_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
 
 def get_font(underline=False, bold=False):
@@ -294,38 +300,38 @@ def get_font(underline=False, bold=False):
 
 
 @singledispatch
-def icon_formatter(obj):
-    return obj
+def icon_formatter(input_other_type):
+    return input_other_type
 
 
 @icon_formatter.register(dict)
-def _(data_obj):
+def _(input_dict):
     setting_list = [('icon', '{}')]
     for attr, formatter in setting_list:
-        path = get_obj_value(data_obj, attr)
+        path = get_obj_value(input_dict, attr)
         if path:
             return icon_formatter(formatter.format(path))
     return icon_formatter('confirm_fill.svg')
 
 
 @icon_formatter.register(object)
-def _(data_obj):
+def _(input_object):
     setting_list = [('icon', '{}'), ('thumbnail_path', '{}'), ('__tablename__', 'entity_{}.svg')]
     for attr, formatter in setting_list:
-        path = get_obj_value(data_obj, attr)
+        path = get_obj_value(input_object, attr)
         if path:
             return icon_formatter(formatter.format(path))
     return icon_formatter('confirm_fill.svg')
 
 
 @icon_formatter.register(basestring)
-def _(path):
-    return MIcon(path)
+def _(input_string):
+    return MIcon(input_string)
 
 
 @icon_formatter.register(tuple)
-def _(path):
-    return MIcon(*path)
+def _(input_tuple):
+    return MIcon(*input_tuple)
 
 
 def dump_structure(obj, space_count):
