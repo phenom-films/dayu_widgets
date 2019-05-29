@@ -1,6 +1,7 @@
 import os
 
-STATIC_FOLDERS = [os.path.join(__path__[0], 'static')]
+DEFAULT_STATIC_FOLDER = os.path.join(__path__[0], 'static')
+CUSTOM_STATIC_FOLDERS = []
 from MTheme import MTheme
 
 # dayu_theme = MTheme('dark', primary_color=MTheme.orange)
