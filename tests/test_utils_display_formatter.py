@@ -61,4 +61,4 @@ class MyNoNameAndCodeObject(object):
         (set(), 'set([])'),
 ))
 def test_utils_default_formatter(input_value, result):
-    assert utils.default_formatter(input_value) == result
+    assert utils.display_formatter(input_value) == result
