@@ -8,9 +8,12 @@
 
 import collections
 import datetime as dt
+import os
 
-from qt import *
 from singledispatch import singledispatch
+
+from dayu_widgets import DEFAULT_STATIC_FOLDER, CUSTOM_STATIC_FOLDERS
+from dayu_widgets.qt import *
 
 ItemViewMenuEvent = collections.namedtuple('ItemViewMenuEvent', ['view', 'selection', 'extra'])
 
@@ -25,8 +28,7 @@ def get_static_file(path):
     """
     if not isinstance(path, basestring):
         raise TypeError("Input argument 'path' should be basestring type, but get {}".format(type(path)))
-    from dayu_widgets import STATIC_FOLDERS
-    full_path = next((os.path.join(prefix, path) for prefix in [''] + STATIC_FOLDERS if
+    full_path = next((os.path.join(prefix, path) for prefix in ['', DEFAULT_STATIC_FOLDER] + CUSTOM_STATIC_FOLDERS if
                       os.path.isfile(os.path.join(prefix, path))), path)
     if os.path.isfile(full_path):
         return full_path
@@ -132,27 +134,6 @@ def generate_color(primary_color, index):
         get_saturation(hsv_color, index, light),
         get_value(hsv_color, index, light)
     ).name()
-
-
-def draw_empty_content(view, text=None, pix_map=None):
-    from dayu_widgets import dayu_theme
-    pix_map = pix_map or MPixmap('empty.svg')
-    text = text or view.tr('No Data')
-    painter = QPainter(view)
-    font_metrics = painter.fontMetrics()
-    painter.setPen(QPen(dayu_theme.secondary_text_color))
-    content_height = pix_map.height() + font_metrics.height()
-    padding = 10
-    proper_min_size = min(view.height() - padding * 2, view.width() - padding * 2, content_height)
-    if proper_min_size < content_height:
-        pix_map = pix_map.scaledToHeight(proper_min_size - font_metrics.height(), Qt.SmoothTransformation)
-        content_height = proper_min_size
-    painter.drawText(view.width() / 2 - font_metrics.width(text) / 2,
-                     view.height() / 2 + content_height / 2 - font_metrics.height() / 2,
-                     text)
-    painter.drawPixmap(view.width() / 2 - pix_map.width() / 2,
-                       view.height() / 2 - content_height / 2, pix_map)
-    painter.end()
 
 
 @singledispatch
