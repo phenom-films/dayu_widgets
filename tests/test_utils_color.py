@@ -38,20 +38,23 @@ def test_fade_color(color, alpha, result):
         ('#722ed1', 6, '#722ed1'),
         ('#722ed1', 8, '#391085'),
         ('#722ed1', 10, '#120338'),
+        ('#ffb7b2', 8, '#b36b6c'),
 ))
 def test_generate_color(color, index, result):
-    '''
+    """
     test data reference from https://ant.design/docs/spec/colors-cn
-    '''
+    """
     assert compile_color(utils.generate_color(color, index), result)
 
 
 def compile_color(color1, color2):
-    '''There is some bias when calculate with float. Set margin of error to 0.01 '''
+    """
+    There is some bias when calculate with float. Set margin of error to 0.01
+    """
     delta = 0.01
     c1 = QColor(color1)
     c2 = QColor(color2)
 
-    return abs(c1.redF() - c2.redF()) < delta and \
-           abs(c1.greenF() - c2.greenF()) < delta and \
-           abs(c1.blueF() - c2.blueF()) < delta
+    return (abs(c1.redF() - c2.redF()) < delta) and \
+           (abs(c1.greenF() - c2.greenF()) < delta) and \
+           (abs(c1.blueF() - c2.blueF()) < delta)
