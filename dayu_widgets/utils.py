@@ -198,15 +198,23 @@ def has_obj_value(data_obj, attr):
         return hasattr(data_obj, attr)
 
 
-def apply_formatter(obj, *args, **kwargs):
-    if obj is None:  # 压根就没有配置
+def apply_formatter(formatter, *args, **kwargs):
+    """
+    Used for QAbstractModel data method.
+    Config a formatter for one field, apply the formatter with the index data.
+    :param formatter: formatter. It can be None/dict/callable or just any type of value
+    :param args:
+    :param kwargs:
+    :return: apply the formatter with args and kwargs
+    """
+    if formatter is None:  # 压根就没有配置
         return args[0]
-    elif isinstance(obj, dict):  # 字典选项型配置
-        return obj.get(args[0], None)
-    elif callable(obj):  # 回调函数型配置
-        return obj(*args, **kwargs)
+    elif isinstance(formatter, dict):  # 字典选项型配置
+        return formatter.get(args[0], None)
+    elif callable(formatter):  # 回调函数型配置
+        return formatter(*args, **kwargs)
     else:  # 直接值型配置
-        return obj
+        return formatter
 
 
 @singledispatch
