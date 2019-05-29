@@ -292,7 +292,13 @@ def _(input_datetime):
     return input_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
 
-def get_font(underline=False, bold=False):
+def font_formatter(underline=False, bold=False):
+    """
+    Used for QAbstractItemModel data method for Qt.FontRole
+    :param underline: font style underline
+    :param bold: font style bold
+    :return: a QFont instance with given style
+    """
     _font = QFont()
     _font.setUnderline(underline)
     _font.setBold(bold)
@@ -301,27 +307,28 @@ def get_font(underline=False, bold=False):
 
 @singledispatch
 def icon_formatter(input_other_type):
-    return input_other_type
+    """
+    Used for QAbstractItemModel data method for Qt.DecorationRole
+    A helper function to easy get QIcon.
+    The input can be dict/object, string, None, tuple(file_path, fill_color)
+    :param input_other_type:
+    :return: a QIcon instance
+    """
+    return input_other_type  # this function never reached
 
 
 @icon_formatter.register(dict)
 def _(input_dict):
-    setting_list = [('icon', '{}')]
-    for attr, formatter in setting_list:
-        path = get_obj_value(input_dict, attr)
-        if path:
-            return icon_formatter(formatter.format(path))
-    return icon_formatter('confirm_fill.svg')
+    attr_list = ['icon']
+    path = next((get_obj_value(input_dict, attr) for attr in attr_list), None)
+    return icon_formatter(path)
 
 
 @icon_formatter.register(object)
 def _(input_object):
-    setting_list = [('icon', '{}'), ('thumbnail_path', '{}'), ('__tablename__', 'entity_{}.svg')]
-    for attr, formatter in setting_list:
-        path = get_obj_value(input_object, attr)
-        if path:
-            return icon_formatter(formatter.format(path))
-    return icon_formatter('confirm_fill.svg')
+    attr_list = ['icon']
+    path = next((get_obj_value(input_object, attr) for attr in attr_list), None)
+    return icon_formatter(path)
 
 
 @icon_formatter.register(basestring)
@@ -332,3 +339,8 @@ def _(input_string):
 @icon_formatter.register(tuple)
 def _(input_tuple):
     return MIcon(*input_tuple)
+
+
+@icon_formatter.register(type(None))
+def _(input_none):
+    return icon_formatter('confirm_fill.svg')
