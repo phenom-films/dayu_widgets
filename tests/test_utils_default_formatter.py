@@ -13,9 +13,9 @@ class MyHasNameObject(object):
 
 
 class MyHasCodeObject(object):
-    def __init__(self, name, age):
+    def __init__(self, code, age):
         super(MyHasCodeObject, self).__init__()
-        self.name = name
+        self.code = code
         self.age = age
 
 
@@ -58,6 +58,7 @@ class MyNoNameAndCodeObject(object):
         (20.051, '20.05'),
         (20.058, '20.06'),
         ([20, 20.058], '20,20.06'),
+        (set(), 'set([])'),
 ))
 def test_utils_default_formatter(input_value, result):
     assert utils.default_formatter(input_value) == result
