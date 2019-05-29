@@ -10,12 +10,11 @@ try:
     from PySide2.QtCore import *
     from PySide2.QtGui import *
     from PySide2.QtWidgets import *
-except:
+    from PySide2.QtSvg import *
+except ImportError:
     from PySide.QtCore import *
     from PySide.QtGui import *
-    from PySide.QtWebKit import *
     from PySide.QtSvg import *
-import os
 
 
 class MCacheDict(object):
@@ -31,8 +30,6 @@ class MCacheDict(object):
         replace_color = replace_color or dayu_theme.icon_color
         if (self.cls is QIcon) and (replace_color is None):
             return QIcon(svg_path)
-        if not os.path.isfile(svg_path):
-            return None
         with open(svg_path, 'r+') as f:
             data_content = f.read()
             if replace_color is not None:
@@ -49,10 +46,10 @@ class MCacheDict(object):
                 return self.cls(pix)
 
     def __call__(self, path, color=None):
-        assert isinstance(path, basestring)
-        from dayu_widgets import STATIC_FOLDERS
-        full_path = next((os.path.join(prefix, path) for prefix in [''] + STATIC_FOLDERS if
-                          os.path.isfile(os.path.join(prefix, path))), path)
+        from dayu_widgets import utils
+        full_path = utils.get_static_file(path)
+        if full_path is None:
+            return self.cls()
         key = u'{}{}'.format(full_path.lower(), color or '')
         pix_map = self._cache_pix_dict.get(key, None)
         if pix_map is None:
