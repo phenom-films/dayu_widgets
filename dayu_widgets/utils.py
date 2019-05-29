@@ -230,7 +230,7 @@ def default_formatter(input_other_type):
     :param input_other_type: any type value
     :return: basestring
     """
-    return str(input_other_type)
+    return str(input_other_type)  # this function never reached
 
 
 @default_formatter.register(dict)
@@ -332,24 +332,3 @@ def _(input_string):
 @icon_formatter.register(tuple)
 def _(input_tuple):
     return MIcon(*input_tuple)
-
-
-def dump_structure(obj, space_count):
-    print "{0}{1} : {2}".format(
-        " " * space_count,
-        obj.metaObject().className(),
-        obj.objectName())
-
-    for child in obj.children():
-        dump_structure(child, space_count + 4)
-
-
-if __name__ == '__main__':
-    import sys
-    from dayu_widgets import MComboBox
-
-    app = QApplication(sys.argv)
-    button = MComboBox()
-    dump_structure(button, 4)
-    button.show()
-    sys.exit(app.exec_())
