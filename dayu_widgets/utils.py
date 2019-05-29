@@ -224,8 +224,9 @@ def apply_formatter(formatter, *args, **kwargs):
 
 
 @singledispatch
-def default_formatter(input_other_type):
+def display_formatter(input_other_type):
     """
+    Used for QAbstractItemModel data method for Qt.DisplayRole
     Format any input value to a string.
     :param input_other_type: any type value
     :return: basestring
@@ -233,61 +234,61 @@ def default_formatter(input_other_type):
     return str(input_other_type)  # this function never reached
 
 
-@default_formatter.register(dict)
+@display_formatter.register(dict)
 def _(input_dict):
     if 'name' in input_dict.keys():
-        return default_formatter(input_dict.get('name'))
+        return display_formatter(input_dict.get('name'))
     elif 'code' in input_dict.keys():
-        return default_formatter(input_dict.get('code'))
+        return display_formatter(input_dict.get('code'))
     else:
         return str(input_dict)
 
 
-@default_formatter.register(list)
+@display_formatter.register(list)
 def _(input_list):
     result = []
     for i in input_list:
-        result.append(default_formatter(i))
+        result.append(display_formatter(i))
     return ','.join(result)
 
 
-@default_formatter.register(str)
+@display_formatter.register(str)
 def _(input_str):
     # ['utf-8', 'windows-1250', 'windows-1252', 'ISO-8859-1']
     return input_str.decode('windows-1252')
     # return obj.decode()
 
 
-@default_formatter.register(unicode)
+@display_formatter.register(unicode)
 def _(input_unicode):
     return input_unicode
 
 
-@default_formatter.register(type(None))
+@display_formatter.register(type(None))
 def _(input_none):
     return '--'
 
 
-@default_formatter.register(int)
+@display_formatter.register(int)
 def _(input_int):
     return str(input_int)
 
 
-@default_formatter.register(float)
+@display_formatter.register(float)
 def _(input_float):
     return '{:.2f}'.format(round(input_float, 2))
 
 
-@default_formatter.register(object)
+@display_formatter.register(object)
 def _(input_object):
     if hasattr(input_object, 'name'):
-        return default_formatter(getattr(input_object, 'name'))
+        return display_formatter(getattr(input_object, 'name'))
     if hasattr(input_object, 'code'):
-        return default_formatter(getattr(input_object, 'code'))
+        return display_formatter(getattr(input_object, 'code'))
     return str(input_object)
 
 
-@default_formatter.register(dt.datetime)
+@display_formatter.register(dt.datetime)
 def _(input_datetime):
     return input_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
