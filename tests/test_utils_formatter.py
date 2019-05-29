@@ -3,6 +3,7 @@ import datetime
 import pytest
 
 from dayu_widgets import utils
+from dayu_widgets.qt import MCacheDict
 
 
 class MyHasNameObject(object):
@@ -35,6 +36,12 @@ class MyNoNameAndCodeObject(object):
         return 'MyNoNameAndCodeObject()'
 
 
+class MHasIconObject(object):
+    def __init__(self, icon=None):
+        super(MHasIconObject, self).__init__()
+        self.icon = icon
+
+
 @pytest.mark.parametrize('input_value, result', (
         ({'name': 'Jim', 'age': 18}, 'Jim'),
         ([{'name': 'Jim', 'age': 18}, {'name': 'Tom', 'age': 16}], 'Jim,Tom'),
@@ -62,3 +69,39 @@ class MyNoNameAndCodeObject(object):
 ))
 def test_utils_default_formatter(input_value, result):
     assert utils.display_formatter(input_value) == result
+
+
+@pytest.mark.parametrize('underline, bold', (
+        (True, True),
+        (True, False),
+        (False, True),
+        (False, False),
+))
+def test_get_font(underline, bold):
+    font = utils.font_formatter(underline, bold)
+    assert font.underline() == underline
+    assert font.bold() == bold
+
+
+@pytest.mark.parametrize('input_data, result', (
+        ({'icon': 'check.svg'}, 'check.svg'),
+        ({'icon': 'add_line.svg'}, 'add_line.svg'),
+        ({'icon': {'icon': 'add_line.svg'}}, 'add_line.svg'),
+        (('check.svg', '#f00'), 'check.svg-#f00'),
+        ('add_line.svg', 'add_line.svg'),
+        ({'name': 'xiaoming'}, 'confirm_fill.svg'),
+        (None, 'confirm_fill.svg'),
+        (object(), 'confirm_fill.svg'),
+        (MHasIconObject(), 'confirm_fill.svg'),
+        (MHasIconObject(icon='check.svg'), 'check.svg'),
+        (MHasIconObject(icon=MHasIconObject('check.svg')), 'check.svg'),
+))
+def test_icon_formatter(monkeypatch, input_data, result):
+    def new_call(self, path, color=None):
+        if color:
+            return '{}-{}'.format(path, color)
+        else:
+            return path
+
+    monkeypatch.setattr(MCacheDict, '__call__', new_call)
+    assert utils.icon_formatter(input_data) == result
