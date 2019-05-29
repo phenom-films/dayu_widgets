@@ -47,8 +47,8 @@ class MAlertTest(QWidget, MFieldMixin):
              'clicked': functools.partial(self.slot_change_alert, 'login success', MAlert.SuccessType)},
             {'text': 'no more error', 'clicked': functools.partial(self.slot_change_alert, '', MAlert.InfoType)}
         ])
-        main_lay.addWidget(alert)
         main_lay.addWidget(button_grp)
+        main_lay.addWidget(alert)
         main_lay.addStretch()
 
     def slot_change_alert(self, alert_text, alert_type):
