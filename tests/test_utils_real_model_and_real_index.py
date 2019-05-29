@@ -74,11 +74,7 @@ def test_real_index():
 
 def compare_two_model_index(index_1, index_2):
     """
-    If the two input index's row and column and their parent is equal, they are equal for test.
-    :param index_1:
-    :param index_2:
-    :return:
+    If the two input index's row and column and their parent is equal, then they are equal for test.
     """
-    return index_1.row() == index_2.row() and \
-           index_1.column() == index_2.column() and \
-           index_1.parent() == index_2.parent()
+    return (index_1.row() == index_2.row()) and (index_1.column() == index_2.column()) and (
+            index_1.parent() == index_2.parent())
