@@ -13,7 +13,7 @@ import datetime
         (dayu_theme.large, dayu_theme.large),
         (dayu_theme.huge, dayu_theme.huge),
 ))
-def test_MSpinBox(qtbot, size, result):
+def test_mspinbox(qtbot, size, result):
     widget = MAbstractSpinBox.MSpinBox(size=size)
     qtbot.addWidget(widget)
     assert widget.property('dayu_size') == result
@@ -28,7 +28,7 @@ def test_MSpinBox(qtbot, size, result):
         (dayu_theme.large, dayu_theme.large),
         (dayu_theme.huge, dayu_theme.huge),
 ))
-def test_MDoubleSpinBox(qtbot, size, result):
+def test_mdoublespinbox(qtbot, size, result):
     widget = MAbstractSpinBox.MDoubleSpinBox(size=size)
     qtbot.addWidget(widget)
     assert widget.property('dayu_size') == result
@@ -43,7 +43,7 @@ def test_MDoubleSpinBox(qtbot, size, result):
         (dayu_theme.large, dayu_theme.large),
         (dayu_theme.huge, dayu_theme.huge),
 ))
-def test_MDateTimeEdit(qtbot, size, result):
+def test_mdatetimeedit(qtbot, size, result):
     widget = MAbstractSpinBox.MDateTimeEdit(size=size)
     qtbot.addWidget(widget)
     assert widget.property('dayu_size') == result
@@ -64,7 +64,7 @@ def test_MDateTimeEdit(qtbot, size, result):
         (dayu_theme.large, dayu_theme.large),
         (dayu_theme.huge, dayu_theme.huge),
 ))
-def test_MDateEdit(qtbot, size, result):
+def test_mdateedit(qtbot, size, result):
     widget = MAbstractSpinBox.MDateEdit(size=size)
     qtbot.addWidget(widget)
     assert widget.property('dayu_size') == result
@@ -85,7 +85,7 @@ def test_MDateEdit(qtbot, size, result):
         (dayu_theme.large, dayu_theme.large),
         (dayu_theme.huge, dayu_theme.huge),
 ))
-def test_MTimeEdit(qtbot, size, result):
+def test_mtimeedit(qtbot, size, result):
     widget = MAbstractSpinBox.MTimeEdit(size=size)
     qtbot.addWidget(widget)
     assert widget.property('dayu_size') == result
