@@ -13,7 +13,7 @@ import pytest
         (dayu_theme.large, dayu_theme.large),
         (dayu_theme.huge, dayu_theme.huge),
 ))
-def test_MAvatar_no_image(qtbot, size, result):
+def test_mavatar_no_image(qtbot, size, result):
     widget = MAvatar(size=size)
     qtbot.addWidget(widget)
 
@@ -43,7 +43,7 @@ def test_MAvatar_no_image(qtbot, size, result):
         (dayu_theme.large, dayu_theme.large),
         (dayu_theme.huge, dayu_theme.huge),
 ))
-def test_MAvatar_with_image(qtbot, size, result):
+def test_mavatar_with_image(qtbot, size, result):
     widget = MAvatar(size=size, image=MPixmap('check.svg'))
     qtbot.addWidget(widget)
 
@@ -62,3 +62,22 @@ def test_MAvatar_with_image(qtbot, size, result):
     assert not pix.isNull()
     assert pix.width() == result
     assert pix.width() == result
+
+
+@pytest.mark.parametrize('input_file, error_type', (
+        ('3', 'str'),
+        (3, 'int'),
+        (set('google'), 'set'),
+        ({'name': 'test'}, 'dict'),
+        (['g'], 'list'),
+        ((2,), 'tuple'),
+        (object(), 'object'),
+))
+def test_mavatar_with_wrong_image(qtbot, input_file, error_type):
+    """Make sure when user give a wrong type arg, raise TypeError"""
+    with pytest.raises(TypeError) as exc_info:
+        widget = MAvatar(image=input_file)
+        qtbot.addWidget(widget)
+
+    exception_msg = exc_info.value.args[0]
+    assert exception_msg == "Input argument 'value' should be QPixmap or None, but get <type '{}'>".format(error_type)
