@@ -7,11 +7,12 @@
 ###################################################################
 
 from dayu_widgets.qt import *
-import functools
 
 
 def property_mixin(cls):
-    def event(self, event):
+    """Run function after dynamic property value changed"""
+
+    def new_event(self, event):
         if event.type() == QEvent.DynamicPropertyChange:
             p = event.propertyName()
             if hasattr(self, '_set_{}'.format(p)):
@@ -19,34 +20,45 @@ def property_mixin(cls):
                 callback(self.property(str(p)))
         return super(cls, self).event(event)
 
-    setattr(cls, 'event', event)
+    setattr(cls, 'event', new_event)
     return cls
 
 
 def cursor_mixin(cls):
+    """
+    Change Widget cursor:
+    when user mouse in: Qt.PointingHandCursor;
+    when widget is disabled and mouse in: Qt.ForbiddenCursor
+    """
+
     old_enter_event = cls.enterEvent
     old_leave_event = cls.leaveEvent
 
-    def enterEvent(self, *args, **kwargs):
+    def new_enter_event(self, *args, **kwargs):
         old_enter_event(self, *args, **kwargs)
         QApplication.setOverrideCursor(Qt.PointingHandCursor if self.isEnabled() else Qt.ForbiddenCursor)
         return super(cls, self).enterEvent(*args, **kwargs)
 
-    def leaveEvent(self, *args, **kwargs):
+    def new_leave_event(self, *args, **kwargs):
         old_leave_event(self, *args, **kwargs)
         QApplication.restoreOverrideCursor()
         return super(cls, self).leaveEvent(*args, **kwargs)
 
-    setattr(cls, 'enterEvent', enterEvent)
-    setattr(cls, 'leaveEvent', leaveEvent)
+    setattr(cls, 'enterEvent', new_enter_event)
+    setattr(cls, 'leaveEvent', new_leave_event)
     return cls
 
 
 def focus_shadow_mixin(cls):
+    """
+    Add shadow effect for decorated class when widget focused
+    When focus in target widget, enable shadow effect.
+    When focus out target widget, disable shadow effect.
+    """
     old_focus_in_event = cls.focusInEvent
     old_focus_out_event = cls.focusOutEvent
 
-    def focusInEvent(self, *args, **kwargs):
+    def focus_in_event(self, *args, **kwargs):
         old_focus_in_event(self, *args, **kwargs)
         if not self.graphicsEffect():
             from dayu_widgets import dayu_theme
@@ -61,21 +73,26 @@ def focus_shadow_mixin(cls):
         if self.isEnabled():
             self.graphicsEffect().setEnabled(True)
 
-    def focusOutEvent(self, *args, **kwargs):
+    def focus_out_event(self, *args, **kwargs):
         old_focus_out_event(self, *args, **kwargs)
         if self.graphicsEffect():
             self.graphicsEffect().setEnabled(False)
 
-    setattr(cls, 'focusInEvent', focusInEvent)
-    setattr(cls, 'focusOutEvent', focusOutEvent)
+    setattr(cls, 'focusInEvent', focus_in_event)
+    setattr(cls, 'focusOutEvent', focus_out_event)
     return cls
 
 
 def hover_shadow_mixin(cls):
+    """
+    Add shadow effect for decorated class when widget hovered
+    When mouse enter target widget, enable shadow effect.
+    When mouse leave target widget, disable shadow effect.
+    """
     old_enter_event = cls.enterEvent
     old_leave_event = cls.leaveEvent
 
-    def enterEvent(self, *args, **kwargs):
+    def new_enter_event(self, *args, **kwargs):
         old_enter_event(self, *args, **kwargs)
         if not self.graphicsEffect():
             from dayu_widgets import dayu_theme
@@ -90,17 +107,30 @@ def hover_shadow_mixin(cls):
         if self.isEnabled():
             self.graphicsEffect().setEnabled(True)
 
-    def leaveEvent(self, *args, **kwargs):
+    def new_leave_event(self, *args, **kwargs):
         old_leave_event(self, *args, **kwargs)
         if self.graphicsEffect():
             self.graphicsEffect().setEnabled(False)
 
-    setattr(cls, 'enterEvent', enterEvent)
-    setattr(cls, 'leaveEvent', leaveEvent)
+    setattr(cls, 'enterEvent', new_enter_event)
+    setattr(cls, 'leaveEvent', new_leave_event)
     return cls
 
 
+def _stackable(widget):
+    """Used for stacked_animation_mixin to only add mixin for widget who can stacked."""
+    # We use widget() to get currentWidget, use currentChanged to play the animation.
+    # For now just QTabWidget and QStackedWidget can use this decorator.
+    return issubclass(widget, QWidget) and hasattr(widget, 'widget') and hasattr(widget, 'currentChanged')
+
+
 def stacked_animation_mixin(cls):
+    """
+    Decorator for stacked widget.
+    When Stacked widget currentChanged, show opacity and position animation for current widget.
+    """
+    if not _stackable(cls):  # If widget is can stack, return widget self
+        return cls
     old_init = cls.__init__
 
     def new_init(self, *args, **kwargs):
