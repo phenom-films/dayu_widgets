@@ -40,3 +40,20 @@ def test_malert_with_wrong_type(qtbot, input_type):
 
     exception_msg = exc_info.value.args[0]
     assert exception_msg == "Input argument 'value' should be one of info/success/warning/error string."
+
+
+@pytest.mark.parametrize('input_text, error_type', (
+        (3, 'int'),
+        ([], 'list'),
+        ((1,), 'tuple'),
+        (set(), 'set'),
+        ({}, 'dict'),
+        (object(), 'object'),
+))
+def test_malert_with_wrong_text_type(qtbot, input_text, error_type):
+    with pytest.raises(TypeError) as exc_info:
+        widget = MAlert(text=input_text)
+        qtbot.addWidget(widget)
+
+    exception_msg = exc_info.value.args[0]
+    assert exception_msg == "Input argument 'value' should be string type, but get <type '{}'>".format(error_type)
