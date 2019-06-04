@@ -143,7 +143,7 @@ def test_hover_shadow_mixin(qtbot):
 
     main_widget.show()
 
-    qtbot.mouseMove(button_test)  # mouse out
+    qtbot.mouseMove(button_test)  # mouse in
 
     def check_effect():
         graphics_effect = button_test.graphicsEffect()
