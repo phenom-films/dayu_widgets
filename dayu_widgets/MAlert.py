@@ -18,17 +18,19 @@ from dayu_widgets.qt import *
 
 @property_mixin
 class MAlert(QWidget):
-    '''
-    自定义 props:
-        text:
-        type:
-    '''
+    """
+    Alert component for feedback.
+
+    properties:
+    type: The feedback type with different color container.
+    text: The feedback string showed in container.
+    """
     InfoType = 'info'
     SuccessType = 'success'
     WarningType = 'warning'
     ErrorType = 'error'
 
-    def __init__(self, text='', type=None, closable=False, show_icon=True, parent=None, flags=0):
+    def __init__(self, text='', type='info', closeable=False, show_icon=True, parent=None, flags=0):
         super(MAlert, self).__init__(parent, flags)
         self.setAttribute(Qt.WA_StyledBackground)
         self._icon_label = MAvatar(size=dayu_theme.tiny)
@@ -47,8 +49,8 @@ class MAlert(QWidget):
         self.setLayout(self._main_lay)
 
         self._icon_label.setVisible(show_icon)
-        self._close_button.setVisible(closable)
-        self.set_type(type or MAlert.InfoType)
+        self._close_button.setVisible(closeable)
+        self.set_type(type)
         self.set_text(text)
 
     def _set_text(self, value):
@@ -56,11 +58,17 @@ class MAlert(QWidget):
         self.setVisible(bool(value))
 
     def set_text(self, value):
-        self.setProperty('text', value)
+        if isinstance(value, basestring):
+            self.setProperty('text', value)
+        else:
+            raise TypeError("Input argument 'value' should be string type, but get {}".format(type(value)))
 
     def _set_type(self, value):
         self._icon_label.set_image(MPixmap('{}_fill.svg'.format(value), vars(dayu_theme).get(value + '_color')))
         self.style().polish(self)
 
     def set_type(self, value):
-        self.setProperty('type', value)
+        if value in [MAlert.InfoType, MAlert.WarningType, MAlert.ErrorType, MAlert.SuccessType]:
+            self.setProperty('type', value)
+        else:
+            raise ValueError("Input argument 'value' should be one of info/success/warning/error string.")
