@@ -31,11 +31,11 @@ class MAlertTest(QWidget, MFieldMixin):
         main_lay.addWidget(MAlert(text='Error Message', type=MAlert.ErrorType, parent=self))
         main_lay.addWidget(MLabel(u'不同的提示信息类型'))
         main_lay.addWidget(MDivider('closable'))
-        main_lay.addWidget(MAlert(text='Error Message', type=MAlert.ErrorType, closable=True, parent=self))
+        main_lay.addWidget(MAlert(text='Error Message', type=MAlert.ErrorType, closeable=True, parent=self))
         main_lay.addWidget(MDivider('data bind'))
         self.register_field('msg', '')
         self.register_field('msg_type', MAlert.InfoType)
-        alert = MAlert(closable=True, parent=self)
+        alert = MAlert(closeable=True, parent=self)
 
         self.bind('msg', alert, 'text')
         self.bind('msg_type', alert, 'type')
