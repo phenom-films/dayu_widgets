@@ -8,17 +8,21 @@
 
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
+from dayu_widgets import utils
 
 
 @property_mixin
 class MBadge(QWidget):
-    '''
-    props:
-        text: basestring
-        count: basestring
-    '''
+    """
+    Badge normally appears in proximity to notifications or user avatars with eye-catching appeal,
+    typically displaying unread messages count.
 
-    def __init__(self, widget, dot=False, count=None, text=None, overflow_count=99, parent=None):
+    Properties:
+        content: String/Number/Boolean content to show in badge.
+
+    """
+
+    def __init__(self, widget=None, content=0, overflow_count=99, parent=None):
         super(MBadge, self).__init__(parent)
         self._widget = widget
         self.overflow_count = overflow_count
@@ -27,37 +31,29 @@ class MBadge(QWidget):
 
         self._main_lay = QGridLayout()
         self._main_lay.setContentsMargins(0, 0, 0, 0)
-        self._main_lay.addWidget(widget, 0, 0)
+        if widget is not None:
+            self._main_lay.addWidget(widget, 0, 0)
         self._main_lay.addWidget(self._badge_button, 0, 0, Qt.AlignTop | Qt.AlignRight)
         self.setLayout(self._main_lay)
         self.setAttribute(Qt.WA_StyledBackground)
-        if dot:
-            self.set_dot(dot)
+        self.set_content(content)
+
+    def set_content(self, value):
+        if isinstance(value, (int, bool, basestring)):
+            self.setProperty('content', value)
         else:
-            if text is not None:
-                self.set_text(text)
-            if count is not None:
-                self.set_count(count)
+            raise TypeError(
+                "Input argument 'value' should be int or bool or string type, but get {}".format(type(value)))
 
-    def _set_text(self, value):
-        if not self._badge_button.property('dot'):
+    def _set_content(self, value):
+        # first, polish the qss
+        self._badge_button.setProperty('dot', value if isinstance(value, bool) else False)
+        self.style().polish(self)
+
+        if isinstance(value, bool):
+            self._badge_button.setText('')
+        elif isinstance(value, int):
+            self._badge_button.setText(utils.overflow_format(value, self.overflow_count))
+        else:
             self._badge_button.setText(value)
-
-    def set_text(self, value):
-        self.setProperty('text', value)
-
-    def _set_dot(self, value):
-        self._badge_button.setVisible(value)
-        self._badge_button.setProperty('dot', value)
-
-    def set_dot(self, value):
-        self.setProperty('dot', value)
-
-    def _set_count(self, value):
-        self._badge_button.setVisible(value > 0)
-        if not self._badge_button.property('dot'):
-            self._badge_button.setText(
-                str(value) if value <= self.overflow_count else '{}+'.format(self.overflow_count))
-
-    def set_count(self, value):
-        self.setProperty('count', value)
+        self._badge_button.setVisible(bool(value))
