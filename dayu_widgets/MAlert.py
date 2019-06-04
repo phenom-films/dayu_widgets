@@ -22,8 +22,8 @@ class MAlert(QWidget):
     Alert component for feedback.
 
     properties:
-    type: The feedback type with different color container.
-    text: The feedback string showed in container.
+        type: The feedback type with different color container.
+        text: The feedback string showed in container.
     """
     InfoType = 'info'
     SuccessType = 'success'
