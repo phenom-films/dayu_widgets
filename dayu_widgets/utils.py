@@ -326,3 +326,12 @@ def _(input_tuple):
 @icon_formatter.register(type(None))
 def _(input_none):
     return icon_formatter('confirm_fill.svg')
+
+
+def overflow_format(num, overflow):
+    """Give a integer, return a string. When this integer is large than given overflow, return 'overflow+'"""
+    if not isinstance(num, int):
+        raise ValueError("Input argument 'num' should be int type, but get {}".format(type(num)))
+    if not isinstance(overflow, int):
+        raise ValueError("Input argument 'overflow' should be int type, but get {}".format(type(overflow)))
+    return str(num) if num <= overflow else '{}+'.format(overflow)
