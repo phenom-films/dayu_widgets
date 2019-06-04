@@ -25,28 +25,22 @@ class MCardTest(QWidget):
 
         basic_card_lay = MFlowLayout()
         basic_card_lay.setSpacing(20)
-        for setting in [
-            {
-                'title': '',
-            },
-            {
-                'title': 'Card Title',
-                'size': dayu_theme.small
-            },
-            {
-                'title': 'Card Title',
-                'image': MPixmap('app-houdini.png')
-            },
-            {
-                'title': 'Card Title',
-                'extra': 'More',
-                'image': MPixmap('app-houdini.png')
-            },
-            {
-                'title': 'Card Title',
-                'extra': 'More',
-            }
-        ]:
+        for setting in [{
+            'title': '',
+        }, {
+            'title': 'Card Title',
+            'size': dayu_theme.small
+        }, {
+            'title': 'Card Title',
+            'image': MPixmap('app-houdini.png')
+        }, {
+            'title': 'Card Title',
+            'extra': 'More',
+            'image': MPixmap('app-houdini.png')
+        }, {
+            'title': 'Card Title',
+            'extra': 'More',
+        }]:
             card_0 = MCard(**setting)
             content_widget_0 = QWidget()
             content_lay_0 = QVBoxLayout()
@@ -78,21 +72,19 @@ class MCardTest(QWidget):
 
         task_card_lay = QVBoxLayout()
         # task_card_lay.setSpacing(10)
-        for setting in [
-                           {
-                               'title': u'Task A',
-                               'description': u'demo pl_0010 Animation \n2019/04/01 - 2019/04/09',
-                               'avatar': MPixmap('success_line.svg', dayu_theme.success_color),
-                           }, {
-                'title': u'Task B',
-                'description': u'#2 closed by xiao hua.',
-                'avatar': MPixmap('error_line.svg', dayu_theme.error_color)
-            }, {
-                'title': u'Task C',
-                'description': u'#3 closed by xiao hua.',
-                'avatar': MPixmap('warning_line.svg', dayu_theme.warning_color)
-            },
-                       ] * 5:
+        for setting in [{
+            'title': u'Task A',
+            'description': u'demo pl_0010 Animation \n2019/04/01 - 2019/04/09',
+            'avatar': MPixmap('success_line.svg', dayu_theme.success_color),
+        }, {
+            'title': u'Task B',
+            'description': u'#2 closed by xiao hua.',
+            'avatar': MPixmap('error_line.svg', dayu_theme.error_color)
+        }, {
+            'title': u'Task C',
+            'description': u'#3 closed by xiao hua.',
+            'avatar': MPixmap('warning_line.svg', dayu_theme.warning_color)
+        }] * 5:
             meta_card = MMeta(extra=True)
             meta_card.setup_data(setting)
             task_card_lay.addWidget(meta_card)
