@@ -11,6 +11,8 @@ from dayu_widgets.MLineEdit import MLineEdit
 from dayu_widgets.MPushButton import MPushButton
 from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.MMessage import MMessage
+from dayu_widgets.MComboBox import MComboBox
+from dayu_widgets.MMenu import MMenu
 from dayu_widgets.MLabel import MLabel
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
@@ -49,9 +51,20 @@ class MLineEditTest(QWidget):
                                                               icon=MIcon('filter_line.svg', '#cccccc'),
                                                               size=dayu_theme.large))
         line_edit_search_engine.returnPressed.connect(self.slot_search)
+        # line_edit_search_engine.sig_delay_text_changed.connect(self.slot_search)
 
         line_edit_file = MLineEdit.file()
         line_edit_folder = MLineEdit.folder()
+
+        line_edit_options = MLineEdit()
+        combobox = MComboBox()
+        option_menu = MMenu()
+        option_menu.set_separator('|')
+        option_menu.set_data([r'http://', r'https://'])
+        combobox.set_menu(option_menu)
+        combobox.set_value('http://')
+        combobox.setFixedWidth(90)
+        line_edit_options.add_prefix_widget(combobox)
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('different size'))
@@ -71,6 +84,8 @@ class MLineEditTest(QWidget):
         main_lay.addWidget(line_edit_file)
         main_lay.addWidget(MLabel('MLineEdit.folder()'))
         main_lay.addWidget(line_edit_folder)
+        main_lay.addWidget(MLabel('MLineEdit.options()'))
+        main_lay.addWidget(line_edit_options)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
