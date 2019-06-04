@@ -14,6 +14,8 @@ from dayu_widgets.qt import *
 @property_mixin
 class MAvatar(QLabel):
     """
+    Avatar component. It can be used to represent people or object.
+
     Property:
     image: avatar image, should be QPixmap.
     """
