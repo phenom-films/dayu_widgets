@@ -17,7 +17,7 @@ class MAvatar(QLabel):
     Avatar component. It can be used to represent people or object.
 
     Property:
-    image: avatar image, should be QPixmap.
+        image: avatar image, should be QPixmap.
     """
 
     def __init__(self, size=None, image=None, parent=None, flags=0):
