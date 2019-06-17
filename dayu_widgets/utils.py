@@ -5,6 +5,10 @@
 # Date  : 2018.5
 # Email : muyanru345@163.com
 ###################################################################
+"""
+Some helper functions for handling color and formatter.
+"""
+
 
 import collections
 import datetime as dt
@@ -13,7 +17,7 @@ import os
 from singledispatch import singledispatch
 
 from dayu_widgets import DEFAULT_STATIC_FOLDER, CUSTOM_STATIC_FOLDERS
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QColor, QSortFilterProxyModel, QModelIndex, QFont, MIcon
 
 ItemViewMenuEvent = collections.namedtuple('ItemViewMenuEvent', ['view', 'selection', 'extra'])
 
@@ -27,9 +31,12 @@ def get_static_file(path):
     :return: if input file found, return the full path, else return None
     """
     if not isinstance(path, basestring):
-        raise TypeError("Input argument 'path' should be basestring type, but get {}".format(type(path)))
-    full_path = next((os.path.join(prefix, path) for prefix in ['', DEFAULT_STATIC_FOLDER] + CUSTOM_STATIC_FOLDERS if
-                      os.path.isfile(os.path.join(prefix, path))), path)
+        raise TypeError("Input argument 'path' should be basestring type, "
+                        "but get {}".format(type(path)))
+    full_path = next((os.path.join(prefix, path)
+                      for prefix in ['', DEFAULT_STATIC_FOLDER] + CUSTOM_STATIC_FOLDERS
+                      if os.path.isfile(os.path.join(prefix, path))),
+                     path)
     if os.path.isfile(full_path):
         return full_path
     return None
@@ -43,19 +50,21 @@ def from_list_to_nested_dict(input_arg, sep='/'):
     :return: a list of nested dict
     """
     if not isinstance(input_arg, (list, tuple, set)):
-        raise TypeError("Input argument 'input' should be list or tuple or set, but get {}".format(type(input_arg)))
+        raise TypeError("Input argument 'input' should be list or tuple or set, "
+                        "but get {}".format(type(input_arg)))
     if not isinstance(sep, basestring):
-        raise TypeError("Input argument 'sep' should be basestring, but get {}".format(type(sep)))
+        raise TypeError("Input argument 'sep' should be basestring, "
+                        "but get {}".format(type(sep)))
 
     result = []
     for item in input_arg:
         components = item.strip(sep).split(sep)
         component_count = len(components)
         current = result
-        for i, c in enumerate(components):
-            atom = next((x for x in current if x['value'] == c), None)
+        for i, comp in enumerate(components):
+            atom = next((x for x in current if x['value'] == comp), None)
             if atom is None:
-                atom = {'value': c, 'label': c, 'children': []}
+                atom = {'value': comp, 'label': comp, 'children': []}
                 current.append(atom)
             current = atom['children']
             if i == component_count - 1:
@@ -71,8 +80,8 @@ def fade_color(color, alpha):
     :param alpha: string, percent 'number%'
     :return: qss/css color format rgba(r, g, b, a)
     """
-    c = QColor(color)
-    return 'rgba({}, {}, {}, {})'.format(c.red(), c.green(), c.blue(), alpha)
+    q_color = QColor(color)
+    return 'rgba({}, {}, {}, {})'.format(q_color.red(), q_color.green(), q_color.blue(), alpha)
 
 
 def generate_color(primary_color, index):
@@ -94,45 +103,45 @@ def generate_color(primary_color, index):
     light_color_count = 5
     dark_color_count = 4
 
-    def get_hue(color, i, is_light):
-        h = color.hue()
-        if 60 <= h <= 240:
-            hue = h - hue_step * i if is_light else h + hue_step * i
+    def _get_hue(color, i, is_light):
+        h_comp = color.hue()
+        if 60 <= h_comp <= 240:
+            hue = h_comp - hue_step * i if is_light else h_comp + hue_step * i
         else:
-            hue = h + hue_step * i if is_light else h - hue_step * i
+            hue = h_comp + hue_step * i if is_light else h_comp - hue_step * i
         if hue < 0:
             hue += 359
         elif hue >= 359:
             hue -= 359
         return hue / 359.0
 
-    def get_saturation(color, i, is_light):
-        s = color.saturationF() * 100
+    def _get_saturation(color, i, is_light):
+        s_comp = color.saturationF() * 100
         if is_light:
-            saturation = s - saturation_step * i
+            saturation = s_comp - saturation_step * i
         elif i == dark_color_count:
-            saturation = s + saturation_step
+            saturation = s_comp + saturation_step
         else:
-            saturation = s + saturation_step2 * i
+            saturation = s_comp + saturation_step2 * i
         saturation = min(100.0, saturation)
         if is_light and i == light_color_count and saturation > 10:
             saturation = 10
         saturation = max(6.0, saturation)
         return round(saturation * 10) / 1000.0
 
-    def get_value(color, i, is_light):
-        v = color.valueF()
+    def _get_value(color, i, is_light):
+        v_comp = color.valueF()
         if is_light:
-            return min((v * 100 + brightness_step1 * i) / 100, 1.0)
-        return max((v * 100 - brightness_step2 * i) / 100, 0.0)
+            return min((v_comp * 100 + brightness_step1 * i) / 100, 1.0)
+        return max((v_comp * 100 - brightness_step2 * i) / 100, 0.0)
 
     light = index <= 6
     hsv_color = QColor(primary_color) if isinstance(primary_color, basestring) else primary_color
     index = light_color_count + 1 - index if light else index - light_color_count - 1
     return QColor.fromHsvF(
-        get_hue(hsv_color, index, light),
-        get_saturation(hsv_color, index, light),
-        get_value(hsv_color, index, light)
+        _get_hue(hsv_color, index, light),
+        _get_saturation(hsv_color, index, light),
+        _get_value(hsv_color, index, light)
     ).name()
 
 
@@ -165,24 +174,24 @@ def real_index(index):
 
 
 def get_obj_value(data_obj, attr, default=None):
+    """Get dict's key or object's attribute with given attr"""
     if isinstance(data_obj, dict):
         return data_obj.get(attr, default)
-    else:
-        return getattr(data_obj, attr, default)
+    return getattr(data_obj, attr, default)
 
 
 def set_obj_value(data_obj, attr, value):
+    """Set dict's key or object's attribute with given attr and value"""
     if isinstance(data_obj, dict):
         return data_obj.update({attr: value})
-    else:
-        return setattr(data_obj, attr, value)
+    return setattr(data_obj, attr, value)
 
 
 def has_obj_value(data_obj, attr):
+    """Return weather dict has the given key or object has the given attribute."""
     if isinstance(data_obj, dict):
         return attr in data_obj.keys()
-    else:
-        return hasattr(data_obj, attr)
+    return hasattr(data_obj, attr)
 
 
 def apply_formatter(formatter, *args, **kwargs):
@@ -200,8 +209,8 @@ def apply_formatter(formatter, *args, **kwargs):
         return formatter.get(args[0], None)
     elif callable(formatter):  # 回调函数型配置
         return formatter(*args, **kwargs)
-    else:  # 直接值型配置
-        return formatter
+    # 直接值型配置
+    return formatter
 
 
 @singledispatch
@@ -221,8 +230,7 @@ def _(input_dict):
         return display_formatter(input_dict.get('name'))
     elif 'code' in input_dict.keys():
         return display_formatter(input_dict.get('code'))
-    else:
-        return str(input_dict)
+    return str(input_dict)
 
 
 @display_formatter.register(list)
@@ -329,9 +337,14 @@ def _(input_none):
 
 
 def overflow_format(num, overflow):
-    """Give a integer, return a string. When this integer is large than given overflow, return 'overflow+'"""
+    """
+    Give a integer, return a string.
+    When this integer is large than given overflow, return "overflow+"
+    """
     if not isinstance(num, int):
-        raise ValueError("Input argument 'num' should be int type, but get {}".format(type(num)))
+        raise ValueError("Input argument 'num' should be int type, "
+                         "but get {}".format(type(num)))
     if not isinstance(overflow, int):
-        raise ValueError("Input argument 'overflow' should be int type, but get {}".format(type(overflow)))
+        raise ValueError("Input argument 'overflow' should be int type, "
+                         "but get {}".format(type(overflow)))
     return str(num) if num <= overflow else '{}+'.format(overflow)
