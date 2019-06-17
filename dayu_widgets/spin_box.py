@@ -5,10 +5,14 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
+"""
+Custom Stylesheet for QSpinBox, QDoubleSpinBox, QDateTimeEdit, QDateEdit, QTimeEdit.
+Only add size arg for their __init__.
+"""
 
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import cursor_mixin
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QSpinBox, QDoubleSpinBox, QDateTimeEdit, QDateEdit, QTimeEdit
 
 
 @cursor_mixin

@@ -3,7 +3,7 @@ import datetime
 
 import pytest
 
-from dayu_widgets import MAbstractSpinBox
+from dayu_widgets import spin_box
 from dayu_widgets import dayu_theme
 
 
@@ -24,26 +24,26 @@ class TestAbstractSpinBox(object):
     @staticmethod
     def test_mspinbox(qtbot, size, result):
         """Test MSpinBox"""
-        widget = MAbstractSpinBox.MSpinBox(size=size)
+        widget = spin_box.MSpinBox(size=size)
         qtbot.addWidget(widget)
         assert widget.property('dayu_size') == result
 
     @staticmethod
     def test_mdoublespinbox(qtbot, size, result):
         """Test MDoubleSpinBox"""
-        widget = MAbstractSpinBox.MDoubleSpinBox(size=size)
+        widget = spin_box.MDoubleSpinBox(size=size)
         qtbot.addWidget(widget)
         assert widget.property('dayu_size') == result
 
     @staticmethod
     def test_mdatetimeedit(qtbot, size, result):
         """Test MDateTimeEdit"""
-        widget = MAbstractSpinBox.MDateTimeEdit(size=size)
+        widget = spin_box.MDateTimeEdit(size=size)
         qtbot.addWidget(widget)
         assert widget.property('dayu_size') == result
 
         date_time_obj = datetime.datetime(2019, 1, 1)
-        widget_with_datetime = MAbstractSpinBox.MDateTimeEdit(date_time_obj)
+        widget_with_datetime = spin_box.MDateTimeEdit(date_time_obj)
         qtbot.addWidget(widget_with_datetime)
         assert widget_with_datetime.property('dayu_size') == dayu_theme.default_size
         assert widget_with_datetime.dateTime() == date_time_obj
@@ -51,12 +51,12 @@ class TestAbstractSpinBox(object):
     @staticmethod
     def test_mdateedit(qtbot, size, result):
         """Test MDateEdit"""
-        widget = MAbstractSpinBox.MDateEdit(size=size)
+        widget = spin_box.MDateEdit(size=size)
         qtbot.addWidget(widget)
         assert widget.property('dayu_size') == result
 
         date_time_obj = datetime.datetime(2019, 1, 1)
-        widget_with_date = MAbstractSpinBox.MDateEdit(date_time_obj)
+        widget_with_date = spin_box.MDateEdit(date_time_obj)
         qtbot.addWidget(widget_with_date)
         assert widget_with_date.property('dayu_size') == dayu_theme.default_size
         assert widget_with_date.date() == date_time_obj
@@ -64,12 +64,12 @@ class TestAbstractSpinBox(object):
     @staticmethod
     def test_mtimeedit(qtbot, size, result):
         """Test MTimeEdit"""
-        widget = MAbstractSpinBox.MTimeEdit(size=size)
+        widget = spin_box.MTimeEdit(size=size)
         qtbot.addWidget(widget)
         assert widget.property('dayu_size') == result
 
         date_time_obj = datetime.datetime(2019, 1, 1)
-        widget_with_time = MAbstractSpinBox.MTimeEdit(date_time_obj.time())
+        widget_with_time = spin_box.MTimeEdit(date_time_obj.time())
         qtbot.addWidget(widget_with_time)
         assert widget_with_time.property('dayu_size') == dayu_theme.default_size
         assert widget_with_time.time() == date_time_obj.time()
