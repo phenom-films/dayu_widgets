@@ -1,19 +1,24 @@
-from dayu_widgets.MBadge import MBadge
-from dayu_widgets.qt import *
+"""
+Test class MBadge.
+"""
 import pytest
+
+from dayu_widgets.MBadge import MBadge
+from dayu_widgets.qt import QLabel, QWidget, QVBoxLayout
 
 
 @pytest.mark.parametrize('content,text,visible', (
-        (1, '1', True),
-        (100, '99+', True),
-        (0, '0', False),
-        (-1, '-1', True),  # when user set to -1, maybe is useful to show something special.
-        ('hot', 'hot', True),
-        ('', '', False),
-        (True, '', True),
-        (False, '', False),
+    (1, '1', True),
+    (100, '99+', True),
+    (0, '0', False),
+    (-1, '-1', True),  # when user set to -1, maybe is useful to show something special.
+    ('hot', 'hot', True),
+    ('', '', False),
+    (True, '', True),
+    (False, '', False),
 ))
 def test_malert_init(qtbot, content, text, visible):
+    """Test MAlert init."""
     label = QLabel('test')
     widget_1 = MBadge(widget=label, content=content)
     widget_2 = MBadge(content=content)
@@ -32,13 +37,14 @@ def test_malert_init(qtbot, content, text, visible):
 
 
 @pytest.mark.parametrize('input_arg, error_type', (
-        ([], 'list'),
-        ((1,), 'tuple'),
-        (set(), 'set'),
-        ({}, 'dict'),
-        (object(), 'object'),
+    ([], 'list'),
+    ((1,), 'tuple'),
+    (set(), 'set'),
+    ({}, 'dict'),
+    (object(), 'object'),
 ))
-def test_malert_with_wrong_content_type(qtbot, input_arg, error_type):
+def test_with_wrong_content_type(qtbot, input_arg, error_type):
+    """Test MAlert.set_content method with wrong input type."""
     with pytest.raises(TypeError) as exc_info:
         widget = MBadge()
         widget.set_content(input_arg)
@@ -46,5 +52,5 @@ def test_malert_with_wrong_content_type(qtbot, input_arg, error_type):
         qtbot.addWidget(widget)
 
     exception_msg = exc_info.value.args[0]
-    assert exception_msg == "Input argument 'value' should be int or bool or string type, but get <type '{}'>".format(
-        error_type)
+    assert exception_msg == "Input argument 'value' should be int or bool or string type, " \
+                            "but get <type '{}'>".format(error_type)
