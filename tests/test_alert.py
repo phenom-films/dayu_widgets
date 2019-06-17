@@ -1,7 +1,7 @@
 """Test MAlert class"""
 import pytest
 
-from dayu_widgets.MAlert import MAlert
+from dayu_widgets.alert import MAlert
 
 TYPE_LIST = (None,
              MAlert.InfoType,
@@ -27,10 +27,14 @@ for text in (None, '', 'test'):
 ])
 def test_malert_init(qtbot, kwargs, result):
     """Test MAlert with different arguments."""
-    widget = MAlert(**kwargs)
+    widget = MAlert()
+    if kwargs.get('text'):
+        widget.set_text(kwargs.get('text'))
+    if kwargs.get('type'):
+        widget.set_dayu_type(kwargs.get('type'))
     qtbot.addWidget(widget)
 
-    assert widget.property('type') == result['type']
+    assert widget.property('dayu_type') == result['type']
     assert widget.property('text') == result['text']
     assert widget.isVisible() == result['visible']
 
@@ -39,7 +43,8 @@ def test_malert_init(qtbot, kwargs, result):
 def test_malert_with_wrong_type(qtbot, input_type):
     """Test MAlert with wrong type for type arg"""
     with pytest.raises(ValueError) as exc_info:
-        widget = MAlert(type=input_type)
+        widget = MAlert()
+        widget.set_dayu_type(input_type)
         qtbot.addWidget(widget)
 
     exception_msg = exc_info.value.args[0]
@@ -58,7 +63,8 @@ def test_malert_with_wrong_type(qtbot, input_type):
 def test_malert_with_wrong_text(qtbot, input_text, error_type):
     """Test MAlert with wrong type for text arg."""
     with pytest.raises(TypeError) as exc_info:
-        widget = MAlert(text=input_text)
+        widget = MAlert()
+        widget.set_text(input_text)
         qtbot.addWidget(widget)
 
     exception_msg = exc_info.value.args[0]

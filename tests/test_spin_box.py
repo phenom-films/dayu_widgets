@@ -24,21 +24,27 @@ class TestAbstractSpinBox(object):
     @staticmethod
     def test_mspinbox(qtbot, size, result):
         """Test MSpinBox"""
-        widget = spin_box.MSpinBox(size=size)
+        widget = spin_box.MSpinBox()
+        if size:
+            widget.set_dayu_size(size)
         qtbot.addWidget(widget)
         assert widget.property('dayu_size') == result
 
     @staticmethod
     def test_mdoublespinbox(qtbot, size, result):
         """Test MDoubleSpinBox"""
-        widget = spin_box.MDoubleSpinBox(size=size)
+        widget = spin_box.MDoubleSpinBox()
+        if size:
+            widget.set_dayu_size(size)
         qtbot.addWidget(widget)
         assert widget.property('dayu_size') == result
 
     @staticmethod
     def test_mdatetimeedit(qtbot, size, result):
         """Test MDateTimeEdit"""
-        widget = spin_box.MDateTimeEdit(size=size)
+        widget = spin_box.MDateTimeEdit()
+        if size:
+            widget.set_dayu_size(size)
         qtbot.addWidget(widget)
         assert widget.property('dayu_size') == result
 
@@ -51,7 +57,9 @@ class TestAbstractSpinBox(object):
     @staticmethod
     def test_mdateedit(qtbot, size, result):
         """Test MDateEdit"""
-        widget = spin_box.MDateEdit(size=size)
+        widget = spin_box.MDateEdit()
+        if size:
+            widget.set_dayu_size(size)
         qtbot.addWidget(widget)
         assert widget.property('dayu_size') == result
 
@@ -64,7 +72,9 @@ class TestAbstractSpinBox(object):
     @staticmethod
     def test_mtimeedit(qtbot, size, result):
         """Test MTimeEdit"""
-        widget = spin_box.MTimeEdit(size=size)
+        widget = spin_box.MTimeEdit()
+        if size:
+            widget.set_dayu_size(size)
         qtbot.addWidget(widget)
         assert widget.property('dayu_size') == result
 
