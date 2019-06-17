@@ -1,13 +1,17 @@
-from dayu_widgets.qt import *
-from dayu_widgets import mixin
 import pytest
+from dayu_widgets.qt import QApplication, Qt
+from dayu_widgets.qt import QWidget, QPushButton, QVBoxLayout, QStackedWidget, QLabel, \
+    QStackedLayout, QTabWidget, QTabBar
+from dayu_widgets.qt import QGraphicsDropShadowEffect, QPropertyAnimation, QGraphicsOpacityEffect
+from dayu_widgets import mixin
+from dayu_widgets import dayu_theme
 
 
 def test_property_mixin(qtbot):
     @mixin.property_mixin
-    class MTestClass(QWidget):
+    class _TestClass(QWidget):
         def __init__(self, parent=None):
-            super(MTestClass, self).__init__(parent)
+            super(_TestClass, self).__init__(parent)
             self._test_attr = None
             self.set_my_property('first_value')
 
@@ -17,7 +21,7 @@ def test_property_mixin(qtbot):
         def _set_my_property(self, value):
             self._test_attr = value
 
-    test_widget = MTestClass()
+    test_widget = _TestClass()
     assert test_widget._test_attr == 'first_value'
     qtbot.addWidget(test_widget)
     test_widget.set_my_property('test_string')
@@ -26,14 +30,14 @@ def test_property_mixin(qtbot):
 
 def test_cursor_mixin(qtbot):
     @mixin.cursor_mixin
-    class MTestClass(QPushButton):
+    class _TestClass(QPushButton):
         def __init__(self, parent=None):
-            super(MTestClass, self).__init__(parent)
+            super(_TestClass, self).__init__(parent)
             geo = QApplication.desktop().screenGeometry()
             self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
 
     main_widget = QWidget()
-    button_test = MTestClass()
+    button_test = _TestClass()
     button_normal = QPushButton()
     test_lay = QVBoxLayout()
     test_lay.addWidget(button_test)
@@ -77,14 +81,14 @@ def test_cursor_mixin(qtbot):
 
 def test_focus_shadow_mixin(qtbot):
     @mixin.focus_shadow_mixin
-    class MTestClass(QPushButton):
+    class _TestClass(QPushButton):
         def __init__(self, parent=None):
-            super(MTestClass, self).__init__(parent)
+            super(_TestClass, self).__init__(parent)
             geo = QApplication.desktop().screenGeometry()
             self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
 
     main_widget = QWidget()
-    button_test = MTestClass()
+    button_test = _TestClass()
 
     button_normal = QPushButton()
     test_lay = QVBoxLayout()
@@ -123,14 +127,14 @@ def test_focus_shadow_mixin(qtbot):
 
 def test_hover_shadow_mixin(qtbot):
     @mixin.hover_shadow_mixin
-    class MTestClass(QPushButton):
+    class _TestClass(QPushButton):
         def __init__(self, parent=None):
-            super(MTestClass, self).__init__(parent)
+            super(_TestClass, self).__init__(parent)
             geo = QApplication.desktop().screenGeometry()
             self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
 
     main_widget = QWidget()
-    button_test = MTestClass()
+    button_test = _TestClass()
     button_normal = QPushButton()
     test_lay = QVBoxLayout()
     test_lay.addWidget(button_test)
@@ -171,12 +175,12 @@ def test_hover_shadow_mixin(qtbot):
 
 
 @pytest.mark.parametrize('input_widget, result', (
-        (QLabel, False),
-        (QWidget, False),
-        (QStackedWidget, True),
-        (QStackedLayout, False),
-        (QTabWidget, True),
-        (QTabBar, False),
+    (QLabel, False),
+    (QWidget, False),
+    (QStackedWidget, True),
+    (QStackedLayout, False),
+    (QTabWidget, True),
+    (QTabBar, False),
 ))
 def test_stackable(input_widget, result):
     assert mixin._stackable(input_widget) == result
@@ -184,11 +188,11 @@ def test_stackable(input_widget, result):
 
 def test_stacked_animation_mixin_normal(qtbot):
     @mixin.stacked_animation_mixin
-    class MTestClass(QStackedWidget):
+    class _TestClass(QStackedWidget):
         def __init__(self, parent=None):
-            super(MTestClass, self).__init__(parent)
+            super(_TestClass, self).__init__(parent)
 
-    main_widget = MTestClass()
+    main_widget = _TestClass()
     qtbot.addWidget(main_widget)
     assert hasattr(main_widget, '_to_show_pos_ani')
     assert isinstance(main_widget._to_show_pos_ani, QPropertyAnimation)
@@ -231,11 +235,11 @@ def test_stacked_animation_mixin_normal(qtbot):
 
 def test_stacked_animation_mixin_error(qtbot):
     @mixin.stacked_animation_mixin
-    class MTestClass(QPushButton):
+    class _TestClass(QPushButton):
         def __init__(self, parent=None):
-            super(MTestClass, self).__init__(parent)
+            super(_TestClass, self).__init__(parent)
 
-    main_widget = MTestClass()
+    main_widget = _TestClass()
     qtbot.addWidget(main_widget)
     assert not hasattr(main_widget, '_to_show_pos_ani')
     assert not hasattr(main_widget, '_to_hide_pos_ani')
@@ -243,3 +247,17 @@ def test_stacked_animation_mixin_error(qtbot):
     assert not hasattr(main_widget, '_opacity_ani')
     assert not hasattr(main_widget, '_play_anim')
     assert not hasattr(main_widget, '_disable_opacity')
+
+
+def test_size_mixin(qtbot):
+    @mixin.size_mixin
+    class _TestClass(QPushButton):
+        def __init__(self, parent=None):
+            super(_TestClass, self).__init__(parent=parent)
+
+    main_widget = _TestClass()
+    qtbot.addWidget(main_widget)
+    assert hasattr(main_widget, 'set_dayu_size')
+    assert main_widget.property('dayu_size') == dayu_theme.default_size
+    main_widget.set_dayu_size(dayu_theme.small)
+    assert main_widget.property('dayu_size') == dayu_theme.small
