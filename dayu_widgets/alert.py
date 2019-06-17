@@ -5,7 +5,9 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
-
+"""
+MAlert class.
+"""
 import functools
 
 from dayu_widgets.MAvatar import MAvatar
@@ -13,7 +15,7 @@ from dayu_widgets.MLabel import MLabel
 from dayu_widgets import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
 from dayu_widgets.mixin import property_mixin
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QWidget, QHBoxLayout, MPixmap, Qt, MIcon
 
 
 @property_mixin
@@ -22,7 +24,7 @@ class MAlert(QWidget):
     Alert component for feedback.
 
     properties:
-        type: The feedback type with different color container.
+        dayu_type: The feedback type with different color container.
         text: The feedback string showed in container.
     """
     InfoType = 'info'
@@ -30,7 +32,7 @@ class MAlert(QWidget):
     WarningType = 'warning'
     ErrorType = 'error'
 
-    def __init__(self, text='', type='info', closeable=False, show_icon=True, parent=None, flags=0):
+    def __init__(self, parent=None, flags=0):
         super(MAlert, self).__init__(parent, flags)
         self.setAttribute(Qt.WA_StyledBackground)
         self._icon_label = MAvatar(size=dayu_theme.tiny)
@@ -48,27 +50,40 @@ class MAlert(QWidget):
 
         self.setLayout(self._main_lay)
 
-        self._icon_label.setVisible(show_icon)
+        self.set_show_icon(True)
+        self.set_closeable(False)
+        self.set_dayu_type('info')
+        self.set_text('')
+
+    def set_closeable(self, closeable):
+        """Display the close icon button or not."""
         self._close_button.setVisible(closeable)
-        self.set_type(type)
-        self.set_text(text)
+
+    def set_show_icon(self, show_icon):
+        """Display the information type icon or not."""
+        self._icon_label.setVisible(show_icon)
 
     def _set_text(self, value):
         self._content_label.setProperty('text', value)
         self.setVisible(bool(value))
 
     def set_text(self, value):
+        """Set the feedback content."""
         if isinstance(value, basestring):
             self.setProperty('text', value)
         else:
-            raise TypeError("Input argument 'value' should be string type, but get {}".format(type(value)))
+            raise TypeError("Input argument 'value' should be string type, "
+                            "but get {}".format(type(value)))
 
-    def _set_type(self, value):
-        self._icon_label.set_image(MPixmap('{}_fill.svg'.format(value), vars(dayu_theme).get(value + '_color')))
+    def _set_dayu_type(self, value):
+        self._icon_label.set_image(MPixmap('{}_fill.svg'.format(value),
+                                           vars(dayu_theme).get(value + '_color')))
         self.style().polish(self)
 
-    def set_type(self, value):
+    def set_dayu_type(self, value):
+        """Set feedback type."""
         if value in [MAlert.InfoType, MAlert.WarningType, MAlert.ErrorType, MAlert.SuccessType]:
-            self.setProperty('type', value)
+            self.setProperty('dayu_type', value)
         else:
-            raise ValueError("Input argument 'value' should be one of info/success/warning/error string.")
+            raise ValueError("Input argument 'value' should be one of "
+                             "info/success/warning/error string.")
