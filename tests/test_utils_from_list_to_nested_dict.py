@@ -1,30 +1,31 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+"""
+Test the function from_list_to_nested_dict.
+"""
 import pytest
 
 from dayu_widgets import utils
 
-test_data = (
-    (['a/b/c'],
-     [
-         {
-             'value': 'a',
-             'label': 'a',
-             'children': [
-                 {
-                     'value': 'b',
-                     'label': 'b',
-                     'children': [
-                         {
-                             'value': 'c',
-                             'label': 'c'
-                         }
-                     ]
-                 }
-             ]
-         }
-     ]),
+TEST_DATA = (
+    (['a/b/c'], [
+        {
+            'value': 'a',
+            'label': 'a',
+            'children': [
+                {
+                    'value': 'b',
+                    'label': 'b',
+                    'children': [
+                        {
+                            'value': 'c',
+                            'label': 'c'
+                        }
+                    ]
+                }
+            ]
+        }
+    ]),
     (['a/b'],
      [
          {
@@ -105,8 +106,7 @@ test_data = (
                      }
                  ]
              }
-         ]}]
-     ),
+         ]}]),
     ([u'中国/北京/故宫', u'中国/苏州/狮子林'],
      [{
          'value': u'中国',
@@ -132,19 +132,18 @@ test_data = (
                      }
                  ]
              }
-         ]}]
-     )
+         ]}])
 )
 
-test_data_ids = [str(i) for i, r in test_data]
 
-
-@pytest.mark.parametrize('input_,result', test_data, ids=test_data_ids)
-def test_utils_from_list_to_nested_dict(input_, result):
+@pytest.mark.parametrize('input_,result', TEST_DATA, ids=[str(i[0]) for i in TEST_DATA])
+def test_from_list_to_nested_dict(input_, result):
+    """Test with different level string."""
     assert utils.from_list_to_nested_dict(input_) == result
 
 
-def test_utils_from_list_to_nested_dict_sep():
+def test_with_sep():
+    """Test when sep is given."""
     result = [{
         'value': 'a',
         'label': 'a',
@@ -167,34 +166,34 @@ def test_utils_from_list_to_nested_dict_sep():
 
 
 @pytest.mark.parametrize('input_arg, error_type', (
-        (3, 'int'),
-        ('a_string', 'str'),
-        ({}, 'dict'),
-        (object(), 'object'),
+    (3, 'int'),
+    ('a_string', 'str'),
+    ({}, 'dict'),
+    (object(), 'object'),
 ))
-def test_from_list_to_nested_dict_with_input_wrong_type(input_arg, error_type):
+def test_with_input_wrong_type(input_arg, error_type):
     """Make sure when user give a wrong type arg, raise TypeError"""
     with pytest.raises(TypeError) as exc_info:
         utils.from_list_to_nested_dict(input_arg)
 
     exception_msg = exc_info.value.args[0]
-    assert exception_msg == "Input argument 'input' should be list or tuple or set, but get <type '{}'>".format(
-        error_type)
+    assert exception_msg == "Input argument 'input' should be list or tuple or set, " \
+                            "but get <type '{}'>".format(error_type)
 
 
 @pytest.mark.parametrize('input_sep, error_type', (
-        (3, 'int'),
-        ([], 'list'),
-        ((1,), 'tuple'),
-        (set(), 'set'),
-        ({}, 'dict'),
-        (object(), 'object'),
+    (3, 'int'),
+    ([], 'list'),
+    ((1,), 'tuple'),
+    (set(), 'set'),
+    ({}, 'dict'),
+    (object(), 'object'),
 ))
-def test_from_list_to_nested_dict_with_sep_wrong_type(input_sep, error_type):
+def test_with_sep_wrong_type(input_sep, error_type):
     """Make sure when user give a wrong type arg, raise TypeError"""
     with pytest.raises(TypeError) as exc_info:
         utils.from_list_to_nested_dict(['a@b@c', 'a@b@d'], input_sep)
 
     exception_msg = exc_info.value.args[0]
-    assert exception_msg == "Input argument 'sep' should be basestring, but get <type '{}'>".format(
-        error_type)
+    assert exception_msg == "Input argument 'sep' should be basestring, " \
+                            "but get <type '{}'>".format(error_type)
