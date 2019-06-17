@@ -5,22 +5,49 @@
 # Date  : 2019.3
 # Email : muyanru345@163.com
 ###################################################################
+"""
+mixin decorators to add Qt class feature.
+"""
 
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QEvent, QPoint, QApplication, Qt, QGraphicsDropShadowEffect, QWidget, \
+    QPropertyAnimation, QEasingCurve, QGraphicsOpacityEffect
 
 
 def property_mixin(cls):
     """Run function after dynamic property value changed"""
 
-    def new_event(self, event):
+    def _new_event(self, event):
         if event.type() == QEvent.DynamicPropertyChange:
-            p = event.propertyName()
-            if hasattr(self, '_set_{}'.format(p)):
-                callback = getattr(self, '_set_{}'.format(p))
-                callback(self.property(str(p)))
+            prp = event.propertyName()
+            if hasattr(self, '_set_{}'.format(prp)):
+                callback = getattr(self, '_set_{}'.format(prp))
+                callback(self.property(str(prp)))
         return super(cls, self).event(event)
 
-    setattr(cls, 'event', new_event)
+    setattr(cls, 'event', _new_event)
+    return cls
+
+
+def size_mixin(cls):
+    """Add dayu_size property and set_dayu_size method for decorated class."""
+
+    from dayu_widgets import dayu_theme
+    old_init = cls.__init__
+
+    def _new_init(self, *args, **kwargs):
+        old_init(self, *args, **kwargs)
+        self.set_dayu_size(dayu_theme.default_size)
+
+    def set_dayu_size(self, value):
+        """Set property dayu_size."""
+        self.setProperty('dayu_size', value)
+
+    def _set_dayu_size(self, value):
+        self.style().polish(self)
+
+    setattr(cls, '__init__', _new_init)
+    setattr(cls, 'set_dayu_size', set_dayu_size)
+    setattr(cls, '_set_dayu_size', _set_dayu_size)
     return cls
 
 
@@ -34,18 +61,19 @@ def cursor_mixin(cls):
     old_enter_event = cls.enterEvent
     old_leave_event = cls.leaveEvent
 
-    def new_enter_event(self, *args, **kwargs):
+    def _new_enter_event(self, *args, **kwargs):
         old_enter_event(self, *args, **kwargs)
-        QApplication.setOverrideCursor(Qt.PointingHandCursor if self.isEnabled() else Qt.ForbiddenCursor)
+        QApplication.setOverrideCursor(
+            Qt.PointingHandCursor if self.isEnabled() else Qt.ForbiddenCursor)
         return super(cls, self).enterEvent(*args, **kwargs)
 
-    def new_leave_event(self, *args, **kwargs):
+    def _new_leave_event(self, *args, **kwargs):
         old_leave_event(self, *args, **kwargs)
         QApplication.restoreOverrideCursor()
         return super(cls, self).leaveEvent(*args, **kwargs)
 
-    setattr(cls, 'enterEvent', new_enter_event)
-    setattr(cls, 'leaveEvent', new_leave_event)
+    setattr(cls, 'enterEvent', _new_enter_event)
+    setattr(cls, 'leaveEvent', _new_leave_event)
     return cls
 
 
@@ -58,7 +86,7 @@ def focus_shadow_mixin(cls):
     old_focus_in_event = cls.focusInEvent
     old_focus_out_event = cls.focusOutEvent
 
-    def focus_in_event(self, *args, **kwargs):
+    def _new_focus_in_event(self, *args, **kwargs):
         old_focus_in_event(self, *args, **kwargs)
         if not self.graphicsEffect():
             from dayu_widgets import dayu_theme
@@ -73,13 +101,13 @@ def focus_shadow_mixin(cls):
         if self.isEnabled():
             self.graphicsEffect().setEnabled(True)
 
-    def focus_out_event(self, *args, **kwargs):
+    def _new_focus_out_event(self, *args, **kwargs):
         old_focus_out_event(self, *args, **kwargs)
         if self.graphicsEffect():
             self.graphicsEffect().setEnabled(False)
 
-    setattr(cls, 'focusInEvent', focus_in_event)
-    setattr(cls, 'focusOutEvent', focus_out_event)
+    setattr(cls, 'focusInEvent', _new_focus_in_event)
+    setattr(cls, 'focusOutEvent', _new_focus_out_event)
     return cls
 
 
@@ -92,7 +120,7 @@ def hover_shadow_mixin(cls):
     old_enter_event = cls.enterEvent
     old_leave_event = cls.leaveEvent
 
-    def new_enter_event(self, *args, **kwargs):
+    def _new_enter_event(self, *args, **kwargs):
         old_enter_event(self, *args, **kwargs)
         if not self.graphicsEffect():
             from dayu_widgets import dayu_theme
@@ -107,13 +135,13 @@ def hover_shadow_mixin(cls):
         if self.isEnabled():
             self.graphicsEffect().setEnabled(True)
 
-    def new_leave_event(self, *args, **kwargs):
+    def _new_leave_event(self, *args, **kwargs):
         old_leave_event(self, *args, **kwargs)
         if self.graphicsEffect():
             self.graphicsEffect().setEnabled(False)
 
-    setattr(cls, 'enterEvent', new_enter_event)
-    setattr(cls, 'leaveEvent', new_leave_event)
+    setattr(cls, 'enterEvent', _new_enter_event)
+    setattr(cls, 'leaveEvent', _new_leave_event)
     return cls
 
 
@@ -121,7 +149,8 @@ def _stackable(widget):
     """Used for stacked_animation_mixin to only add mixin for widget who can stacked."""
     # We use widget() to get currentWidget, use currentChanged to play the animation.
     # For now just QTabWidget and QStackedWidget can use this decorator.
-    return issubclass(widget, QWidget) and hasattr(widget, 'widget') and hasattr(widget, 'currentChanged')
+    return issubclass(widget, QWidget) and hasattr(widget, 'widget') and hasattr(widget,
+                                                                                 'currentChanged')
 
 
 def stacked_animation_mixin(cls):
@@ -133,7 +162,7 @@ def stacked_animation_mixin(cls):
         return cls
     old_init = cls.__init__
 
-    def new_init(self, *args, **kwargs):
+    def _new_init(self, *args, **kwargs):
         old_init(self, *args, **kwargs)
         self._previous_index = 0
         self._to_show_pos_ani = QPropertyAnimation()
@@ -179,7 +208,7 @@ def stacked_animation_mixin(cls):
         # QPainter::begin: A paint device can only be painted by one painter at a time.
         self.currentWidget().graphicsEffect().setEnabled(False)
 
-    setattr(cls, '__init__', new_init)
+    setattr(cls, '__init__', _new_init)
     setattr(cls, '_play_anim', _play_anim)
     setattr(cls, '_disable_opacity', _disable_opacity)
     return cls
