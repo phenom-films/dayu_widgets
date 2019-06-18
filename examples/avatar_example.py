@@ -6,21 +6,19 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MAvatar import MAvatar
+from dayu_widgets.avatar import MAvatar
 from dayu_widgets.MDivider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
 from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.push_button import MPushButton
 from dayu_widgets import dayu_theme
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QWidget, QVBoxLayout, MPixmap, QFormLayout, Qt, QHBoxLayout
 
 
-class MAvatarTest(QWidget, MFieldMixin):
+class AvatarExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MAvatarTest, self).__init__(parent)
-        self._init_ui()
-
-    def _init_ui(self):
+        super(AvatarExample, self).__init__(parent)
+        self.setWindowTitle('Example for MAvatar')
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('different size'))
 
@@ -30,19 +28,27 @@ class MAvatarTest(QWidget, MFieldMixin):
                      ('Small', dayu_theme.small),
                      ('Tiny', dayu_theme.tiny)]
 
-        self.pix_map_list = ['', MPixmap('avatar.png'), MPixmap('app-maya.png'), MPixmap('app-nuke.png'),
+        self.pix_map_list = [None, MPixmap('avatar.png'),
+                             MPixmap('app-maya.png'),
+                             MPixmap('app-nuke.png'),
                              MPixmap('app-houdini.png')]
+        form_lay = QFormLayout()
+        form_lay.setLabelAlignment(Qt.AlignRight)
+
         for label, size in size_list:
             h_lay = QHBoxLayout()
-            h_lay.addWidget(MLabel(label))
             for image in self.pix_map_list:
-                h_lay.addWidget(MAvatar(size=size, image=image))
+                avatar_tmp = MAvatar()
+                avatar_tmp.set_dayu_size(size)
+                avatar_tmp.set_dayu_image(image)
+                h_lay.addWidget(avatar_tmp)
             h_lay.addStretch()
-            main_lay.addLayout(h_lay)
-        self.register_field('image', '')
+            form_lay.addRow(MLabel(label), h_lay)
+        main_lay.addLayout(form_lay)
+        self.register_field('image', None)
         main_lay.addWidget(MDivider('different image'))
         avatar = MAvatar()
-        self.bind('image', avatar, 'image')
+        self.bind('image', avatar, 'dayu_image')
         button = MPushButton(text='Change Avatar Image', type=MPushButton.PrimaryType)
         button.clicked.connect(self.slot_change_image)
 
@@ -52,14 +58,17 @@ class MAvatarTest(QWidget, MFieldMixin):
         self.setLayout(main_lay)
 
     def slot_change_image(self):
+        """Set the Avatar image random by data bind."""
         import random
         self.set_field('image', random.choice(self.pix_map_list))
 
 
 if __name__ == '__main__':
     import sys
+    from dayu_widgets.qt import QApplication
+
     app = QApplication(sys.argv)
-    test = MAvatarTest()
+    test = AvatarExample()
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())
