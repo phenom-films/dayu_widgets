@@ -15,7 +15,7 @@ from dayu_widgets.qt import QRadioButton
 @cursor_mixin
 class MRadioButton(QRadioButton):
     """
-    MRadioButton just use stylesheet. No more extend.
+    MRadioButton just use stylesheet and set cursor shape when hover. No more extend.
     """
     def __init__(self, text='', parent=None):
         super(MRadioButton, self).__init__(text=text, parent=parent)
