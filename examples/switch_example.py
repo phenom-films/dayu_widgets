@@ -6,17 +6,18 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MDivider import MDivider
+from dayu_widgets.divider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MSwitch import MSwitch
+from dayu_widgets.label import MLabel
+from dayu_widgets.switch import MSwitch
 from dayu_widgets import dayu_theme
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QWidget, QHBoxLayout, QVBoxLayout
 
 
-class MSwitchTest(QWidget, MFieldMixin):
+class SwitchExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MSwitchTest, self).__init__(parent)
+        super(SwitchExample, self).__init__(parent)
+        self.setWindowTitle('Examples for MSwitch')
         self._init_ui()
 
     def _init_ui(self):
@@ -32,13 +33,16 @@ class MSwitchTest(QWidget, MFieldMixin):
 
         size_lay = QVBoxLayout()
         size_list = [
-                     ('Large', dayu_theme.large),
-                     ('Medium', dayu_theme.medium),
-                     ('Small', dayu_theme.small)]
-        for label, size in size_list:
+            ('Huge', MSwitch.huge),
+            ('Large', MSwitch.large),
+            ('Medium', MSwitch.medium),
+            ('Small', MSwitch.small),
+            ('Tiny', MSwitch.tiny),
+        ]
+        for label, cls in size_list:
             lay2 = QHBoxLayout()
             lay2.addWidget(MLabel(label))
-            lay2.addWidget(MSwitch(size=size))
+            lay2.addWidget(cls())
             size_lay.addLayout(lay2)
 
         main_lay = QVBoxLayout()
@@ -52,9 +56,10 @@ class MSwitchTest(QWidget, MFieldMixin):
 
 if __name__ == '__main__':
     import sys
+    from dayu_widgets.qt import QApplication
 
     app = QApplication(sys.argv)
-    test = MSwitchTest()
+    test = SwitchExample()
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())
