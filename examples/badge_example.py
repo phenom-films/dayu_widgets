@@ -6,47 +6,45 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MAbstractSpinBox import MSpinBox
-from dayu_widgets.MAvatar import MAvatar
-from dayu_widgets.MBadge import MBadge
+from dayu_widgets.spin_box import MSpinBox
+from dayu_widgets.avatar import MAvatar
+from dayu_widgets.badge import MBadge
 from dayu_widgets.MComboBox import MComboBox
-from dayu_widgets.MDivider import MDivider
+from dayu_widgets.divider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MLabel import MLabel
+from dayu_widgets.label import MLabel
 from dayu_widgets.MMenu import MMenu
 from dayu_widgets import dayu_theme
 from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QWidget, QHBoxLayout, MIcon, MPixmap, QVBoxLayout
 
 
-class MBadgeTest(QWidget, MFieldMixin):
+class BadgeExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MBadgeTest, self).__init__(parent)
+        super(BadgeExample, self).__init__(parent)
+        self.setWindowTitle('Examples for MBadge')
         self._init_ui()
 
     def _init_ui(self):
         standalone_lay = QHBoxLayout()
-        standalone_lay.addWidget(MBadge(content=0))
-        standalone_lay.addWidget(MBadge(content=20))
-        standalone_lay.addWidget(MBadge(content=100))
-        standalone_lay.addWidget(MBadge(content=True))
-        standalone_lay.addWidget(MBadge(content='new'))
+        standalone_lay.addWidget(MBadge.count(0))
+        standalone_lay.addWidget(MBadge.count(20))
+        standalone_lay.addWidget(MBadge.count(100))
+        standalone_lay.addWidget(MBadge.dot(True))
+        standalone_lay.addWidget(MBadge.text('new'))
         standalone_lay.addStretch()
 
         button = MToolButton(icon=MIcon('trash_line.svg'))
-        avatar = MAvatar(size=dayu_theme.large, image=MPixmap('avatar.png'))
+        avatar = MAvatar.large(MPixmap('avatar.png'))
         button_alert = MToolButton(icon=MIcon('alert_fill.svg'), size=dayu_theme.large)
-        badge_1 = MBadge(widget=button)
-        badge_1.set_content(True)
-        badge_2 = MBadge(widget=avatar)
-        badge_2.set_content(True)
-        badge_3 = MBadge(widget=button_alert)
-        # badge_2.set_content(True)
-        button.clicked.connect(lambda: badge_1.set_content(False))
+        badge_1 = MBadge.dot(True, widget=button)
+        badge_2 = MBadge.dot(True, widget=avatar)
+        badge_3 = MBadge.dot(True, widget=button_alert)
+        button.clicked.connect(lambda: badge_1.set_dayu_dot(False))
 
         spin_box = MSpinBox()
         spin_box.setRange(0, 9999)
-        spin_box.valueChanged.connect(badge_3.set_content)
+        spin_box.valueChanged.connect(badge_3.set_dayu_count)
         spin_box.setValue(1)
 
         self.register_field('button1_selected', u'北京')
@@ -56,8 +54,7 @@ class MBadgeTest(QWidget, MFieldMixin):
         select1.set_menu(menu1)
         self.bind('button1_selected', select1, 'value', signal='sig_value_changed')
 
-        badge_hot = MBadge(widget=MLabel(u'你的理想城市  '))
-        badge_hot.set_content('hot')
+        badge_hot = MBadge.text('hot', widget=MLabel(u'你的理想城市  '))
 
         sub_lay1 = QHBoxLayout()
         sub_lay1.addWidget(badge_1)
@@ -84,9 +81,9 @@ class MBadgeTest(QWidget, MFieldMixin):
 
 if __name__ == '__main__':
     import sys
-
+    from dayu_widgets.qt import QApplication
     app = QApplication(sys.argv)
-    test = MBadgeTest()
+    test = BadgeExample()
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())
