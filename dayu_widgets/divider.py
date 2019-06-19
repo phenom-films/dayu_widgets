@@ -27,6 +27,7 @@ class MDivider(QWidget):
 
     def __init__(self, text='', orientation=Qt.Horizontal, alignment=Qt.AlignCenter, parent=None):
         super(MDivider, self).__init__(parent)
+        self._orient = orientation
         self._text_label = MLabel.secondary()
         self._left_frame = QFrame()
         self._right_frame = QFrame()
@@ -39,15 +40,11 @@ class MDivider(QWidget):
         self.setLayout(self._main_lay)
 
         if orientation == Qt.Horizontal:
-            self._left_frame.setVisible(True)
-            self._text_label.setVisible(True)
-            self._right_frame.setVisible(True)
             self._left_frame.setFrameShape(QFrame.HLine)
             self._left_frame.setFrameShadow(QFrame.Sunken)
             self._right_frame.setFrameShape(QFrame.HLine)
             self._right_frame.setFrameShadow(QFrame.Sunken)
         else:
-            self._left_frame.setVisible(True)
             self._text_label.setVisible(False)
             self._right_frame.setVisible(False)
             self._left_frame.setFrameShape(QFrame.VLine)
@@ -61,14 +58,24 @@ class MDivider(QWidget):
         self.set_dayu_text(text)
 
     def set_dayu_text(self, value):
-        """Set the divider's text"""
+        """
+        Set the divider's text.
+        When text is empty, hide the text_label and right_frame to ensure the divider not has a gap.
+
+        :param value: basestring
+        :return: None
+        """
         self._text = value
         self._text_label.setText(value)
-        self._text_label.setVisible(bool(value))
-        self._right_frame.setVisible(bool(value))
+        if self._orient == Qt.Horizontal:
+            self._text_label.setVisible(bool(value))
+            self._right_frame.setVisible(bool(value))
 
     def get_dayu_text(self):
-        """Get current text"""
+        """
+        Get current text
+        :return: basestring
+        """
         return self._text
 
     dayu_text = Property(basestring, get_dayu_text, set_dayu_text)
