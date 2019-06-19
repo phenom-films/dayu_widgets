@@ -5,17 +5,19 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
+"""
+MDivider
+"""
+from dayu_widgets.label import MLabel
+from dayu_widgets.qt import QWidget, Qt, QFrame, QHBoxLayout, Property
 
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.mixin import property_mixin
-from dayu_widgets.qt import *
 
-
-@property_mixin
 class MDivider(QWidget):
     '''
-    props:
-        text: basestring
+    A divider line separates different content.
+
+    Property:
+        dayu_text: basestring
     '''
     _alignment_map = {
         Qt.AlignCenter: 50,
@@ -25,7 +27,7 @@ class MDivider(QWidget):
 
     def __init__(self, text='', orientation=Qt.Horizontal, alignment=Qt.AlignCenter, parent=None):
         super(MDivider, self).__init__(parent)
-        self._text_label = MLabel(type=MLabel.HelpType)
+        self._text_label = MLabel.secondary()
         self._left_frame = QFrame()
         self._right_frame = QFrame()
         self._main_lay = QHBoxLayout()
@@ -51,14 +53,42 @@ class MDivider(QWidget):
             self._left_frame.setFrameShape(QFrame.VLine)
             self._left_frame.setFrameShadow(QFrame.Plain)
             self.setFixedWidth(2)
-        self.set_text(text)
-        self._main_lay.setStretchFactor(self._left_frame, self._alignment_map.get(alignment, 50))
-        self._main_lay.setStretchFactor(self._right_frame, 100 - self._alignment_map.get(alignment, 50))
+        self._main_lay.setStretchFactor(self._left_frame,
+                                        self._alignment_map.get(alignment, 50))
+        self._main_lay.setStretchFactor(self._right_frame,
+                                        100 - self._alignment_map.get(alignment, 50))
+        self._text = None
+        self.set_dayu_text(text)
 
-    def _set_text(self, value):
-        self._text_label.setProperty('text', value)
+    def set_dayu_text(self, value):
+        """Set the divider's text"""
+        self._text = value
+        self._text_label.setText(value)
         self._text_label.setVisible(bool(value))
         self._right_frame.setVisible(bool(value))
 
-    def set_text(self, value):
-        self.setProperty('text', value)
+    def get_dayu_text(self):
+        """Get current text"""
+        return self._text
+
+    dayu_text = Property(basestring, get_dayu_text, set_dayu_text)
+
+    @classmethod
+    def left(cls, text=''):
+        """Create a horizontal divider with text at left."""
+        return cls(text, alignment=Qt.AlignLeft)
+
+    @classmethod
+    def right(cls, text=''):
+        """Create a horizontal divider with text at right."""
+        return cls(text, alignment=Qt.AlignRight)
+
+    @classmethod
+    def center(cls, text=''):
+        """Create a horizontal divider with text at center."""
+        return cls(text, alignment=Qt.AlignCenter)
+
+    @classmethod
+    def vertical(cls):
+        """Create a vertical divider"""
+        return cls(orientation=Qt.Vertical)
