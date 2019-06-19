@@ -42,6 +42,30 @@ def test_mavatar_init(qtbot, size, result, image):
     assert pix.width() == result
     assert pix.width() == result
 
+@pytest.mark.parametrize('image', ('check.svg', None))
+@pytest.mark.parametrize('cls, result', (
+    (MAvatar.tiny, dayu_theme.tiny),
+    (MAvatar.small, dayu_theme.small),
+    (MAvatar.medium, dayu_theme.medium),
+    (MAvatar.large, dayu_theme.large),
+    (MAvatar.huge, dayu_theme.huge),
+))
+def test_avatar_class_method(qtbot, cls, result, image):
+    """Test for MAvatar class methods"""
+    if image:
+        widget = cls(MPixmap(image))
+    else:
+        widget = cls()
+    qtbot.addWidget(widget)
+
+    assert widget.height() == result
+    assert widget.width() == result
+    pix = widget.pixmap()
+    assert pix is not None
+    assert not pix.isNull()
+    assert pix.width() == result
+    assert pix.width() == result
+
 
 @pytest.mark.parametrize('input_file, error_type', (
     ('3', 'str'),

@@ -7,9 +7,9 @@
 ###################################################################
 
 from dayu_widgets.avatar import MAvatar
-from dayu_widgets.MDivider import MDivider
+from dayu_widgets.divider import MDivider
 from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MLabel import MLabel
+from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import QWidget, QVBoxLayout, MPixmap, QFormLayout, Qt, QHBoxLayout
@@ -22,11 +22,11 @@ class AvatarExample(QWidget, MFieldMixin):
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('different size'))
 
-        size_list = [('Huge', dayu_theme.huge),
-                     ('Large', dayu_theme.large),
-                     ('Medium', dayu_theme.medium),
-                     ('Small', dayu_theme.small),
-                     ('Tiny', dayu_theme.tiny)]
+        size_list = [('Huge', MAvatar.huge),
+                     ('Large', MAvatar.large),
+                     ('Medium', MAvatar.medium),
+                     ('Small', MAvatar.small),
+                     ('Tiny', MAvatar.tiny)]
 
         self.pix_map_list = [None, MPixmap('avatar.png'),
                              MPixmap('app-maya.png'),
@@ -35,12 +35,10 @@ class AvatarExample(QWidget, MFieldMixin):
         form_lay = QFormLayout()
         form_lay.setLabelAlignment(Qt.AlignRight)
 
-        for label, size in size_list:
+        for label, cls in size_list:
             h_lay = QHBoxLayout()
             for image in self.pix_map_list:
-                avatar_tmp = MAvatar()
-                avatar_tmp.set_dayu_size(size)
-                avatar_tmp.set_dayu_image(image)
+                avatar_tmp = cls(image)
                 h_lay.addWidget(avatar_tmp)
             h_lay.addStretch()
             form_lay.addRow(MLabel(label), h_lay)
@@ -49,7 +47,7 @@ class AvatarExample(QWidget, MFieldMixin):
         main_lay.addWidget(MDivider('different image'))
         avatar = MAvatar()
         self.bind('image', avatar, 'dayu_image')
-        button = MPushButton(text='Change Avatar Image', type=MPushButton.PrimaryType)
+        button = MPushButton.primary(text='Change Avatar Image')
         button.clicked.connect(self.slot_change_image)
 
         main_lay.addWidget(avatar)

@@ -75,3 +75,43 @@ class MAvatar(QLabel):
 
     dayu_image = Property(QPixmap, get_dayu_image, set_dayu_image)
     dayu_size = Property(int, get_dayu_size, set_dayu_size)
+
+    @classmethod
+    def huge(cls, image=None):
+        """Create a MAvatar with huge size"""
+        inst = cls()
+        inst.set_dayu_size(dayu_theme.huge)
+        inst.set_dayu_image(image)
+        return inst
+
+    @classmethod
+    def large(cls, image=None):
+        """Create a MAvatar with large size"""
+        inst = cls()
+        inst.set_dayu_size(dayu_theme.large)
+        inst.set_dayu_image(image)
+        return inst
+
+    @classmethod
+    def medium(cls, image=None):
+        """Create a MAvatar with medium size"""
+        inst = cls()
+        inst.set_dayu_size(dayu_theme.medium)
+        inst.set_dayu_image(image)
+        return inst
+
+    @classmethod
+    def small(cls, image=None):
+        """Create a MAvatar with small size"""
+        inst = cls()
+        inst.set_dayu_size(dayu_theme.small)
+        inst.set_dayu_image(image)
+        return inst
+
+    @classmethod
+    def tiny(cls, image=None):
+        """Create a MAvatar with tiny size"""
+        inst = cls()
+        inst.set_dayu_size(dayu_theme.tiny)
+        inst.set_dayu_image(image)
+        return inst
