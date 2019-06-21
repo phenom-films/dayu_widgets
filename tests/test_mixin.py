@@ -52,6 +52,7 @@ def test_cursor_mixin(qtbot):
     qtbot.mouseMove(button_test)  # mouse enter
 
     def check_cursor():
+        assert QApplication.overrideCursor()
         assert QApplication.overrideCursor().shape() == Qt.ForbiddenCursor
 
     qtbot.waitUntil(check_cursor)
@@ -67,6 +68,7 @@ def test_cursor_mixin(qtbot):
     qtbot.mouseMove(button_test)  # mouse enter
 
     def check_cursor():
+        assert QApplication.overrideCursor()
         assert QApplication.overrideCursor().shape() == Qt.PointingHandCursor
 
     qtbot.waitUntil(check_cursor)
@@ -248,16 +250,3 @@ def test_stacked_animation_mixin_error(qtbot):
     assert not hasattr(main_widget, '_play_anim')
     assert not hasattr(main_widget, '_disable_opacity')
 
-
-def test_size_mixin(qtbot):
-    @mixin.size_mixin
-    class _TestClass(QPushButton):
-        def __init__(self, parent=None):
-            super(_TestClass, self).__init__(parent=parent)
-
-    main_widget = _TestClass()
-    qtbot.addWidget(main_widget)
-    assert hasattr(main_widget, 'set_dayu_size')
-    assert main_widget.property('dayu_size') == dayu_theme.default_size
-    main_widget.set_dayu_size(dayu_theme.small)
-    assert main_widget.property('dayu_size') == dayu_theme.small
