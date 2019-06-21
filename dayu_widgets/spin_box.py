@@ -25,8 +25,7 @@ class MSpinBox(QSpinBox):
 
     def __init__(self, parent=None):
         super(MSpinBox, self).__init__(parent=parent)
-        self._dayu_size = None
-        self.set_dayu_size(dayu_theme.default_size)
+        self._dayu_size = dayu_theme.default_size
 
     def get_dayu_size(self):
         """
@@ -57,8 +56,7 @@ class MDoubleSpinBox(QDoubleSpinBox):
 
     def __init__(self, parent=None):
         super(MDoubleSpinBox, self).__init__(parent=parent)
-        self._dayu_size = None
-        self.set_dayu_size(dayu_theme.default_size)
+        self._dayu_size = dayu_theme.default_size
 
     def get_dayu_size(self):
         """
@@ -88,12 +86,11 @@ class MDateTimeEdit(QDateTimeEdit):
     """
 
     def __init__(self, datetime=None, parent=None):
-        if datetime:
-            super(MDateTimeEdit, self).__init__(datetime, parent=parent)
-        else:
+        if datetime is None:
             super(MDateTimeEdit, self).__init__(parent=parent)
-        self._dayu_size = None
-        self.set_dayu_size(dayu_theme.default_size)
+        else:
+            super(MDateTimeEdit, self).__init__(datetime, parent=parent)
+        self._dayu_size = dayu_theme.default_size
 
     def get_dayu_size(self):
         """
@@ -123,12 +120,11 @@ class MDateEdit(QDateEdit):
     """
 
     def __init__(self, date=None, parent=None):
-        if date:
-            super(MDateEdit, self).__init__(date, parent=parent)
-        else:
+        if date is None:
             super(MDateEdit, self).__init__(parent=parent)
-        self._dayu_size = None
-        self.set_dayu_size(dayu_theme.default_size)
+        else:
+            super(MDateEdit, self).__init__(date, parent=parent)
+        self._dayu_size = dayu_theme.default_size
 
     def get_dayu_size(self):
         """
@@ -158,12 +154,11 @@ class MTimeEdit(QTimeEdit):
     """
 
     def __init__(self, time=None, parent=None):
-        if time:
-            super(MTimeEdit, self).__init__(time, parent=parent)
-        else:
+        if time is None:
             super(MTimeEdit, self).__init__(parent=parent)
-        self._dayu_size = None
-        self.set_dayu_size(dayu_theme.default_size)
+        else:
+            super(MTimeEdit, self).__init__(time, parent=parent)
+        self._dayu_size = dayu_theme.default_size
 
     def get_dayu_size(self):
         """

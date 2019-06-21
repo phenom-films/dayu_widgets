@@ -78,8 +78,8 @@ class TestAbstractSpinBox(object):
         qtbot.addWidget(widget)
         assert widget.property('dayu_size') == result
 
-        date_time_obj = datetime.datetime(2019, 1, 1)
-        widget_with_time = spin_box.MTimeEdit(date_time_obj.time())
+        time_obj = datetime.datetime(2019, 1, 1).time()
+        widget_with_time = spin_box.MTimeEdit(time_obj)
         qtbot.addWidget(widget_with_time)
         assert widget_with_time.property('dayu_size') == dayu_theme.default_size
-        assert widget_with_time.time() == date_time_obj.time()
+        assert widget_with_time.time() == time_obj
