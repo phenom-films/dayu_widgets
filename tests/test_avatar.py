@@ -28,6 +28,7 @@ def test_mavatar_init(qtbot, size, result, image):
 
     assert widget.height() == result
     assert widget.width() == result
+    assert widget.get_dayu_size() == result
     pix = widget.pixmap()
     assert pix is not None
     assert not pix.isNull()
@@ -41,6 +42,8 @@ def test_mavatar_init(qtbot, size, result, image):
     assert not pix.isNull()
     assert pix.width() == result
     assert pix.width() == result
+    assert orig is widget.get_dayu_image()
+
 
 @pytest.mark.parametrize('image', ('check.svg', None))
 @pytest.mark.parametrize('cls, result', (
