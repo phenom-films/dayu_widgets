@@ -59,6 +59,11 @@ def test_divider_class_method(qtbot, text, visible_text):
     _asset_divider_perform(divider_center, True and visible_text, Qt.AlignCenter)
     _asset_divider_perform(divider_ver, False, Qt.AlignCenter)
 
+    assert divider_left.get_dayu_text() == text
+    assert divider_right.get_dayu_text() == text
+    assert divider_center.get_dayu_text() == text
+    assert divider_ver.get_dayu_text() == ''
+
 
 def _asset_divider_perform(divider, show, align):
     assert divider._text_label.isVisible() == show
