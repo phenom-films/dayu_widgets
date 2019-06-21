@@ -95,3 +95,6 @@ def test_label_elide_mode(qtbot, text, elide):
         assert label_left.property('text') == label_left.text()
         assert label_right.property('text') == label_right.text()
         assert label_center.property('text') == label_center.text()
+    assert label_left.get_elide_mode() == Qt.ElideLeft
+    assert label_right.get_elide_mode() == Qt.ElideRight
+    assert label_center.get_elide_mode() == Qt.ElideMiddle
