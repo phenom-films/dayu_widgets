@@ -28,29 +28,6 @@ def property_mixin(cls):
     return cls
 
 
-def size_mixin(cls):
-    """Add dayu_size property and set_dayu_size method for decorated class."""
-
-    from dayu_widgets import dayu_theme
-    old_init = cls.__init__
-
-    def _new_init(self, *args, **kwargs):
-        old_init(self, *args, **kwargs)
-        self.set_dayu_size(dayu_theme.default_size)
-
-    def set_dayu_size(self, value):
-        """Set property dayu_size."""
-        self.setProperty('dayu_size', value)
-
-    def _set_dayu_size(self, value):
-        self.style().polish(self)
-
-    setattr(cls, '__init__', _new_init)
-    setattr(cls, 'set_dayu_size', set_dayu_size)
-    setattr(cls, '_set_dayu_size', _set_dayu_size)
-    return cls
-
-
 def cursor_mixin(cls):
     """
     Change Widget cursor:
