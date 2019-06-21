@@ -8,17 +8,18 @@
 
 import functools
 
-from dayu_widgets.MAbstractSpinBox import MSpinBox
+from dayu_widgets.spin_box import MSpinBox
 from dayu_widgets.MButtonGroup import MPushButtonGroup
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MSlider import MSlider
-from dayu_widgets.qt import *
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.slider import MSlider
+from dayu_widgets.qt import QWidget, QVBoxLayout, Qt, QHBoxLayout
 
 
-class MSliderTest(QWidget, MFieldMixin):
+class SliderExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MSliderTest, self).__init__(parent)
+        super(SliderExample, self).__init__(parent)
+        self.setWindowTitle('Examples for MSlider')
         self._init_ui()
 
     def _init_ui(self):
@@ -56,9 +57,9 @@ class MSliderTest(QWidget, MFieldMixin):
 
 if __name__ == '__main__':
     import sys
-
+    from dayu_widgets.qt import QApplication
     app = QApplication(sys.argv)
-    test = MSliderTest()
+    test = SliderExample()
     from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()
