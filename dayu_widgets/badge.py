@@ -63,7 +63,7 @@ class MBadge(QWidget):
         :return: None
         """
         self._overflow_count = num
-        self._set_content()
+        self._update_number()
 
     def get_dayu_dot(self):
         """
@@ -98,6 +98,9 @@ class MBadge(QWidget):
         :return: None
         """
         self._count = num
+        self._update_number()
+
+    def _update_number(self):
         self._badge_button.setText(utils.overflow_format(self._count, self._overflow_count))
         self._badge_button.setVisible(self._count > 0)
         self._dot = None
