@@ -3,6 +3,7 @@
 import pytest
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets import dayu_theme
+from dayu_widgets.qt import MIcon
 
 MPUSHBUTTON_TYPE_LIST = (
     MPushButton.DefaultType,
@@ -15,9 +16,11 @@ MPUSHBUTTON_TYPE_LIST = (
 @pytest.mark.parametrize('dayu_size', (
     dayu_theme.huge, dayu_theme.large, dayu_theme.medium, dayu_theme.small, dayu_theme.tiny
 ))
-def test_mpushbutton_init(qtbot, dayu_type, dayu_size):
+@pytest.mark.parametrize('icon', (None, 'success_fill.svg'))
+@pytest.mark.parametrize('text', ('test', ''))
+def test_mpushbutton_init(qtbot, dayu_type, dayu_size, icon, text):
     """Test MPushButton set_dayu_size and set_dayu_type."""
-    widget = MPushButton()
+    widget = MPushButton(icon=MIcon(icon) if icon else icon, text=text)
     widget.set_dayu_size(dayu_size)
     widget.set_dayu_type(dayu_type)
     qtbot.addWidget(widget)

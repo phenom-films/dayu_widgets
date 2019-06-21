@@ -30,14 +30,12 @@ class MPushButton(QPushButton):
     DangerType = 'danger'
 
     def __init__(self, icon=None, text='', parent=None):
-        if icon:
-            super(MPushButton, self).__init__(icon=icon, text=text, parent=parent)
-        else:
+        if icon is None:
             super(MPushButton, self).__init__(text=text, parent=parent)
-        self._dayu_type = None
-        self._dayu_size = None
-        self.set_dayu_type(MPushButton.DefaultType)
-        self.set_dayu_size(dayu_theme.default_size)
+        else:
+            super(MPushButton, self).__init__(icon=icon, text=text, parent=parent)
+        self._dayu_type = MPushButton.DefaultType
+        self._dayu_size = dayu_theme.default_size
 
     def get_dayu_size(self):
         """
