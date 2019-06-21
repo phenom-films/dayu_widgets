@@ -52,7 +52,7 @@ def test_cursor_mixin(qtbot):
     qtbot.mouseMove(button_test)  # mouse enter
 
     def check_cursor():
-        assert QApplication.overrideCursor()
+        assert QApplication.overrideCursor() is not None
         assert QApplication.overrideCursor().shape() == Qt.ForbiddenCursor
 
     qtbot.waitUntil(check_cursor)
@@ -68,7 +68,7 @@ def test_cursor_mixin(qtbot):
     qtbot.mouseMove(button_test)  # mouse enter
 
     def check_cursor():
-        assert QApplication.overrideCursor()
+        assert QApplication.overrideCursor() is not None
         assert QApplication.overrideCursor().shape() == Qt.PointingHandCursor
 
     qtbot.waitUntil(check_cursor)
