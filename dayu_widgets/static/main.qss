@@ -281,19 +281,19 @@ MAlert{
     border: 1px solid @border_color;
     border-radius: 4px;
 }
-MAlert[type=info]{
+MAlert[dayu_type=info]{
     border-color: @info_3;
     background-color: @info_1;
 }
-MAlert[type=success]{
+MAlert[dayu_type=success]{
     border-color: @success_3;
     background-color: @success_1;
 }
-MAlert[type=warning]{
+MAlert[dayu_type=warning]{
     border-color: @warning_3;
     background-color: @warning_1;
 }
-MAlert[type=error]{
+MAlert[dayu_type=error]{
     border-color: @error_3;
     background-color: @error_1;
 }
@@ -320,7 +320,7 @@ MBadge > QPushButton{
     margin: 0;
 }
 
-MBadge > QPushButton[dot=true]{
+MBadge[dayu_dot=true] > QPushButton{
     min-height:8px;
     max-height:8px;
     min-width:8px;
@@ -347,40 +347,40 @@ MToolButton:disabled{
     background-color: @disable_color;
 }
 
-MToolButton[type=taobao]{
+MToolButton[dayu_type=taobao]{
     border-radius: 2px;
     border: 1px solid @border_color;
 }
-MToolButton[type=taobao]:checked{
+MToolButton[dayu_type=taobao]:checked{
     color: @primary_color;
     border: 2px solid @primary_color;
 }
 
-MToolButton[type=bar]{
+MToolButton[dayu_type=bar]{
     border-radius: 0;
     padding: 2px 10px;
     border:none;
 }
-MToolButton[type=bar]:hover{
+MToolButton[dayu_type=bar]:hover{
     color: @primary_color;
     background-color:@background_selected_color;
 }
-MToolButton[type=bar]:checked{
+MToolButton[dayu_type=bar]:checked{
     color: @primary_color;
     background-color:@background_selected_color;
 }
 
-MToolButton[type=line]{
+MToolButton[dayu_type=line]{
     border-radius: 0;
     padding: 6px 10px;
     border-color: transparent;
 }
-MToolButton[type=line]:hover{
+MToolButton[dayu_type=line]:hover{
     color: @primary_5;
     border-color: @primary_5;
     border-width: 0 0 2px 0;
 }
-MToolButton[type=line]:checked{
+MToolButton[dayu_type=line]:checked{
     color: @primary_color;
     border-style: solid;
     border-color: @primary_color;
@@ -388,15 +388,15 @@ MToolButton[type=line]:checked{
 }
 
 
-MToolButton[type=icon]:checked{
+MToolButton[dayu_type=icon]:checked{
     border:1px solid @primary_color;
 }
 
-MToolButton[type=breadcrumb]:hover{
+MToolButton[dayu_type=breadcrumb]:hover{
     color: @primary_5;
     border: none;
 }
-MToolButton[type=breadcrumb]:pressed{
+MToolButton[dayu_type=breadcrumb]:pressed{
     color: @primary_7;
 }
 
@@ -538,17 +538,71 @@ MPushButton {
     font-weight: 400;
     border-radius: 5%;
     padding: 1% 10%;
+}
+
+MPushButton[dayu_type=default]{
     background-color: @background_out_color;
     border: 1px solid @border_color;
 }
-
-MPushButton:hover{
+MPushButton[dayu_type=default]:hover{
     color: @primary_5;
     border-color: @primary_5;
 }
-MPushButton:pressed{
+MPushButton[dayu_type=default]:pressed{
     color: @primary_7;
     border-color: @primary_7;
+}
+
+
+MPushButton[dayu_type=primary]{
+    border: none;
+    color: @text_color_inverse;
+    background-color: @primary_color;
+}
+MPushButton[dayu_type=primary]:hover{
+    background-color: @primary_5;
+}
+MPushButton[dayu_type=primary]:pressed{
+    background-color: @primary_7;
+}
+
+
+MPushButton[dayu_type=success]{
+    border: none;
+    color: @text_color_inverse;
+    background-color: @success_6;
+}
+MPushButton[dayu_type=success]:hover{
+    background-color: @success_5;
+}
+MPushButton[dayu_type=success]:pressed{
+    background-color: @success_7;
+}
+
+
+MPushButton[dayu_type=warning]{
+    border: none;
+    color: @text_color_inverse;
+    background-color: @warning_6;
+}
+MPushButton[dayu_type=warning]:hover{
+    background-color: @warning_5;
+}
+MPushButton[dayu_type=warning]:pressed{
+    background-color: @warning_7;
+}
+
+
+MPushButton[dayu_type=danger]{
+    border: none;
+    color: white;
+    background-color: @error_6;
+}
+MPushButton[dayu_type=danger]:hover{
+    background-color: @error_5;
+}
+MPushButton[dayu_type=danger]:pressed{
+    background-color: @error_7;
 }
 
 MPushButton[combine=horizontal]{
@@ -556,59 +610,6 @@ MPushButton[combine=horizontal]{
 }
 MPushButton[combine=vertical]{
     border-radius: 0;
-
-}
-
-
-MPushButton[type=primary]{
-    border: none;
-    color: @text_color_inverse;
-    background-color: @primary_color;
-}
-MPushButton[type=primary]:hover{
-    background-color: @primary_5;
-}
-MPushButton[type=primary]:pressed{
-    background-color: @primary_7;
-}
-
-
-MPushButton[type=success]{
-    border: none;
-    color: @text_color_inverse;
-    background-color: @success_6;
-}
-MPushButton[type=success]:hover{
-    background-color: @success_5;
-}
-MPushButton[type=success]:pressed{
-    background-color: @success_7;
-}
-
-
-MPushButton[type=warning]{
-    border: none;
-    color: @text_color_inverse;
-    background-color: @warning_6;
-}
-MPushButton[type=warning]:hover{
-    background-color: @warning_5;
-}
-MPushButton[type=warning]:pressed{
-    background-color: @warning_7;
-}
-
-
-MPushButton[type=error]{
-    border: none;
-    color: white;
-    background-color: @error_6;
-}
-MPushButton[type=error]:hover{
-    background-color: @error_5;
-}
-MPushButton[type=error]:pressed{
-    background-color: @error_7;
 }
 
 MPushButton:disabled{
@@ -729,51 +730,57 @@ MComboBox:hover{
 MLabel{
     padding: 2px;
     background-color: transparent;
+    font-size: @font_size_base@unit;
     color: @primary_text_color;
+    font-weight: 400;
 }
-MLabel[type=h1]{
+MLabel[dayu_level="1"]{
     font-size: @h1_size@unit;
     font-weight: 500;
     color: @title_color;
 }
-MLabel[type=h2]{
+MLabel[dayu_level="2"]{
     font-size: @h2_size@unit;
     font-weight: 500;
     color: @title_color;
 }
-MLabel[type=h3]{
+MLabel[dayu_level="3"]{
     font-size: @h3_size@unit;
     font-weight: 500;
     color: @title_color;
 }
-MLabel[type=h4]{
+MLabel[dayu_level="4"]{
     font-size: @h4_size@unit;
     font-weight: 500;
     color: @title_color;
 }
-MLabel[type=text]{
-    font-size: @font_size_base@unit;
-    font-weight: 400;
-    color: @primary_text_color;
+
+
+MLabel[dayu_underline=true]{
+    text-decoration: underline;
+}
+MLabel[dayu_delete=true]{
+    text-decoration: line-through;
+}
+MLabel[dayu_strong=true]{
+    font-weight: bold;
+}
+MLabel[dayu_code=true]{
+    background-color: @background_out_color;
+    border: 1px solid @border_color;
+}
+MLabel[dayu_mark=true]{
+    background-color: @warning_1;
 }
 
-MLabel[type=help]{
-    font-size: @font_size_base@unit;
-    font-weight: 400;
+MLabel[dayu_type=danger]{
+    color: @error_6;
+}
+MLabel[dayu_type=warning]{
+    color: @warning_6;
+}
+MLabel[dayu_type=secondary]{
     color: @secondary_text_color;
-}
-MLabel[link=true]{
-    color: @primary_color;
-}
-MLabel[link=true]:hover{
-    color: @primary_5;
-}
-MLabel[link=true]:pressed{
-    color: @primary_7;
-}
-
-MLabel[error=true]{
-    color: @error_5;
 }
 
 MLabel:disabled{
@@ -815,10 +822,10 @@ MLineEdit:focus{
     border: 1px solid @primary_color;
 }
 
-MLineEdit[type=error]{
+MLineEdit[dayu_type=error]{
     color: @error_7;
 }
-MLineEdit[type=error]:focus{
+MLineEdit[dayu_type=error]:focus{
     border: 1px solid @error_5;
 }
 
@@ -1166,7 +1173,8 @@ MDockWidget::close-button:hover, MDockWidget::float-button:hover {
 }
 
 MProgressBar {
-    color: #555;
+    font-size: @font_size_small;
+    color: @primary_text_color;
     border: 0 solid @border_color;
     background-color: @border_color;
     min-height: 12px;
