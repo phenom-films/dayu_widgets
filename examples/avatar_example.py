@@ -8,7 +8,7 @@
 
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.divider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
+from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets import dayu_theme

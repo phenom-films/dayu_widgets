@@ -9,7 +9,7 @@
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
-from dayu_widgets.loading import MLoading
+from dayu_widgets.loading import MLoading, MLoadingWrapper
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import QWidget, QHBoxLayout, QVBoxLayout
 
@@ -53,6 +53,9 @@ class LoadingExample(QWidget, MFieldMixin):
         main_lay.addLayout(size_lay)
         main_lay.addWidget(MDivider('different color'))
         main_lay.addLayout(color_lay)
+        main_lay.addWidget(MDivider('loading wrapper'))
+        main_lay.addLayout(wrapper_lay)
+
         main_lay.addStretch()
         self.setLayout(main_lay)
 
