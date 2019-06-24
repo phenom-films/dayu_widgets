@@ -9,7 +9,6 @@
 Some helper functions for handling color and formatter.
 """
 
-
 import collections
 import datetime as dt
 import os
@@ -348,3 +347,16 @@ def overflow_format(num, overflow):
         raise ValueError("Input argument 'overflow' should be int type, "
                          "but get {}".format(type(overflow)))
     return str(num) if num <= overflow else '{}+'.format(overflow)
+
+
+def get_percent(value, minimum, maximum):
+    """
+    Get a given value's percent in the range.
+    :param value: value
+    :param minimum: the range's minimum value
+    :param maximum: the range's maximum value
+    :return: percent float
+    """
+    if minimum == maximum:
+        raise ValueError('minimum should not be equal to maximum.')
+    return max(0, min(100, (value - minimum) * 100 / (maximum - minimum)))
