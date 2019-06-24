@@ -358,5 +358,9 @@ def get_percent(value, minimum, maximum):
     :return: percent float
     """
     if minimum == maximum:
-        raise ValueError('minimum should not be equal to maximum.')
+        # reference from qprogressbar.cpp
+        # If max and min are equal and we get this far, it means that the
+        # progress bar has one step and that we are on that step. Return
+        # 100% here in order to avoid division by zero further down.
+        return 100
     return max(0, min(100, (value - minimum) * 100 / (maximum - minimum)))
