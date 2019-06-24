@@ -51,7 +51,7 @@ class MProgressCircle(QProgressBar):
         :param widget: QWidget
         :return: None
         """
-        self._default_label.setVisible(False)
+        self.setTextVisible(False)
         self._main_lay.addWidget(widget)
 
     def get_dayu_width(self):
@@ -92,8 +92,10 @@ class MProgressCircle(QProgressBar):
 
     def paintEvent(self, event):
         """Override QProgressBar's paintEvent."""
-        self._default_label.setText(self.text())
-        self._default_label.setVisible(self.isTextVisible())
+        if self.text() != self._default_label.text():
+            self._default_label.setText(self.text())
+        if self.isTextVisible() != self._default_label.isVisible():
+            self._default_label.setVisible(self.isTextVisible())
 
         percent = utils.get_percent(self.value(), self.minimum(), self.maximum())
         total_width = self.get_dayu_width()
