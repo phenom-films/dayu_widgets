@@ -6,16 +6,16 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MCarousel import MCarousel
-from dayu_widgets.MSwitch import MSwitch
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MSlider import MSlider
+from dayu_widgets.carousel import MCarousel
+from dayu_widgets.switch import MSwitch
+from dayu_widgets.label import MLabel
+from dayu_widgets.slider import MSlider
 from dayu_widgets.qt import *
 
 
-class MCarouselTest(QWidget):
+class CarouselExample(QWidget):
     def __init__(self, parent=None):
-        super(MCarouselTest, self).__init__(parent)
+        super(CarouselExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     from dayu_widgets import dayu_theme
 
     app = QApplication(sys.argv)
-    test = MCarouselTest()
+    test = CarouselExample()
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())

@@ -5,18 +5,18 @@
 # Date  : 2019.3
 # Email : muyanru345@163.com
 ###################################################################
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MMessage import MMessage
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MMenuTabWidget import MMenuTabWidget
+from dayu_widgets.divider import MDivider
+from dayu_widgets.message import MMessage
+from dayu_widgets.label import MLabel
+from dayu_widgets.menu_tab_widget import MMenuTabWidget
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
 import functools
 
 
-class MMenuTabWidgetTest(QWidget):
+class MenuTabWidgetExample(QWidget):
     def __init__(self, parent=None):
-        super(MMenuTabWidgetTest, self).__init__(parent)
+        super(MenuTabWidgetExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -63,7 +63,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MMenuTabWidgetTest()
+    test = MenuTabWidgetExample()
     dayu_theme.apply(test)
 
     test.show()

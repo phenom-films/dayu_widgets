@@ -6,15 +6,15 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MBrowser import MDragFileButton
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MSequenceFile import MSequenceFile
+from dayu_widgets.browser import MDragFileButton
+from dayu_widgets.divider import MDivider
+from dayu_widgets.sequence_file import MSequenceFile
 from dayu_widgets.qt import *
 
 
-class MSequenceFileTest(QWidget):
+class SequenceFileExample(QWidget):
     def __init__(self, parent=None):
-        super(MSequenceFileTest, self).__init__(parent)
+        super(SequenceFileExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MSequenceFileTest()
+    test = SequenceFileExample()
     from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()

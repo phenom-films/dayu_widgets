@@ -8,18 +8,18 @@
 
 import random
 
-from dayu_widgets.MComboBox import MComboBox
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MMenu import MMenu
+from dayu_widgets.combo_box import MComboBox
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.label import MLabel
+from dayu_widgets.menu import MMenu
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
 
 
-class MComBoxTest(QWidget, MFieldMixin):
+class ComboBoxExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MComBoxTest, self).__init__(parent)
+        super(ComboBoxExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -126,7 +126,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MComBoxTest()
+    test = ComboBoxExample()
     from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()

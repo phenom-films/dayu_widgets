@@ -1,10 +1,10 @@
 import importlib
 
-from dayu_widgets.MButtonGroup import MToolButtonGroup
-from dayu_widgets.MDockWidget import MDockWidget
+from dayu_widgets.button_group import MToolButtonGroup
+from dayu_widgets.dock_widget import MDockWidget
 from dayu_widgets import dayu_theme
-from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.qt import *
+from dayu_widgets.tool_button import MToolButton
+from dayu_widgets.qt import QMainWindow, QTextEdit, QStackedWidget, QWidget, Qt, QVBoxLayout, QScrollArea
 import os
 
 
@@ -14,11 +14,12 @@ def get_test_widget():
         if i.startswith('__') or (not i.endswith('.py')) or i == 'demo.py':
             continue
         name = i.split('.')[0]
-        module_name = 'dayu_widgets.examples.{component}'.format(component=name)
-        module = importlib.import_module(module_name, name)
-        if hasattr(module, name):
+        module_name = 'examples.{component}'.format(component=name)
+        class_name = ''.join(map(lambda x: x.title(), name.split('_')))
+        module = importlib.import_module(module_name, class_name)
+        if hasattr(module, class_name):
             with open('./{}.py'.format(name)) as f:
-                result.append((name, getattr(module, name), f.readlines()))
+                result.append((name, getattr(module, class_name), f.readlines()))
     return result
 
 
@@ -41,7 +42,7 @@ class MDemo(QMainWindow):
         list_widget.sig_checked_changed.connect(self.slot_change_widget)
         data_list = []
         for index, (name, cls, code) in enumerate(get_test_widget()):
-            data_list.append({'text': name[:-4], 'data': code, 'checkable': True})
+            data_list.append({'text': name[:-8], 'data': code, 'checkable': True})
             widget = cls()
             widget.setProperty('code', code)
             self.stacked_widget.addWidget(widget)
@@ -72,6 +73,7 @@ class MDemo(QMainWindow):
 
 if __name__ == '__main__':
     import sys
+    from dayu_widgets.qt import QApplication
 
     app = QApplication(sys.argv)
     test = MDemo()

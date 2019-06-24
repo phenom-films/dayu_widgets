@@ -6,15 +6,15 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MPage import MPage
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.page import MPage
 from dayu_widgets.qt import *
 
 
-class MPageTest(QWidget, MFieldMixin):
+class PageExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MPageTest, self).__init__(parent)
+        super(PageExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     from dayu_widgets import dayu_theme
 
     app = QApplication(sys.argv)
-    test = MPageTest()
+    test = PageExample()
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())

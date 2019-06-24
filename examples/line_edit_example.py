@@ -6,21 +6,21 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MLineEdit import MLineEdit
-from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.MMessage import MMessage
-from dayu_widgets.MComboBox import MComboBox
-from dayu_widgets.MMenu import MMenu
-from dayu_widgets.MLabel import MLabel
+from dayu_widgets.divider import MDivider
+from dayu_widgets.line_edit import MLineEdit
+from dayu_widgets.push_button import MPushButton
+from dayu_widgets.tool_button import MToolButton
+from dayu_widgets.message import MMessage
+from dayu_widgets.combo_box import MComboBox
+from dayu_widgets.menu import MMenu
+from dayu_widgets.label import MLabel
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
 
 
-class MLineEditTest(QWidget):
+class LineEditExample(QWidget):
     def __init__(self, parent=None):
-        super(MLineEditTest, self).__init__(parent)
+        super(LineEditExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -38,7 +38,8 @@ class MLineEditTest(QWidget):
         line_edit_icon.add_suffix_widget(tool_button)
 
         line_edit_button = MLineEdit(text='Beijing', size=dayu_theme.small)
-        push_button = MPushButton(text='Go', size=dayu_theme.small, type='primary')
+        push_button = MPushButton.primary(text='Go')
+        push_button.set_dayu_size(dayu_theme.small)
         push_button.setFixedWidth(40)
         line_edit_button.add_suffix_widget(push_button)
 
@@ -98,7 +99,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MLineEditTest()
+    test = LineEditExample()
     from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()

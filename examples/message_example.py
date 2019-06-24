@@ -8,29 +8,33 @@
 
 import functools
 
-from dayu_widgets.MButtonGroup import MPushButtonGroup
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MMessage import MMessage
-from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.button_group import MPushButtonGroup
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.label import MLabel
+from dayu_widgets.message import MMessage
+from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import *
 
 
-class MMessageTest(QWidget, MFieldMixin):
+class MessageExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MMessageTest, self).__init__(parent)
+        super(MessageExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
-        button3 = MPushButton(text='Normal Message', type=MPushButton.PrimaryType)
-        button4 = MPushButton(text='Success Message', type=MPushButton.SuccessType)
-        button5 = MPushButton(text='Warning Message', type=MPushButton.WarningType)
-        button6 = MPushButton(text='Error Message', type=MPushButton.ErrorType)
-        button3.clicked.connect(functools.partial(self.slot_show_message, MMessage.info, {'text': u'这是一条普通提示'}))
-        button4.clicked.connect(functools.partial(self.slot_show_message, MMessage.success, {'text': u'恭喜你，成功啦！'}))
-        button5.clicked.connect(functools.partial(self.slot_show_message, MMessage.warning, {'text': u'我警告你哦！'}))
-        button6.clicked.connect(functools.partial(self.slot_show_message, MMessage.error, {'text': u'失败了！'}))
+        button3 = MPushButton.primary(text='Normal Message')
+        button4 = MPushButton.success(text='Success Message')
+        button5 = MPushButton.warning(text='Warning Message')
+        button6 = MPushButton.danger(text='Error Message')
+        button3.clicked.connect(
+            functools.partial(self.slot_show_message, MMessage.info, {'text': u'这是一条普通提示'}))
+        button4.clicked.connect(
+            functools.partial(self.slot_show_message, MMessage.success, {'text': u'恭喜你，成功啦！'}))
+        button5.clicked.connect(
+            functools.partial(self.slot_show_message, MMessage.warning, {'text': u'我警告你哦！'}))
+        button6.clicked.connect(
+            functools.partial(self.slot_show_message, MMessage.error, {'text': u'失败了！'}))
 
         sub_lay1 = QHBoxLayout()
         sub_lay1.addWidget(button3)
@@ -96,7 +100,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MMessageTest()
+    test = MessageExample()
     from dayu_widgets import dayu_theme
 
     dayu_theme.apply(test)

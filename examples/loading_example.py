@@ -54,7 +54,7 @@ class LoadingExample(QWidget, MFieldMixin):
         main_lay.addWidget(MDivider('different color'))
         main_lay.addLayout(color_lay)
         main_lay.addWidget(MDivider('loading wrapper'))
-        main_lay.addLayout(wrapper_lay)
+        # main_lay.addLayout(wrapper_lay)
 
         main_lay.addStretch()
         self.setLayout(main_lay)

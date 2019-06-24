@@ -9,7 +9,7 @@
 import functools
 
 from dayu_widgets import dayu_theme
-from dayu_widgets.MButtonGroup import MPushButtonGroup
+from dayu_widgets.button_group import MPushButtonGroup
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel

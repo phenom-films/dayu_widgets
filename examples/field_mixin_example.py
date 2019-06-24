@@ -6,16 +6,16 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MLineEdit import MLineEdit
-from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.label import MLabel
+from dayu_widgets.line_edit import MLineEdit
+from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import *
 
 
-class MFieldMixinTest(QWidget, MFieldMixin):
+class FieldMixinExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MFieldMixinTest, self).__init__(parent)
+        super(FieldMixinExample, self).__init__(parent)
         self.register_field('my_name', 'xiaoming')
         self.register_field('thumbnail_path', '')
         self.register_field('is_enable', True)
@@ -25,16 +25,16 @@ class MFieldMixinTest(QWidget, MFieldMixin):
         self.register_field('email', self.computed_email)
 
         name2_label = MLabel()
-        email_label = MLabel(link=True)
+        email_label = MLabel()
         thumbnail_label = MLabel()
-        enable_button = MPushButton(type=MPushButton.PrimaryType)
+        enable_button = MPushButton.primary()
         self.bind('my_name', name2_label, 'text')
         self.bind('email', email_label, 'text')
         self.bind('is_enable', enable_button, 'enabled')
         self.bind('thumbnail_pix_map', thumbnail_label, 'pixmap')
         self.bind('str_enable', enable_button, 'text')
 
-        button = MPushButton(text='Change Data', type=MPushButton.PrimaryType)
+        button = MPushButton.primary(text='Change Data')
         button.clicked.connect(self.slot_change_data)
         main_lay = QGridLayout()
         main_lay.addWidget(MLabel('Avatar:'), 0, 0)
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MFieldMixinTest()
+    test = FieldMixinExample()
     from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()

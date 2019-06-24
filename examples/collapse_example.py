@@ -6,13 +6,13 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MCollapse import MCollapse
-from dayu_widgets.MLabel import MLabel
+from dayu_widgets.collapse import MCollapse
+from dayu_widgets.label import MLabel
 from dayu_widgets.qt import *
 
-class MCollapseTest(QWidget):
+class CollapseExample(QWidget):
     def __init__(self, parent=None):
-        super(MCollapseTest, self).__init__(parent)
+        super(CollapseExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MCollapseTest()
+    test = CollapseExample()
     from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()

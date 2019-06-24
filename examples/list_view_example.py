@@ -5,19 +5,18 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
-import dayu_widgets.examples._mock_data as mock
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MItemModel import MTableModel, MSortFilterModel
-from dayu_widgets.MItemView import MListView
-from dayu_widgets.MLineEdit import MLineEdit
-from dayu_widgets.qt import *
+import examples._mock_data as mock
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.item_model import MTableModel, MSortFilterModel
+from dayu_widgets.item_view import MListView
+from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets import dayu_theme
+from dayu_widgets.qt import *
 
-
-class MListViewTest(QWidget, MFieldMixin):
+class ListViewExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MListViewTest, self).__init__(parent)
+        super(ListViewExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -57,7 +56,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MListViewTest()
+    test = ListViewExample()
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())

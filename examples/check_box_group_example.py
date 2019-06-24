@@ -7,17 +7,17 @@
 ###################################################################
 
 
-from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets.MButtonGroup import MCheckBoxGroup
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MLabel import MLabel
+from dayu_widgets.push_button import MPushButton
+from dayu_widgets.button_group import MCheckBoxGroup
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.label import MLabel
 from dayu_widgets.qt import *
 
 
-class MCheckBoxGroupTest(QWidget, MFieldMixin):
+class CheckBoxGroupExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MCheckBoxGroupTest, self).__init__(parent)
+        super(CheckBoxGroupExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MCheckBoxGroupTest()
+    test = CheckBoxGroupExample()
     from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()

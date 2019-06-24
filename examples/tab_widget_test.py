@@ -5,10 +5,10 @@
 # Date  : 2019.3
 # Email : muyanru345@163.com
 ###################################################################
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MMessage import MMessage
-from dayu_widgets.MTabWidget import MTabWidget
+from dayu_widgets.divider import MDivider
+from dayu_widgets.label import MLabel
+from dayu_widgets.message import MMessage
+from dayu_widgets.tab_widget import MTabWidget
 from dayu_widgets.qt import *
 
 

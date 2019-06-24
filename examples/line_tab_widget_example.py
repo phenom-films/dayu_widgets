@@ -5,16 +5,16 @@
 # Date  : 2019.3
 # Email : muyanru345@163.com
 ###################################################################
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MMessage import MMessage
-from dayu_widgets.MLineTabWidget import MLineTabWidget
+from dayu_widgets.divider import MDivider
+from dayu_widgets.label import MLabel
+from dayu_widgets.message import MMessage
+from dayu_widgets.line_tab_widget import MLineTabWidget
 from dayu_widgets.qt import *
 
 
-class MLineTabWidgetTest(QWidget):
+class LineTabWidgetExample(QWidget):
     def __init__(self, parent=None):
-        super(MLineTabWidgetTest, self).__init__(parent)
+        super(LineTabWidgetExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -62,7 +62,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MLineTabWidgetTest()
+    test = LineTabWidgetExample()
 
     from dayu_widgets import dayu_theme
 

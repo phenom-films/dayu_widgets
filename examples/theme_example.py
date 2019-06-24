@@ -8,16 +8,16 @@
 
 import functools
 
-from dayu_widgets.MButtonGroup import MRadioButtonGroup
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.button_group import MRadioButtonGroup
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import *
 
 
-class MRadioButtonGroupTest(QWidget, MFieldMixin):
+class ThemeExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MRadioButtonGroupTest, self).__init__(parent)
+        super(ThemeExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -27,30 +27,30 @@ class MRadioButtonGroupTest(QWidget, MFieldMixin):
         radio_grp_1_lay.addWidget(radio_group_h)
         radio_grp_1_lay.addStretch()
 
-        app_data = [
+        color_data = [
             {'text': 'Maya', 'icon': MIcon('app-maya.png')},
             {'text': 'Nuke', 'icon': MIcon('app-nuke.png')},
             {'text': 'Houdini', 'icon': MIcon('app-houdini.png')}
         ]
 
         radio_group_v = MRadioButtonGroup(orientation=Qt.Vertical)
-        radio_group_v.set_button_list(app_data)
+        radio_group_v.set_button_list(color_data)
 
         radio_group_button_h = MRadioButtonGroup()
-        radio_group_button_h.set_button_list(app_data)
+        radio_group_button_h.set_button_list(color_data)
         radio_grp_h_lay = QHBoxLayout()
         radio_grp_h_lay.addWidget(radio_group_button_h)
         radio_grp_h_lay.addStretch()
 
         radio_group_button_v = MRadioButtonGroup(orientation=Qt.Vertical)
-        radio_group_button_v.set_button_list(app_data)
+        radio_group_button_v.set_button_list(color_data)
 
         self.register_field('value1', -1)
-        self.register_field('value1_text', functools.partial(self.value_to_text, 'value1', app_data))
+        self.register_field('value1_text', functools.partial(self.value_to_text, 'value1', color_data))
         self.register_field('value2', 0)
-        self.register_field('value2_text', functools.partial(self.value_to_text, 'value2', app_data))
+        self.register_field('value2_text', functools.partial(self.value_to_text, 'value2', color_data))
         self.register_field('value3', -1)
-        self.register_field('value3_text', functools.partial(self.value_to_text, 'value3', app_data))
+        self.register_field('value3_text', functools.partial(self.value_to_text, 'value3', color_data))
 
         button1 = MPushButton(text='Group 1')
         button2 = MPushButton(text='Group 2')
@@ -94,8 +94,9 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MRadioButtonGroupTest()
+    test = ThemeExample()
     from dayu_widgets import dayu_theme
+
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())

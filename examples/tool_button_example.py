@@ -6,17 +6,17 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MButtonGroup import MToolButtonGroup
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
+from dayu_widgets.button_group import MToolButtonGroup
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets import dayu_theme
-from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.qt import *
 
 
-class MToolButtonTest(QWidget, MFieldMixin):
+class ToolButtonExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MToolButtonTest, self).__init__(parent)
+        super(ToolButtonExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -91,7 +91,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MToolButtonTest()
+    test = ToolButtonExample()
     from dayu_widgets import dayu_theme
 
     dayu_theme.apply(test)

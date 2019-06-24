@@ -6,27 +6,28 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MBrowser import MClickBrowserFilePushButton, MClickBrowserFileToolButton, \
+from dayu_widgets.browser import MClickBrowserFilePushButton, MClickBrowserFileToolButton, \
     MClickBrowserFolderPushButton, MClickBrowserFolderToolButton, \
     MDragFileButton, MDragFolderButton
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.label import MLabel
+from dayu_widgets.push_button import MPushButton
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
 
 
-class MBrowserTest(QWidget, MFieldMixin):
+class BrowserExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MBrowserTest, self).__init__(parent)
+        super(BrowserExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
-        browser_1 = MClickBrowserFilePushButton(size=dayu_theme.small, text='Browser File (Small)')
-        browser_2 = MClickBrowserFolderPushButton(size=dayu_theme.medium, text='Browser Folder (Default)')
-        browser_3 = MClickBrowserFilePushButton.primary(size=dayu_theme.large,
-                                                text='Browser File (Large)')
+        browser_1 = MClickBrowserFilePushButton(text='Browser File (Small)')
+        browser_1.set_dayu_size(dayu_theme.small)
+        browser_2 = MClickBrowserFolderPushButton(text='Browser Folder (Default)')
+        browser_3 = MClickBrowserFilePushButton.primary(text='Browser File (Large)')
+        browser_3.set_dayu_size(dayu_theme.large)
         lay_1 = QHBoxLayout()
         lay_1.addWidget(browser_1)
         lay_1.addWidget(browser_2)
@@ -86,7 +87,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MBrowserTest()
+    test = BrowserExample()
     from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()

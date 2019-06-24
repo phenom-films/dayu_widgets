@@ -8,17 +8,17 @@
 
 import functools
 
-from dayu_widgets.MBreadcrumb import MBreadcrumb
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MMessage import MMessage
+from dayu_widgets.breadcrumb import MBreadcrumb
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.message import MMessage
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
 
 
-class MBreadcrumbTest(QWidget, MFieldMixin):
+class BreadcrumbExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MBreadcrumbTest, self).__init__(parent)
+        super(BreadcrumbExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MBreadcrumbTest()
+    test = BreadcrumbExample()
     from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()

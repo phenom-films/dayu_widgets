@@ -7,17 +7,16 @@
 ###################################################################
 import functools
 
-import dayu_widgets.examples._mock_data as mock
+import examples._mock_data as mock
 from dayu_widgets import dayu_theme
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MItemModel import MTableModel, MSortFilterModel
-from dayu_widgets.MItemView import MTableView
-from dayu_widgets.MLineEdit import MLineEdit
-from dayu_widgets.MLoading import MLoadingWrapper
-from dayu_widgets.MPushButton import MPushButton
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.item_model import MTableModel, MSortFilterModel
+from dayu_widgets.item_view import MTableView
+from dayu_widgets.line_edit import MLineEdit
+from dayu_widgets.loading import MLoadingWrapper
+from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import *
-
 
 def h(*args):
     cls = args[0]
@@ -45,9 +44,9 @@ class MFetchDataThread(QThread):
         time.sleep(4)
 
 
-class MTableViewTest(QWidget, MFieldMixin):
+class TableViewExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MTableViewTest, self).__init__(parent)
+        super(TableViewExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -63,8 +62,8 @@ class MTableViewTest(QWidget, MFieldMixin):
         thread = MFetchDataThread(self)
 
         self.loading_wrapper = MLoadingWrapper(widget=table_default, loading=False)
-        thread.started.connect(functools.partial(self.loading_wrapper.set_loading, True))
-        thread.finished.connect(functools.partial(self.loading_wrapper.set_loading, False))
+        thread.started.connect(functools.partial(self.loading_wrapper.set_dayu_loading, True))
+        thread.finished.connect(functools.partial(self.loading_wrapper.set_dayu_loading, False))
         thread.finished.connect(functools.partial(table_default.setModel, model_sort))
         button = MPushButton(text='Get Data: 4s')
         button.clicked.connect(thread.start)
@@ -105,7 +104,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MTableViewTest()
+    test = TableViewExample()
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())

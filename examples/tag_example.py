@@ -6,13 +6,13 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MTag import MTag, MCheckableTag, MNewTag
-from dayu_widgets.MFlowLayout import MFlowLayout
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MLabel import MLabel
+from dayu_widgets.tag import MTag, MCheckableTag, MNewTag
+from dayu_widgets.flow_layout import MFlowLayout
+from dayu_widgets.divider import MDivider
+from dayu_widgets.label import MLabel
 from dayu_widgets.qt import *
 from dayu_widgets import dayu_theme
-from dayu_widgets.MMessage import MMessage
+from dayu_widgets.message import MMessage
 
 import functools
 

@@ -9,13 +9,13 @@
 from dayu_widgets.spin_box import MSpinBox
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.badge import MBadge
-from dayu_widgets.MComboBox import MComboBox
+from dayu_widgets.combo_box import MComboBox
 from dayu_widgets.divider import MDivider
-from dayu_widgets.MFieldMixin import MFieldMixin
+from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
-from dayu_widgets.MMenu import MMenu
+from dayu_widgets.menu import MMenu
 from dayu_widgets import dayu_theme
-from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.qt import QWidget, QHBoxLayout, MIcon, MPixmap, QVBoxLayout
 
 
