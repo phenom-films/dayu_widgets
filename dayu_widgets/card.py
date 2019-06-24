@@ -6,10 +6,10 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.MAvatar import MAvatar
-from dayu_widgets.MDivider import MDivider
+from dayu_widgets.label import MLabel
+from dayu_widgets.tool_button import MToolButton
+from dayu_widgets.avatar import MAvatar
+from dayu_widgets.divider import MDivider
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import property_mixin, hover_shadow_mixin, cursor_mixin
 from dayu_widgets.qt import *
@@ -37,7 +37,7 @@ class MCard(QWidget):
         self._title_layout.addWidget(self._title_label)
         self._title_layout.addStretch()
         if extra:
-            self._extra_button = MLabel(text=extra, link=True)
+            self._extra_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('more.svg'))
             self._title_layout.addWidget(self._extra_button)
 
         self._content_layout = QVBoxLayout()
@@ -51,6 +51,9 @@ class MCard(QWidget):
         self._main_lay.addLayout(self._content_layout)
         self.setLayout(self._main_lay)
 
+    def get_more_button(self):
+        return self._extra_button
+
     def set_widget(self, widget):
         self._content_layout.addWidget(widget)
 
@@ -58,36 +61,67 @@ class MCard(QWidget):
 @hover_shadow_mixin
 @cursor_mixin
 class MMeta(QWidget):
-    def __init__(self, cover=None, avatar=None, title=None, description=None, parent=None):
+    def __init__(self, cover=None, avatar=None, title=None, description=None, extra=False, parent=None):
         super(MMeta, self).__init__(parent)
-
+        self.setAttribute(Qt.WA_StyledBackground)
+        # self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         self._cover_label = QLabel()
         self._avatar = MAvatar()
         self._title_label = MLabel.h4()
+        # self._title_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.MinimumExpanding)
         self._description_label = MLabel.help()
-        content_lay = QHBoxLayout()
-        text_lay = QVBoxLayout()
-        text_lay.addWidget(self._title_label)
-        text_lay.addWidget(self._description_label)
-        text_lay.addStretch()
-        content_lay.addWidget(self._avatar)
-        content_lay.addLayout(text_lay)
-        content_lay.addStretch()
+        # self._description_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.MinimumExpanding)
+        self._description_label.setWordWrap(True)
+        self._title_layout = QHBoxLayout()
+        self._title_layout.addWidget(self._title_label)
+        self._title_layout.addStretch()
+        if extra:
+            self._extra_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('more.svg'))
+            self._title_layout.addWidget(self._extra_button)
+
+        content_lay = QFormLayout()
+        content_lay.setContentsMargins(5, 5, 5, 5)
+        content_lay.addRow(self._avatar, self._title_layout)
+        content_lay.addRow(self._description_label)
 
         self._button_layout = QHBoxLayout()
 
         main_lay = QVBoxLayout()
+        main_lay.setSpacing(0)
+        main_lay.setContentsMargins(1, 1, 1, 1)
         main_lay.addWidget(self._cover_label)
         main_lay.addLayout(content_lay)
-        main_lay.addWidget(self._button_layout)
+        main_lay.addLayout(self._button_layout)
+        main_lay.addStretch()
         self.setLayout(main_lay)
+        self._cover_label.setFixedSize(QSize(200, 200))
+        # self.setFixedWidth(200)
+
+    def get_more_button(self):
+        return self._extra_button
 
     def setup_data(self, data_dict):
         if data_dict.get('title'):
             self._title_label.setText(data_dict.get('title'))
+            self._title_label.setVisible(True)
+        else:
+            self._title_label.setVisible(False)
+
         if data_dict.get('description'):
             self._description_label.setText(data_dict.get('description'))
+            self._description_label.setVisible(True)
+        else:
+            self._description_label.setVisible(False)
+
         if data_dict.get('avatar'):
-            self._avatar.set_image(data_dict.get('avatar'))
+            self._avatar.set_dayu_image(data_dict.get('avatar'))
+            self._avatar.setVisible(True)
+        else:
+            self._avatar.setVisible(False)
+
         if data_dict.get('cover'):
-            self._avatar.set_image(data_dict.get('avatar'))
+            fixed_height = self._cover_label.width()
+            self._cover_label.setPixmap(data_dict.get('cover').scaledToWidth(fixed_height, Qt.SmoothTransformation))
+            self._cover_label.setVisible(True)
+        else:
+            self._cover_label.setVisible(False)

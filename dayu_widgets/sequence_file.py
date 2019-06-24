@@ -9,10 +9,10 @@
 import functools
 
 from dayu_path import DayuPath
-from dayu_widgets.MCheckBox import MCheckBox
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MLineEdit import MLineEdit
+from dayu_widgets.check_box import MCheckBox
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.label import MLabel
+from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
@@ -38,8 +38,8 @@ class MSequenceFile(QWidget, MFieldMixin):
         self._is_sequence_check_box.toggled.connect(functools.partial(self.setProperty, 'sequence'))
         self._is_sequence_check_box.toggled.connect(self.sig_is_sequence_changed)
 
-        self._info_label = MLabel(type=MLabel.HelpType)
-        self._error_label = MLabel(type=MLabel.HelpType)
+        self._info_label = MLabel.secondary()
+        self._error_label = MLabel.secondary()
         self._error_label.setProperty('error', True)
         self._error_label.setMinimumWidth(100)
         self._error_label.set_elide_mode(Qt.ElideMiddle)

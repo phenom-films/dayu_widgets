@@ -6,10 +6,12 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets.MToolButton import MToolButton
+import os
+
+from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.mixin import property_mixin, cursor_mixin
-from dayu_widgets.qt import *
+from dayu_widgets.push_button import MPushButton
+from dayu_widgets.qt import QFileDialog, Slot, Signal, MIcon, Qt, QToolButton, QSize, QSizePolicy
 
 
 @Slot()
@@ -18,12 +20,14 @@ def _slot_browser_file(self):
     filter_list = 'File(%s)' % (' '.join(['*' + e for e in self.property('format')])) \
         if self.property('format') else 'Any File(*)'
     if multi:
-        r_files, _ = QFileDialog.getOpenFileNames(self, 'Browser File', self.property('path'), filter_list)
+        r_files, _ = QFileDialog.getOpenFileNames(self, 'Browser File', self.property('path'),
+                                                  filter_list)
         if r_files:
             self.sig_files_changed.emit(r_files)
             self.set_path(r_files[0])
     else:
-        r_file, _ = QFileDialog.getOpenFileName(self, 'Browser File', self.property('path'), filter_list)
+        r_file, _ = QFileDialog.getOpenFileName(self, 'Browser File', self.property('path'),
+                                                filter_list)
         if r_file:
             self.sig_file_changed.emit(r_file)
             self.set_path(r_file)
@@ -41,17 +45,18 @@ def _slot_browser_folder(self):
 
 
 @property_mixin
+@cursor_mixin
 class MClickBrowserFilePushButton(MPushButton):
     sig_file_changed = Signal(str)
     sig_files_changed = Signal(list)
     slot_browser_file = _slot_browser_file
 
-    def __init__(self, icon=None, text='', type=None, size=None, multiple=False, parent=None):
+    def __init__(self, icon=None, text='', multiple=False, parent=None):
         super(MClickBrowserFilePushButton, self).__init__(
-            icon=icon or MIcon('cloud_line.svg', None if type is None or type == 'default' else '#fff'),
-            text=text, type=type, size=size, parent=parent)
+            icon=icon or MIcon('cloud_line.svg',
+                               None if type is None or type == 'default' else '#fff'),
+            text=text, parent=parent)
         self.setProperty('multiple', multiple)
-        self.setCursor(Qt.PointingHandCursor)
         self.clicked.connect(self.slot_browser_file)
         self.setToolTip(self.tr('Click to browser file'))
         self.set_path('')
@@ -138,7 +143,8 @@ class MDragFileButton(QToolButton):
             file_name = url.toLocalFile()
             if sys.platform == 'darwin':
                 p = subprocess.Popen(
-                    'osascript -e \'get posix path of posix file \"file://{}\" -- kthxbai\''.format(file_name),
+                    'osascript -e \'get posix path of posix file \"file://{}\" -- kthxbai\''.format(
+                        file_name),
                     stdout=subprocess.PIPE,
                     shell=True)
                 # print p.communicate()[0].strip()
@@ -162,11 +168,11 @@ class MClickBrowserFolderPushButton(MPushButton):
     sig_folders_changed = Signal(list)
     slot_browser_folder = _slot_browser_folder
 
-    def __init__(self, icon=None, text='', type=None, size=None, multiple=False, parent=None):
+    def __init__(self, icon=None, text='', multiple=False, parent=None):
         super(MClickBrowserFolderPushButton, self).__init__(
             icon=icon or MIcon('folder_line.svg',
                                None if type is None or type == MPushButton.DefaultType else '#fff'),
-            text=text, type=type, size=size, parent=parent)
+            text=text, parent=parent)
         self.setProperty('multiple', multiple)
         self.setCursor(Qt.PointingHandCursor)
         self.clicked.connect(self.slot_browser_folder)
@@ -232,14 +238,16 @@ class MDragFolderButton(QToolButton):
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasFormat("text/uri-list"):
-            folder_list = [url.toLocalFile() for url in event.mimeData().urls() if os.path.isdir(url.toLocalFile())]
+            folder_list = [url.toLocalFile() for url in event.mimeData().urls() if
+                           os.path.isdir(url.toLocalFile())]
             count = len(folder_list)
             if count == 1 or (count > 1 and self.property('multiple')):
                 event.acceptProposedAction()
                 return
 
     def dropEvent(self, event):
-        folder_list = [url.toLocalFile() for url in event.mimeData().urls() if os.path.isdir(url.toLocalFile())]
+        folder_list = [url.toLocalFile() for url in event.mimeData().urls() if
+                       os.path.isdir(url.toLocalFile())]
         if self.property('multiple'):
             self.sig_folders_changed.emit(folder_list)
         else:

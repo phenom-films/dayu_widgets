@@ -6,13 +6,10 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.mixin import property_mixin
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QProgressBar, Qt
 
 
-@property_mixin
-class MProgressBar(QProgressBar, MFieldMixin):
+class MProgressBar(QProgressBar):
     '''
     props:
         status: str
@@ -32,3 +29,31 @@ class MProgressBar(QProgressBar, MFieldMixin):
 
     def _set_status(self, value):
         self.style().polish(self)
+
+    # def paintEvent(self, event):
+    #     pass
+"""
+MProgressBar {
+    font-size: @font_size_small;
+    color: @primary_text_color;
+    border: 0 solid @border_color;
+    background-color: @border_color;
+    min-height: 12px;
+    max-height: 12px;
+    border-radius: 6px;
+}
+
+MProgressBar::chunk {
+    min-height: 12px;
+    max-height: 12px;
+    border-radius: 5px;
+}
+MProgressBar[status=error]::chunk {
+    background-color: @error_6;
+}
+MProgressBar[status=success]::chunk {
+    background-color: @success_6;
+}
+MProgressBar[status=primary]::chunk {
+    background-color: @primary_color;
+}"""

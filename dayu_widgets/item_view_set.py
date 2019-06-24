@@ -7,10 +7,10 @@
 ###################################################################
 
 from dayu_widgets import dayu_theme
-from dayu_widgets.MItemModel import MSortFilterModel, MTableModel
-from dayu_widgets.MItemView import MTableView, MTreeView, MBigView, MListView
-from dayu_widgets.MLineEdit import MLineEdit
-from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.item_model import MSortFilterModel, MTableModel
+from dayu_widgets.item_view import MTableView, MTreeView, MBigView, MListView
+from dayu_widgets.line_edit import MLineEdit
+from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.qt import *
 
 

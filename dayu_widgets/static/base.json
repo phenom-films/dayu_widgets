@@ -1,25 +1,19 @@
 {
   "color": {
     "primary": "#2d8cf0",
-    "primary_light": "#5cadff",
-    "primary_dark": "#2b85e4",
-    "primary_opacity": "rgba(45, 140, 240, 15%)",
     "info": "#2db7f5",
-    "info_light": "#57c5f7",
-    "info_dark": "#2baee9",
-    "info_opacity": "rgba(45, 183, 245, 15%)",
     "success": "#19be6b",
-    "success_light": "#47cb89",
-    "success_dark": "#18b566",
-    "success_opacity": "rgba(25, 190, 107, 15%)",
     "warning": "#ff9900",
-    "warning_light": "#ffad33",
-    "warning_dark": "#f29100",
-    "warning_opacity": "rgba(255, 153, 0, 15%)",
     "error": "#ed4014",
-    "error_light": "#f16643",
-    "error_dark": "#e13d13",
-    "error_opacity": "rgba(237, 64, 20, 15%)",
+    "title_color": "rgba(0, 0, 0, 85%)",
+    "primary_text_color": "rgba(0, 0, 0, 65%)",
+    "secondary_text_color": "rgba(0, 0, 0, 45%)",
+    "disable_color": "rgba(0, 0, 0, 45%)",
+    "divider_color": "rgba(0, 0, 0, 9%)",
+    "background_color": "rgba(0, 0, 0, 4%)",
+    "table_header_color": "rgba(0, 0, 0, 2%)",
+    "border_radius_base": "4px",
+    "border_radius_sm": "2px",
     "text_title": "#17233d",
     "text_content": "#515a6e",
     "text_select": "#fffff0",
@@ -35,7 +29,8 @@
     "background_selected": "#eeeeee",
     "female": "#ef5b97",
     "male": "#4ebbff",
-    "icon": "#555555"
+    "icon": "#555555",
+    "icon_disabled": "#999"
   },
   "size": {
     "huge": 48,
@@ -60,7 +55,7 @@
     "tiny_font": 11
   },
   "font": {
-    "family": "\"Helvetica Neue\",Helvetica,\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",Arial,sans-serif",
+    "family": "BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",\"Helvetica Neue\",Helvetica,Arial,sans-serif",
     "h1": "font-weight:bold;\nfont-size: 18px",
     "h2": "font-weight:bold;\nfont-size: 14px",
     "h3": "font-weight:bold;\nfont-size: 12px",

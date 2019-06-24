@@ -9,9 +9,9 @@
 import functools
 
 from dayu_widgets import dayu_theme
-from dayu_widgets.MBrowser import MClickBrowserFileToolButton, MClickBrowserFolderToolButton
-from dayu_widgets.MPushButton import MPushButton
-from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.browser import MClickBrowserFileToolButton, MClickBrowserFolderToolButton
+from dayu_widgets.push_button import MPushButton
+from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.mixin import property_mixin, focus_shadow_mixin
 from dayu_widgets.qt import *
 
@@ -112,7 +112,9 @@ class MLineEdit(QLineEdit):
     @classmethod
     def search_engine(cls, size=None, parent=None):
         line_edit = MLineEdit(size=size, parent=parent)
-        suffix_button = MPushButton(text='Search', size=size, type=MPushButton.PrimaryType)
+        suffix_button = MPushButton.primary(text='Search')
+        suffix_button.set_dayu_size(size)
+
         suffix_button.clicked.connect(line_edit.returnPressed)
         suffix_button.setFixedWidth(100)
         line_edit.add_suffix_widget(suffix_button)

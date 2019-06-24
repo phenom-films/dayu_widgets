@@ -6,11 +6,11 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MAvatar import MAvatar
-from dayu_widgets.MLoading import MLoading
-from dayu_widgets.MLabel import MLabel
+from dayu_widgets.avatar import MAvatar
+from dayu_widgets.loading import MLoading
+from dayu_widgets.label import MLabel
 from dayu_widgets import dayu_theme
-from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
 
@@ -41,9 +41,9 @@ class MMessage(QWidget):
         self.setAttribute(Qt.WA_StyledBackground)
 
         if type == MMessage.LoadingType:
-            self._icon_label = MLoading(size=dayu_theme.tiny)
+            self._icon_label = MLoading.tiny()
         else:
-            self._icon_label = MAvatar(size=dayu_theme.tiny)
+            self._icon_label = MAvatar.tiny()
 
         self._content_label = MLabel(parent=self)
         self._content_label.set_elide_mode(Qt.ElideMiddle)
@@ -106,7 +106,7 @@ class MMessage(QWidget):
 
     def _set_type(self, value):
         if isinstance(self._icon_label, MAvatar):
-            self._icon_label.set_image(MPixmap('{}_fill.svg'.format(value), vars(dayu_theme).get(value + '_color')))
+            self._icon_label.set_dayu_image(MPixmap('{}_fill.svg'.format(value), vars(dayu_theme).get(value + '_color')))
 
     @classmethod
     def _show(cls, text, duration=None, type=None, closable=False, parent=None):

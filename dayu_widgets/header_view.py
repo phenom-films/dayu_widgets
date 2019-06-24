@@ -9,7 +9,7 @@
 import functools
 
 import dayu_widgets.utils as utils
-from dayu_widgets.MMenu import MMenu
+from dayu_widgets.menu import MMenu
 from dayu_widgets.qt import *
 
 

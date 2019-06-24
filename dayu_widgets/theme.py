@@ -21,7 +21,7 @@ class MTheme(object):
     cyan = '#13c2c2'
     green = '#52c41a'
     magenta = '#eb2f96'
-    pink = '#pink'
+    pink = '#ef5b97'
     red = '#f5222d'
     orange = '#fa8c16'
     yellow = '#fadb14'

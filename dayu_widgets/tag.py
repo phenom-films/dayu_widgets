@@ -8,9 +8,9 @@
 
 from dayu_widgets import dayu_theme
 from dayu_widgets import utils
-from dayu_widgets.MLineEdit import MLineEdit
-from dayu_widgets.MTheme import QssTemplate
-from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.line_edit import MLineEdit
+from dayu_widgets.theme import QssTemplate
+from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.mixin import property_mixin, cursor_mixin
 from dayu_widgets.qt import *
 

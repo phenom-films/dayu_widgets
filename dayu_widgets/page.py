@@ -10,12 +10,12 @@ import functools
 import math
 
 from dayu_widgets import dayu_theme
-from dayu_widgets.MAbstractSpinBox import MSpinBox
-from dayu_widgets.MComboBox import MComboBox
-from dayu_widgets.MFieldMixin import MFieldMixin
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MMenu import MMenu
-from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.spin_box import MSpinBox
+from dayu_widgets.combo_box import MComboBox
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.label import MLabel
+from dayu_widgets.menu import MMenu
+from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.qt import *
 
 
@@ -60,7 +60,8 @@ class MPage(QWidget, MFieldMixin):
         self._pre_button.clicked.connect(functools.partial(self._slot_change_current_page, -1))
         self._next_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('right_line.svg'), size=size)
         self._next_button.clicked.connect(functools.partial(self._slot_change_current_page, 1))
-        self._current_page_spin_box = MSpinBox(size=size)
+        self._current_page_spin_box = MSpinBox()
+        self._current_page_spin_box.set_dayu_size(size)
         self._current_page_spin_box.setMinimum(1)
         # self._current_page_spin_box.valueChanged.connect(self.sig_current_page_changed)
         self._total_page_label = MLabel()
@@ -81,9 +82,9 @@ class MPage(QWidget, MFieldMixin):
         main_lay.addStretch()
         main_lay.addWidget(self._display_label)
         main_lay.addStretch()
-        main_lay.addWidget(MLabel.help('|'))
+        main_lay.addWidget(MLabel.secondary('|'))
         main_lay.addWidget(self._change_page_size_button)
-        main_lay.addWidget(MLabel.help('|'))
+        main_lay.addWidget(MLabel.secondary('|'))
         main_lay.addWidget(self._pre_button)
         main_lay.addWidget(MLabel('Page'))
         main_lay.addWidget(self._current_page_spin_box)

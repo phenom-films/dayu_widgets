@@ -5,15 +5,17 @@
 # Date  : 2019.4
 # Email : muyanru345@163.com
 ###################################################################
-
-# 特别声明，该 FlowLayout 的实现，完全是 PySide/examples/layouts/flowlayout.py 的内容
-# 这里仅仅是修改了下命名规范，以及添加了 insertWidget 方法
+"""MFlowLayout"""
 
 
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QLayout, QWidgetItem, Qt, QRect, QSize, QSizePolicy, QPoint
 
 
 class MFlowLayout(QLayout):
+    """
+    FlowLayout, the code is come from PySide/examples/layouts/flowlayout.py
+    I change the code style and add insertWidget method.
+    """
     def __init__(self, parent=None, margin=0, spacing=-1):
         super(MFlowLayout, self).__init__(parent)
 

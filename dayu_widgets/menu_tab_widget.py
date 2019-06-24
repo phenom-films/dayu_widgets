@@ -7,9 +7,9 @@
 ###################################################################
 
 
-from dayu_widgets.MToolButton import MToolButton
-from dayu_widgets.MButtonGroup import MButtonGroupBase
-from dayu_widgets.MDivider import MDivider
+from dayu_widgets.tool_button import MToolButton
+from dayu_widgets.button_group import MButtonGroupBase
+from dayu_widgets.divider import MDivider
 from dayu_widgets.qt import *
 from dayu_widgets import dayu_theme
 

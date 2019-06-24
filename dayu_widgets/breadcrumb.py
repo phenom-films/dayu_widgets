@@ -6,8 +6,8 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MToolButton import MToolButton
+from dayu_widgets.label import MLabel
+from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.qt import *
 from dayu_widgets import dayu_theme
 
@@ -54,7 +54,7 @@ class MBreadcrumb(QWidget):
             button.clicked.connect(data_dict.get('clicked'))
 
         if len(self._button_group.buttons()) != 0:
-            separator = MLabel.help(self._separator)
+            separator = MLabel.secondary(self._separator)
             self._label_list.append(separator)
             self._main_layout.insertWidget(self._main_layout.count() - 1, separator)
         self._main_layout.insertWidget(self._main_layout.count() - 1, button)

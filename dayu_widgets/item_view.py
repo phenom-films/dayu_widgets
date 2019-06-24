@@ -7,9 +7,9 @@
 ###################################################################
 from dayu_widgets import dayu_theme
 from dayu_widgets import utils
-from dayu_widgets.MHeaderView import MHeaderView
-from dayu_widgets.MItemModel import MTableModel
-from dayu_widgets.MMenu import MMenu
+from dayu_widgets.header_view import MHeaderView
+from dayu_widgets.item_model import MTableModel
+from dayu_widgets.menu import MMenu
 from dayu_widgets.qt import *
 
 

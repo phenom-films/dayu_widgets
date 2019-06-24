@@ -9,9 +9,9 @@
 import functools
 
 import dayu_widgets.utils as utils
-from dayu_widgets.MDivider import MDivider
-from dayu_widgets.MLabel import MLabel
-from dayu_widgets.MMessage import MMessage
+from dayu_widgets.divider import MDivider
+from dayu_widgets.label import MLabel
+from dayu_widgets.message import MMessage
 from dayu_widgets.qt import *
 
 
