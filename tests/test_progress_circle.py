@@ -34,8 +34,8 @@ def test_progress_circle_width(qtbot, width, result):
 
 
 @pytest.mark.parametrize('color, result', (
-        ('#f00', '#f00'),
-        ('#fff', '#fff'),
+    ('#f00', '#f00'),
+    ('#fff', '#fff'),
 ))
 def test_progress_circle_color(qtbot, color, result):
     circle = MProgressCircle()
@@ -45,6 +45,8 @@ def test_progress_circle_color(qtbot, color, result):
     assert circle.get_dayu_color() == result
     circle.set_dayu_color('#0f0')
     assert circle.get_dayu_color() == '#0f0'
+    circle.setValue(20)
+    assert circle.text() == '20%'
 
 
 def test_progress_circle_widget(qtbot):
