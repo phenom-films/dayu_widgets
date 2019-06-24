@@ -9,7 +9,7 @@
 Example code for MDateTimeEdit, MDoubleSpinBox, MSpinBox, MTimeEdit, MDateEdit
 """
 from dayu_widgets.spin_box import MDateTimeEdit, MDoubleSpinBox, MSpinBox, MTimeEdit, MDateEdit
-from dayu_widgets.MDivider import MDivider
+from dayu_widgets.divider import MDivider
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import QWidget, QVBoxLayout, QHBoxLayout
 
