@@ -36,7 +36,7 @@ class MLabel(QLabel):
         self._dayu_strong = False
         self._dayu_code = False
         self._dayu_level = 0
-        self._elide_mode = Qt.ElideRight
+        self._elide_mode = Qt.ElideNone
         self.setText(text)
 
     def get_dayu_level(self):
@@ -93,7 +93,7 @@ class MLabel(QLabel):
 
     def set_elide_mode(self, value):
         """Set MLabel elide mode.
-        Only accepted Qt.ElideLeft/Qt.ElideMiddle/Qt.ElideRight"""
+        Only accepted Qt.ElideLeft/Qt.ElideMiddle/Qt.ElideRight/Qt.ElideNone"""
         self._elide_mode = value
         self._update_elided_text()
 
