@@ -23,10 +23,10 @@ class ToastExample(QWidget, MFieldMixin):
         self._init_ui()
 
     def _init_ui(self):
-        button3 = MPushButton.primary(text='Normal Toast')
-        button4 = MPushButton.success(text='Success Toast')
-        button5 = MPushButton.warning(text='Warning Toast')
-        button6 = MPushButton.danger(text='Error Toast')
+        button3 = MPushButton(text='Normal Message').primary()
+        button4 = MPushButton(text='Success Message').success()
+        button5 = MPushButton(text='Warning Message').warning()
+        button6 = MPushButton(text='Error Message').danger()
         button3.clicked.connect(
             functools.partial(self.slot_show_message, MToast.info, {'text': u'好像没啥用'}))
         button4.clicked.connect(
@@ -42,7 +42,7 @@ class ToastExample(QWidget, MFieldMixin):
         sub_lay1.addWidget(button5)
         sub_lay1.addWidget(button6)
 
-        loading_button = MPushButton.primary('Loading Toast')
+        loading_button = MPushButton('Loading Toast').primary()
         loading_button.clicked.connect(self.slot_show_loading)
 
         main_lay = QVBoxLayout()
