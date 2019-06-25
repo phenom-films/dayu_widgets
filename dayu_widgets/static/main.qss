@@ -337,67 +337,57 @@ MToolButton {
 }
 MToolButton:hover{
     color: @primary_5;
-    border: 1px solid @primary_5;
 }
 MToolButton:pressed{
     color: @primary_7;
-    border: 1px solid @primary_7;
 }
 MToolButton:disabled{
     background-color: @disable_color;
 }
 
-MToolButton[dayu_type=taobao]{
+MTaobaoButton{
     border-radius: 2px;
     border: 1px solid @border_color;
 }
-MToolButton[dayu_type=taobao]:checked{
+MTaobaoButton:hover{
+    color: @primary_5;
+    border: 1px solid @primary_5;
+}
+MTaobaoButton:checked{
     color: @primary_color;
     border: 2px solid @primary_color;
 }
 
-MToolButton[dayu_type=bar]{
+MBlockButton{
     border-radius: 0;
     padding: 2px 10px;
     border:none;
 }
-MToolButton[dayu_type=bar]:hover{
+MBlockButton:hover{
     color: @primary_color;
     background-color:@background_selected_color;
 }
-MToolButton[dayu_type=bar]:checked{
+MBlockButton:checked{
     color: @primary_color;
     background-color:@background_selected_color;
 }
 
-MToolButton[dayu_type=line]{
+MUnderlineButton{
     border-radius: 0;
     padding: 6px 10px;
     border-color: transparent;
 }
-MToolButton[dayu_type=line]:hover{
+MUnderlineButton:hover{
+    border-radius: 0;
     color: @primary_5;
-    border-color: @primary_5;
-    border-width: 0 0 2px 0;
+    border: none;
 }
-MToolButton[dayu_type=line]:checked{
+MUnderlineButton:checked{
+    border-radius: 0;
     color: @primary_color;
     border-style: solid;
     border-color: @primary_color;
     border-width: 0 0 2px 0;
-}
-
-
-MToolButton[dayu_type=icon]:checked{
-    border:1px solid @primary_color;
-}
-
-MToolButton[dayu_type=breadcrumb]:hover{
-    color: @primary_5;
-    border: none;
-}
-MToolButton[dayu_type=breadcrumb]:pressed{
-    color: @primary_7;
 }
 
 
