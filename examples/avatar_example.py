@@ -47,7 +47,7 @@ class AvatarExample(QWidget, MFieldMixin):
         main_lay.addWidget(MDivider('different image'))
         avatar = MAvatar()
         self.bind('image', avatar, 'dayu_image')
-        button = MPushButton.primary(text='Change Avatar Image')
+        button = MPushButton(text='Change Avatar Image').primary()
         button.clicked.connect(self.slot_change_image)
 
         main_lay.addWidget(avatar)

@@ -54,7 +54,7 @@ class LabelExample(QWidget, MFieldMixin):
 
         data_bind_lay = QHBoxLayout()
         data_bind_label = MLabel()
-        button = MPushButton.primary(text='Random An Animal')
+        button = MPushButton(text='Random An Animal').primary()
         button.clicked.connect(self.slot_change_text)
         data_bind_lay.addWidget(data_bind_label)
         data_bind_lay.addWidget(button)

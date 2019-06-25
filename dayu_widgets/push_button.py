@@ -29,7 +29,7 @@ class MPushButton(QPushButton):
     WarningType = 'warning'
     DangerType = 'danger'
 
-    def __init__(self, icon=None, text='', parent=None):
+    def __init__(self, text='', icon=None, parent=None):
         if icon is None:
             super(MPushButton, self).__init__(text=text, parent=parent)
         else:
@@ -76,33 +76,50 @@ class MPushButton(QPushButton):
                              "default/primary/success/warning/danger string.")
         self.style().polish(self)
 
-    @classmethod
-    def primary(cls, text='', icon=None, parent=None):
-        """Create a PrimaryType push button"""
-        ins = cls(text=text, icon=icon, parent=parent)
-        ins.set_dayu_type(cls.PrimaryType)
-        return ins
-
-    @classmethod
-    def success(cls, text='', icon=None, parent=None):
-        """Create a SuccessType push button"""
-        ins = cls(text=text, icon=icon, parent=parent)
-        ins.set_dayu_type(cls.SuccessType)
-        return ins
-
-    @classmethod
-    def warning(cls, text='', icon=None, parent=None):
-        """Create a WarningType push button"""
-        ins = cls(text=text, icon=icon, parent=parent)
-        ins.set_dayu_type(cls.WarningType)
-        return ins
-
-    @classmethod
-    def danger(cls, text='', icon=None, parent=None):
-        """Create a DangerType push button"""
-        ins = cls(text=text, icon=icon, parent=parent)
-        ins.set_dayu_type(cls.DangerType)
-        return ins
-
     dayu_type = Property(str, get_dayu_type, set_dayu_type)
     dayu_size = Property(int, get_dayu_size, set_dayu_size)
+
+    def primary(self):
+        """Set MPushButton to PrimaryType"""
+        self.set_dayu_type(MPushButton.PrimaryType)
+        return self
+
+    def success(self):
+        """Set MPushButton to SuccessType"""
+        self.set_dayu_type(MPushButton.SuccessType)
+        return self
+
+    def warning(self):
+        """Set MPushButton to  WarningType"""
+        self.set_dayu_type(MPushButton.WarningType)
+        return self
+
+    def danger(self):
+        """Set MPushButton to DangerType"""
+        self.set_dayu_type(MPushButton.DangerType)
+        return self
+
+    def huge(self):
+        """Set MPushButton to PrimaryType"""
+        self.set_dayu_size(dayu_theme.huge)
+        return self
+
+    def large(self):
+        """Set MPushButton to SuccessType"""
+        self.set_dayu_size(dayu_theme.large)
+        return self
+
+    def medium(self):
+        """Set MPushButton to  WarningType"""
+        self.set_dayu_size(dayu_theme.medium)
+        return self
+
+    def small(self):
+        """Set MPushButton to DangerType"""
+        self.set_dayu_size(dayu_theme.small)
+        return self
+
+    def tiny(self):
+        """Set MPushButton to DangerType"""
+        self.set_dayu_size(dayu_theme.tiny)
+        return self

@@ -19,32 +19,27 @@ class PushButtonExample(QWidget, MFieldMixin):
         self.setWindowTitle('Example for MPushButton')
 
         sub_lay1 = QHBoxLayout()
-        sub_lay1.addWidget(MPushButton(text='Default'))
-        sub_lay1.addWidget(MPushButton.primary(text='Primary'))
-        sub_lay1.addWidget(MPushButton.success(text='Success'))
-        sub_lay1.addWidget(MPushButton.warning(text='Warning'))
-        sub_lay1.addWidget(MPushButton.danger(text='Danger'))
+        sub_lay1.addWidget(MPushButton('Default'))
+        sub_lay1.addWidget(MPushButton('Primary').primary())
+        sub_lay1.addWidget(MPushButton('Success').success())
+        sub_lay1.addWidget(MPushButton('Warning').warning())
+        sub_lay1.addWidget(MPushButton('Danger').danger())
 
         sub_lay2 = QHBoxLayout()
-        sub_lay2.addWidget(MPushButton(text='Upload', icon=MIcon('cloud_line.svg')))
+        sub_lay2.addWidget(MPushButton('Upload', MIcon('cloud_line.svg')))
         sub_lay2.addWidget(
-            MPushButton.primary(text='Submit', icon=MIcon('folder_line.svg', '#ddd')))
+            MPushButton('Submit', MIcon('folder_line.svg', '#ddd')).primary())
         sub_lay2.addWidget(
-            MPushButton.success(text='Submit', icon=MIcon('success_line.svg', '#ddd')))
-        sub_lay2.addWidget(MPushButton.warning(text='Edit', icon=MIcon('edit_line.svg', '#ddd')))
-        sub_lay2.addWidget(MPushButton.danger(text='Delete', icon=MIcon('trash_line.svg', '#ddd')))
+            MPushButton('Submit', MIcon('success_line.svg', '#ddd')).success())
+        sub_lay2.addWidget(MPushButton('Edit', MIcon('edit_line.svg', '#ddd')).warning())
+        sub_lay2.addWidget(MPushButton('Delete', MIcon('trash_line.svg', '#ddd')).danger())
 
         sub_lay3 = QHBoxLayout()
-        size_list = [('Large', dayu_theme.large),
-                     ('Medium', dayu_theme.medium),
-                     ('Small', dayu_theme.small)]
-        for label, size in size_list:
-            button = MPushButton(text=label)
-            button.set_dayu_size(size)
-            button.set_dayu_type(MPushButton.PrimaryType)
-            sub_lay3.addWidget(button)
+        sub_lay3.addWidget(MPushButton('Large').large().primary())
+        sub_lay3.addWidget(MPushButton('Medium').medium().primary())
+        sub_lay3.addWidget(MPushButton('Small').small().primary())
 
-        disabled_button = MPushButton(text='Disabled')
+        disabled_button = MPushButton('Disabled')
         disabled_button.setEnabled(False)
 
         main_lay = QVBoxLayout()

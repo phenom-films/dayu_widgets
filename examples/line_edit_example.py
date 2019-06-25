@@ -38,8 +38,7 @@ class LineEditExample(QWidget):
         line_edit_icon.add_suffix_widget(tool_button)
 
         line_edit_button = MLineEdit(text='Beijing', size=dayu_theme.small)
-        push_button = MPushButton.primary(text='Go')
-        push_button.set_dayu_size(dayu_theme.small)
+        push_button = MPushButton(text='Go').primary().small()
         push_button.setFixedWidth(40)
         line_edit_button.add_suffix_widget(push_button)
 
