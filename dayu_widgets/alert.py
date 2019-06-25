@@ -38,8 +38,7 @@ class MAlert(QWidget):
         self._icon_label = MAvatar()
         self._icon_label.set_dayu_size(dayu_theme.tiny)
         self._content_label = MLabel().secondary()
-        self._close_button = MToolButton(type=MToolButton.IconOnlyType,
-                                         size=dayu_theme.tiny, icon=MIcon('close_line.svg'))
+        self._close_button = MToolButton().svg('close_line.svg').tiny().icon_only()
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
 
         self._main_lay = QHBoxLayout()
