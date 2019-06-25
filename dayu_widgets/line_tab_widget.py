@@ -5,58 +5,65 @@
 # Date  : 2019.3
 # Email : muyanru345@163.com
 ###################################################################
-
+"""MLineTabWidget"""
 
 from dayu_widgets.button_group import MButtonGroupBase
 from dayu_widgets.divider import MDivider
+from dayu_widgets.qt import Signal, QWidget, Property, Qt, QHBoxLayout, QVBoxLayout
 from dayu_widgets.stacked_widget import MStackedWidget
 from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.qt import *
 
 
-class MLineButtonGroup(MButtonGroupBase):
+class MUnderlineButton(MToolButton):
+    """MUnderlineButton"""
+
+    def __init__(self, parent=None):
+        super(MUnderlineButton, self).__init__(parent)
+        self.setCheckable(True)
+
+
+class MUnderlineButtonGroup(MButtonGroupBase):
+    """MUnderlineButtonGroup"""
     sig_checked_changed = Signal(int)
 
-    def __init__(self, size=None, orientation=Qt.Horizontal, parent=None):
-        super(MLineButtonGroup, self).__init__(orientation=orientation, parent=parent)
+    def __init__(self, parent=None):
+        super(MUnderlineButtonGroup, self).__init__(parent=parent)
         self.set_spacing(1)
         self._button_group.setExclusive(True)
-        self._size = size
-        self._orientation = orientation
-        self._button_group.buttonClicked[int].connect(self.set_checked)
         self._button_group.buttonClicked[int].connect(self.sig_checked_changed)
-        self.set_checked(-1)
 
     def create_button(self, data_dict):
-        button = MToolButton(text=data_dict.get('text'),
-                             icon=data_dict.get('icon'),
-                             type=MToolButton.LineType,
-                             size=data_dict.get('size') or self._size,
-                             parent=self
-                             )
-        button.setCheckable(True)
-        if data_dict.get('icon') or data_dict.get('icon_checked'):
-            button.setProperty('icon_checked', data_dict.get('icon_checked'))
-            button.setProperty('icon_unchecked', data_dict.get('icon'))
+        button = MUnderlineButton(parent=self)
+        if data_dict.get('svg'):
+            button.svg(data_dict.get('svg'))
+        if data_dict.get('text'):
+            if data_dict.get('svg') or data_dict.get('icon'):
+                button.text_beside_icon()
+            else:
+                button.text_only()
+        else:
+            button.icon_only()
         return button
 
-    def _set_checked(self, value):
-        assert isinstance(value, int)
-        if value != self._button_group.checkedId():
-            # 更新来自代码
-            button = self._button_group.button(value)
-            if button:
-                button.setChecked(True)
-            self.sig_checked_changed.emit(value)
+    def set_dayu_checked(self, value):
+        """Set current checked button's id"""
+        button = self._button_group.button(value)
+        button.setChecked(True)
+        self.sig_checked_changed.emit(value)
 
-    def set_checked(self, value):
-        self.setProperty('checked', value)
+    def get_dayu_checked(self):
+        """Get current checked button's id"""
+        return self._button_group.checkedId()
+
+    dayu_checked = Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
 
 
 class MLineTabWidget(QWidget):
-    def __init__(self, alignment=Qt.AlignCenter, size=None, parent=None):
+    """MLineTabWidget"""
+
+    def __init__(self, alignment=Qt.AlignCenter, parent=None):
         super(MLineTabWidget, self).__init__(parent=parent)
-        self.tool_button_group = MLineButtonGroup(size=size)
+        self.tool_button_group = MUnderlineButtonGroup()
         self.bar_layout = QHBoxLayout()
         self.bar_layout.setContentsMargins(0, 0, 0, 0)
         if alignment == Qt.AlignCenter:
@@ -81,5 +88,6 @@ class MLineTabWidget(QWidget):
         self.setLayout(main_lay)
 
     def add_tab(self, widget, data_dict):
+        """Add a tab"""
         self.stack_widget.addWidget(widget)
         self.tool_button_group.add_button(data_dict, self.stack_widget.count() - 1)
