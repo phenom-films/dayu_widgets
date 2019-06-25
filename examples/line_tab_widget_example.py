@@ -7,64 +7,57 @@
 ###################################################################
 from dayu_widgets.divider import MDivider
 from dayu_widgets.label import MLabel
-from dayu_widgets.message import MMessage
 from dayu_widgets.line_tab_widget import MLineTabWidget
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QWidget, QVBoxLayout, Qt
 
 
 class LineTabWidgetExample(QWidget):
     def __init__(self, parent=None):
         super(LineTabWidgetExample, self).__init__(parent)
+        self.setWindowTitle('Example for MLineTabWidget')
         self._init_ui()
 
     def _init_ui(self):
         main_lay = QVBoxLayout()
 
         tab_center = MLineTabWidget()
-        tab_center.add_tab(MLabel('test 1'), u'Current Element')
-        tab_center.add_tab(MLabel('test 2'), u'Linked Assets')
-        tab_center.add_tab(MLabel('test 3'), u'Hero Shots')
-        tab_center.add_tab(MLabel('test 4'), u'Linked Metadata')
-        tab_center.tool_button_group.set_checked(0)
+        tab_center.add_tab(MLabel('test 1 ' * 10),
+                           {'text': u'Tab 1', 'svg': 'user_line.svg'})
+        tab_center.add_tab(MLabel('test 2 ' * 10), {'svg': 'calendar_line.svg'})
+        tab_center.add_tab(MLabel('test 3 ' * 10), u'Tab 3')
+        tab_center.tool_button_group.set_dayu_checked(0)
 
         tab_left = MLineTabWidget(alignment=Qt.AlignLeft)
-        tab_left.add_tab(MLabel('test 1'), u'标签一')
-        tab_left.add_tab(MLabel('test 2'), u'标签二')
-        tab_left.add_tab(MLabel('test 3'), u'标签三')
-        tab_left.tool_button_group.set_checked(0)
+        tab_left.add_tab(MLabel('test 1 ' * 10), u'Tab 1')
+        tab_left.add_tab(MLabel('test 2 ' * 10), u'Tab 2')
+        tab_left.add_tab(MLabel('test 3 ' * 10), u'Tab 3')
+        tab_left.tool_button_group.set_dayu_checked(0)
 
         tab_right = MLineTabWidget(alignment=Qt.AlignRight)
-        tab_right.add_tab(MLabel('test 1'), u'标签一')
-        tab_right.add_tab(MLabel('test 2'), u'标签二')
-        tab_right.add_tab(MLabel('test 3'), u'标签三')
-        tab_right.tool_button_group.set_checked(0)
+        tab_right.add_tab(MLabel('test 1 ' * 10), u'Tab 1')
+        tab_right.add_tab(MLabel('test 2 ' * 10), u'Tab 2')
+        tab_right.add_tab(MLabel('test 3 ' * 10), u'Tab 3')
+        tab_right.tool_button_group.set_dayu_checked(0)
 
         main_lay.addWidget(MDivider('Center'))
         main_lay.addWidget(tab_center)
+        main_lay.addSpacing(20)
         main_lay.addWidget(MDivider('Left'))
         main_lay.addWidget(tab_left)
+        main_lay.addSpacing(20)
         main_lay.addWidget(MDivider('Right'))
         main_lay.addWidget(tab_right)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
-    @Slot()
-    def slot_close_tab(self, index):
-        if index > 0:
-            text = self.tab_left.tabText(index)
-            self.tab_left.removeTab(index)
-            MMessage.info(u'成功关闭一个标签: {}'.format(text), closable=True, parent=self)
-        else:
-            MMessage.warning(u'请不要关闭第一个标签', closable=True, parent=self)
-
 
 if __name__ == '__main__':
     import sys
+    from dayu_widgets.qt import QApplication
+    from dayu_widgets import dayu_theme
 
     app = QApplication(sys.argv)
     test = LineTabWidgetExample()
-
-    from dayu_widgets import dayu_theme
 
     dayu_theme.apply(test)
     test.show()
