@@ -32,12 +32,12 @@ class MAlert(QWidget):
     WarningType = 'warning'
     ErrorType = 'error'
 
-    def __init__(self, parent=None, flags=0):
+    def __init__(self, text='', parent=None, flags=0):
         super(MAlert, self).__init__(parent, flags)
         self.setAttribute(Qt.WA_StyledBackground)
         self._icon_label = MAvatar()
         self._icon_label.set_dayu_size(dayu_theme.tiny)
-        self._content_label = MLabel.secondary()
+        self._content_label = MLabel().secondary()
         self._close_button = MToolButton(type=MToolButton.IconOnlyType,
                                          size=dayu_theme.tiny, icon=MIcon('close_line.svg'))
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
@@ -56,7 +56,7 @@ class MAlert(QWidget):
         self._dayu_type = None
         self._dayu_text = None
         self.set_dayu_type(MAlert.InfoType)
-        self.set_dayu_text('')
+        self.set_dayu_text(text)
 
     def set_closeable(self, closeable):
         """Display the close icon button or not."""
@@ -109,3 +109,28 @@ class MAlert(QWidget):
 
     dayu_text = Property(unicode, get_dayu_text, set_dayu_text)
     dayu_type = Property(str, get_dayu_type, set_dayu_type)
+
+    def info(self):
+        """Set MAlert to InfoType"""
+        self.set_dayu_type(MAlert.InfoType)
+        return self
+
+    def success(self):
+        """Set MAlert to SuccessType"""
+        self.set_dayu_type(MAlert.SuccessType)
+        return self
+
+    def warning(self):
+        """Set MAlert to  WarningType"""
+        self.set_dayu_type(MAlert.WarningType)
+        return self
+
+    def error(self):
+        """Set MAlert to ErrorType"""
+        self.set_dayu_type(MAlert.ErrorType)
+        return self
+
+    def closable(self):
+        """Set MAlert closebale is True"""
+        self.set_closeable(True)
+        return self

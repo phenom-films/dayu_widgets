@@ -23,19 +23,12 @@ class AlertExample(QWidget, MFieldMixin):
         main_lay = QVBoxLayout()
         self.setLayout(main_lay)
         main_lay.addWidget(MDivider('different type'))
-        for text, dayu_type in (('Information Message', MAlert.InfoType),
-                                ('Success Message', MAlert.SuccessType),
-                                ('Warning Message', MAlert.WarningType),
-                                ('Error Message', MAlert.ErrorType),
-                                ):
-            info_alert = MAlert(parent=self)
-            info_alert.set_dayu_text(text)
-            info_alert.set_dayu_type(dayu_type)
-            main_lay.addWidget(info_alert)
+        main_lay.addWidget(MAlert(text='Information Message', parent=self).info())
+        main_lay.addWidget(MAlert(text='Success Message', parent=self).success())
+        main_lay.addWidget(MAlert(text='Warning Message', parent=self).warning())
+        main_lay.addWidget(MAlert(text='Error Message', parent=self).error())
 
-        closeable_alert = MAlert(parent=self)
-        closeable_alert.set_closeable(True)
-        closeable_alert.set_dayu_text('Some Message')
+        closeable_alert = MAlert('Some Message', parent=self).closable()
 
         main_lay.addWidget(MLabel(u'不同的提示信息类型'))
         main_lay.addWidget(MDivider('closable'))
