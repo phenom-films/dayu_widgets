@@ -28,7 +28,7 @@ class MDivider(QWidget):
     def __init__(self, text='', orientation=Qt.Horizontal, alignment=Qt.AlignCenter, parent=None):
         super(MDivider, self).__init__(parent)
         self._orient = orientation
-        self._text_label = MLabel.secondary()
+        self._text_label = MLabel().secondary()
         self._left_frame = QFrame()
         self._right_frame = QFrame()
         self._main_lay = QHBoxLayout()
