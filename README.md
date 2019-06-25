@@ -6,7 +6,7 @@ Components for PySide
 
 
 提供**亮色(light)** 和 **暗色(dark)** 两种主题，每种主题可以设置主题颜色。
-一下截图以：
+以下截图以：
 
 * 亮色 #1890ff 
 * 暗色 #fa8c16
@@ -23,12 +23,14 @@ Components for PySide
 ### MLoading
 ![pageres](screenshots/loading_light.gif)![pageres](screenshots/loading_dark.gif)
 
+### MToolButton
+![pageres](screenshots/tool_button_light.png)![pageres](screenshots/tool_button_dark.png)
 
 ## Navigation
 
 
 ### MBreadcrumb
-![pageres](screenshots/breadcrumb_light.png)![pageres](screenshots/breadcrumb_dark.png)
+![pageres](screenshots/breadcrumb_light.gif)![pageres](screenshots/breadcrumb_dark.gif)
 
 ### MPage
 ![pageres](screenshots/page_light.png)![pageres](screenshots/page_dark.png)
@@ -79,6 +81,9 @@ Components for PySide
 ### MCard
 ![pageres](screenshots/card_light.png)![pageres](screenshots/card_dark.png)
 
+### MLineTabWidget
+![pageres](screenshots/line_tab_widget_light.gif)![pageres](screenshots/line_tab_widget_dark.gif)
+
 ### MTag
 ![pageres](screenshots/tag_light.png)![pageres](screenshots/tag_dark.png)
 
@@ -90,7 +95,7 @@ Components for PySide
 ![pageres](screenshots/alert_light.png)![pageres](screenshots/alert_dark.png)
 
 ### Message
-![pageres](screenshots/message_light.png)![pageres](screenshots/message_dark.png)
+![pageres](screenshots/message_light.gif)![pageres](screenshots/message_dark.gif)
 
 ### MProgressBar
 ![pageres](screenshots/progress_bar_light.png)![pageres](screenshots/progress_bar_dark.png)
