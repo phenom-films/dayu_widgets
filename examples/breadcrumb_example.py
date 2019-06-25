@@ -12,53 +12,43 @@ from dayu_widgets.breadcrumb import MBreadcrumb
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.message import MMessage
-from dayu_widgets import dayu_theme
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QWidget, QVBoxLayout
 
 
 class BreadcrumbExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(BreadcrumbExample, self).__init__(parent)
+        self.setWindowTitle('Examples for MBreadcrumb')
         self._init_ui()
 
     def _init_ui(self):
-        size_list = [
-                     ('Large', dayu_theme.large),
-                     ('Medium', dayu_theme.medium),
-                     ('Small', dayu_theme.small)]
+        MMessage.config(duration=1)
         entity_list = [
-            {'text': 'Demo Project',
-             'clicked': functools.partial(self.slot_show_message, MMessage.info, 'Go to "Demo Project"'),
-             'icon': MIcon('cloud_line.svg')},
-            {'text': 'pl',
-             'clicked': functools.partial(self.slot_show_message, MMessage.info, 'Go to Sequence "pl"'),
-             'icon': MIcon('female.svg')},
-            {'text': 'pl_0010',
-             'clicked': functools.partial(self.slot_show_message, MMessage.info, 'Go to Shot "pl_0010"'),
-             'icon': MIcon('folder_line.svg')}
+            {
+                'clicked': functools.partial(self.slot_show_message, MMessage.info,
+                                             'Go to "Home Page"'),
+                'svg': 'home_line.svg'},
+            {
+                'text': 'pl',
+                'clicked': functools.partial(self.slot_show_message, MMessage.info, 'Go to "pl"'),
+                'svg': 'user_line.svg'},
+            {
+                'text': 'pl_0010',
+                'clicked': functools.partial(self.slot_show_message, MMessage.info,
+                                             'Go to "pl_0010"'),
+            }
         ]
         no_icon_eg = MBreadcrumb()
-        no_icon_eg.set_item_list([data_dict.get('text') for data_dict in entity_list])
-
-        with_icon_eg = MBreadcrumb()
-        with_icon_eg.set_item_list(entity_list)
+        no_icon_eg.set_item_list(entity_list)
 
         separator_eg = MBreadcrumb(separator='=>')
         separator_eg.set_item_list(entity_list)
 
         main_lay = QVBoxLayout()
-        main_lay.addWidget(MDivider('no icon'))
+        main_lay.addWidget(MDivider('normal'))
         main_lay.addWidget(no_icon_eg)
-        main_lay.addWidget(MDivider('with icon'))
-        main_lay.addWidget(with_icon_eg)
         main_lay.addWidget(MDivider('separator: =>'))
         main_lay.addWidget(separator_eg)
-
-        for label, size in size_list:
-            bread = MBreadcrumb(size=size)
-            bread.set_item_list(entity_list)
-            main_lay.addWidget(MDivider(label))
-            main_lay.addWidget(bread)
 
         main_lay.addStretch()
         self.setLayout(main_lay)
@@ -69,10 +59,12 @@ class BreadcrumbExample(QWidget, MFieldMixin):
 
 if __name__ == '__main__':
     import sys
+    from dayu_widgets.qt import QApplication
 
     app = QApplication(sys.argv)
     test = BreadcrumbExample()
     from dayu_widgets import dayu_theme
+
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())
