@@ -9,7 +9,7 @@
 
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import cursor_mixin
-from dayu_widgets.qt import QToolButton, QSizePolicy, Qt, Slot, Property, MIcon
+from dayu_widgets.qt import QToolButton, QSizePolicy, Qt, Slot, Property, MIcon, QSize
 
 
 @cursor_mixin
@@ -107,6 +107,7 @@ class MToolButton(QToolButton):
     def icon_only(self):
         """Set tool button style to icon only"""
         self.setToolButtonStyle(Qt.ToolButtonIconOnly)
+        self.setFixedSize(QSize(self._dayu_size, self._dayu_size))
         return self
 
     def text_only(self):
