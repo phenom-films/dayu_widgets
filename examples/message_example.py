@@ -14,19 +14,20 @@ from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.message import MMessage
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QWidget, QHBoxLayout, QVBoxLayout
 
 
 class MessageExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MessageExample, self).__init__(parent)
+        self.setWindowTitle('Examples for MMessage')
         self._init_ui()
 
     def _init_ui(self):
-        button3 = MPushButton.primary(text='Normal Message')
-        button4 = MPushButton.success(text='Success Message')
-        button5 = MPushButton.warning(text='Warning Message')
-        button6 = MPushButton.danger(text='Error Message')
+        button3 = MPushButton(text='Normal Message').primary()
+        button4 = MPushButton(text='Success Message').success()
+        button5 = MPushButton(text='Warning Message').warning()
+        button6 = MPushButton(text='Error Message').danger()
         button3.clicked.connect(
             functools.partial(self.slot_show_message, MMessage.info, {'text': u'这是一条普通提示'}))
         button4.clicked.connect(
@@ -75,7 +76,7 @@ class MessageExample(QWidget, MFieldMixin):
             {'text': 'set top to 50',
              'clicked': functools.partial(self.slot_set_config, MMessage.config, {'top': 50})},
         ])
-        loading_button = MPushButton.primary('Display a loading indicator')
+        loading_button = MPushButton('Display a loading indicator')
         loading_button.clicked.connect(self.slot_show_loading)
         main_lay.addWidget(MDivider('set global setting'))
         main_lay.addWidget(button_grp)
@@ -98,6 +99,7 @@ class MessageExample(QWidget, MFieldMixin):
 
 if __name__ == '__main__':
     import sys
+    from dayu_widgets.qt import QApplication
 
     app = QApplication(sys.argv)
     test = MessageExample()
