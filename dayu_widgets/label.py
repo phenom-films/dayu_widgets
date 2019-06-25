@@ -143,86 +143,62 @@ class MLabel(QLabel):
         """
         self._update_elided_text()
 
-    @classmethod
-    def h1(cls, text=''):
-        """Create a QLabel with h1 type."""
-        ins = cls(text=text)
-        ins.set_dayu_level(MLabel.H1Level)
-        return ins
+    def h1(self):
+        """Set QLabel with h1 type."""
+        self.set_dayu_level(MLabel.H1Level)
+        return self
 
-    @classmethod
-    def h2(cls, text=''):
-        """Create a QLabel with h2 type."""
-        ins = cls(text=text)
-        ins.set_dayu_level(MLabel.H2Level)
-        return ins
+    def h2(self):
+        """Set QLabel with h2 type."""
+        self.set_dayu_level(MLabel.H2Level)
+        return self
 
-    @classmethod
-    def h3(cls, text=''):
-        """Create a QLabel with h3 type."""
-        ins = cls(text=text)
-        ins.set_dayu_level(MLabel.H3Level)
-        return ins
+    def h3(self):
+        """Set QLabel with h3 type."""
+        self.set_dayu_level(MLabel.H3Level)
+        return self
 
-    @classmethod
-    def h4(cls, text=''):
-        """Create a QLabel with h4 type."""
-        ins = cls(text=text)
-        ins.set_dayu_level(MLabel.H4Level)
-        return ins
+    def h4(self):
+        """Set QLabel with h4 type."""
+        self.set_dayu_level(MLabel.H4Level)
+        return self
 
-    @classmethod
-    def secondary(cls, text=''):
-        """Create a QLabel with secondary type."""
-        ins = cls(text=text)
-        ins.set_dayu_type(MLabel.SecondaryType)
-        return ins
+    def secondary(self):
+        """Set QLabel with secondary type."""
+        self.set_dayu_type(MLabel.SecondaryType)
+        return self
 
-    @classmethod
-    def warning(cls, text=''):
-        """Create a QLabel with warning type."""
-        ins = cls(text=text)
-        ins.set_dayu_type(MLabel.WarningType)
-        return ins
+    def warning(self):
+        """Set QLabel with warning type."""
+        self.set_dayu_type(MLabel.WarningType)
+        return self
 
-    @classmethod
-    def danger(cls, text=''):
-        """Create a QLabel with danger type."""
-        ins = cls(text=text)
-        ins.set_dayu_type(MLabel.DangerType)
-        return ins
+    def danger(self):
+        """Set QLabel with danger type."""
+        self.set_dayu_type(MLabel.DangerType)
+        return self
 
-    @classmethod
-    def strong(cls, text=''):
-        """Create a QLabel with strong style."""
-        ins = cls(text=text)
-        ins.set_dayu_strong(True)
-        return ins
+    def strong(self):
+        """Set QLabel with strong style."""
+        self.set_dayu_strong(True)
+        return self
 
-    @classmethod
-    def mark(cls, text=''):
-        """Create a QLabel with mark style."""
-        ins = cls(text=text)
-        ins.set_dayu_mark(True)
-        return ins
+    def mark(self):
+        """Set QLabel with mark style."""
+        self.set_dayu_mark(True)
+        return self
 
-    @classmethod
-    def code(cls, text=''):
-        """Create a QLabel with code style."""
-        ins = cls(text=text)
-        ins.set_dayu_code(True)
-        return ins
+    def code(self):
+        """Set QLabel with code style."""
+        self.set_dayu_code(True)
+        return self
 
-    @classmethod
-    def delete(cls, text=''):
-        """Create a QLabel with delete style."""
-        ins = cls(text=text)
-        ins.set_dayu_delete(True)
-        return ins
+    def delete(self):
+        """Set QLabel with delete style."""
+        self.set_dayu_delete(True)
+        return self
 
-    @classmethod
-    def underline(cls, text=''):
-        """Create a QLabel with underline style."""
-        ins = cls(text=text)
-        ins.set_dayu_underline(True)
-        return ins
+    def underline(self):
+        """Set QLabel with underline style."""
+        self.set_dayu_underline(True)
+        return self

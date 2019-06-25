@@ -10,46 +10,50 @@ from dayu_widgets.label import MLabel
 from dayu_widgets.qt import Qt, QWidget, QVBoxLayout
 
 
-@pytest.mark.parametrize('cls,text,attr', (
-    (MLabel.h1, 'any', 1),
-    (MLabel.h2, '', 2),
-    (MLabel.h3, 'test', 3),
-    (MLabel.h4, 'doesn\'t matter', 4)
+@pytest.mark.parametrize('func,text,attr', (
+    ('h1', 'any', 1),
+    ('h2', '', 2),
+    ('h3', 'test', 3),
+    ('h4', 'doesn\'t matter', 4)
 ))
-def test_label_dayu_level(qtbot, cls, text, attr):
+def test_label_dayu_level(qtbot, func, text, attr):
     """Test MLabel with different level"""
-    label = cls(text)
+    label = MLabel(text)
+    getattr(label, func)()
     qtbot.addWidget(label)
 
     assert label.get_dayu_level() == attr
     assert label.text() == text
 
 
-@pytest.mark.parametrize('cls,text,attr', (
-    (MLabel, 'any', ''),
-    (MLabel.secondary, 'Secondary', 'secondary'),
-    (MLabel.warning, 'Warning', 'warning'),
-    (MLabel.danger, 'Danger', 'danger')
+@pytest.mark.parametrize('func,text,attr', (
+    (None, 'any', ''),
+    ('secondary', 'Secondary', 'secondary'),
+    ('warning', 'Warning', 'warning'),
+    ('danger', 'Danger', 'danger')
 ))
-def test_label_dayu_type(qtbot, cls, text, attr):
+def test_label_dayu_type(qtbot, func, text, attr):
     """Test MLabel with different type"""
-    label = cls(text)
+    label = MLabel(text)
+    if func:
+        getattr(label, func)()
     qtbot.addWidget(label)
 
     assert label.get_dayu_type() == attr
     assert label.text() == text
 
 
-@pytest.mark.parametrize('text, cls, attr', (
-    ('Mark', MLabel.mark, 'dayu_mark'),
-    ('Code', MLabel.code, 'dayu_code'),
-    ('Underline', MLabel.underline, 'dayu_underline'),
-    ('Delete', MLabel.delete, 'dayu_delete'),
-    ('Strong', MLabel.strong, 'dayu_strong')
+@pytest.mark.parametrize('text, func, attr', (
+    ('Mark', 'mark', 'dayu_mark'),
+    ('Code', 'code', 'dayu_code'),
+    ('Underline', 'underline', 'dayu_underline'),
+    ('Delete', 'delete', 'dayu_delete'),
+    ('Strong', 'strong', 'dayu_strong')
 ))
-def test_label_dayu_style(qtbot, cls, text, attr):
+def test_label_dayu_style(qtbot, func, text, attr):
     """Test MLabel with different style"""
-    label = cls(text)
+    label = MLabel(text)
+    getattr(label, func)()
     qtbot.addWidget(label)
 
     assert label.property(attr)
