@@ -6,7 +6,7 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import QLabel, QSizePolicy, Qt, QSize, QPainter, QPoint, Property
+from dayu_widgets.qt import QLabel, QSizePolicy, Qt, QSize, Property
 
 
 class MLabel(QLabel):
@@ -40,15 +40,16 @@ class MLabel(QLabel):
         self.setText(text)
 
     def get_dayu_level(self):
-        """Get MTitle level."""
+        """Get MLabel level."""
         return self._dayu_level
 
     def set_dayu_level(self, value):
-        """Set MTitle level"""
+        """Set MLabel level"""
         self._dayu_level = value
         self.style().polish(self)
 
     def set_dayu_underline(self, value):
+        """Set MLabel underline style."""
         self._dayu_underline = value
         self.style().polish(self)
 
@@ -56,6 +57,7 @@ class MLabel(QLabel):
         return self._dayu_underline
 
     def set_dayu_delete(self, value):
+        """Set MLabel a delete line style."""
         self._dayu_delete = value
         self.style().polish(self)
 
@@ -63,6 +65,7 @@ class MLabel(QLabel):
         return self._dayu_delete
 
     def set_dayu_strong(self, value):
+        """Set MLabel bold style."""
         self._dayu_strong = value
         self.style().polish(self)
 
@@ -70,6 +73,7 @@ class MLabel(QLabel):
         return self._dayu_strong
 
     def set_dayu_mark(self, value):
+        """Set MLabel mark style."""
         self._dayu_mark = value
         self.style().polish(self)
 
@@ -77,6 +81,7 @@ class MLabel(QLabel):
         return self._dayu_mark
 
     def set_dayu_code(self, value):
+        """Set MLabel code style."""
         self._dayu_code = value
         self.style().polish(self)
 
@@ -87,6 +92,8 @@ class MLabel(QLabel):
         return self._elide_mode
 
     def set_elide_mode(self, value):
+        """Set MLabel elide mode.
+        Only accepted Qt.ElideLeft/Qt.ElideMiddle/Qt.ElideRight"""
         self._elide_mode = value
         self._update_elided_text()
 
@@ -130,10 +137,10 @@ class MLabel(QLabel):
         """
         Update the elided text on the label
         """
-        font_metrics = self.fontMetrics()
-        elided_text = font_metrics.elidedText(self._actual_text, self._elide_mode,
+        _font_metrics = self.fontMetrics()
+        _elided_text = _font_metrics.elidedText(self._actual_text, self._elide_mode,
                                               self.width() - 2 * 2)
-        super(MLabel, self).setText(elided_text)
+        super(MLabel, self).setText(_elided_text)
 
     def resizeEvent(self, event):
         """
