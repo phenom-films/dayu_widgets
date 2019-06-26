@@ -100,26 +100,26 @@ class MPushButton(QPushButton):
         return self
 
     def huge(self):
-        """Set MPushButton to PrimaryType"""
+        """Set MPushButton to huge size"""
         self.set_dayu_size(dayu_theme.huge)
         return self
 
     def large(self):
-        """Set MPushButton to SuccessType"""
+        """Set MPushButton to large size"""
         self.set_dayu_size(dayu_theme.large)
         return self
 
     def medium(self):
-        """Set MPushButton to  WarningType"""
+        """Set MPushButton to  medium"""
         self.set_dayu_size(dayu_theme.medium)
         return self
 
     def small(self):
-        """Set MPushButton to DangerType"""
+        """Set MPushButton to small size"""
         self.set_dayu_size(dayu_theme.small)
         return self
 
     def tiny(self):
-        """Set MPushButton to DangerType"""
+        """Set MPushButton to tiny size"""
         self.set_dayu_size(dayu_theme.tiny)
         return self
