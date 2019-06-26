@@ -9,25 +9,24 @@
 from dayu_widgets import dayu_theme
 from dayu_widgets import utils
 from dayu_widgets.line_edit import MLineEdit
+from dayu_widgets.mixin import cursor_mixin
+from dayu_widgets.qt import QLabel, Signal, QHBoxLayout, QSizePolicy, Property, Qt, QCheckBox, \
+    QWidget, QGridLayout
 from dayu_widgets.theme import QssTemplate
 from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.mixin import property_mixin, cursor_mixin
-from dayu_widgets.qt import *
 
 
-@property_mixin
-@cursor_mixin
 class MTag(QLabel):
     sig_closed = Signal()
     sig_clicked = Signal()
 
-    def __init__(self, text='', color=None, border=True, closable=False, parent=None):
-        super(MTag, self).__init__(parent)
+    def __init__(self, text='', parent=None):
+        super(MTag, self).__init__(text=text, parent=parent)
         self._is_pressed = False
-        self._close_button = MToolButton(type=MToolButton.IconOnlyType,
-                                         size=dayu_theme.tiny, icon=MIcon('close_line.svg'))
+        self._close_button = MToolButton().tiny().svg('close_line.svg').icon_only()
         self._close_button.clicked.connect(self.sig_closed)
         self._close_button.clicked.connect(self.close)
+        self._close_button.setVisible(False)
 
         self._main_lay = QHBoxLayout()
         self._main_lay.setContentsMargins(0, 0, 0, 0)
@@ -36,62 +35,68 @@ class MTag(QLabel):
 
         self.setLayout(self._main_lay)
 
-        self._close_button.setVisible(closable)
-        self._border = border
-        self._closable = closable
-        if border:
-            self._style = QssTemplate('''
-                MTag{
-                    font-size: 12px;
-                    padding: 3px;
-                    color: @text_color;
-                    border-radius: @border_radius;
-                    border: 1px solid @border_color;
-                    background-color: @background_color;
-                }
-                MTag:hover{
-                    color: @hover_color;
-                }
+        self._border = True
+        self._border_style = QssTemplate('''
+            MTag{
+                font-size: 12px;
+                padding: 3px;
+                color: @text_color;
+                border-radius: @border_radius;
+                border: 1px solid @border_color;
+                background-color: @background_color;
+            }
+            MTag:hover{
+                color: @hover_color;
+            }
             ''')
-        else:
-            self._style = QssTemplate('''
-                MTag{
-                    font-size: 12px;
-                    padding: 4px;
-                    border-radius: @border_radius;
-                    color: @text_color;
-                    border: 0 solid @border_color;
-                    background-color: @background_color;
-                }
-                MTag:hover{
-                    background-color:@hover_color;
-                }
-            ''')
-        self.setText(text)
-        self.set_color(color or dayu_theme.secondary_text_color)
+        self._no_border_style = QssTemplate('''
+            MTag{
+                font-size: 12px;
+                padding: 4px;
+                border-radius: @border_radius;
+                color: @text_color;
+                border: 0 solid @border_color;
+                background-color: @background_color;
+            }
+            MTag:hover{
+                background-color:@hover_color;
+            }
+        ''')
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+
+        self._color = None
+        self.set_dayu_color(dayu_theme.secondary_text_color)
 
     def minimumSizeHint(self, *args, **kwargs):
         orig = super(MTag, self).minimumSizeHint(*args, **kwargs)
-        orig.setWidth(orig.width() + (dayu_theme.tiny if self._closable else 0))
+        orig.setWidth(orig.width() + (dayu_theme.tiny if self._close_button.isVisible() else 0))
         return orig
 
-    def set_color(self, value):
-        self.setProperty('color', value)
+    def get_dayu_color(self):
+        """Get tag's color"""
+        return self._color
 
-    def _set_color(self, value):
+    def set_dayu_color(self, value):
+        self._color = value
+        self._update_style()
+
+    def _update_style(self):
         if self._border:
-            self.setStyleSheet(self._style.substitute(background_color=utils.fade_color(value, '15%'),
-                                                      border_radius=dayu_theme.border_radius_base,
-                                                      border_color=utils.fade_color(value, '35%'),
-                                                      hover_color=utils.generate_color(value, 5),
-                                                      text_color=value))
+            self.setStyleSheet(
+                self._border_style.substitute(background_color=utils.fade_color(self._color, '15%'),
+                                              border_radius=dayu_theme.border_radius_base,
+                                              border_color=utils.fade_color(self._color, '35%'),
+                                              hover_color=utils.generate_color(self._color, 5),
+                                              text_color=self._color))
         else:
-            self.setStyleSheet(self._style.substitute(background_color=utils.generate_color(value, 6),
-                                                      border_radius=dayu_theme.border_radius_base,
-                                                      border_color=utils.generate_color(value, 6),
-                                                      hover_color=utils.generate_color(value, 5),
-                                                      text_color=dayu_theme.text_color_inverse))
+            self.setStyleSheet(self._no_border_style.substitute(
+                background_color=utils.generate_color(self._color, 6),
+                border_radius=dayu_theme.border_radius_base,
+                border_color=utils.generate_color(self._color, 6),
+                hover_color=utils.generate_color(self._color, 5),
+                text_color=dayu_theme.text_color_inverse))
+
+    dayu_color = Property(str, get_dayu_color, set_dayu_color)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -108,6 +113,19 @@ class MTag(QLabel):
         self._is_pressed = False
         return super(MTag, self).mouseReleaseEvent(event)
 
+    def closeable(self):
+        self._close_button.setVisible(True)
+        return self
+
+    def clickable(self):
+        self.setCursor(Qt.PointingHandCursor)
+        return self
+
+    def border(self, is_border):
+        self._border = is_border
+        self._update_style()
+        return self
+
 
 @cursor_mixin
 class MCheckableTag(QCheckBox):
@@ -123,9 +141,10 @@ class MNewTag(QWidget):
     def __init__(self, text='New Tag', parent=None):
         super(MNewTag, self).__init__(parent)
         self.setAttribute(Qt.WA_StyledBackground)
-        self._add_button = MToolButton(size=dayu_theme.tiny, icon=MIcon('add_line.svg'), text=text)
+        self._add_button = MToolButton().tiny().svg('add_line.svg').text_beside_icon()
+        self._add_button.setText(text)
         self._add_button.clicked.connect(self._slot_show_edit)
-        self._line_edit = MLineEdit(size=dayu_theme.tiny)
+        self._line_edit = MLineEdit().tiny()
         self._line_edit.returnPressed.connect(self._slot_return_pressed)
         self._line_edit.setVisible(False)
 
@@ -153,3 +172,4 @@ class MNewTag(QWidget):
     def focusOutEvent(self, *args, **kwargs):
         self._line_edit.setVisible(False)
         self._add_button.setVisible(True)
+        return super(MNewTag, self).focusOutEvent(*args, **kwargs)
