@@ -57,16 +57,9 @@ Components for PySide
 ### MSilder
 ![pageres](screenshots/slider_light.png)![pageres](screenshots/slider_dark.png)
 
-### MSpinBox 
-### MDoubleSpinBox 
-### MDateTimeEdit
-### MDateEdit
-### MTimeEdit
+### MSpinBox MDoubleSpinBox 
+### MDateTimeEdit MDateEdit MTimeEdit
 ![pageres](screenshots/spin_box_light.png)![pageres](screenshots/spin_box_dark.png)
-
-### MBrowser
-![pageres](screenshots/browser_light.png)![pageres](screenshots/browser_dark.png)
-
 
 
 ## Data Display
