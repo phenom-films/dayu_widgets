@@ -68,7 +68,7 @@ def focus_shadow_mixin(cls):
         if not self.graphicsEffect():
             from dayu_widgets import dayu_theme
             shadow_effect = QGraphicsDropShadowEffect(self)
-            dayu_type = self.property('type')
+            dayu_type = self.property('dayu_type')
             color = vars(dayu_theme).get('{}_color'.format(dayu_type or 'primary'))
             shadow_effect.setColor(color)
             shadow_effect.setOffset(0, 0)
