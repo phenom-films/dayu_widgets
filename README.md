@@ -42,6 +42,12 @@ Components for PySide
 ### MCheckBox
 ![pageres](screenshots/check_box_light.png)![pageres](screenshots/check_box_dark.png)
 
+### MBrowser
+![pageres](screenshots/browser_light.png)![pageres](screenshots/browser_dark.png)
+
+### MLineEdit
+![pageres](screenshots/line_edit_light.png)![pageres](screenshots/line_edit_dark.png)
+
 ### MRadioButton
 ![pageres](screenshots/radio_button_light.png)![pageres](screenshots/radio_button_dark.png)
 
