@@ -595,11 +595,31 @@ MPushButton[dayu_type=danger]:pressed{
     background-color: @error_7;
 }
 
-MPushButton[combine=horizontal]{
-    border-radius: 0;
+MPushButton[combine=horizontal][position=left],
+MComboBox[combine=horizontal][position=left]{
+    margin-left: 1px;
+    border-left: none;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
 }
-MPushButton[combine=vertical]{
-    border-radius: 0;
+
+MPushButton[combine=horizontal][position=right],
+MComboBox[combine=horizontal][position=right]{
+    border-right: none;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+MPushButton[combine=vertical][position=top],
+MComboBox[combine=vertical][position=top]{
+    border-top: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+MPushButton[combine=vertical][position=bottom],
+MComboBox[combine=vertical][position=bottom]{
+    border-bottom: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 MPushButton:disabled{
@@ -813,7 +833,7 @@ MLineEdit:focus{
 }
 
 MLineEdit[dayu_type=error]{
-    color: @error_7;
+    color: @error_5;
 }
 MLineEdit[dayu_type=error]:focus{
     border: 1px solid @error_5;
