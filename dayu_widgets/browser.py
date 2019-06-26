@@ -5,135 +5,276 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
+"""
+MClickBrowserFilePushButton, MClickBrowserFileToolButton
+MClickBrowserFolderPushButton, MClickBrowserFolderToolButton
+Browser files or folders by selecting.
 
+MDragFileButton, MDragFolderButton
+Browser files or folders by dragging.
+"""
 import os
 
-from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.mixin import property_mixin, cursor_mixin
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import QFileDialog, Slot, Signal, MIcon, Qt, QToolButton, QSize, QSizePolicy
+from dayu_widgets.qt import QFileDialog, Slot, Signal, QSize, QSizePolicy, Property
+from dayu_widgets.tool_button import MToolButton
 
 
 @Slot()
 def _slot_browser_file(self):
-    multi = self.property('multiple')
-    filter_list = 'File(%s)' % (' '.join(['*' + e for e in self.property('format')])) \
-        if self.property('format') else 'Any File(*)'
-    if multi:
-        r_files, _ = QFileDialog.getOpenFileNames(self, 'Browser File', self.property('path'),
+    filter_list = 'File(%s)' % (' '.join(['*' + e for e in self.get_dayu_filters()])) \
+        if self.get_dayu_filters() else 'Any File(*)'
+    if self.get_dayu_multiple():
+        r_files, _ = QFileDialog.getOpenFileNames(self, 'Browser File', self.get_dayu_path(),
                                                   filter_list)
         if r_files:
             self.sig_files_changed.emit(r_files)
-            self.set_path(r_files[0])
+            self.set_dayu_path(r_files[0])
     else:
-        r_file, _ = QFileDialog.getOpenFileName(self, 'Browser File', self.property('path'),
+        r_file, _ = QFileDialog.getOpenFileName(self, 'Browser File', self.get_dayu_path(),
                                                 filter_list)
         if r_file:
             self.sig_file_changed.emit(r_file)
-            self.set_path(r_file)
+            self.set_dayu_path(r_file)
 
 
 @Slot()
 def _slot_browser_folder(self):
-    r_folder = QFileDialog.getExistingDirectory(self, 'Browser Folder', self.property('path'))
+    r_folder = QFileDialog.getExistingDirectory(self, 'Browser Folder', self.get_dayu_path())
     if r_folder:
-        if self.property('multiple'):
+        if self.get_dayu_multiple():
             self.sig_folders_changed.emit([r_folder])
         else:
             self.sig_folder_changed.emit(r_folder)
-        self.set_path(r_folder)
+        self.set_dayu_path(r_folder)
 
 
-@property_mixin
-@cursor_mixin
 class MClickBrowserFilePushButton(MPushButton):
+    """A Clickable push button to browser files"""
     sig_file_changed = Signal(str)
     sig_files_changed = Signal(list)
     slot_browser_file = _slot_browser_file
 
-    def __init__(self, icon=None, text='', multiple=False, parent=None):
-        super(MClickBrowserFilePushButton, self).__init__(
-            icon=icon or MIcon('cloud_line.svg',
-                               None if type is None or type == 'default' else '#fff'),
-            text=text, parent=parent)
+    def __init__(self, text='Browser', multiple=False, parent=None):
+        super(MClickBrowserFilePushButton, self).__init__(text=text, parent=parent)
         self.setProperty('multiple', multiple)
         self.clicked.connect(self.slot_browser_file)
         self.setToolTip(self.tr('Click to browser file'))
-        self.set_path('')
 
-    def set_format(self, value):
-        self.setProperty('format', value)
+        self._path = None
+        self._multiple = multiple
+        self._filters = []
 
-    def set_path(self, value):
-        self.setProperty('path', value)
+    def get_dayu_filters(self):
+        """
+        Get browser's format filters
+        :return: list
+        """
+        return self._filters
+
+    def set_dayu_filters(self, value):
+        """
+        Set browser file format filters
+        :param value:
+        :return: None
+        """
+        self._filters = value
+
+    def get_dayu_path(self):
+        """
+        Get last browser file path
+        :return: str
+        """
+        return self._path
+
+    def set_dayu_path(self, value):
+        """
+        Set browser file start path
+        :param value: str
+        :return: None
+        """
+        self._path = value
+
+    def get_dayu_multiple(self):
+        """
+        Get browser can select multiple file or not
+        :return: bool
+        """
+        return self._multiple
+
+    def set_dayu_multiple(self, value):
+        """
+        Set browser can select multiple file or not
+        :param value: bool
+        :return: None
+        """
+        self._multiple = value
+
+    dayu_multiple = Property(bool, get_dayu_multiple, set_dayu_multiple)
+    dayu_path = Property(basestring, get_dayu_path, set_dayu_path)
+    dayu_filters = Property(list, get_dayu_filters, set_dayu_filters)
 
 
-@property_mixin
 class MClickBrowserFileToolButton(MToolButton):
+    """A Clickable tool button to browser files"""
     sig_file_changed = Signal(str)
     sig_files_changed = Signal(list)
     slot_browser_file = _slot_browser_file
 
-    def __init__(self, icon=None, size=None, multiple=False, parent=None):
-        super(MClickBrowserFileToolButton, self).__init__(icon=icon or MIcon('cloud_line.svg'),
-                                                          type=MToolButton.IconOnlyType,
-                                                          size=size, parent=parent)
-        self.setProperty('multiple', multiple)
+    def __init__(self, multiple=False, parent=None):
+        super(MClickBrowserFileToolButton, self).__init__(parent=parent)
+        self.set_dayu_svg('cloud_line.svg')
+        self.icon_only()
         self.clicked.connect(self.slot_browser_file)
-        self.set_path('')
         self.setToolTip(self.tr('Click to browser file'))
 
-    def set_format(self, value):
-        self.setProperty('format', value)
+        self._path = None
+        self._multiple = multiple
+        self._filters = []
 
-    def set_path(self, value):
-        self.setProperty('path', value)
+    def get_dayu_filters(self):
+        """
+        Get browser's format filters
+        :return: list
+        """
+        return self._filters
+
+    def set_dayu_filters(self, value):
+        """
+        Set browser file format filters
+        :param value:
+        :return: None
+        """
+        self._filters = value
+
+    def get_dayu_path(self):
+        """
+        Get last browser file path
+        :return: str
+        """
+        return self._path
+
+    def set_dayu_path(self, value):
+        """
+        Set browser file start path
+        :param value: str
+        :return: None
+        """
+        self._path = value
+
+    def get_dayu_multiple(self):
+        """
+        Get browser can select multiple file or not
+        :return: bool
+        """
+        return self._multiple
+
+    def set_dayu_multiple(self, value):
+        """
+        Set browser can select multiple file or not
+        :param value: bool
+        :return: None
+        """
+        self._multiple = value
+
+    dayu_multiple = Property(bool, get_dayu_multiple, set_dayu_multiple)
+    dayu_path = Property(basestring, get_dayu_path, set_dayu_path)
+    dayu_filters = Property(list, get_dayu_filters, set_dayu_filters)
 
 
-@property_mixin
-@cursor_mixin
-class MDragFileButton(QToolButton):
+class MDragFileButton(MToolButton):
+    """A Clickable and draggable tool button to upload files"""
     sig_file_changed = Signal(str)
     sig_files_changed = Signal(list)
     slot_browser_file = _slot_browser_file
 
-    def __init__(self, text='', icon=None, multiple=False, parent=None):
+    def __init__(self, text='', multiple=False, parent=None):
         super(MDragFileButton, self).__init__(parent=parent)
         self.setAcceptDrops(True)
         self.setMouseTracking(True)
-        self.setProperty('multiple', multiple)
-        self.setCursor(Qt.PointingHandCursor)
-        self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.text_under_icon()
         self.setText(text)
-        self.setIcon(icon or MIcon('cloud_line.svg'))
-        self.setIconSize(QSize(80, 80))
+
+        self.set_dayu_size(60)
+        self.set_dayu_svg('cloud_line.svg')
+        self.setIconSize(QSize(60, 60))
+
         self.clicked.connect(self.slot_browser_file)
-        self.set_path('')
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.setToolTip(self.tr('Click to browser file'))
 
-    def set_format(self, value):
-        self.setProperty('format', value)
+        self._path = None
+        self._multiple = multiple
+        self._filters = []
 
-    def set_path(self, value):
-        self.setProperty('path', value)
+    def get_dayu_filters(self):
+        """
+        Get browser's format filters
+        :return: list
+        """
+        return self._filters
+
+    def set_dayu_filters(self, value):
+        """
+        Set browser file format filters
+        :param value:
+        :return: None
+        """
+        self._filters = value
+
+    def get_dayu_path(self):
+        """
+        Get last browser file path
+        :return: str
+        """
+        return self._path
+
+    def set_dayu_path(self, value):
+        """
+        Set browser file start path
+        :param value: str
+        :return: None
+        """
+        self._path = value
+
+    def get_dayu_multiple(self):
+        """
+        Get browser can select multiple file or not
+        :return: bool
+        """
+        return self._multiple
+
+    def set_dayu_multiple(self, value):
+        """
+        Set browser can select multiple file or not
+        :param value: bool
+        :return: None
+        """
+        self._multiple = value
+
+    dayu_multiple = Property(bool, get_dayu_multiple, set_dayu_multiple)
+    dayu_path = Property(basestring, get_dayu_path, set_dayu_path)
+    dayu_filters = Property(list, get_dayu_filters, set_dayu_filters)
 
     def dragEnterEvent(self, event):
+        """Override dragEnterEvent. Validate dragged files"""
         if event.mimeData().hasFormat("text/uri-list"):
             file_list = self._get_valid_file_list(event.mimeData().urls())
             count = len(file_list)
-            if count == 1 or (count > 1 and self.property('multiple')):
+            if count == 1 or (count > 1 and self.get_dayu_multiple()):
                 event.acceptProposedAction()
                 return
 
     def dropEvent(self, event):
+        """Override dropEvent to accept the dropped files"""
         file_list = self._get_valid_file_list(event.mimeData().urls())
-        if self.property('multiple'):
+        if self.get_dayu_multiple():
             self.sig_files_changed.emit(file_list)
-            self.set_path(file_list)
+            self.set_dayu_path(file_list)
         else:
             self.sig_file_changed.emit(file_list[0])
-            self.set_path(file_list[0])
+            self.set_dayu_path(file_list[0])
 
     def _get_valid_file_list(self, url_list):
         import subprocess
@@ -142,15 +283,14 @@ class MDragFileButton(QToolButton):
         for url in url_list:
             file_name = url.toLocalFile()
             if sys.platform == 'darwin':
-                p = subprocess.Popen(
+                sub_process = subprocess.Popen(
                     'osascript -e \'get posix path of posix file \"file://{}\" -- kthxbai\''.format(
                         file_name),
                     stdout=subprocess.PIPE,
                     shell=True)
-                # print p.communicate()[0].strip()
-                file_name = p.communicate()[0].strip()
-                print file_name
-                p.wait()
+                # print sub_process.communicate()[0].strip()
+                file_name = sub_process.communicate()[0].strip()
+                sub_process.wait()
 
             if os.path.isfile(file_name):
                 if self.property('format'):
@@ -162,94 +302,180 @@ class MDragFileButton(QToolButton):
         return file_list
 
 
-@property_mixin
 class MClickBrowserFolderPushButton(MPushButton):
+    """A Clickable push button to browser folders"""
     sig_folder_changed = Signal(str)
     sig_folders_changed = Signal(list)
     slot_browser_folder = _slot_browser_folder
 
-    def __init__(self, icon=None, text='', multiple=False, parent=None):
-        super(MClickBrowserFolderPushButton, self).__init__(
-            icon=icon or MIcon('folder_line.svg',
-                               None if type is None or type == MPushButton.DefaultType else '#fff'),
-            text=text, parent=parent)
+    def __init__(self, text='', multiple=False, parent=None):
+        super(MClickBrowserFolderPushButton, self).__init__(text=text, parent=parent)
         self.setProperty('multiple', multiple)
-        self.setCursor(Qt.PointingHandCursor)
         self.clicked.connect(self.slot_browser_folder)
-        self.set_path('')
         self.setToolTip(self.tr('Click to browser folder'))
 
-    def set_format(self, value):
-        self.setProperty('format', value)
+        self._path = None
+        self._multiple = multiple
 
-    def set_path(self, value):
-        self.setProperty('path', value)
+    def get_dayu_path(self):
+        """
+        Get last browser file path
+        :return: str
+        """
+        return self._path
+
+    def set_dayu_path(self, value):
+        """
+        Set browser file start path
+        :param value: str
+        :return: None
+        """
+        self._path = value
+
+    def get_dayu_multiple(self):
+        """
+        Get browser can select multiple file or not
+        :return: bool
+        """
+        return self._multiple
+
+    def set_dayu_multiple(self, value):
+        """
+        Set browser can select multiple file or not
+        :param value: bool
+        :return: None
+        """
+        self._multiple = value
+
+    dayu_multiple = Property(bool, get_dayu_multiple, set_dayu_multiple)
+    dayu_path = Property(basestring, get_dayu_path, set_dayu_path)
 
 
 @property_mixin
 class MClickBrowserFolderToolButton(MToolButton):
+    """A Clickable tool button to browser folders"""
     sig_folder_changed = Signal(str)
     sig_folders_changed = Signal(list)
     slot_browser_folder = _slot_browser_folder
 
-    def __init__(self, multiple=False, icon=None, size=None, parent=None):
-        super(MClickBrowserFolderToolButton, self).__init__(
-            icon=icon or MIcon('folder_line.svg'), size=size,
-            type=MToolButton.IconOnlyType, parent=parent)
-        self.setProperty('multiple', multiple)
-        self.setCursor(Qt.PointingHandCursor)
+    def __init__(self, multiple=False, parent=None):
+        super(MClickBrowserFolderToolButton, self).__init__(parent=parent)
+
+        self.set_dayu_svg('folder_line.svg')
+        self.icon_only()
         self.clicked.connect(self.slot_browser_folder)
-        self.set_path('')
         self.setToolTip(self.tr('Click to browser folder'))
 
-    def set_format(self, value):
-        self.setProperty('format', value)
+        self._path = None
+        self._multiple = multiple
 
-    def set_path(self, value):
-        self.setProperty('path', value)
+    def get_dayu_path(self):
+        """
+        Get last browser file path
+        :return: str
+        """
+        return self._path
+
+    def set_dayu_path(self, value):
+        """
+        Set browser file start path
+        :param value: str
+        :return: None
+        """
+        self._path = value
+
+    def get_dayu_multiple(self):
+        """
+        Get browser can select multiple file or not
+        :return: bool
+        """
+        return self._multiple
+
+    def set_dayu_multiple(self, value):
+        """
+        Set browser can select multiple file or not
+        :param value: bool
+        :return: None
+        """
+        self._multiple = value
+
+    dayu_multiple = Property(bool, get_dayu_multiple, set_dayu_multiple)
+    dayu_path = Property(basestring, get_dayu_path, set_dayu_path)
 
 
 @property_mixin
 @cursor_mixin
-class MDragFolderButton(QToolButton):
+class MDragFolderButton(MToolButton):
+    """A Clickable and draggable tool button to browser folders"""
     sig_folder_changed = Signal(str)
     sig_folders_changed = Signal(list)
     slot_browser_folder = _slot_browser_folder
 
-    def __init__(self, text='', icon=None, multiple=False, parent=None):
+    def __init__(self, multiple=False, parent=None):
         super(MDragFolderButton, self).__init__(parent=parent)
         self.setAcceptDrops(True)
         self.setMouseTracking(True)
-        self.setProperty('multiple', multiple)
-        self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-        self.setText(text)
-        self.setIcon(icon or MIcon('folder_line.svg'))
-        self.setIconSize(QSize(80, 80))
+        self.text_under_icon()
+        self.set_dayu_svg('folder_line.svg')
+        self.set_dayu_size(60)
+        self.setIconSize(QSize(60, 60))
+        self.setText(self.tr('Click or drag folder here'))
         self.clicked.connect(self.slot_browser_folder)
-        self.set_path('')
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.setToolTip(self.tr('Click to browser folder'))
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.setToolTip(self.tr('Click to browser folder or drag folder here'))
 
-    def set_format(self, value):
-        self.setProperty('format', value)
+        self._path = None
+        self._multiple = multiple
 
-    def set_path(self, value):
-        self.setProperty('path', value)
+    def get_dayu_path(self):
+        """
+        Get last browser file path
+        :return: str
+        """
+        return self._path
+
+    def set_dayu_path(self, value):
+        """
+        Set browser file start path
+        :param value: str
+        :return: None
+        """
+        self._path = value
+
+    def get_dayu_multiple(self):
+        """
+        Get browser can select multiple file or not
+        :return: bool
+        """
+        return self._multiple
+
+    def set_dayu_multiple(self, value):
+        """
+        Set browser can select multiple file or not
+        :param value: bool
+        :return: None
+        """
+        self._multiple = value
+
+    dayu_multiple = Property(bool, get_dayu_multiple, set_dayu_multiple)
+    dayu_path = Property(bool, get_dayu_path, set_dayu_path)
 
     def dragEnterEvent(self, event):
+        """Override dragEnterEvent. Validate dragged folders"""
         if event.mimeData().hasFormat("text/uri-list"):
             folder_list = [url.toLocalFile() for url in event.mimeData().urls() if
                            os.path.isdir(url.toLocalFile())]
             count = len(folder_list)
-            if count == 1 or (count > 1 and self.property('multiple')):
+            if count == 1 or (count > 1 and self.get_dayu_multiple()):
                 event.acceptProposedAction()
                 return
 
     def dropEvent(self, event):
+        """Override dropEvent to accept the dropped folders"""
         folder_list = [url.toLocalFile() for url in event.mimeData().urls() if
                        os.path.isdir(url.toLocalFile())]
-        if self.property('multiple'):
+        if self.get_dayu_multiple():
             self.sig_folders_changed.emit(folder_list)
         else:
             self.sig_folder_changed.emit(folder_list[0])
-        self.set_path(folder_list[0])
+        self.set_dayu_path(folder_list[0])
