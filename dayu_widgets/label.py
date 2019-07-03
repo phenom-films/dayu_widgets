@@ -6,7 +6,7 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import QLabel, QSizePolicy, Qt, QSize, Property
+from dayu_widgets.qt import QLabel, QSizePolicy, Qt, QSize, Property, QEvent
 
 
 class MLabel(QLabel):
@@ -37,7 +37,7 @@ class MLabel(QLabel):
         self._dayu_code = False
         self._dayu_level = 0
         self._elide_mode = Qt.ElideNone
-        self.setText(text)
+        self.setProperty('dayu_text', text)
 
     def get_dayu_level(self):
         """Get MLabel level."""
@@ -139,7 +139,7 @@ class MLabel(QLabel):
         """
         _font_metrics = self.fontMetrics()
         _elided_text = _font_metrics.elidedText(self._actual_text, self._elide_mode,
-                                              self.width() - 2 * 2)
+                                                self.width() - 2 * 2)
         super(MLabel, self).setText(_elided_text)
 
     def resizeEvent(self, event):
@@ -209,3 +209,8 @@ class MLabel(QLabel):
         """Set QLabel with underline style."""
         self.set_dayu_underline(True)
         return self
+
+    def event(self, event):
+        if event.type() == QEvent.DynamicPropertyChange and event.propertyName() == 'dayu_text':
+            self.setText(self.property('dayu_text'))
+        return super(MLabel, self).event(event)
