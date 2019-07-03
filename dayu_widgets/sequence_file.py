@@ -32,14 +32,15 @@ class MSequenceFile(QWidget, MFieldMixin):
         super(MSequenceFile, self).__init__(parent)
         self.sequence_obj = None
         size = size or dayu_theme.small
-        self._file_label = MLineEdit(size=size)
+        self._file_label = MLineEdit()
+        self._file_label.set_dayu_size(size)
         self._file_label.setReadOnly(True)
         self._is_sequence_check_box = MCheckBox(self.tr('Sequence'))
         self._is_sequence_check_box.toggled.connect(functools.partial(self.setProperty, 'sequence'))
         self._is_sequence_check_box.toggled.connect(self.sig_is_sequence_changed)
 
-        self._info_label = MLabel.secondary()
-        self._error_label = MLabel.secondary()
+        self._info_label = MLabel().secondary()
+        self._error_label = MLabel().secondary()
         self._error_label.setProperty('error', True)
         self._error_label.setMinimumWidth(100)
         self._error_label.set_elide_mode(Qt.ElideMiddle)

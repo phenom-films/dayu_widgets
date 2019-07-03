@@ -25,7 +25,7 @@ class MProgressCircle(QProgressBar):
     def __init__(self, dashboard=False, parent=None):
         super(MProgressCircle, self).__init__(parent)
         self._main_lay = QHBoxLayout()
-        self._default_label = MLabel.h3()
+        self._default_label = MLabel().h3()
         self._default_label.setAlignment(Qt.AlignCenter)
         self._main_lay.addWidget(self._default_label)
         self.setLayout(self._main_lay)
