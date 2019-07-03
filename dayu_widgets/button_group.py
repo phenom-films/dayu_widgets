@@ -67,6 +67,7 @@ class MButtonGroupBase(QWidget):
         else:
             self._button_group.addButton(button, index)
         self._main_layout.insertWidget(self._main_layout.count(), button)
+        return button
 
     def set_button_list(self, button_list):
         for button in self._button_group.buttons():
@@ -74,7 +75,14 @@ class MButtonGroupBase(QWidget):
             self._main_layout.removeWidget(button)
             button.setVisible(False)
         for index, data_dict in enumerate(button_list):
-            self.add_button(data_dict, index)
+            button = self.add_button(data_dict, index)
+            if index == 0:
+                button.setProperty('position', 'left')
+            elif index  == len(button_list) -1:
+                button.setProperty('position', 'right')
+            else:
+                button.setProperty('position', 'center')
+
 
 
 class MPushButtonGroup(MButtonGroupBase):
@@ -186,8 +194,11 @@ class MRadioButtonGroup(MButtonGroupBase):
 
     def set_dayu_checked(self, value):
         button = self._button_group.button(value)
-        button.setChecked(True)
-        self.sig_checked_changed.emit(value)
+        if button:
+            button.setChecked(True)
+            self.sig_checked_changed.emit(value)
+        else:
+            print 'error'
 
     def get_dayu_checked(self):
         return self._button_group.checkedId()
@@ -220,14 +231,16 @@ class MToolButtonGroup(MButtonGroupBase):
             button.icon_only()
         return button
 
-    def _set_checked(self, value):
-        assert isinstance(value, int)
-        if value != self._button_group.checkedId():
-            # 更新来自代码
-            button = self._button_group.button(value)
-            if button:
-                button.setChecked(True)
+    def set_dayu_checked(self, value):
+        button = self._button_group.button(value)
+        if button:
+            button.setChecked(True)
             self.sig_checked_changed.emit(value)
+        else:
+            print 'error'
 
-    def set_checked(self, value):
-        self.setProperty('checked', value)
+    def get_dayu_checked(self):
+        return self._button_group.checkedId()
+
+    dayu_checked = Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
+
