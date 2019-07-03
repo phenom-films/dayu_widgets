@@ -12,7 +12,7 @@ from dayu_widgets.label import MLabel
 from dayu_widgets import dayu_theme
 from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.qt import QWidget, Qt, Signal, QHBoxLayout, QTimer, QPropertyAnimation, \
-    QEasingCurve, QAbstractAnimation, MPixmap, QPoint
+    QEasingCurve, QAbstractAnimation, MPixmap, QPoint, QGraphicsDropShadowEffect, QPainterPath, QRegion, QRectF
 
 
 class MMessage(QWidget):
@@ -48,7 +48,7 @@ class MMessage(QWidget):
                                                vars(dayu_theme).get(current_type + '_color')))
 
         self._content_label = MLabel(parent=self)
-        self._content_label.set_elide_mode(Qt.ElideMiddle)
+        # self._content_label.set_elide_mode(Qt.ElideMiddle)
         self._content_label.setText(text)
 
         self._close_button = MToolButton(parent=self).icon_only().svg('close_line.svg').tiny()
