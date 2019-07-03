@@ -47,7 +47,6 @@ class MBadge(QWidget):
             self._main_lay.addWidget(widget, 0, 0)
         self._main_lay.addWidget(self._badge_button, 0, 0, Qt.AlignTop | Qt.AlignRight)
         self.setLayout(self._main_lay)
-        self.setAttribute(Qt.WA_StyledBackground)
 
     def get_dayu_overflow(self):
         """
