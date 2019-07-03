@@ -19,7 +19,7 @@ class SequenceFileExample(QWidget):
 
     def _init_ui(self):
         browser = MDragFileButton(text='Click or drag files')
-        browser.set_format(['.py', 'pyc', '.jpg', '.mov', 'exr'])
+        browser.set_dayu_filters(['.py', 'pyc', '.jpg', '.mov', 'exr'])
         browser.sig_file_changed.connect(self.slot_add_file)
         self.sequence_file_1 = MSequenceFile()
 

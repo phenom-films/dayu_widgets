@@ -82,7 +82,7 @@ class TableViewExample(QWidget, MFieldMixin):
         table_large.set_header_list(mock.header_list)
         model_1.set_data_list(mock.data_list)
 
-        line_edit = MLineEdit.search(size=dayu_theme.small)
+        line_edit = MLineEdit().search().small()
         line_edit.textChanged.connect(model_sort.set_search_pattern)
 
         main_lay = QVBoxLayout()
