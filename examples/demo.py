@@ -1,11 +1,10 @@
 import importlib
-
-from dayu_widgets.button_group import MToolButtonGroup
-from dayu_widgets.dock_widget import MDockWidget
-from dayu_widgets import dayu_theme
-from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.qt import QMainWindow, QTextEdit, QStackedWidget, QWidget, Qt, QVBoxLayout, QScrollArea
 import os
+
+from dayu_widgets.qt import QMainWindow, QTextEdit, QStackedWidget, Qt
+from dayu_widgets import dayu_theme
+from dayu_widgets.dock_widget import MDockWidget
+from dayu_widgets.item_view_set import MItemViewSet
 
 
 def get_test_widget():
@@ -34,30 +33,19 @@ class MDemo(QMainWindow):
         self.text_edit = QTextEdit()
         self.stacked_widget = QStackedWidget()
 
-        list_widget = MToolButtonGroup(orientation=Qt.Vertical,
-                                       size=dayu_theme.small,
-                                       type=MToolButton.TaoBaoType,
-                                       exclusive=True,
-                                       parent=self)
-        list_widget.sig_checked_changed.connect(self.slot_change_widget)
+        list_widget = MItemViewSet(view_type=MItemViewSet.ListViewType)
+        list_widget.set_header_list([{'key': 'name', 'label': 'Name', 'icon': 'list_view.svg'}])
+        list_widget.sig_left_clicked.connect(self.slot_change_widget)
         data_list = []
         for index, (name, cls, code) in enumerate(get_test_widget()):
-            data_list.append({'text': name[:-8], 'data': code, 'checkable': True})
+            data_list.append({'name': name[:-8], 'data': code})
             widget = cls()
             widget.setProperty('code', code)
             self.stacked_widget.addWidget(widget)
-        list_widget.set_button_list(data_list)
-        list_widget.set_checked(0)
-
-        left_widget = QWidget()
-        left_lay = QVBoxLayout()
-        left_widget.setLayout(left_lay)
-        left_lay.addWidget(list_widget)
-        scroll_area = QScrollArea()
-        scroll_area.setWidget(left_widget)
+        list_widget.setup_data(data_list)
 
         test_widget = MDockWidget('Example List')
-        test_widget.setWidget(left_widget)
+        test_widget.setWidget(list_widget)
         self.addDockWidget(Qt.LeftDockWidgetArea, test_widget)
 
         code_widget = MDockWidget('Example Code')
@@ -66,8 +54,8 @@ class MDemo(QMainWindow):
         self.setCentralWidget(self.stacked_widget)
 
     def slot_change_widget(self, index):
-        self.stacked_widget.setCurrentIndex(index)
-        widget = self.stacked_widget.widget(index)
+        self.stacked_widget.setCurrentIndex(index.row())
+        widget = self.stacked_widget.widget(index.row())
         self.text_edit.setPlainText(''.join(widget.property('code')))
 
 

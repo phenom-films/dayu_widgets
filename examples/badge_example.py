@@ -34,9 +34,9 @@ class BadgeExample(QWidget, MFieldMixin):
         standalone_lay.addWidget(MBadge.text('new'))
         standalone_lay.addStretch()
 
-        button = MToolButton(icon=MIcon('trash_line.svg'))
+        button = MToolButton().svg('trash_line.svg')
         avatar = MAvatar.large(MPixmap('avatar.png'))
-        button_alert = MToolButton(icon=MIcon('alert_fill.svg'), size=dayu_theme.large)
+        button_alert = MToolButton().svg('alert_fill.svg').large()
         badge_1 = MBadge.dot(True, widget=button)
         badge_2 = MBadge.dot(True, widget=avatar)
         badge_3 = MBadge.dot(True, widget=button_alert)

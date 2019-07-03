@@ -32,8 +32,7 @@ class ToolButtonGroupExample(QWidget, MFieldMixin):
             {'text': 'Houdini', 'icon': MIcon('app-houdini.png'), 'checkable': True}
         ]
 
-        tool_group_v = MToolButtonGroup(type=MToolButton.TaoBaoType,
-                                        exclusive=True,
+        tool_group_v = MToolButtonGroup(exclusive=True,
                                         size=dayu_theme.small,
                                         orientation=Qt.Vertical)
         tool_group_v.set_button_list(app_data)
@@ -44,7 +43,7 @@ class ToolButtonGroupExample(QWidget, MFieldMixin):
         tool_2_lay.addWidget(tool_group_button_h)
         tool_2_lay.addStretch()
 
-        tool_grp_excl_true = MToolButtonGroup(orientation=Qt.Horizontal, exclusive=True, type=MToolButton.IconOnlyType)
+        tool_grp_excl_true = MToolButtonGroup(orientation=Qt.Horizontal, exclusive=True)
         tool_grp_excl_true.set_button_list([
             {'icon': MIcon('table_view.svg'), 'checkable': True,
              'icon_checked': MIcon('table_view.svg', dayu_theme.primary_color),
@@ -59,13 +58,12 @@ class ToolButtonGroupExample(QWidget, MFieldMixin):
              'icon_checked': MIcon('big_view.svg', dayu_theme.primary_color),
              'tooltip': u'Big View'},
         ])
-        tool_grp_excl_true.set_checked(0)
+        tool_grp_excl_true.set_dayu_checked(0)
         tool_excl_lay = QHBoxLayout()
         tool_excl_lay.addWidget(tool_grp_excl_true)
         tool_excl_lay.addStretch()
 
         tool_grp_excl_false = MToolButtonGroup(orientation=Qt.Horizontal,
-                                               type=MToolButton.IconOnlyType,
                                                exclusive=False)
         # TODO: 这里表现的不对
         tool_grp_excl_false.set_button_list(

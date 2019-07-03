@@ -32,7 +32,8 @@ class ComboBoxExample(QWidget, MFieldMixin):
                      ]
         size_lay = QHBoxLayout()
         for label, size in size_list:
-            combo_box = MComboBox(size=size)
+            combo_box = MComboBox()
+            combo_box.set_dayu_size(size)
             combo_box.set_menu(menu1)
             size_lay.addWidget(combo_box)
             self.bind('button1_selected', combo_box, 'value', signal='sig_value_changed')
