@@ -5,65 +5,73 @@
 # Date  : 2019.3
 # Email : muyanru345@163.com
 ###################################################################
-
+"""A Navigation menu"""
 
 from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.button_group import MButtonGroupBase
 from dayu_widgets.divider import MDivider
-from dayu_widgets.qt import *
+from dayu_widgets.qt import Signal, QWidget, Property, QHBoxLayout, QVBoxLayout, Qt
 from dayu_widgets import dayu_theme
 
 
-class MLineButtonGroup(MButtonGroupBase):
+class MBlockButton(MToolButton):
+    """MBlockButton"""
+
+    def __init__(self, parent=None):
+        super(MBlockButton, self).__init__(parent)
+        self.setCheckable(True)
+
+
+class MBlockButtonGroup(MButtonGroupBase):
+    """MBlockButtonGroup"""
     sig_checked_changed = Signal(int)
 
-    def __init__(self, size=None, orientation=Qt.Horizontal, parent=None):
-        super(MLineButtonGroup, self).__init__(orientation=orientation, parent=parent)
+    def __init__(self, parent=None):
+        super(MBlockButtonGroup, self).__init__(parent=parent)
         self.set_spacing(1)
         self._button_group.setExclusive(True)
-        self._size = size
-        self._orientation = orientation
-        self._button_group.buttonClicked[int].connect(self.set_checked)
         self._button_group.buttonClicked[int].connect(self.sig_checked_changed)
-        self.set_checked(-1)
 
     def create_button(self, data_dict):
-        button = MToolButton(text=data_dict.get('text'),
-                             icon=data_dict.get('icon'),
-                             type=MToolButton.BarType,
-                             size=data_dict.get('size') or self._size,
-                             parent=self
-                             )
-        button.setCheckable(True)
-        if data_dict.get('icon') or data_dict.get('icon_checked'):
-            button.setProperty('icon_checked', data_dict.get('icon_checked'))
-            button.setProperty('icon_unchecked', data_dict.get('icon'))
+        button = MBlockButton()
+        if data_dict.get('svg'):
+            button.svg(data_dict.get('svg'))
+        if data_dict.get('text'):
+            if data_dict.get('svg') or data_dict.get('icon'):
+                button.text_beside_icon()
+            else:
+                button.text_only()
+        else:
+            button.icon_only()
+        button.set_dayu_size(dayu_theme.large)
         return button
 
-    def _set_checked(self, value):
-        assert isinstance(value, int)
-        if value != self._button_group.checkedId():
-            # 更新来自代码
-            button = self._button_group.button(value)
-            if button:
-                button.setChecked(True)
-            self.sig_checked_changed.emit(value)
+    def set_dayu_checked(self, value):
+        """Set current checked button's id"""
+        button = self._button_group.button(value)
+        button.setChecked(True)
+        self.sig_checked_changed.emit(value)
 
-    def set_checked(self, value):
-        self.setProperty('checked', value)
+    def get_dayu_checked(self):
+        """Get current checked button's id"""
+        return self._button_group.checkedId()
+
+    dayu_checked = Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
 
 
 class MMenuTabWidget(QWidget):
-    def __init__(self, size=None, parent=None):
+    """MMenuTabWidget"""
+
+    def __init__(self, parent=None):
         super(MMenuTabWidget, self).__init__(parent=parent)
-        self.tool_button_group = MLineButtonGroup(size=size)
-        self.bar_layout = QHBoxLayout()
-        self.bar_layout.setContentsMargins(0, 0, 0, 0)
-        self.bar_layout.addWidget(self.tool_button_group)
-        self.bar_layout.addStretch()
+        self.tool_button_group = MBlockButtonGroup()
+        self._bar_layout = QHBoxLayout()
+        self._bar_layout.setContentsMargins(10, 0, 10, 0)
+        self._bar_layout.addWidget(self.tool_button_group)
+        self._bar_layout.addStretch()
         bar_widget = QWidget()
         bar_widget.setObjectName('bar_widget')
-        bar_widget.setLayout(self.bar_layout)
+        bar_widget.setLayout(self._bar_layout)
         bar_widget.setAttribute(Qt.WA_StyledBackground)
         main_lay = QVBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
@@ -74,10 +82,13 @@ class MMenuTabWidget(QWidget):
         self.setLayout(main_lay)
 
     def tool_bar_append_widget(self, widget):
-        self.bar_layout.addWidget(widget)
+        """Add the widget too menubar's right position."""
+        self._bar_layout.addWidget(widget)
 
     def tool_bar_insert_widget(self, widget):
-        self.bar_layout.insertWidget(0, widget)
+        """Insert the widget to menubar's left position."""
+        self._bar_layout.insertWidget(0, widget)
 
     def add_menu(self, data_dict, index=None):
+        """Add a menu"""
         self.tool_button_group.add_button(data_dict, index)
