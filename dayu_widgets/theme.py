@@ -94,6 +94,7 @@ class MTheme(object):
         self.icon_minus = url_prefix_2.format('minus')
         self.icon_circle = url_prefix_2.format('circle')
         self.icon_sphere = url_prefix_2.format('sphere')
+        self.icon_size_grip = url_prefix_2.format('size_grip')
 
     def _init_color(self):
         self.info_color = self.blue
