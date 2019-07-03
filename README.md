@@ -107,6 +107,9 @@ Components for PySide
 ### MAlert <- QWidget
 ![pageres](screenshots/alert_light.png)![pageres](screenshots/alert_dark.png)
 
+### MDrawer <- QWidget
+![pageres](screenshots/drawer_light.gif)![pageres](screenshots/drawer_dark.gif)
+
 ### MMessage <- QWidget
 ![pageres](screenshots/message_light.gif)![pageres](screenshots/message_dark.gif)
 
