@@ -5,62 +5,55 @@
 # Date  : 2019.3
 # Email : muyanru345@163.com
 ###################################################################
-from dayu_widgets.divider import MDivider
-from dayu_widgets.message import MMessage
+import functools
+
+from dayu_widgets.badge import MBadge
 from dayu_widgets.label import MLabel
 from dayu_widgets.menu_tab_widget import MMenuTabWidget
-from dayu_widgets import dayu_theme
-from dayu_widgets.qt import *
-import functools
+from dayu_widgets.message import MMessage
+from dayu_widgets.qt import QWidget, QVBoxLayout
+from dayu_widgets.stacked_widget import MStackedWidget
+from dayu_widgets.tool_button import MToolButton
 
 
 class MenuTabWidgetExample(QWidget):
     def __init__(self, parent=None):
         super(MenuTabWidgetExample, self).__init__(parent)
+        self.setWindowTitle('Examples for MMenuTabWidget')
         self._init_ui()
 
     def _init_ui(self):
-        main_lay = QVBoxLayout()
         item_list = [
-            {'text': 'Overview', 'icon': MIcon('home_line.svg'),
+            {'text': 'Overview', 'svg': 'home_line.svg',
              'clicked': functools.partial(MMessage.info, u'首页', parent=self)},
-            {'text': u'我的', 'icon': MIcon('user_line.svg'),
+            {'text': u'我的', 'svg': 'user_line.svg',
              'clicked': functools.partial(MMessage.info, u'编辑账户', parent=self)},
-            {'text': u'Notice', 'icon': MIcon('alert_line.svg'),
+            {'text': u'Notice', 'svg': 'alert_line.svg',
              'clicked': functools.partial(MMessage.info, u'查看通知', parent=self)},
         ]
         tool_bar = MMenuTabWidget()
-        tool_bar_small = MMenuTabWidget(size=dayu_theme.small)
-        tool_bar_large = MMenuTabWidget(size=dayu_theme.large)
-        tool_bar_large.tool_bar_insert_widget(MLabel.h3('DEMO'))
-        stack_lay = QStackedLayout()
-        for data_dict in item_list:
-            tool_bar.add_menu(data_dict)
-            tool_bar_small.add_menu(data_dict)
+        tool_bar.tool_bar_insert_widget(MLabel('DaYu').h4().secondary().strong())
+        tool_bar.tool_bar_append_widget(
+            MBadge.dot(show=True, widget=MToolButton().icon_only().svg('user_fill.svg').large()))
+        stack_widget = MStackedWidget()
+        for index, data_dict in enumerate(item_list):
             label = MLabel(data_dict.get('text'), parent=self)
-            stack_lay.addWidget(label)
-            tool_bar_large.add_menu(data_dict, stack_lay.count() - 1)
-        tool_bar_large.tool_button_group.sig_checked_changed.connect(stack_lay.setCurrentIndex)
+            stack_widget.addWidget(label)
+            tool_bar.add_menu(data_dict, stack_widget.count() - 1)
+        tool_bar.tool_button_group.sig_checked_changed.connect(stack_widget.setCurrentIndex)
+        tool_bar.tool_button_group.set_dayu_checked(0)
 
-        tool_bar.tool_button_group.set_checked(0)
-        tool_bar_small.tool_button_group.set_checked(0)
-        tool_bar_large.tool_button_group.set_checked(0)
-        lay = QVBoxLayout()
-        lay.addWidget(MDivider('size small'))
-        lay.addWidget(tool_bar_small)
-        lay.addWidget(MDivider('size medium'))
-        lay.addWidget(tool_bar)
-        lay.addWidget(MDivider('size large'))
-        lay.addWidget(tool_bar_large)
-        lay.addLayout(stack_lay)
-        main_lay.addLayout(lay)
-
-        main_lay.addStretch()
+        main_lay = QVBoxLayout()
+        main_lay.setContentsMargins(0, 0, 0, 0)
+        main_lay.addWidget(tool_bar)
+        main_lay.addWidget(stack_widget)
         self.setLayout(main_lay)
 
 
 if __name__ == '__main__':
     import sys
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import QApplication
 
     app = QApplication(sys.argv)
     test = MenuTabWidgetExample()
