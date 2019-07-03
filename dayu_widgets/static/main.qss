@@ -365,11 +365,11 @@ MBlockButton{
 }
 MBlockButton:hover{
     color: @primary_color;
-    background-color:@background_selected_color;
+    background-color:@background_in_color;
 }
 MBlockButton:checked{
     color: @primary_color;
-    background-color:@background_selected_color;
+    background-color:@background_in_color;
 }
 
 MUnderlineButton{
@@ -609,6 +609,11 @@ MComboBox[combine=horizontal][position=right]{
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
 }
+MPushButton[combine=horizontal][position=center],
+MComboBox[combine=horizontal][position=center]{
+    /*border: none;*/
+    border-radius: 0;
+}
 MPushButton[combine=vertical][position=top],
 MComboBox[combine=vertical][position=top]{
     border-top: none;
@@ -797,7 +802,8 @@ MLabel:disabled{
     color:@disable_color;
 }
 
-MMessage{
+MMessage,
+MDrawer{
     padding: 2px;
     border: 1px solid @border_color;
     border-radius: 2px;
@@ -822,13 +828,17 @@ MSectionItem{
 QWidget#title {
     background-color: @background_out_color;
 }
-
-MLineEdit{
+MTextEdit {
+    border-radius: @border_radius_base@unit;
+}
+MLineEdit,
+MTextEdit{
     border: 1px solid @border_color;
     background-color: @background_in_color;
 }
 
-MLineEdit:focus{
+MLineEdit:focus,
+MTextEdit:focus{
     border: 1px solid @primary_color;
 }
 
@@ -1296,4 +1306,9 @@ MMeta {
     border: 1px solid @border_color;
     border-radius: @border_radius_small@unit;
     background-color: @background_in_color;
+}
+
+MSizeGrip {
+    background-color: transparent;
+    image: url(@icon_size_grip);
 }
