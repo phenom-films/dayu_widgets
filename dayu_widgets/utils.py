@@ -11,6 +11,7 @@ Some helper functions for handling color and formatter.
 
 import collections
 import datetime as dt
+import math
 import os
 
 from singledispatch import singledispatch
@@ -364,3 +365,27 @@ def get_percent(value, minimum, maximum):
         # 100% here in order to avoid division by zero further down.
         return 100
     return max(0, min(100, (value - minimum) * 100 / (maximum - minimum)))
+
+
+def get_total_page(total, per):
+    """
+    Get the page count.
+    :param total: total count
+    :param per: count per page
+    :return: page count int
+    """
+    return int(math.ceil(1.0 * total / per))
+
+
+def get_page_display_string(current, per, total):
+    """
+    Get the format string x - x of xx
+    :param current: current page
+    :param per: count per page
+    :param total: total count
+    :return: str
+    """
+    return '{start} - {end} of {total}'.format(
+        start=((current - 1) * per + 1) if current else 0,
+        end=min(total, current * per),
+        total=total)
