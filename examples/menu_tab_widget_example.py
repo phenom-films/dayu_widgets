@@ -12,7 +12,6 @@ from dayu_widgets.label import MLabel
 from dayu_widgets.menu_tab_widget import MMenuTabWidget
 from dayu_widgets.message import MMessage
 from dayu_widgets.qt import QWidget, QVBoxLayout
-from dayu_widgets.stacked_widget import MStackedWidget
 from dayu_widgets.tool_button import MToolButton
 
 
@@ -35,18 +34,16 @@ class MenuTabWidgetExample(QWidget):
         tool_bar.tool_bar_insert_widget(MLabel('DaYu').h4().secondary().strong())
         tool_bar.tool_bar_append_widget(
             MBadge.dot(show=True, widget=MToolButton().icon_only().svg('user_fill.svg').large()))
-        stack_widget = MStackedWidget()
+        self.content_widget = MLabel()
         for index, data_dict in enumerate(item_list):
-            label = MLabel(data_dict.get('text'), parent=self)
-            stack_widget.addWidget(label)
-            tool_bar.add_menu(data_dict, stack_widget.count() - 1)
-        tool_bar.tool_button_group.sig_checked_changed.connect(stack_widget.setCurrentIndex)
+            tool_bar.add_menu(data_dict, index)
         tool_bar.tool_button_group.set_dayu_checked(0)
 
         main_lay = QVBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
         main_lay.addWidget(tool_bar)
-        main_lay.addWidget(stack_widget)
+        main_lay.addWidget(self.content_widget)
+
         self.setLayout(main_lay)
 
 
