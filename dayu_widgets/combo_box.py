@@ -18,24 +18,41 @@ class MComboBox(QComboBox):
     Separator = '/'
     sig_value_changed = Signal(list)
 
-    def __init__(self, size=None, parent=None):
+    def __init__(self, parent=None):
         super(MComboBox, self).__init__(parent)
-        size = size or dayu_theme.default_size
         self._root_menu = None
         self._display_formatter = utils.display_formatter
-        self.setProperty('dayu_size', size)
         self.setEditable(True)
         line_edit = self.lineEdit()
         line_edit.setReadOnly(True)
         line_edit.setTextMargins(4, 0, 4, 0)
-        line_edit.setProperty('dayu_size', size)
         line_edit.setStyleSheet('background-color:transparent')
-        line_edit.setCursor(Qt.PointingHandCursor)
+        # line_edit.setCursor(Qt.PointingHandCursor)
         line_edit.installEventFilter(self)
         self._has_custom_view = False
         self.set_value('')
         self.set_placeholder(self.tr('Please Select'))
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self._dayu_size = dayu_theme.default_size
+
+    def get_dayu_size(self):
+        """
+        Get the push button height
+        :return: integer
+        """
+        return self._dayu_size
+
+    def set_dayu_size(self, value):
+        """
+        Set the avatar size.
+        :param value: integer
+        :return: None
+        """
+        self._dayu_size = value
+        self.lineEdit().setProperty('dayu_size', value)
+        self.style().polish(self)
+
+    dayu_size = Property(int, get_dayu_size, set_dayu_size)
 
     def set_formatter(self, func):
         self._display_formatter = func
@@ -75,3 +92,28 @@ class MComboBox(QComboBox):
             if event.type() == QEvent.MouseButtonPress:
                 self.showPopup()
         return super(MComboBox, self).eventFilter(widget, event)
+
+    def huge(self):
+        """Set MComboBox to huge size"""
+        self.set_dayu_size(dayu_theme.huge)
+        return self
+
+    def large(self):
+        """Set MComboBox to large size"""
+        self.set_dayu_size(dayu_theme.large)
+        return self
+
+    def medium(self):
+        """Set MComboBox to  medium"""
+        self.set_dayu_size(dayu_theme.medium)
+        return self
+
+    def small(self):
+        """Set MComboBox to small size"""
+        self.set_dayu_size(dayu_theme.small)
+        return self
+
+    def tiny(self):
+        """Set MComboBox to tiny size"""
+        self.set_dayu_size(dayu_theme.tiny)
+        return self
