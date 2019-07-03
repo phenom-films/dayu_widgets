@@ -10,7 +10,9 @@ from dayu_widgets import utils
 from dayu_widgets.header_view import MHeaderView
 from dayu_widgets.item_model import MTableModel
 from dayu_widgets.menu import MMenu
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QPainter, QPen, Qt, QBrush, MPixmap, QStyledItemDelegate, QStyle, Slot, \
+    Signal, QPoint, QSortFilterProxyModel, QSize, QTableView, QListView, QTreeView, QSettings, \
+    QAbstractItemView
 
 
 def draw_empty_content(view, text=None, pix_map=None):
@@ -24,7 +26,8 @@ def draw_empty_content(view, text=None, pix_map=None):
     padding = 10
     proper_min_size = min(view.height() - padding * 2, view.width() - padding * 2, content_height)
     if proper_min_size < content_height:
-        pix_map = pix_map.scaledToHeight(proper_min_size - font_metrics.height(), Qt.SmoothTransformation)
+        pix_map = pix_map.scaledToHeight(proper_min_size - font_metrics.height(),
+                                         Qt.SmoothTransformation)
         content_height = proper_min_size
     painter.drawText(view.width() / 2 - font_metrics.width(text) / 2,
                      view.height() / 2 + content_height / 2 - font_metrics.height() / 2,
@@ -67,7 +70,8 @@ class MOptionDelegate(QStyledItemDelegate):
         model.setData(index, editor.property('value'))
 
     def updateEditorGeometry(self, editor, option, index):
-        editor.move(self.parent_widget.mapToGlobal(QPoint(option.rect.x(), option.rect.y() + option.rect.height())))
+        editor.move(self.parent_widget.mapToGlobal(
+            QPoint(option.rect.x(), option.rect.y() + option.rect.height())))
 
     def paint(self, painter, option, index):
         painter.save()
@@ -135,7 +139,8 @@ def slot_context_menu(self, point):
         need_map = isinstance(self.model(), QSortFilterProxyModel)
         selection = []
         for index in self.selectionModel().selectedRows() or self.selectionModel().selectedIndexes():
-            data_obj = self.model().mapToSource(index).internalPointer() if need_map else index.internalPointer()
+            data_obj = self.model().mapToSource(
+                index).internalPointer() if need_map else index.internalPointer()
             selection.append(data_obj)
         event = utils.ItemViewMenuEvent(view=self, selection=selection, extra={})
         self.sig_context_menu.emit(event)
@@ -169,12 +174,12 @@ def mouse_release_event(self, event):
         value = utils.get_obj_value(data_obj, key_name)
         if value:
             if isinstance(value, dict):
-                self.emit(SIGNAL('sigLinkClicked(PyObject)'), value)
+                self.sig_link_clicked.emit(value)
             elif isinstance(value, basestring):
-                self.emit(SIGNAL('sigLinkClicked(PyObject)'), data_obj)
+                self.sig_link_clicked.emit(data_obj)
             elif isinstance(value, list):
                 for i in value:
-                    self.emit(SIGNAL('sigLinkClicked(PyObject)'), i)
+                    self.sig_link_clicked.emit(i)
 
 
 class MTableView(QTableView):
@@ -238,6 +243,7 @@ class MTableView(QTableView):
         # }
 
     def paintEvent(self, event):
+        """Override paintEvent when there is no data to show, draw the preset picture and text."""
         model = utils.real_model(self.model())
         if model is None:
             draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
@@ -273,6 +279,7 @@ class MTreeView(QTreeView):
         self.setAlternatingRowColors(True)
 
     def paintEvent(self, event):
+        """Override paintEvent when there is no data to show, draw the preset picture and text."""
         model = utils.real_model(self.model())
         if model is None:
             draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
@@ -304,6 +311,7 @@ class MBigView(QListView):
         self.setIconSize(QSize(128, 128))
 
     def wheelEvent(self, event):
+        """Override wheelEvent while user press ctrl, zoom the list view icon size."""
         if event.modifiers() == Qt.ControlModifier:
             num_degrees = event.delta() / 8.0
             num_steps = num_degrees / 15.0
@@ -318,6 +326,7 @@ class MBigView(QListView):
             super(MBigView, self).wheelEvent(event)
 
     def paintEvent(self, event):
+        """Override paintEvent when there is no data to show, draw the preset picture and text."""
         model = utils.real_model(self.model())
         if model is None:
             draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
@@ -355,6 +364,7 @@ class MListView(QListView):
             self.setModelColumn(0)
 
     def paintEvent(self, event):
+        """Override paintEvent when there is no data to show, draw the preset picture and text."""
         model = utils.real_model(self.model())
         if model is None:
             draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
