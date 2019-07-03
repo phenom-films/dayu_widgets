@@ -6,14 +6,14 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets import dayu_theme
 from dayu_widgets.button_group import MToolButtonGroup
 from dayu_widgets.item_model import MSortFilterModel, MTableModel
 from dayu_widgets.item_view import MTableView, MBigView
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.page import MPage
 from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QModelIndex, QItemSelection, Signal, Slot, QStackedWidget, MIcon, \
+    QWidget, QHBoxLayout, QVBoxLayout, QApplication, Qt
 
 
 class MItemViewFullSet(QWidget):
@@ -33,7 +33,7 @@ class MItemViewFullSet(QWidget):
 
         self.stack_widget = QStackedWidget()
 
-        self.view_button_grp = MToolButtonGroup(type=MToolButton.IconOnlyType, exclusive=True)
+        self.view_button_grp = MToolButtonGroup(exclusive=True)
         data_group = []
         if table_view:
             self.table_view = MTableView(show_row_count=True)
@@ -41,8 +41,7 @@ class MItemViewFullSet(QWidget):
             self.table_view.pressed.connect(self.slot_left_clicked)
             self.table_view.setModel(self.sort_filter_model)
             self.stack_widget.addWidget(self.table_view)
-            data_group.append({'icon': MIcon('table_view.svg'),
-                               'icon_checked': MIcon('table_view.svg', dayu_theme.primary_color),
+            data_group.append({'svg': 'table_view.svg',
                                'checkable': True,
                                'tooltip': u'Table View'})
         if big_view:
@@ -51,8 +50,7 @@ class MItemViewFullSet(QWidget):
             self.big_view.pressed.connect(self.slot_left_clicked)
             self.big_view.setModel(self.sort_filter_model)
             self.stack_widget.addWidget(self.big_view)
-            data_group.append({'icon': MIcon('big_view.svg'),
-                               'icon_checked': MIcon('big_view.svg', dayu_theme.primary_color),
+            data_group.append({'svg': 'big_view.svg',
                                'checkable': True,
                                'tooltip': u'Big View'})
 
@@ -76,14 +74,13 @@ class MItemViewFullSet(QWidget):
         if data_group and len(data_group) > 1:
             self.view_button_grp.sig_checked_changed.connect(self.stack_widget.setCurrentIndex)
             self.view_button_grp.set_button_list(data_group)
-            self.view_button_grp.set_checked(0)
+            self.view_button_grp.set_dayu_checked(0)
             self.top_lay.addWidget(self.view_button_grp)
-        search_size = dayu_theme.small
-        self.search_line_edit = MLineEdit.search(size=search_size)
-        self.search_attr_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('down_fill.svg'),
-                                              size=search_size)
-        self.search_line_edit.add_prefix_widget(self.search_attr_button)
+        self.search_line_edit = MLineEdit().search().small()
+        self.search_attr_button = MToolButton().icon_only().svg('down_fill.svg').small()
+        self.search_line_edit.set_prefix_widget(self.search_attr_button)
         self.search_line_edit.textChanged.connect(self.sort_filter_model.set_search_pattern)
+        self.search_line_edit.setVisible(False)
 
         self.top_lay.addStretch()
         self.top_lay.addWidget(self.search_line_edit)
@@ -151,3 +148,8 @@ class MItemViewFullSet(QWidget):
 
     def get_data(self):
         return self.source_model.get_data_list()
+
+    def searchable(self):
+        """Enable search line edit visible."""
+        self.search_line_edit.setVisible(True)
+        return self

@@ -6,12 +6,11 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets import dayu_theme
 from dayu_widgets.item_model import MSortFilterModel, MTableModel
 from dayu_widgets.item_view import MTableView, MTreeView, MBigView, MListView
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QWidget, QModelIndex, Signal, QVBoxLayout, QApplication, Qt, Slot, QHBoxLayout
 
 
 class MItemViewSet(QWidget):
@@ -22,31 +21,34 @@ class MItemViewSet(QWidget):
     TreeViewType = MTreeView
     ListViewType = MListView
 
-    def __init__(self, type=None, searchable=False, parent=None):
+    def __init__(self, view_type=None, parent=None):
         super(MItemViewSet, self).__init__(parent)
-        self.main_lay = QVBoxLayout()
-        self.main_lay.setSpacing(5)
-        self.main_lay.setContentsMargins(0, 0, 0, 0)
+        self._main_lay = QVBoxLayout()
+        self._main_lay.setSpacing(5)
+        self._main_lay.setContentsMargins(0, 0, 0, 0)
 
         self.sort_filter_model = MSortFilterModel()
         self.source_model = MTableModel()
         self.sort_filter_model.setSourceModel(self.source_model)
-        view_class = type or MItemViewSet.TableViewType
+        view_class = view_type or MItemViewSet.TableViewType
         self.item_view = view_class()
         self.item_view.doubleClicked.connect(self.sig_double_clicked)
         self.item_view.pressed.connect(self.slot_left_clicked)
         self.item_view.setModel(self.sort_filter_model)
 
-        if searchable:
-            search_size = dayu_theme.small
-            self.search_line_edit = MLineEdit.search(size=search_size)
-            self.search_attr_button = MToolButton(type=MToolButton.IconOnlyType, icon=MIcon('down_fill.svg'),
-                                                  size=search_size)
-            self.search_line_edit.add_prefix_widget(self.search_attr_button)
-            self.search_line_edit.textChanged.connect(self.sort_filter_model.set_search_pattern)
-            self.main_lay.addWidget(self.search_line_edit)
-        self.main_lay.addWidget(self.item_view)
-        self.setLayout(self.main_lay)
+        self._search_line_edit = MLineEdit().search().small()
+        self._search_attr_button = MToolButton().icon_only().svg('down_fill.svg').small()
+        self._search_line_edit.set_prefix_widget(self._search_attr_button)
+        self._search_line_edit.textChanged.connect(self.sort_filter_model.set_search_pattern)
+        self._search_line_edit.setVisible(False)
+        _search_lay = QHBoxLayout()
+        _search_lay.setContentsMargins(0, 0, 0, 0)
+        _search_lay.addStretch()
+        _search_lay.addWidget(self._search_line_edit)
+
+        self._main_lay.addLayout(_search_lay)
+        self._main_lay.addWidget(self.item_view)
+        self.setLayout(self._main_lay)
 
     @Slot(QModelIndex)
     def slot_left_clicked(self, start_index):
@@ -69,3 +71,8 @@ class MItemViewSet(QWidget):
 
     def get_data(self):
         return self.source_model.get_data_list()
+
+    def searchable(self):
+        """Enable search line edit visible."""
+        self._search_line_edit.setVisible(True)
+        return self
