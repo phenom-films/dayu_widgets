@@ -80,6 +80,7 @@ class MMenuTabWidget(QWidget):
         main_lay.addWidget(MDivider())
         main_lay.addSpacing(5)
         self.setLayout(main_lay)
+        self.setFixedHeight(dayu_theme.large + 10)
 
     def tool_bar_append_widget(self, widget):
         """Add the widget too menubar's right position."""
