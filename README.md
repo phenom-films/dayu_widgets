@@ -14,98 +14,112 @@ Components for PySide
 ## General
 
 
-### MPushButton
+### MPushButton(<- QPushButton)
 ![pageres](screenshots/push_button_light.png)![pageres](screenshots/push_button_dark.png)
 
-### MLabel
+### MLabel (<- QLabel)
 ![pageres](screenshots/label_light.png)![pageres](screenshots/label_dark.png)
 
-### MLoading
+### MLoading (<- QWidget)
 ![pageres](screenshots/loading_light.gif)![pageres](screenshots/loading_dark.gif)
 
-### MToolButton
+### MToolButton (<- QToolButton)
 ![pageres](screenshots/tool_button_light.png)![pageres](screenshots/tool_button_dark.png)
 
 ## Navigation
 
 
-### MBreadcrumb
+### MBreadcrumb (<- QWidget)
 ![pageres](screenshots/breadcrumb_light.gif)![pageres](screenshots/breadcrumb_dark.gif)
 
-### MPage
+### MMenuTabWidget (<- QWidget)
+![pageres](screenshots/menu_tab_widget_light.png)![pageres](screenshots/menu_tab_widget_dark.png)
+
+### MPage (<- QWidget)
 ![pageres](screenshots/page_light.png)![pageres](screenshots/page_dark.png)
 
 
 ## Data Entry
 
 
-### MCheckBox
+### MCheckBox <- QCheckBox
 ![pageres](screenshots/check_box_light.png)![pageres](screenshots/check_box_dark.png)
 
-### MBrowser
+### MClickBrowserFilePushButton <- MPushButton
+### MClickBrowserFileToolButton <- MToolButton
+### MClickBrowserFolderPushButton <- MPushButton
+### MClickBrowserFolderToolButton <- MToolButton
+### MDragFileButton <- MToolButton
+### MDragFolderButton <- MToolButton
 ![pageres](screenshots/browser_light.png)![pageres](screenshots/browser_dark.png)
 
-### MLineEdit
+### MLineEdit <- QLineEdit
 ![pageres](screenshots/line_edit_light.png)![pageres](screenshots/line_edit_dark.png)
 
-### MRadioButton
+### MRadioButton <- QRadioButton
 ![pageres](screenshots/radio_button_light.png)![pageres](screenshots/radio_button_dark.png)
 
-### MSwitch
+### MSwitch <- QRadioButton
 ![pageres](screenshots/switch_light.png)![pageres](screenshots/switch_dark.png)
 
-### MSilder
+### MSilder <- QSlider
 ![pageres](screenshots/slider_light.png)![pageres](screenshots/slider_dark.png)
 
-### MSpinBox MDoubleSpinBox 
-### MDateTimeEdit MDateEdit MTimeEdit
+### MSpinBox <- QSpinBox
+### MDoubleSpinBox  <- QDoubleSpinBox 
+### MDateTimeEdit <- QDateTimeEdit
+### MDateEdit <- QDateEdit
+### MTimeEdit <- QTimeEdit
 ![pageres](screenshots/spin_box_light.png)![pageres](screenshots/spin_box_dark.png)
 
 
 ## Data Display
 
 
-### MAvatar
+### MAvatar <- QLabel
 ![pageres](screenshots/avatar_light.png)![pageres](screenshots/avatar_dark.png)
 
-### MBadge
+### MBadge <- QWidget
 ![pageres](screenshots/badge_light.png)![pageres](screenshots/badge_dark.png)
 
-### MCollapse
-![pageres](screenshots/collapse_light.png)![pageres](screenshots/collapse_dark.png)
 
-### MCarousel
+### MCarousel <- QGraphicsView
 ![pageres](screenshots/carousel_light.png)![pageres](screenshots/carousel_dark.png)
 
-### MCard
+### MCard <- QWidget
 ![pageres](screenshots/card_light.png)![pageres](screenshots/card_dark.png)
 
-### MLineTabWidget
+### MCollapse <- QWidget
+![pageres](screenshots/collapse_light.png)![pageres](screenshots/collapse_dark.png)
+
+### MLineTabWidget <- QWidget
 ![pageres](screenshots/line_tab_widget_light.gif)![pageres](screenshots/line_tab_widget_dark.gif)
 
-### MTag
+### MTag <- QLabel
+### MCheckableTag <- QCheckBox
+### MNewTag <- QWidget
 ![pageres](screenshots/tag_light.png)![pageres](screenshots/tag_dark.png)
 
 
 ## Feedback
 
 
-### MAlert
+### MAlert <- QWidget
 ![pageres](screenshots/alert_light.png)![pageres](screenshots/alert_dark.png)
 
-### Message
+### MMessage <- QWidget
 ![pageres](screenshots/message_light.gif)![pageres](screenshots/message_dark.gif)
 
-### MProgressBar
+### MProgressBar <- QProgressBar
 ![pageres](screenshots/progress_bar_light.png)![pageres](screenshots/progress_bar_dark.png)
 
-### MProgressCircle
+### MProgressCircle <- QProgressBar
 ![pageres](screenshots/progress_circle_light.png)![pageres](screenshots/progress_circle_dark.png)
 
-### MToast
+### MToast <- QWidget
 ![pageres](screenshots/toast_light.gif)![pageres](screenshots/toast_dark.gif)
 
 ## Other
 
-### MDivider
+### MDivider <- QWidget
 ![pageres](screenshots/divider_light.png)![pageres](screenshots/divider_dark.png)
