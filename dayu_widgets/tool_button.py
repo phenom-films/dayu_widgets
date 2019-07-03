@@ -62,6 +62,8 @@ class MToolButton(QToolButton):
         """
         self._dayu_size = value
         self.style().polish(self)
+        if self.toolButtonStyle() == Qt.ToolButtonIconOnly:
+            self.setFixedSize(QSize(self._dayu_size, self._dayu_size))
 
     def get_dayu_svg(self):
         """Get current svg path"""
