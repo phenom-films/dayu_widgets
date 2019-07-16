@@ -10,3 +10,8 @@ The screenshots in docs used:
 
 * Light: #1890ff 
 * Dark: #fa8c16
+
+
+```python
+import dayu_widgets
+```

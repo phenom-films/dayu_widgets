@@ -1,6 +1,6 @@
 ![logo](_media/logo.svg)
 
-# DaYu Widgets
+# DaYu Widgets <small>0.0.1</small>
 
 > Web Style Components for PySide 
 

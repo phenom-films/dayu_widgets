@@ -10,6 +10,7 @@
 </head>
 <body>
   <div id="app"></div>
+  <script src="//unpkg.com/docsify-edit-on-github/index.js"></script>
   <script>
     window.$docsify = {
       name: '',
@@ -20,10 +21,35 @@
       coverpage: [
         '/',
         '/zh-cn/'
-      ]
+      ],
+      plugins: [
+          EditOnGithubPlugin.create('https://github.com/phenom-films/dayu_widgets/tree/master/docs/',
+                  'https://github.com/phenom-films/dayu_widgets/tree/master/docs/',
+                  '📝Edit on Github')
+      ],
+      search: {
+        maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+        paths: 'auto', // or 'auto'
+
+        // 支持本地化
+        placeholder: {
+          '/zh-cn/': '搜索',
+          '/': 'Type to search'
+        },
+
+        noData: {
+          '/zh-cn/': '找不到结果',
+          '/': 'No Results'
+        },
+
+        // 搜索标题的最大程级, 1 - 6
+        depth: 2
+      }
     }
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
   <script src="//unpkg.com/prismjs/components/prism-python.js"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
+  <script src="//unpkg.com/docsify-copy-code"></script>
 </body>
 </html>
