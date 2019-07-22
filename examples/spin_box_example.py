@@ -10,7 +10,6 @@ Example code for MDateTimeEdit, MDoubleSpinBox, MSpinBox, MTimeEdit, MDateEdit
 """
 from dayu_widgets.spin_box import MDateTimeEdit, MDoubleSpinBox, MSpinBox, MTimeEdit, MDateEdit
 from dayu_widgets.divider import MDivider
-from dayu_widgets import dayu_theme
 from dayu_widgets.qt import QWidget, QVBoxLayout, QHBoxLayout
 
 
@@ -21,14 +20,12 @@ class SpinBoxExample(QWidget):
 
         main_lay = QVBoxLayout()
         class_list = [MSpinBox, MDoubleSpinBox, MDateTimeEdit, MDateEdit, MTimeEdit]
-        size_list = [dayu_theme.large, dayu_theme.medium, dayu_theme.small]
         for cls in class_list:
             main_lay.addWidget(MDivider(cls.__name__))
             lay = QHBoxLayout()
-            for size in size_list:
-                line_edit_large = cls()
-                line_edit_large.set_dayu_size(size)
-                lay.addWidget(line_edit_large)
+            lay.addWidget(cls().large())
+            lay.addWidget(cls().medium())
+            lay.addWidget(cls().small())
             main_lay.addLayout(lay)
 
         main_lay.addWidget(MDivider('Pop Calendar Widget'))
@@ -50,6 +47,7 @@ class SpinBoxExample(QWidget):
 
 if __name__ == '__main__':
     import sys
+    from dayu_widgets import dayu_theme
     from dayu_widgets.qt import QApplication
     app = QApplication(sys.argv)
     test = SpinBoxExample()
