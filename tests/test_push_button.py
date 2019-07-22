@@ -28,17 +28,18 @@ def test_mpushbutton_init(qtbot, dayu_type, dayu_size, icon, text):
     assert widget.property('dayu_type') == dayu_type
     assert widget.property('dayu_size') == dayu_size
 
-@pytest.mark.parametrize('cls', (
-    MPushButton,
-    MPushButton.primary,
-    MPushButton.success,
-    MPushButton.warning,
-    MPushButton.danger,))
-@pytest.mark.parametrize('dayu_type', MPUSHBUTTON_TYPE_LIST)
-def test_class_method(qtbot, cls, dayu_type):
+@pytest.mark.parametrize('attr, dayu_type', zip((
+    None,
+    'primary',
+    'success',
+    'warning',
+    'danger'), MPUSHBUTTON_TYPE_LIST))
+def test_chain_method(qtbot, attr, dayu_type):
     """Test MPushButton class methods."""
-    widget = cls()
-    widget.set_dayu_type(dayu_type)
+    widget = MPushButton()
+    if attr:
+        getattr(widget, attr)()
+    # widget.set_dayu_type(dayu_type)
     qtbot.addWidget(widget)
     assert widget.property('dayu_type') == dayu_type
     assert widget.property('dayu_size') == dayu_theme.default_size

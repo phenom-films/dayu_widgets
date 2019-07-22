@@ -55,6 +55,8 @@ def test_progress_circle_widget(qtbot):
     circle.set_widget(label)
     qtbot.addWidget(circle)
     circle.show()
+    circle.repaint()
+    assert not circle.isTextVisible()
     assert not circle._default_label.isVisible()
     assert label.isVisible()
 
