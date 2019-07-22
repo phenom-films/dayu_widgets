@@ -10,7 +10,7 @@ MSwitch
 """
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import cursor_mixin
-from dayu_widgets.qt import QSize, QCheckBox, Property
+from dayu_widgets.qt import QSize, QRadioButton, Property
 
 
 @cursor_mixin
@@ -29,7 +29,7 @@ class MSwitch(QRadioButton):
 
     def minimumSizeHint(self):
         """
-        Override the QCheckBox minimum size hint. We don't need the text space.
+        Override the QRadioButton minimum size hint. We don't need the text space.
         :return:
         """
         height = self._dayu_size * 1.2
