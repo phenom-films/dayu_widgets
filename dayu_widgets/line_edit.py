@@ -221,3 +221,8 @@ class MLineEdit(QLineEdit):
         """Set MLineEdit to tiny size"""
         self.set_dayu_size(dayu_theme.tiny)
         return self
+
+    def password(self):
+        """Set MLineEdit to password echo mode"""
+        self.setEchoMode(QLineEdit.Password)
+        return self
