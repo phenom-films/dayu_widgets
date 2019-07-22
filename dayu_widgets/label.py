@@ -132,6 +132,7 @@ class MLabel(QLabel):
         """
         self._actual_text = text
         self._update_elided_text()
+        self.setToolTip(text)
 
     def _update_elided_text(self):
         """
