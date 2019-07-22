@@ -53,37 +53,27 @@ class MSwitch(QRadioButton):
 
     dayu_size = Property(int, get_dayu_size, set_dayu_size)
 
-    @classmethod
-    def huge(cls):
-        """Create a MSwitch with huge size"""
-        inst = cls()
-        inst.set_dayu_size(dayu_theme.huge)
-        return inst
+    def huge(self):
+        """Set MSwitch to huge size"""
+        self.set_dayu_size(dayu_theme.huge)
+        return self
 
-    @classmethod
-    def large(cls):
-        """Create a MSwitch with large size"""
-        inst = cls()
-        inst.set_dayu_size(dayu_theme.large)
-        return inst
+    def large(self):
+        """Set MSwitch to large size"""
+        self.set_dayu_size(dayu_theme.large)
+        return self
 
-    @classmethod
-    def medium(cls):
-        """Create a MSwitch with medium size"""
-        inst = cls()
-        inst.set_dayu_size(dayu_theme.medium)
-        return inst
+    def medium(self):
+        """Set MSwitch to medium size"""
+        self.set_dayu_size(dayu_theme.medium)
+        return self
 
-    @classmethod
-    def small(cls):
-        """Create a MSwitch with small size"""
-        inst = cls()
-        inst.set_dayu_size(dayu_theme.small)
-        return inst
+    def small(self):
+        """Set MSwitch to small size"""
+        self.set_dayu_size(dayu_theme.small)
+        return self
 
-    @classmethod
-    def tiny(cls):
-        """Create a MSwitch with tiny size"""
-        inst = cls()
-        inst.set_dayu_size(dayu_theme.tiny)
-        return inst
+    def tiny(self):
+        """Set MSwitch to tiny size"""
+        self.set_dayu_size(dayu_theme.tiny)
+        return self

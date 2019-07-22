@@ -8,10 +8,9 @@
 
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
-from dayu_widgets.label import MLabel
 from dayu_widgets.switch import MSwitch
 from dayu_widgets import dayu_theme
-from dayu_widgets.qt import QWidget, QHBoxLayout, QVBoxLayout
+from dayu_widgets.qt import QWidget, QHBoxLayout, QVBoxLayout, QFormLayout
 
 
 class SwitchExample(QWidget, MFieldMixin):
@@ -31,19 +30,12 @@ class SwitchExample(QWidget, MFieldMixin):
         lay.addWidget(check_box_2)
         lay.addWidget(check_box_3)
 
-        size_lay = QVBoxLayout()
-        size_list = [
-            ('Huge', MSwitch.huge),
-            ('Large', MSwitch.large),
-            ('Medium', MSwitch.medium),
-            ('Small', MSwitch.small),
-            ('Tiny', MSwitch.tiny),
-        ]
-        for label, cls in size_list:
-            lay2 = QHBoxLayout()
-            lay2.addWidget(MLabel(label))
-            lay2.addWidget(cls())
-            size_lay.addLayout(lay2)
+        size_lay = QFormLayout()
+        size_lay.addRow('Huge', MSwitch().huge())
+        size_lay.addRow('Large', MSwitch().large())
+        size_lay.addRow('Medium', MSwitch().medium())
+        size_lay.addRow('Small', MSwitch().small())
+        size_lay.addRow('Tiny', MSwitch().tiny())
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('Basic'))
