@@ -45,6 +45,5 @@ from sequence_file import MSequenceFile
 from slider import MSlider
 from switch import MSwitch
 from tab_widget import MTabWidget
-from tag import MTag, MCheckableTag, MNewTag
 from toast import MToast
 from tool_button import MToolButton
