@@ -41,7 +41,6 @@ class MBreadcrumb(QWidget):
             self._main_layout.removeWidget(button)
             button.setVisible(False)
         for sep in self._label_list:
-            self._button_group.removeButton(sep)
             self._main_layout.removeWidget(sep)
             sep.setVisible(False)
 
