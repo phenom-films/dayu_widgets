@@ -1207,13 +1207,13 @@ MProgressBar::chunk {
     max-height: 12px;
     border-radius: 5px;
 }
-MProgressBar[status=error]::chunk {
+MProgressBar[dayu_status=error]::chunk {
     background-color: @error_6;
 }
-MProgressBar[status=success]::chunk {
+MProgressBar[dayu_status=success]::chunk {
     background-color: @success_6;
 }
-MProgressBar[status=primary]::chunk {
+MProgressBar[dayu_status=primary]::chunk {
     background-color: @primary_color;
 }
 
@@ -1296,8 +1296,12 @@ MNewTag MToolButton:hover{
     border:none;
 }
 
-MCard{
+MCard[border=true]{
     border: 1px solid @border_color;
+    border-radius: @border_radius_small@unit;
+}
+MCard[border=false]{
+    border: 0 solid @border_color;
     border-radius: @border_radius_small@unit;
     background-color: @background_in_color;
 }
