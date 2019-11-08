@@ -6,7 +6,7 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import QProgressBar, Qt
+from dayu_widgets.qt import QProgressBar, Qt, Property, Slot
 
 
 class MProgressBar(QProgressBar):
@@ -19,19 +19,47 @@ class MProgressBar(QProgressBar):
     NormalStatus = 'primary'
     SuccessStatus = 'success'
 
-    def __init__(self, status=None, parent=None):
+    def __init__(self, parent=None):
         super(MProgressBar, self).__init__(parent=parent)
         self.setAlignment(Qt.AlignCenter)
-        self.set_status(status or MProgressBar.NormalStatus)
+        self._status = MProgressBar.NormalStatus
 
-    def set_status(self, value):
-        self.setProperty('status', value)
+    def auto_color(self):
+        self.valueChanged.connect(self._update_color)
+        return self
 
-    def _set_status(self, value):
+    @Slot(int)
+    def _update_color(self, value):
+        if value >= self.maximum():
+            self.set_dayu_status(MProgressBar.SuccessStatus)
+        else:
+            self.set_dayu_status(MProgressBar.NormalStatus)
+
+    def get_dayu_status(self):
+        return self._status
+
+    def set_dayu_status(self, value):
+        self._status = value
         self.style().polish(self)
+
+    dayu_status = Property(str, get_dayu_status, set_dayu_status)
+
+    def normal(self):
+        self.set_dayu_status(MProgressBar.NormalStatus)
+        return self
+
+    def error(self):
+        self.set_dayu_status(MProgressBar.ErrorStatus)
+        return self
+
+    def success(self):
+        self.set_dayu_status(MProgressBar.SuccessStatus)
+        return self
 
     # def paintEvent(self, event):
     #     pass
+
+
 """
 MProgressBar {
     font-size: @font_size_small;
