@@ -282,7 +282,7 @@ def _(input_datetime):
     return input_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
 
-def font_formatter(underline=False, bold=False):
+def font_formatter(setting_dict):
     """
     Used for QAbstractItemModel data method for Qt.FontRole
     :param underline: font style underline
@@ -290,8 +290,8 @@ def font_formatter(underline=False, bold=False):
     :return: a QFont instance with given style
     """
     _font = QFont()
-    _font.setUnderline(underline)
-    _font.setBold(bold)
+    _font.setUnderline(setting_dict.get('underline') or False)
+    _font.setBold(setting_dict.get('bold') or False)
     return _font
 
 
