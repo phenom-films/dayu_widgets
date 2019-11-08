@@ -10,13 +10,13 @@ from dayu_widgets.card import MCard, MMeta
 from dayu_widgets.label import MLabel
 from dayu_widgets.divider import MDivider
 from dayu_widgets.flow_layout import MFlowLayout
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QWidget, QApplication, MPixmap, QVBoxLayout, QScrollArea, QSplitter
 from dayu_widgets import dayu_theme
 
 
-class MCardTest(QWidget):
+class CardExample(QWidget):
     def __init__(self, parent=None):
-        super(MCardTest, self).__init__(parent)
+        super(CardExample, self).__init__(parent)
         geo = QApplication.desktop().screenGeometry()
         self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 1.5, geo.height() / 2)
         self._init_ui()
@@ -58,7 +58,7 @@ class MCardTest(QWidget):
             {
                 'title': u'Houdini',
                 'description': u'Side Effects Software的旗舰级产品，是创建高级视觉效果的有效工具',
-                # 'avatar': MPixmap('user_line.svg'),
+                'avatar': MPixmap('user_line.svg'),
                 'cover': MPixmap('app-houdini.png')
             }, {
                 'title': u'Autodesk Maya',
@@ -124,7 +124,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MCardTest()
+    test = CardExample()
 
     dayu_theme.apply(test)
     test.show()
