@@ -8,7 +8,7 @@
 import dayu_widgets.utils as utils
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import property_mixin, cursor_mixin, focus_shadow_mixin
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QComboBox, Signal, QEvent, QSizePolicy, Property, QPoint
 
 
 @property_mixin
@@ -58,6 +58,7 @@ class MComboBox(QComboBox):
         self._display_formatter = func
 
     def set_placeholder(self, text):
+        """Display the text when no item selected."""
         self.lineEdit().setPlaceholderText(text)
 
     def set_value(self, value):
@@ -74,11 +75,13 @@ class MComboBox(QComboBox):
         self._root_menu.sig_value_changed.connect(self.set_value)
 
     def setView(self, *args, **kwargs):
+        """Override setView to flag _has_custom_view variable."""
         self._has_custom_view = True
         super(MComboBox, self).setView(*args, **kwargs)
 
     def showPopup(self):
-        if self._has_custom_view:
+        """Override default showPopup. When set custom menu, show the menu instead."""
+        if self._has_custom_view or self._root_menu is None:
             super(MComboBox, self).showPopup()
         else:
             QComboBox.hidePopup(self)
