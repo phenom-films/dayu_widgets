@@ -24,6 +24,7 @@ header_list = [
         'key': 'name',
         'checkable': True,
         'searchable': True,
+        'font': lambda x,y: {'underline':True},
         'icon': 'user_fill.svg'
     }, {
         'label': 'Sex',
@@ -38,6 +39,7 @@ header_list = [
         'searchable': True,
         'editable': True,
         'display': lambda x, y: u'{} 岁'.format(x),
+        'font': lambda x,y: {'bold':True},
     }, {
         'label': 'Address',
         'key': 'city',
