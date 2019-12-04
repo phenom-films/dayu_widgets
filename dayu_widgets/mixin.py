@@ -135,7 +135,7 @@ def stacked_animation_mixin(cls):
     Decorator for stacked widget.
     When Stacked widget currentChanged, show opacity and position animation for current widget.
     """
-    if not _stackable(cls):  # If widget is can stack, return widget self
+    if not _stackable(cls):  # If widget can't stack, return the original widget class
         return cls
     old_init = cls.__init__
 
