@@ -169,9 +169,9 @@ class MLineEdit(QLineEdit):
         self.setPlaceholderText(self.tr('Error information will be here...'))
         return self
 
-    def search_engine(self):
+    def search_engine(self, text='Search'):
         """Add a MPushButton to suffix for MLineEdit"""
-        _suffix_button = MPushButton(text='Search').primary()
+        _suffix_button = MPushButton(text=text).primary()
         _suffix_button.clicked.connect(self.returnPressed)
         _suffix_button.setFixedWidth(100)
         self.set_suffix_widget(_suffix_button)
