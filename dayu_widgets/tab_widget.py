@@ -30,3 +30,6 @@ class MTabWidget(QTabWidget):
         super(MTabWidget, self).__init__(parent=parent)
         self.bar = MTabBar()
         self.setTabBar(self.bar)
+
+    def disable_animation(self):
+        self.currentChanged.disconnect(self._play_anim)
