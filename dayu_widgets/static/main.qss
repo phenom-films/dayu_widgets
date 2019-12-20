@@ -535,11 +535,11 @@ MPushButton[dayu_type=default]{
     border: 1px solid @border_color;
 }
 MPushButton[dayu_type=default]:hover{
-    color: @primary_5;
+    /*color: @primary_5;*/
     border-color: @primary_5;
 }
 MPushButton[dayu_type=default]:pressed{
-    color: @primary_7;
+    /*color: @primary_7;*/
     border-color: @primary_7;
 }
 
