@@ -17,7 +17,7 @@ import os
 from singledispatch import singledispatch
 
 from dayu_widgets import DEFAULT_STATIC_FOLDER, CUSTOM_STATIC_FOLDERS
-from dayu_widgets.qt import QColor, QSortFilterProxyModel, QModelIndex, QFont, MIcon
+from dayu_widgets.qt import QColor, QSortFilterProxyModel, QModelIndex, QFont, MIcon, QIcon
 
 ItemViewMenuEvent = collections.namedtuple('ItemViewMenuEvent', ['view', 'selection', 'extra'])
 
@@ -312,6 +312,11 @@ def _(input_dict):
     attr_list = ['icon']
     path = next((get_obj_value(input_dict, attr) for attr in attr_list), None)
     return icon_formatter(path)
+
+
+@icon_formatter.register(QIcon)
+def _(input_dict):
+    return input_dict
 
 
 @icon_formatter.register(object)
