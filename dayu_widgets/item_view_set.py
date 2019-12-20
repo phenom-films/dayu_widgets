@@ -10,7 +10,8 @@ from dayu_widgets.item_model import MSortFilterModel, MTableModel
 from dayu_widgets.item_view import MTableView, MTreeView, MBigView, MListView
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.qt import QWidget, QModelIndex, Signal, QVBoxLayout, QApplication, Qt, Slot, QHBoxLayout
+from dayu_widgets.qt import QWidget, QModelIndex, Signal, QVBoxLayout, QApplication, Qt, Slot, \
+    QHBoxLayout
 
 
 class MItemViewSet(QWidget):
@@ -41,12 +42,12 @@ class MItemViewSet(QWidget):
         self._search_line_edit.set_prefix_widget(self._search_attr_button)
         self._search_line_edit.textChanged.connect(self.sort_filter_model.set_search_pattern)
         self._search_line_edit.setVisible(False)
-        _search_lay = QHBoxLayout()
-        _search_lay.setContentsMargins(0, 0, 0, 0)
-        _search_lay.addStretch()
-        _search_lay.addWidget(self._search_line_edit)
+        self._search_lay = QHBoxLayout()
+        self._search_lay.setContentsMargins(0, 0, 0, 0)
+        self._search_lay.addStretch()
+        self._search_lay.addWidget(self._search_line_edit)
 
-        self._main_lay.addLayout(_search_lay)
+        self._main_lay.addLayout(self._search_lay)
         self._main_lay.addWidget(self.item_view)
         self.setLayout(self._main_lay)
 
@@ -76,3 +77,7 @@ class MItemViewSet(QWidget):
         """Enable search line edit visible."""
         self._search_line_edit.setVisible(True)
         return self
+
+    def insert_widget(self, widget):
+        """Use can insert extra widget into search layout."""
+        self._search_lay.insertWidget(0, widget)
