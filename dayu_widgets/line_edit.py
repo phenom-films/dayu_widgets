@@ -11,7 +11,8 @@ Get the user input is a text field
 import functools
 
 from dayu_widgets import dayu_theme
-from dayu_widgets.browser import MClickBrowserFileToolButton, MClickBrowserFolderToolButton
+from dayu_widgets.browser import MClickBrowserFileToolButton, MClickBrowserFolderToolButton, \
+    MClickSaveFileToolButton
 from dayu_widgets.mixin import focus_shadow_mixin
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import QLineEdit, Signal, QHBoxLayout, Slot, QTextEdit, QApplication, Qt, \
@@ -186,6 +187,16 @@ class MLineEdit(QLineEdit):
         self.textChanged.connect(_suffix_button.set_dayu_path)
         self.set_suffix_widget(_suffix_button)
         self.setPlaceholderText(self.tr('Click button to browser files'))
+        return self
+
+    def save_file(self, filters=None):
+        """Add a MClickSaveFileToolButton for MLineEdit to set save file"""
+        _suffix_button = MClickSaveFileToolButton()
+        _suffix_button.sig_file_changed.connect(self.setText)
+        _suffix_button.set_dayu_filters(filters or [])
+        self.textChanged.connect(_suffix_button.set_dayu_path)
+        self.set_suffix_widget(_suffix_button)
+        self.setPlaceholderText(self.tr('Click button to set save file'))
         return self
 
     def folder(self):
