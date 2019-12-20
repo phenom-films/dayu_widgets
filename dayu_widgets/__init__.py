@@ -47,3 +47,4 @@ from switch import MSwitch
 from tab_widget import MTabWidget
 from toast import MToast
 from tool_button import MToolButton
+from text_edit import MTextEdit
