@@ -79,8 +79,8 @@ class MTheme(object):
         # icon
         pre_str = DEFAULT_STATIC_FOLDER.replace('\\', '/')
         suf_str = '' if theme == 'light' else '_dark'
-        url_prefix = '{pre}/{{}}{suf}.svg'.format(pre=pre_str, suf=suf_str)
-        url_prefix_2 = '{pre}/{{}}.svg'.format(pre=pre_str)
+        url_prefix = '{pre}/{{}}{suf}.png'.format(pre=pre_str, suf=suf_str)
+        url_prefix_2 = '{pre}/{{}}.png'.format(pre=pre_str)
         self.icon_down = url_prefix.format('down_line')
         self.icon_up = url_prefix.format('up_line')
         self.icon_left = url_prefix.format('left_line')
@@ -89,12 +89,12 @@ class MTheme(object):
         self.icon_calender = url_prefix.format('calendar_fill')
         self.icon_splitter = url_prefix.format('splitter')
         self.icon_float = url_prefix.format('float')
+        self.icon_size_grip = url_prefix.format('size_grip')
 
         self.icon_check = url_prefix_2.format('check')
         self.icon_minus = url_prefix_2.format('minus')
         self.icon_circle = url_prefix_2.format('circle')
         self.icon_sphere = url_prefix_2.format('sphere')
-        self.icon_size_grip = url_prefix_2.format('size_grip')
 
     def _init_color(self):
         self.info_color = self.blue
