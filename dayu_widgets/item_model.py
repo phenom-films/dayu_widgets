@@ -81,6 +81,10 @@ class MTableModel(QAbstractItemModel):
             result |= Qt.ItemIsEditable
         if self.header_list[index.column()].get('editable', False):
             result |= Qt.ItemIsEditable
+        if self.header_list[index.column()].get('draggable', False):
+            result |= Qt.ItemIsDragEnabled
+        if self.header_list[index.column()].get('droppable', False):
+            result |= Qt.ItemIsDropEnabled
         return Qt.ItemFlags(result)
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
