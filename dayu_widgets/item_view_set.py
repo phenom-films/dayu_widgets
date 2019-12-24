@@ -24,9 +24,9 @@ class MItemViewSet(QWidget):
 
     def __init__(self, view_type=None, parent=None):
         super(MItemViewSet, self).__init__(parent)
-        self._main_lay = QVBoxLayout()
-        self._main_lay.setSpacing(5)
-        self._main_lay.setContentsMargins(0, 0, 0, 0)
+        self.main_lay = QVBoxLayout()
+        self.main_lay.setSpacing(5)
+        self.main_lay.setContentsMargins(0, 0, 0, 0)
 
         self.sort_filter_model = MSortFilterModel()
         self.source_model = MTableModel()
@@ -47,9 +47,9 @@ class MItemViewSet(QWidget):
         self._search_lay.addStretch()
         self._search_lay.addWidget(self._search_line_edit)
 
-        self._main_lay.addLayout(self._search_lay)
-        self._main_lay.addWidget(self.item_view)
-        self.setLayout(self._main_lay)
+        self.main_lay.addLayout(self._search_lay)
+        self.main_lay.addWidget(self.item_view)
+        self.setLayout(self.main_lay)
 
     @Slot(QModelIndex)
     def slot_left_clicked(self, start_index):
