@@ -87,8 +87,8 @@ class MComboBox(QComboBox):
             QComboBox.hidePopup(self)
             self._root_menu.popup(self.mapToGlobal(QPoint(0, self.height())))
 
-    def setCurrentIndex(self, index):
-        raise NotImplementedError
+    # def setCurrentIndex(self, index):
+    #     raise NotImplementedError
 
     def eventFilter(self, widget, event):
         if widget is self.lineEdit():
