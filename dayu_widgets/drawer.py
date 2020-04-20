@@ -10,10 +10,10 @@ from dayu_widgets.divider import MDivider
 from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.label import MLabel
 from dayu_widgets import dayu_theme
-from dayu_widgets.qt import QWidget, Qt, Signal, QHBoxLayout, QTimer, QPropertyAnimation, \
-    QEasingCurve, QAbstractAnimation, QGraphicsDropShadowEffect, QPoint, Property, QScrollArea, QVBoxLayout, QFrame
+from dayu_widgets.qt import QEvent,QWidget, Qt, Signal, QHBoxLayout, QTimer, QPropertyAnimation, \
+    QEasingCurve, QAbstractAnimation, QGraphicsDropShadowEffect, QPoint, Property, QScrollArea, QVBoxLayout, QFrame , QApplication
 
-
+import time
 class MDrawer(QWidget):
     """
     A panel which slides in from the edge of the screen.
@@ -28,7 +28,7 @@ class MDrawer(QWidget):
     def __init__(self, title, position='right', closable=True, parent=None):
         super(MDrawer, self).__init__(parent)
         self.setObjectName('message')
-        self.setWindowFlags(Qt.Popup )
+        # self.setWindowFlags(Qt.Popup )
         # self.setWindowFlags(
         #     Qt.FramelessWindowHint | Qt.Popup | Qt.WA_TranslucentBackground)
         self.setAttribute(Qt.WA_StyledBackground)
@@ -86,6 +86,31 @@ class MDrawer(QWidget):
         # self._shadow_effect.setBlurRadius(5)
         # self._shadow_effect.setEnabled(False)
         # self.setGraphicsEffect(self._shadow_effect)
+
+        self.app = QApplication.instance()
+        self.app.installEventFilter(self)
+        self.protect_time = time.time()
+
+    def retrieveChildren(self,parent,receiver):
+        if not hasattr(parent,"children"):
+            return
+
+        for child in parent.children():
+            if child is receiver:
+                return True
+            ret = self.retrieveChildren(child,receiver)
+            if ret:
+                return ret
+
+    def eventFilter(self,receiver,event):
+        # Note QEvent.Type.MouseButtonPress 为 2
+        if event.type() == 2:
+            if self.retrieveChildren(self,receiver):
+                self.protect_time = time.time()
+            # NOTE 如果点击多次触发，通过时间进行保护
+            if (time.time() - self.protect_time) > .1:
+                self.close()
+        return False
 
     def set_widget(self, widget):
         self._scroll_area.setWidget(widget)
@@ -187,6 +212,7 @@ class MDrawer(QWidget):
         return super(MDrawer, self).show()
 
     def closeEvent(self, event):
+        self.app.removeEventFilter(self)
         if self._is_first_close:
             self._is_first_close = False
             self._close_timer.start()
