@@ -91,6 +91,7 @@ class MDrawer(QWidget):
         self.app.installEventFilter(self)
         self.protect_time = time.time()
 
+
     def retrieveChildren(self,parent,receiver):
         if not hasattr(parent,"children"):
             return
@@ -110,6 +111,8 @@ class MDrawer(QWidget):
             # NOTE 如果点击多次触发，通过时间进行保护
             if (time.time() - self.protect_time) > .1:
                 self.close()
+        elif event.type() == QEvent.Type.Resize and receiver is self.window():
+            self.close()
         return False
 
     def set_widget(self, widget):
@@ -134,6 +137,7 @@ class MDrawer(QWidget):
         if self._position == MDrawer.LeftPos:
             pos = parent_geo.topLeft() if parent.parent() is None else parent.mapToGlobal(
                 parent_geo.topLeft())
+            pos -= self.window().geometry().topLeft()
             target_x = pos.x()
             target_y = pos.y()
             self.setFixedHeight(parent_geo.height())
@@ -142,6 +146,7 @@ class MDrawer(QWidget):
         if self._position == MDrawer.RightPos:
             pos = parent_geo.topRight() if parent.parent() is None else parent.mapToGlobal(
                 parent_geo.topRight())
+            pos -= self.window().geometry().topLeft()
             self.setFixedHeight(parent_geo.height())
             target_x = pos.x() - self.width()
             target_y = pos.y()
@@ -150,6 +155,7 @@ class MDrawer(QWidget):
         if self._position == MDrawer.TopPos:
             pos = parent_geo.topLeft() if parent.parent() is None else parent.mapToGlobal(
                 parent_geo.topLeft())
+            pos -= self.window().geometry().topLeft()
             self.setFixedWidth(parent_geo.width())
             target_x = pos.x()
             target_y = pos.y()
@@ -158,6 +164,7 @@ class MDrawer(QWidget):
         if self._position == MDrawer.BottomPos:
             pos = parent_geo.bottomLeft() if parent.parent() is None else parent.mapToGlobal(
                 parent_geo.bottomLeft())
+            pos -= self.window().geometry().topLeft()
             self.setFixedWidth(parent_geo.width())
             target_x = pos.x()
             target_y = pos.y() - self.height()
