@@ -93,12 +93,13 @@ class MDrawer(QWidget):
 
 
     def retrieveChildren(self,parent,receiver):
+        if parent is receiver:
+            return True
         if not hasattr(parent,"children"):
             return
 
         for child in parent.children():
-            if child is receiver:
-                return True
+            
             ret = self.retrieveChildren(child,receiver)
             if ret:
                 return ret
