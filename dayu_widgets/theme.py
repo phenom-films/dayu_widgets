@@ -35,7 +35,7 @@ class MTheme(object):
     def __init__(self, theme='light', primary_color=None):
         super(MTheme, self).__init__()
         default_qss_file = utils.get_static_file('main.qss')
-        with open(default_qss_file, 'r+') as f:
+        with open(default_qss_file, 'r') as f:
             self.default_qss = QssTemplate(f.read())
         self.primary_color, self.item_hover_bg = (None, None)
         self.primary_1, self.primary_2, self.primary_3, self.primary_4, self.primary_5, = (None, None, None, None, None)

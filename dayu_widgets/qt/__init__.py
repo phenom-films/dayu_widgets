@@ -11,10 +11,12 @@ try:
     from PySide2.QtGui import *
     from PySide2.QtWidgets import *
     from PySide2.QtSvg import QSvgRenderer
+    print 'PySide2'
 except ImportError:
     from PySide.QtCore import *
     from PySide.QtGui import *
     from PySide.QtSvg import QSvgRenderer
+    print 'PySide'
 
 
 class MCacheDict(object):
@@ -30,7 +32,7 @@ class MCacheDict(object):
         replace_color = replace_color or dayu_theme.icon_color
         if (self.cls is QIcon) and (replace_color is None):
             return QIcon(svg_path)
-        with open(svg_path, 'r+') as f:
+        with open(svg_path, 'r') as f:
             data_content = f.read()
             if replace_color is not None:
                 data_content = data_content.replace('#555555', replace_color)
