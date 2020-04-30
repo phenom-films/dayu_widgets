@@ -11,12 +11,10 @@ try:
     from PySide2.QtGui import *
     from PySide2.QtWidgets import *
     from PySide2.QtSvg import QSvgRenderer
-    print 'PySide2'
 except ImportError:
     from PySide.QtCore import *
     from PySide.QtGui import *
     from PySide.QtSvg import QSvgRenderer
-    print 'PySide'
 
 
 class MCacheDict(object):
