@@ -77,7 +77,7 @@ def test_utils_default_formatter(input_value, result):
 @pytest.mark.parametrize('bold', (True, False))
 def test_font_formatter(underline, bold):
     """Test font_formatter with different arg values"""
-    font = utils.font_formatter(underline, bold)
+    font = utils.font_formatter({'underline': underline, 'bold': bold})
     assert font.underline() == underline
     assert font.bold() == bold
 
