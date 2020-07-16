@@ -354,8 +354,8 @@ class MDragFileButton(MToolButton):
                 sub_process.wait()
 
             if os.path.isfile(file_name):
-                if self.property('format'):
-                    if os.path.splitext(file_name)[-1] in self.property('format'):
+                if self.get_dayu_filters():
+                    if os.path.splitext(file_name)[-1] in self.get_dayu_filters():
                         file_list.append(file_name)
                 else:
                     file_list.append(file_name)
