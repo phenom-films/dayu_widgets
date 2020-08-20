@@ -15,9 +15,9 @@ from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
 
 
-class MPushButtonGroupTest(QWidget, MFieldMixin):
+class PushButtonGroupExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MPushButtonGroupTest, self).__init__(parent)
+        super(PushButtonGroupExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -26,7 +26,8 @@ class MPushButtonGroupTest(QWidget, MFieldMixin):
             {'text': 'Edit', 'icon': MIcon('edit_fill.svg', '#fff'), 'type': MPushButton.WarningType},
             {'text': 'Delete', 'icon': MIcon('trash_line.svg', '#fff'), 'type': MPushButton.DangerType},
         ]
-        button_group_h = MPushButtonGroup(size=dayu_theme.large)
+        button_group_h = MPushButtonGroup()
+        button_group_h.set_dayu_size(dayu_theme.large)
         button_group_h.set_button_list(button_config_list)
         h_lay = QHBoxLayout()
         h_lay.addWidget(button_group_h)
@@ -53,7 +54,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MPushButtonGroupTest()
+    test = PushButtonGroupExample()
     from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()
