@@ -42,13 +42,13 @@ class CheckBoxGroupExample(QWidget, MFieldMixin):
         label = MLabel()
         self.register_field('checked_app', [u'北京', u'郑州'])
         self.register_field('checked_app_text', lambda: u' & '.join(self.field('checked_app')))
-        self.bind('checked_app', radio_group_b, 'value', signal='sig_checked_changed')
+        self.bind('checked_app', radio_group_b, 'dayu_checked', signal='sig_checked_changed')
         self.bind('checked_app_text', label, 'text')
 
         radio_group_tri = MCheckBoxGroup()
         radio_group_tri.set_button_list(self.app_data)
         self.register_field('check_grp', [u'Maya'])
-        self.bind('check_grp', radio_group_tri, 'value', signal='sig_checked_changed')
+        self.bind('check_grp', radio_group_tri, 'dayu_checked', signal='sig_checked_changed')
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('Orientation Qt.Horizontal'))

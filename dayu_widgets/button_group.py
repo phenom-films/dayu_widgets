@@ -129,7 +129,7 @@ class MCheckBoxGroup(MButtonGroupBase):
         self.customContextMenuRequested.connect(self._slot_context_menu)
 
         self._button_group.buttonClicked[int].connect(self._slot_map_signal)
-        self.set_value([])
+        self._dayu_checked = []
 
     def create_button(self, data_dict):
         return MCheckBox()
@@ -161,21 +161,24 @@ class MCheckBoxGroup(MButtonGroupBase):
             [check_box.text() for check_box in self._button_group.buttons() if
              check_box.isChecked()])
 
-    def set_value(self, value):
+    def set_dayu_checked(self, value):
         if not isinstance(value, list):
             value = [value]
-        self.setProperty('value', value)
+        if value == self.get_dayu_checked():
+            return
 
-    def _set_value(self, value):
-        edit_from_code = False
+        self._dayu_checked = value
         for check_box in self._button_group.buttons():
             flag = Qt.Checked if check_box.text() in value else Qt.Unchecked
             if flag != check_box.checkState():
-                # 更新来自代码
-                edit_from_code = True
                 check_box.setCheckState(flag)
-        if edit_from_code:
-            self.sig_checked_changed.emit(value)
+        self.sig_checked_changed.emit(value)
+
+    def get_dayu_checked(self):
+        return self._dayu_checked
+
+    # TODO: pyside 的 Property 不直接支持 list，需要寻求解决办法
+    dayu_checked = Property(list, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
 
 
 class MRadioButtonGroup(MButtonGroupBase):
@@ -249,4 +252,3 @@ class MToolButtonGroup(MButtonGroupBase):
         return self._button_group.checkedId()
 
     dayu_checked = Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
-
