@@ -15,9 +15,9 @@ from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import *
 
 
-class MRadioButtonGroupTest(QWidget, MFieldMixin):
+class MRadioButtonGroupExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MRadioButtonGroupTest, self).__init__(parent)
+        super(MRadioButtonGroupExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -59,9 +59,9 @@ class MRadioButtonGroupTest(QWidget, MFieldMixin):
         button2.clicked.connect(functools.partial(self.slot_change_value, 'value2'))
         button3.clicked.connect(functools.partial(self.slot_change_value, 'value3'))
 
-        self.bind('value1', radio_group_v, 'checked', signal='sig_checked_changed')
-        self.bind('value2', radio_group_button_h, 'checked', signal='sig_checked_changed')
-        self.bind('value3', radio_group_button_v, 'checked', signal='sig_checked_changed')
+        self.bind('value1', radio_group_v, 'dayu_checked', signal='sig_checked_changed')
+        self.bind('value2', radio_group_button_h, 'dayu_checked', signal='sig_checked_changed')
+        self.bind('value3', radio_group_button_v, 'dayu_checked', signal='sig_checked_changed')
         self.bind('value1_text', button1, 'text')
         self.bind('value2_text', button2, 'text')
         self.bind('value3_text', button3, 'text')
@@ -94,7 +94,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MRadioButtonGroupTest()
+    test = MRadioButtonGroupExample()
     from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()
