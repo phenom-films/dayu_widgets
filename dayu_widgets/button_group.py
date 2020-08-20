@@ -57,6 +57,8 @@ class MButtonGroupBase(QWidget):
             button.setProperty('shortcut', data_dict.get('shortcut'))
         if data_dict.get('tooltip'):
             button.setProperty('toolTip', data_dict.get('tooltip'))
+        if data_dict.get('checkable'):
+            button.setProperty('checkable', data_dict.get('checkable'))
         if data_dict.get('clicked'):
             button.clicked.connect(data_dict.get('clicked'))
         if data_dict.get('toggled'):
@@ -193,6 +195,8 @@ class MRadioButtonGroup(MButtonGroupBase):
         return MRadioButton()
 
     def set_dayu_checked(self, value):
+        if value == self.get_dayu_checked():
+            return
         button = self._button_group.button(value)
         if button:
             button.setChecked(True)
@@ -232,6 +236,8 @@ class MToolButtonGroup(MButtonGroupBase):
         return button
 
     def set_dayu_checked(self, value):
+        if value == self.get_dayu_checked():
+            return
         button = self._button_group.button(value)
         if button:
             button.setChecked(True)
