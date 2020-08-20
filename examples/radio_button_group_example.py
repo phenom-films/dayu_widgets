@@ -15,9 +15,9 @@ from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import *
 
 
-class MRadioButtonGroupExample(QWidget, MFieldMixin):
+class RadioButtonGroupExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
-        super(MRadioButtonGroupExample, self).__init__(parent)
+        super(RadioButtonGroupExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -94,7 +94,7 @@ if __name__ == '__main__':
     import sys
 
     app = QApplication(sys.argv)
-    test = MRadioButtonGroupExample()
+    test = RadioButtonGroupExample()
     from dayu_widgets import dayu_theme
     dayu_theme.apply(test)
     test.show()
