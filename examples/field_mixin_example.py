@@ -55,15 +55,12 @@ class FieldMixinExample(QWidget, MFieldMixin):
         self.setLayout(temp_lay)
 
     def computed_str_enable(self):
-        print 'computed_str_enable'
         return 'Enabled' if self.field('is_enable') else 'Disabled'
 
     def computed_thumbnail_pix_map(self):
-        print 'computed_thumbnail_pix_map'
         return MPixmap(self.field('thumbnail_path'))
 
     def computed_email(self):
-        print 'computed_email'
         return '{}@phenom-films.com'.format(self.field('my_name'))
 
     def slot_change_data(self):
