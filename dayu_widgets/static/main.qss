@@ -741,6 +741,9 @@ MComboBox:focus{
 MComboBox:hover{
     border: 1px solid @primary_7;
 }
+MComboBox:disabled{
+    color: @disable_color;
+}
 /* MLabel */
 MLabel{
     padding: 2px;
@@ -848,7 +851,9 @@ MLineEdit[dayu_type=error]{
 MLineEdit[dayu_type=error]:focus{
     border: 1px solid @error_5;
 }
-
+MLineEdit:disabled{
+    color: @disable_color;
+}
 
 MTabWidget::pane { /* The tab widget frame */
     border: 1px solid @border_color;
@@ -1136,6 +1141,10 @@ MSlider::handle {
     height: 8px;
     border-radius: 6px;
 }
+MSlider::handle:disabled{
+    border-color: @disable_color;
+}
+
 MSlider::handle:horizontal {
     margin: -4px 0;
 }
@@ -1155,7 +1164,9 @@ MSlider::add-page:horizontal {
 MSlider::sub-page:horizontal {
     background: @primary_color;
 }
-
+MSlider::sub-page:disabled{
+    background: @disable_color;
+}
 MSlider::add-page:vertical {
     background: @primary_color;
 }
