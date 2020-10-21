@@ -18,8 +18,13 @@ class MSlider(QSlider):
 
     def __init__(self, orientation=Qt.Horizontal, parent=None):
         super(MSlider, self).__init__(orientation, parent=parent)
+        self._show_text_when_move = True
+
+    def disable_show_text(self):
+        self._show_text_when_move = False
 
     def mouseMoveEvent(self, event):
         """Override the mouseMoveEvent to show current value as a tooltip."""
-        QToolTip.showText(event.globalPos(), str(self.value()), self)
+        if self._show_text_when_move:
+            QToolTip.showText(event.globalPos(), str(self.value()), self)
         return super(MSlider, self).mouseMoveEvent(event)
