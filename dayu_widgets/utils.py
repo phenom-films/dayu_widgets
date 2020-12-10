@@ -260,7 +260,9 @@ def _(input_none):
 
 @display_formatter.register(int)
 def _(input_int):
-    return str(input_int)
+    # return str(input_int)
+    # 直接返回 int，不影响该列的排序
+    return input_int
 
 
 @display_formatter.register(float)
