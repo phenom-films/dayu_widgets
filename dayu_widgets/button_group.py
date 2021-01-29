@@ -1,11 +1,10 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
-
+import six
 import functools
 
 from dayu_widgets.check_box import MCheckBox
@@ -39,7 +38,7 @@ class MButtonGroupBase(QWidget):
         raise NotImplementedError()
 
     def add_button(self, data_dict, index=None):
-        if isinstance(data_dict, basestring):
+        if isinstance(data_dict, six.string_types):
             data_dict = {'text': data_dict}
         elif isinstance(data_dict, QIcon):
             data_dict = {'icon': data_dict}
@@ -205,7 +204,7 @@ class MRadioButtonGroup(MButtonGroupBase):
             button.setChecked(True)
             self.sig_checked_changed.emit(value)
         else:
-            print 'error'
+            print('error')
 
     def get_dayu_checked(self):
         return self._button_group.checkedId()
@@ -246,7 +245,7 @@ class MToolButtonGroup(MButtonGroupBase):
             button.setChecked(True)
             self.sig_checked_changed.emit(value)
         else:
-            print 'error'
+            print('error')
 
     def get_dayu_checked(self):
         return self._button_group.checkedId()

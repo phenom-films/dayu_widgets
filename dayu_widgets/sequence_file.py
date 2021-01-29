@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
@@ -20,12 +19,13 @@ from dayu_widgets.qt import *
 
 @property_mixin
 class MSequenceFile(QWidget, MFieldMixin):
-    '''
+    """
     这个类必须依赖 DayuPath
     props:
-        path: basestring
+        path: six.string_types
         sequence: bool
-    '''
+    """
+
     sig_is_sequence_changed = Signal(bool)
 
     def __init__(self, size=None, parent=None):
@@ -35,13 +35,15 @@ class MSequenceFile(QWidget, MFieldMixin):
         self._file_label = MLineEdit()
         self._file_label.set_dayu_size(size)
         self._file_label.setReadOnly(True)
-        self._is_sequence_check_box = MCheckBox(self.tr('Sequence'))
-        self._is_sequence_check_box.toggled.connect(functools.partial(self.setProperty, 'sequence'))
+        self._is_sequence_check_box = MCheckBox(self.tr("Sequence"))
+        self._is_sequence_check_box.toggled.connect(
+            functools.partial(self.setProperty, "sequence")
+        )
         self._is_sequence_check_box.toggled.connect(self.sig_is_sequence_changed)
 
         self._info_label = MLabel().secondary()
         self._error_label = MLabel().secondary()
-        self._error_label.setProperty('error', True)
+        self._error_label.setProperty("error", True)
         self._error_label.setMinimumWidth(100)
         self._error_label.set_elide_mode(Qt.ElideMiddle)
 
@@ -67,11 +69,11 @@ class MSequenceFile(QWidget, MFieldMixin):
         self._update_info()
 
     def set_path(self, value):
-        self.setProperty('path', value)
+        self.setProperty("path", value)
 
     def set_sequence(self, value):
         assert isinstance(value, bool)
-        self.setProperty('sequence', value)
+        self.setProperty("sequence", value)
 
     def _set_sequence(self, value):
         if value != self._is_sequence_check_box.isChecked():
@@ -81,18 +83,31 @@ class MSequenceFile(QWidget, MFieldMixin):
         self._update_info()
 
     def _update_info(self):
-        self._file_label.setProperty('text', self.sequence_obj if self.property('sequence') else self.property('path'))
+        self._file_label.setProperty(
+            "text",
+            self.sequence_obj if self.property("sequence") else self.property("path"),
+        )
         if self.sequence_obj:
-            self._info_label.setText(u'Format: {ext}  '
-                                     u'Total: {count}  '
-                                     u'Range: {start}-{end}'.format(ext=self.sequence_obj.ext,
-                                                                    count=len(self.sequence_obj.frames),
-                                                                    start=self.sequence_obj.frames[
-                                                                        0] if self.sequence_obj.frames else '/',
-                                                                    end=self.sequence_obj.frames[
-                                                                        -1] if self.sequence_obj.frames else '/'))
-            error_info = u'Missing: {}'.format(self.sequence_obj.missing) if self.sequence_obj.missing else ''
+            self._info_label.setText(
+                u"Format: {ext}  "
+                u"Total: {count}  "
+                u"Range: {start}-{end}".format(
+                    ext=self.sequence_obj.ext,
+                    count=len(self.sequence_obj.frames),
+                    start=self.sequence_obj.frames[0]
+                    if self.sequence_obj.frames
+                    else "/",
+                    end=self.sequence_obj.frames[-1]
+                    if self.sequence_obj.frames
+                    else "/",
+                )
+            )
+            error_info = (
+                u"Missing: {}".format(self.sequence_obj.missing)
+                if self.sequence_obj.missing
+                else ""
+            )
             self._error_label.setText(error_info)
             self._error_label.setToolTip(error_info)
-        self._info_label.setVisible(self.property('sequence'))
-        self._error_label.setVisible(self.property('sequence'))
+        self._info_label.setVisible(self.property("sequence"))
+        self._error_label.setVisible(self.property("sequence"))

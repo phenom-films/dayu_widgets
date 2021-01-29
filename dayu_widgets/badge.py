@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
@@ -8,6 +7,7 @@
 """
 MBadge
 """
+import six
 from dayu_widgets import utils
 from dayu_widgets.qt import QWidget, QPushButton, QGridLayout, QSizePolicy, Qt, Property
 
@@ -24,7 +24,7 @@ class MBadge(QWidget):
 
     Property:
         dayu_dot: bool
-        dayu_text: basestring
+        dayu_text: six.string_types
         dayu_count: int
         dayu_overflow: int
     """
@@ -78,7 +78,7 @@ class MBadge(QWidget):
         :return: None
         """
         self._dot = show
-        self._badge_button.setText('')
+        self._badge_button.setText("")
         self._badge_button.setVisible(show)
         self.style().polish(self)
 
@@ -100,7 +100,9 @@ class MBadge(QWidget):
         self._update_number()
 
     def _update_number(self):
-        self._badge_button.setText(utils.overflow_format(self._count, self._overflow_count))
+        self._badge_button.setText(
+            utils.overflow_format(self._count, self._overflow_count)
+        )
         self._badge_button.setVisible(self._count > 0)
         self._dot = None
         self.style().polish(self)
@@ -108,14 +110,14 @@ class MBadge(QWidget):
     def get_dayu_text(self):
         """
         Get current showed text
-        :return: basestring
+        :return: six.string_types
         """
         return self._text
 
     def set_dayu_text(self, text):
         """
         Set current style to show a text.
-        :param text: basestring
+        :param text: six.string_types
         :return: None
         """
         self._text = text
@@ -127,7 +129,7 @@ class MBadge(QWidget):
     dayu_overflow = Property(int, get_dayu_overflow, set_dayu_overflow)
     dayu_dot = Property(bool, get_dayu_dot, set_dayu_dot)
     dayu_count = Property(int, get_dayu_count, set_dayu_count)
-    dayu_text = Property(basestring, get_dayu_text, set_dayu_text)
+    dayu_text = Property(str, get_dayu_text, set_dayu_text)
 
     @classmethod
     def dot(cls, show=False, widget=None):
@@ -154,10 +156,10 @@ class MBadge(QWidget):
         return inst
 
     @classmethod
-    def text(cls, text='', widget=None):
+    def text(cls, text="", widget=None):
         """
         Create a Badge with text style.
-        :param text: basestring
+        :param text: six.string_types
         :param widget: the wrapped widget
         :return: instance badge
         """

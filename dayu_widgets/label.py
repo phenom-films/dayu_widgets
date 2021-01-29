@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
@@ -24,7 +23,7 @@ class MLabel(QLabel):
     H3Level = 3
     H4Level = 4
 
-    def __init__(self, text='', parent=None, flags=0):
+    def __init__(self, text='', parent=None, flags=Qt.Widget):
         super(MLabel, self).__init__(text, parent, flags)
         self.setTextInteractionFlags(Qt.TextBrowserInteraction | Qt.LinksAccessibleByMouse)
         self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)

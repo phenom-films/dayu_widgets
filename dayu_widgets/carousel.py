@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
@@ -81,7 +80,7 @@ class MCarousel(QGraphicsView):
         self.loading_ani.setTargetObject(self.hor_bar)
         self.loading_ani.setEasingCurve(QEasingCurve.InOutQuad)
         self.loading_ani.setDuration(500)
-        self.loading_ani.setPropertyName('value')
+        self.loading_ani.setPropertyName(b'value')
         self.autoplay_timer = QTimer(self)
         self.autoplay_timer.setInterval(2000)
         self.autoplay_timer.timeout.connect(self.next_page)

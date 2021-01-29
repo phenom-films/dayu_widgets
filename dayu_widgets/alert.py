@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
@@ -8,6 +7,7 @@
 """
 MAlert class.
 """
+import six
 import functools
 
 from dayu_widgets.avatar import MAvatar
@@ -27,18 +27,19 @@ class MAlert(QWidget):
         dayu_type: The feedback type with different color container.
         dayu_text: The feedback string showed in container.
     """
-    InfoType = 'info'
-    SuccessType = 'success'
-    WarningType = 'warning'
-    ErrorType = 'error'
 
-    def __init__(self, text='', parent=None, flags=0):
+    InfoType = "info"
+    SuccessType = "success"
+    WarningType = "warning"
+    ErrorType = "error"
+
+    def __init__(self, text="", parent=None, flags=Qt.Widget):
         super(MAlert, self).__init__(parent, flags)
         self.setAttribute(Qt.WA_StyledBackground)
         self._icon_label = MAvatar()
         self._icon_label.set_dayu_size(dayu_theme.tiny)
         self._content_label = MLabel().secondary()
-        self._close_button = MToolButton().svg('close_line.svg').tiny().icon_only()
+        self._close_button = MToolButton().svg("close_line.svg").tiny().icon_only()
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
 
         self._main_lay = QHBoxLayout()
@@ -71,25 +72,38 @@ class MAlert(QWidget):
 
     def set_dayu_text(self, value):
         """Set the feedback content."""
-        if isinstance(value, basestring):
+        if isinstance(value, six.string_types):
             self._dayu_text = value
         else:
-            raise TypeError("Input argument 'value' should be string type, "
-                            "but get {}".format(type(value)))
+            raise TypeError(
+                "Input argument 'value' should be string type, "
+                "but get {}".format(type(value))
+            )
         self._set_dayu_text()
 
     def _set_dayu_type(self):
-        self._icon_label.set_dayu_image(MPixmap('{}_fill.svg'.format(self._dayu_type),
-                                                vars(dayu_theme).get(self._dayu_type + '_color')))
+        self._icon_label.set_dayu_image(
+            MPixmap(
+                "{}_fill.svg".format(self._dayu_type),
+                vars(dayu_theme).get(self._dayu_type + "_color"),
+            )
+        )
         self.style().polish(self)
 
     def set_dayu_type(self, value):
         """Set feedback type."""
-        if value in [MAlert.InfoType, MAlert.SuccessType, MAlert.WarningType, MAlert.ErrorType]:
+        if value in [
+            MAlert.InfoType,
+            MAlert.SuccessType,
+            MAlert.WarningType,
+            MAlert.ErrorType,
+        ]:
             self._dayu_type = value
         else:
-            raise ValueError("Input argument 'value' should be one of "
-                             "info/success/warning/error string.")
+            raise ValueError(
+                "Input argument 'value' should be one of "
+                "info/success/warning/error string."
+            )
         self._set_dayu_type()
 
     def get_dayu_type(self):
@@ -102,11 +116,11 @@ class MAlert(QWidget):
     def get_dayu_text(self):
         """
         Get MAlert feedback message.
-        :return: basestring
+        :return: six.string_types
         """
         return self._dayu_text
 
-    dayu_text = Property(unicode, get_dayu_text, set_dayu_text)
+    dayu_text = Property(six.text_type, get_dayu_text, set_dayu_text)
     dayu_type = Property(str, get_dayu_type, set_dayu_type)
 
     def info(self):

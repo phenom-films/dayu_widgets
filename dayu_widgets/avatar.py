@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
@@ -21,7 +20,7 @@ class MAvatar(QLabel):
         dayu_size: the size of image.
     """
 
-    def __init__(self, parent=None, flags=0):
+    def __init__(self, parent=None, flags=Qt.Widget):
         super(MAvatar, self).__init__(parent, flags)
         self._default_pix = MPixmap('user_fill.svg')
         self._pixmap = self._default_pix

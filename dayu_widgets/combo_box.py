@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
@@ -16,7 +15,7 @@ from dayu_widgets.qt import QComboBox, Signal, QEvent, QSizePolicy, Property, QP
 @focus_shadow_mixin
 class MComboBox(QComboBox):
     Separator = '/'
-    sig_value_changed = Signal(list)
+    sig_value_changed = Signal(object)
 
     def __init__(self, parent=None):
         super(MComboBox, self).__init__(parent)
