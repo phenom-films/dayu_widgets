@@ -79,11 +79,10 @@ class MButtonGroupBase(QWidget):
             button = self.add_button(data_dict, index)
             if index == 0:
                 button.setProperty('position', 'left')
-            elif index  == len(button_list) -1:
+            elif index == len(button_list) - 1:
                 button.setProperty('position', 'right')
             else:
                 button.setProperty('position', 'center')
-
 
 
 class MPushButtonGroup(MButtonGroupBase):
@@ -174,7 +173,8 @@ class MCheckBoxGroup(MButtonGroupBase):
         self.sig_checked_changed.emit(value)
 
     def get_dayu_checked(self):
-        return self._dayu_checked
+        return [check_box.text() for check_box in self._button_group.buttons() if
+                              check_box.isChecked()]
 
     # TODO: pyside 的 Property 不直接支持 list，需要寻求解决办法
     dayu_checked = Property(list, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
