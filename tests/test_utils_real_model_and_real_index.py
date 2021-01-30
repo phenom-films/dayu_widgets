@@ -1,7 +1,7 @@
 """
 Test helper functions about Qt MVC: real_model, real_index
 """
-
+import pytest
 from dayu_widgets import utils
 from dayu_widgets.qt import QSortFilterProxyModel, QStringListModel, QStandardItemModel
 
@@ -84,3 +84,6 @@ def compare_two_model_index(index_1, index_2):
     return (index_1.row() == index_2.row()) \
            and (index_1.column() == index_2.column()) \
            and (index_1.parent() == index_2.parent())
+           
+if __name__ =="__main__":
+    pytest.main([__file__])

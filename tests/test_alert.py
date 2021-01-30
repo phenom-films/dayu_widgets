@@ -53,12 +53,12 @@ def test_malert_with_wrong_type(qtbot, input_type):
 
 
 @pytest.mark.parametrize('input_text, error_type', (
-    (3, 'int'),
-    ([], 'list'),
-    ((1,), 'tuple'),
-    (set(), 'set'),
-    ({}, 'dict'),
-    (object(), 'object'),
+    (3, int),
+    ([], list),
+    ((1,), tuple),
+    (set(), set),
+    ({}, dict),
+    (object(), object),
 ))
 def test_malert_with_wrong_text(qtbot, input_text, error_type):
     """Test MAlert with wrong type for text arg."""
@@ -69,4 +69,4 @@ def test_malert_with_wrong_text(qtbot, input_text, error_type):
 
     exception_msg = exc_info.value.args[0]
     assert exception_msg == "Input argument 'value' should be string type, " \
-                            "but get <type '{}'>".format(error_type)
+                            "but get {}".format(error_type)

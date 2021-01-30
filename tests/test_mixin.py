@@ -250,3 +250,5 @@ def test_stacked_animation_mixin_error(qtbot):
     assert not hasattr(main_widget, '_play_anim')
     assert not hasattr(main_widget, '_disable_opacity')
 
+if __name__ =="__main__":
+    pytest.main([__file__])

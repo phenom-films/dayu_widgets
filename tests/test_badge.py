@@ -57,8 +57,8 @@ def test_badge_count(qtbot, num, text, visible):
     assert badge_1._badge_button.isVisible() == visible
     assert badge_2._badge_button.text() == text
     assert badge_2._badge_button.isVisible() == visible
-    assert badge_1.get_dayu_dot() is None
-    assert badge_2.get_dayu_dot() is None
+    assert badge_1.get_dayu_dot() is False
+    assert badge_2.get_dayu_dot() is False
     assert badge_1.get_dayu_text() is None
     assert badge_2.get_dayu_text() is None
     assert badge_1.get_dayu_count() == num
@@ -85,7 +85,7 @@ def test_badge_overflow(qtbot, num, text, overflow):
     main_widget.show()
 
     assert badge._badge_button.text() == text
-    assert badge.get_dayu_dot() is None
+    assert badge.get_dayu_dot() is False
     assert badge.get_dayu_text() is None
     assert badge.get_dayu_count() == num
     assert badge.get_dayu_overflow() == overflow
@@ -112,8 +112,8 @@ def test_badge_text(qtbot, content, text, visible):
     assert badge_1._badge_button.isVisible() == visible
     assert badge_2._badge_button.text() == text
     assert badge_2._badge_button.isVisible() == visible
-    assert badge_1.get_dayu_dot() is None
-    assert badge_2.get_dayu_dot() is None
+    assert badge_1.get_dayu_dot() is False
+    assert badge_2.get_dayu_dot() is False
     assert badge_1.get_dayu_text() == text
     assert badge_2.get_dayu_text() == text
     assert badge_1.get_dayu_count() is None

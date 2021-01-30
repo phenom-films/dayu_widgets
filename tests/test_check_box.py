@@ -1,3 +1,4 @@
+import pytest
 from dayu_widgets.check_box import MCheckBox
 
 

@@ -20,10 +20,10 @@ def test_overflow_format(num, overflow, result):
 
 
 @pytest.mark.parametrize('num, overflow, error_type', (
-    (0.0, 99, 'float'),
-    (20.0, 99.0, 'float'),
-    ('20', 50, 'str'),
-    (None, 50, 'NoneType')
+    (0.0, 99, float),
+    (20.0, 99.0, float),
+    ('20', 50, str),
+    (None, 50, type(None))
 ))
 def test_with_wrong_num_type(num, overflow, error_type):
     """Test overflow_format with wrong """
@@ -32,13 +32,13 @@ def test_with_wrong_num_type(num, overflow, error_type):
 
     exception_msg = exc_info.value.args[0]
     assert exception_msg == "Input argument 'num' should be int type, " \
-                            "but get <type '{}'>".format(error_type)
+                            "but get {}".format(error_type)
 
 
 @pytest.mark.parametrize('num, overflow, error_type', (
-    (100, 99.0, 'float'),
-    (10, '99', 'str'),
-    (0, None, 'NoneType'),
+    (100, 99.0, float),
+    (10, '99', str),
+    (0, None, type(None)),
 ))
 def test_with_wrong_overflow_type(num, overflow, error_type):
     """Test overflow_format with wrong """
@@ -47,4 +47,7 @@ def test_with_wrong_overflow_type(num, overflow, error_type):
 
     exception_msg = exc_info.value.args[0]
     assert exception_msg == "Input argument 'overflow' should be int type, " \
-                            "but get <type '{}'>".format(error_type)
+                            "but get {}".format(error_type)
+
+if __name__ =="__main__":
+    pytest.main([__file__])

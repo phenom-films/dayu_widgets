@@ -46,3 +46,6 @@ class TestObjValue(object):
         """Test set_obj_value with dict/object as arg. """
         utils.set_obj_value(obj, attr, value)
         assert utils.get_obj_value(obj, attr) == value
+        
+if __name__ =="__main__":
+    pytest.main([__file__])

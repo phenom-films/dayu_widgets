@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Test the function from_list_to_nested_dict.
@@ -166,10 +165,10 @@ def test_with_sep():
 
 
 @pytest.mark.parametrize('input_arg, error_type', (
-    (3, 'int'),
-    ('a_string', 'str'),
-    ({}, 'dict'),
-    (object(), 'object'),
+    (3, int),
+    ('a_string', str),
+    ({}, dict),
+    (object(), object),
 ))
 def test_with_input_wrong_type(input_arg, error_type):
     """Make sure when user give a wrong type arg, raise TypeError"""
@@ -178,16 +177,16 @@ def test_with_input_wrong_type(input_arg, error_type):
 
     exception_msg = exc_info.value.args[0]
     assert exception_msg == "Input argument 'input' should be list or tuple or set, " \
-                            "but get <type '{}'>".format(error_type)
+                            "but get {}".format(error_type)
 
 
 @pytest.mark.parametrize('input_sep, error_type', (
-    (3, 'int'),
-    ([], 'list'),
-    ((1,), 'tuple'),
-    (set(), 'set'),
-    ({}, 'dict'),
-    (object(), 'object'),
+    (3, int),
+    ([], list),
+    ((1,), tuple),
+    (set(), set),
+    ({}, dict),
+    (object(), object),
 ))
 def test_with_sep_wrong_type(input_sep, error_type):
     """Make sure when user give a wrong type arg, raise TypeError"""
@@ -195,5 +194,5 @@ def test_with_sep_wrong_type(input_sep, error_type):
         utils.from_list_to_nested_dict(['a@b@c', 'a@b@d'], input_sep)
 
     exception_msg = exc_info.value.args[0]
-    assert exception_msg == "Input argument 'sep' should be basestring, " \
-                            "but get <type '{}'>".format(error_type)
+    assert exception_msg == "Input argument 'sep' should be six.string_types, " \
+                            "but get {}".format(error_type)
