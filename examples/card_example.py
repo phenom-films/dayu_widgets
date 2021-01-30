@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
@@ -18,7 +17,13 @@ class CardExample(QWidget):
     def __init__(self, parent=None):
         super(CardExample, self).__init__(parent)
         geo = QApplication.desktop().screenGeometry()
-        self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 1.5, geo.height() / 2)
+        width = float(geo.width())
+        height = float(geo.height())
+        x = int(width / 4)
+        y = int(height / 4)
+        w = int(width / 1.5)
+        h = int(height / 2)
+        self.setGeometry(x,y,w,h)
         self._init_ui()
 
     def _init_ui(self):

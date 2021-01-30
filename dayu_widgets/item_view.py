@@ -14,6 +14,7 @@ from dayu_widgets.qt import (
     QPen,
     Qt,
     QBrush,
+    QColor,
     MPixmap,
     QStyledItemDelegate,
     QStyle,
@@ -37,7 +38,7 @@ def draw_empty_content(view, text=None, pix_map=None):
     text = text or view.tr("No Data")
     painter = QPainter(view)
     font_metrics = painter.fontMetrics()
-    painter.setPen(QPen(dayu_theme.secondary_text_color))
+    painter.setPen(QPen(QColor(dayu_theme.secondary_text_color)))
     content_height = pix_map.height() + font_metrics.height()
     padding = 10
     proper_min_size = min(
@@ -104,10 +105,10 @@ class MOptionDelegate(QStyledItemDelegate):
         painter.save()
         icon_color = dayu_theme.icon_color
         if option.state & QStyle.State_MouseOver:
-            painter.fillRect(option.rect, dayu_theme.primary_5)
+            painter.fillRect(option.rect, QColor(dayu_theme.primary_5))
             icon_color = "#fff"
         if option.state & QStyle.State_Selected:
-            painter.fillRect(option.rect, dayu_theme.primary_6)
+            painter.fillRect(option.rect, QColor(dayu_theme.primary_6))
             icon_color = "#fff"
         painter.setRenderHint(QPainter.Antialiasing)
         painter.setPen(Qt.NoPen)

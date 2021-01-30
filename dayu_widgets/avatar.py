@@ -52,7 +52,7 @@ class MAvatar(QLabel):
         if value is None:
             self._pixmap = self._default_pix
         elif isinstance(value, QPixmap):
-            self._pixmap = value
+            self._pixmap = self._default_pix if value.isNull() else value
         else:
             raise TypeError("Input argument 'value' should be QPixmap or None, "
                             "but get {}".format(type(value)))

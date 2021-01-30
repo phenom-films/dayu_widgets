@@ -34,7 +34,7 @@ class MBadge(QWidget):
         self._widget = widget
         self._overflow_count = 99
 
-        self._dot = None
+        self._dot = False
         self._text = None
         self._count = None
 
@@ -104,7 +104,7 @@ class MBadge(QWidget):
             utils.overflow_format(self._count, self._overflow_count)
         )
         self._badge_button.setVisible(self._count > 0)
-        self._dot = None
+        self._dot = False
         self.style().polish(self)
 
     def get_dayu_text(self):
@@ -123,7 +123,7 @@ class MBadge(QWidget):
         self._text = text
         self._badge_button.setText(self._text)
         self._badge_button.setVisible(bool(self._text))
-        self._dot = None
+        self._dot = False
         self.style().polish(self)
 
     dayu_overflow = Property(int, get_dayu_overflow, set_dayu_overflow)

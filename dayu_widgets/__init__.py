@@ -1,17 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-
-"""
-
-from __future__ import division
-from __future__ import print_function
-from __future__ import absolute_import
-
-__author__ = 'timmyliang'
-__email__ = '820472580@qq.com'
-__date__ = '2021-01-29 11:39:49'
-
-
 import os
 
 DEFAULT_STATIC_FOLDER = os.path.join(__path__[0], 'static')

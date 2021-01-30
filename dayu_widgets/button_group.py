@@ -177,7 +177,7 @@ class MCheckBoxGroup(MButtonGroupBase):
                               check_box.isChecked()]
 
     # TODO: pyside 的 Property 不直接支持 list，需要寻求解决办法
-    dayu_checked = Property(list, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
+    dayu_checked = Property('QVariantList', get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
 
 
 class MRadioButtonGroup(MButtonGroupBase):

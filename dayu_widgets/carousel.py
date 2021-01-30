@@ -72,6 +72,7 @@ class MCarousel(QGraphicsView):
 
         hud_widget = QWidget(self)
         hud_widget.setLayout(self.navigate_lay)
+        hud_widget.setStyleSheet("background:transparent")
         hud_widget.move(width / 2 - total_width / 2, height - 30)
 
         self.setFixedWidth(width + 2)

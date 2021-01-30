@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
@@ -39,7 +38,7 @@ class MTabWidgetTest(QWidget):
         main_lay.addStretch()
         self.setLayout(main_lay)
 
-    @Slot()
+    @Slot(int)
     def slot_close_tab(self, index):
         if index > 0:
             text = self.tab_closable.tabText(index)

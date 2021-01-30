@@ -27,7 +27,6 @@ class MLabel(QLabel):
         super(MLabel, self).__init__(text, parent, flags)
         self.setTextInteractionFlags(Qt.TextBrowserInteraction | Qt.LinksAccessibleByMouse)
         self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
-        self._actual_text = text
         self._dayu_type = ''
         self._dayu_underline = False
         self._dayu_mark = False
@@ -121,7 +120,7 @@ class MLabel(QLabel):
 
         :returns:   The original unmodified text
         """
-        return self._actual_text
+        return self.property('text')
 
     def setText(self, text):
         """
@@ -129,7 +128,7 @@ class MLabel(QLabel):
 
         :param text:    The text to set on the label
         """
-        self._actual_text = text
+        self.setProperty('text',text)
         self._update_elided_text()
         self.setToolTip(text)
 
@@ -138,7 +137,9 @@ class MLabel(QLabel):
         Update the elided text on the label
         """
         _font_metrics = self.fontMetrics()
-        _elided_text = _font_metrics.elidedText(self._actual_text, self._elide_mode,
+        text = self.property('text')
+        text = text if text else ""
+        _elided_text = _font_metrics.elidedText(text, self._elide_mode,
                                                 self.width() - 2 * 2)
         super(MLabel, self).setText(_elided_text)
 
