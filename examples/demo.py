@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
+# ctrl + C stop QApplication
 import signal
 signal.signal(signal.SIGINT, signal.SIG_DFL)
+
 import os
+# Qt.py global variable for preferred Qt binding
 os.environ["QT_PREFERRED_BINDING"] = "PyQt4;PyQt5;PySide;PySide2"
+# For Houdini hython.exe
+os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = r"E:\Houdini18\bin\Qt_plugins\platforms"
+
 import sys
 MODULE = os.path.join(__file__,"..","..")
 sys.path.insert(0,MODULE) if MODULE not in sys.path else None
 import importlib
-import os
 
 from dayu_widgets.qt import QMainWindow, QTextEdit, QStackedWidget, Qt
 from dayu_widgets import dayu_theme

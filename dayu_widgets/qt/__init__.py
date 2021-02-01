@@ -7,8 +7,6 @@
 
 import six
 
-import Qt
-print(Qt.__binding__)
 from Qt.QtCore import *
 from Qt.QtGui import *
 from Qt.QtWidgets import *

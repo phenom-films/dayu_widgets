@@ -41,7 +41,7 @@ class MMenu(QMenu):
         self.set_data(data_list)
 
     def set_value(self, data):
-        assert isinstance(data, (list, six.string_types, int, float))
+        assert isinstance(data, (list, six.string_types, six.integer_types, float))
         # if isinstance(data, int):
         #     action = self._action_group.actions()[data]
         #     data = action.property('value')
