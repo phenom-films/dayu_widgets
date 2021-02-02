@@ -32,7 +32,7 @@ class MTextEdit(QTextEdit):
     def _autosize_text_edit(self):
         # w = self.width()
         doc = self.document()
-        print self.width(), doc.lineCount(), doc.idealWidth()
+        print (self.width(), doc.lineCount(), doc.idealWidth())
 
     def resizeable(self):
         """Show the size grip on bottom right. User can use it to resize MTextEdit"""

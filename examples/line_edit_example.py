@@ -59,7 +59,7 @@ class LineEditExample(QWidget):
         option_menu.set_data([r'http://', r'https://'])
         combobox.set_menu(option_menu)
         combobox.set_value('http://')
-        combobox.setFixedWidth(90)
+        combobox.setFixedWidth(100)
         line_edit_options.set_prefix_widget(combobox)
 
         main_lay = QVBoxLayout()

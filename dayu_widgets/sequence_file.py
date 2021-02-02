@@ -23,7 +23,7 @@ class MSequenceFile(QWidget, MFieldMixin):
     '''
     这个类必须依赖 DayuPath
     props:
-        path: basestring
+        path: six.string_types
         sequence: bool
     '''
     sig_is_sequence_changed = Signal(bool)

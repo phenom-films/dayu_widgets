@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
@@ -12,7 +11,7 @@ from dayu_widgets.item_model import MTableModel
 from dayu_widgets.menu import MMenu
 from dayu_widgets.qt import QPainter, QPen, Qt, QBrush, MPixmap, QStyledItemDelegate, QStyle, Slot, \
     Signal, QPoint, QSortFilterProxyModel, QSize, QTableView, QListView, QTreeView, QSettings, \
-    QAbstractItemView
+    QAbstractItemView , QColor
 
 
 def draw_empty_content(view, text=None, pix_map=None):
@@ -21,7 +20,7 @@ def draw_empty_content(view, text=None, pix_map=None):
     text = text or view.tr('No Data')
     painter = QPainter(view)
     font_metrics = painter.fontMetrics()
-    painter.setPen(QPen(dayu_theme.secondary_text_color))
+    painter.setPen(QPen(QColor(dayu_theme.secondary_text_color)))
     content_height = pix_map.height() + font_metrics.height()
     padding = 10
     proper_min_size = min(view.height() - padding * 2, view.width() - padding * 2, content_height)
@@ -77,10 +76,10 @@ class MOptionDelegate(QStyledItemDelegate):
         painter.save()
         icon_color = dayu_theme.icon_color
         if option.state & QStyle.State_MouseOver:
-            painter.fillRect(option.rect, dayu_theme.primary_5)
+            painter.fillRect(option.rect, QColor(dayu_theme.primary_5))
             icon_color = '#fff'
         if option.state & QStyle.State_Selected:
-            painter.fillRect(option.rect, dayu_theme.primary_6)
+            painter.fillRect(option.rect, QColor(dayu_theme.primary_6))
             icon_color = '#fff'
         painter.setRenderHint(QPainter.Antialiasing)
         painter.setPen(Qt.NoPen)
@@ -175,7 +174,7 @@ def mouse_release_event(self, event):
         if value:
             if isinstance(value, dict):
                 self.sig_link_clicked.emit(value)
-            elif isinstance(value, basestring):
+            elif isinstance(value, six.string_types):
                 self.sig_link_clicked.emit(data_obj)
             elif isinstance(value, list):
                 for i in value:

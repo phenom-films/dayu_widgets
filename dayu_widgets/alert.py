@@ -8,6 +8,7 @@
 """
 MAlert class.
 """
+import six
 import functools
 
 from dayu_widgets.avatar import MAvatar
@@ -32,7 +33,7 @@ class MAlert(QWidget):
     WarningType = 'warning'
     ErrorType = 'error'
 
-    def __init__(self, text='', parent=None, flags=0):
+    def __init__(self, text='', parent=None, flags=Qt.Widget):
         super(MAlert, self).__init__(parent, flags)
         self.setAttribute(Qt.WA_StyledBackground)
         self._icon_label = MAvatar()
@@ -71,7 +72,7 @@ class MAlert(QWidget):
 
     def set_dayu_text(self, value):
         """Set the feedback content."""
-        if isinstance(value, basestring):
+        if isinstance(value, six.string_types):
             self._dayu_text = value
         else:
             raise TypeError("Input argument 'value' should be string type, "
@@ -102,11 +103,11 @@ class MAlert(QWidget):
     def get_dayu_text(self):
         """
         Get MAlert feedback message.
-        :return: basestring
+        :return: six.string_types
         """
         return self._dayu_text
 
-    dayu_text = Property(unicode, get_dayu_text, set_dayu_text)
+    dayu_text = Property(six.text_type, get_dayu_text, set_dayu_text)
     dayu_type = Property(str, get_dayu_type, set_dayu_type)
 
     def info(self):

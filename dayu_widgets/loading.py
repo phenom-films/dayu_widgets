@@ -29,7 +29,7 @@ class MLoading(QWidget):
         self._loading_ani.setTargetObject(self)
         # self.loading_ani.setEasingCurve(QEasingCurve.InOutQuad)
         self._loading_ani.setDuration(1000)
-        self._loading_ani.setPropertyName('rotation')
+        self._loading_ani.setPropertyName(b'rotation')
         self._loading_ani.setStartValue(0)
         self._loading_ani.setEndValue(360)
         self._loading_ani.setLoopCount(-1)
