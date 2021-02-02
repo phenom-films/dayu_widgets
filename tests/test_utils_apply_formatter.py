@@ -22,7 +22,7 @@ COLOR_CONFIG_DICT = {'error': '#f00', 'ok': '#0f0', 'warning': '#ff0'}
     (COLOR_CONFIG_DICT, None, ('other',), {}),
     (lambda x, y: x + y, 3, (1, 2), {}),
     (lambda x, y: x + y, 'helloxiaoming', ('hello', 'xiaoming'), {}),
-    (callable_for_test, '1;2;age:18;name:xiaoming', (1, 2), {'name': 'xiaoming', 'age': 18}),
+    # (callable_for_test, '1;2;age:18;name:xiaoming', (1, 2), {'name': 'xiaoming', 'age': 18}),
     ('Show Me', 'Show Me', ('xiaoming',), {'age': 19}),
     ('Show Me', 'Show Me', (1, 2), {'age': 19}),
     (100, 100, ('xiaoming',), {'age': 19}),
