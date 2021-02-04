@@ -82,7 +82,7 @@ class MFieldMixin(object):
         elif isinstance(self.field(data_name), list):
             value = self.field(data_name)[index] if index < len(self.field(data_name)) else None
         if widget.metaObject().indexOfProperty(widget_property) > -1 \
-                or widget_property in map(str, widget.dynamicPropertyNames()):
+                or widget_property in list(map(str, [b.data().decode() for b in widget.dynamicPropertyNames()])):
             widget.setProperty(widget_property, value)
         else:
             widget.set_field(widget_property, value)

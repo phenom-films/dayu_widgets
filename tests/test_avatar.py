@@ -71,13 +71,13 @@ def test_avatar_class_method(qtbot, cls, result, image):
 
 
 @pytest.mark.parametrize('input_file, error_type', (
-    ('3', 'str'),
-    (3, 'int'),
-    (set('google'), 'set'),
-    ({'name': 'test'}, 'dict'),
-    (['g'], 'list'),
-    ((2,), 'tuple'),
-    (object(), 'object'),
+    ('3', str),
+    (3, int),
+    (set('google'), set),
+    ({'name': 'test'}, dict),
+    (['g'], list),
+    ((2,), tuple),
+    (object(), object),
 ))
 def test_mavatar_with_wrong_image(qtbot, input_file, error_type):
     """Make sure when user give a wrong type arg, raise TypeError"""
@@ -88,4 +88,4 @@ def test_mavatar_with_wrong_image(qtbot, input_file, error_type):
 
     exception_msg = exc_info.value.args[0]
     assert exception_msg == "Input argument 'value' should be QPixmap or None," \
-                            " but get <type '{}'>".format(error_type)
+                            " but get {}".format(error_type)

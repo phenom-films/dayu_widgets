@@ -56,12 +56,12 @@ def test_custom_static_folder(custom_folder):
 
 
 @pytest.mark.parametrize('input_file, error_type', (
-    (3, 'int'),
-    (set(), 'set'),
-    ({}, 'dict'),
-    (['g'], 'list'),
-    ((2,), 'tuple'),
-    (object(), 'object'),
+    (3, int),
+    (set(), set),
+    ({}, dict),
+    (["g"], list),
+    ((2,), tuple),
+    (object(), object),
 ))
 def test_with_wrong_type(input_file, error_type):
     """Make sure when user give a wrong type arg, raise TypeError"""
@@ -70,4 +70,4 @@ def test_with_wrong_type(input_file, error_type):
 
     exception_msg = exc_info.value.args[0]
     assert exception_msg == "Input argument 'path' should be basestring type, " \
-                            "but get <type '{}'>".format(error_type)
+                            "but get {}".format(error_type)
