@@ -1,15 +1,34 @@
-import importlib
+# -*- coding: utf-8 -*-
+# ctrl + C stop QApplication
+import signal
+signal.signal(signal.SIGINT, signal.SIG_DFL)
+
 import os
+# Qt.py global variable for preferred Qt binding
+# os.environ["QT_PREFERRED_BINDING"] = "PyQt4;PyQt5;PySide;PySide2"
+# For Houdini hython.exe
+os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = r"E:\Houdini18\bin\Qt_plugins\platforms"
+
+import sys
+MODULE = os.path.join(__file__,"..","..")
+sys.path.insert(0,MODULE) if MODULE not in sys.path else None
+import importlib
+
+import Qt
+print(Qt.__binding__)
 
 from dayu_widgets.qt import QMainWindow, QTextEdit, QStackedWidget, Qt
+
+
 from dayu_widgets import dayu_theme
 from dayu_widgets.dock_widget import MDockWidget
 from dayu_widgets.item_view_set import MItemViewSet
-
+import codecs
 
 def get_test_widget():
     result = []
-    for index, i in enumerate(os.listdir('.')):
+    DIR = os.path.dirname(__file__)
+    for i in os.listdir(DIR):
         if i.startswith('__') or (not i.endswith('.py')) or i == 'demo.py':
             continue
         name = i.split('.')[0]
@@ -17,7 +36,7 @@ def get_test_widget():
         class_name = ''.join(map(lambda x: x.title(), name.split('_')))
         module = importlib.import_module(module_name, class_name)
         if hasattr(module, class_name):
-            with open('./{}.py'.format(name)) as f:
+            with codecs.open(os.path.join(DIR,"%s.py" % name),encoding='utf-8') as f:
                 result.append((name, getattr(module, class_name), f.readlines()))
     return result
 
@@ -39,6 +58,8 @@ class MDemo(QMainWindow):
         data_list = []
         for index, (name, cls, code) in enumerate(get_test_widget()):
             data_list.append({'name': name[:-8], 'data': code})
+            if not callable(cls):
+                continue
             widget = cls()
             widget.setProperty('code', code)
             self.stacked_widget.addWidget(widget)
@@ -64,6 +85,12 @@ if __name__ == '__main__':
     from dayu_widgets.qt import QApplication
 
     app = QApplication(sys.argv)
-    test = MDemo()
-    test.show()
+    
+    try:
+        test = MDemo()
+        test.show()
+    except:
+        import traceback
+        traceback.print_exc()
+
     sys.exit(app.exec_())

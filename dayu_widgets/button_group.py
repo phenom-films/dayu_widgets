@@ -5,7 +5,7 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
-
+import six
 import functools
 
 from dayu_widgets.check_box import MCheckBox
@@ -39,7 +39,7 @@ class MButtonGroupBase(QWidget):
         raise NotImplementedError()
 
     def add_button(self, data_dict, index=None):
-        if isinstance(data_dict, basestring):
+        if isinstance(data_dict, six.string_types):
             data_dict = {'text': data_dict}
         elif isinstance(data_dict, QIcon):
             data_dict = {'icon': data_dict}
@@ -178,7 +178,7 @@ class MCheckBoxGroup(MButtonGroupBase):
                               check_box.isChecked()]
 
     # TODO: pyside 的 Property 不直接支持 list，需要寻求解决办法
-    dayu_checked = Property(list, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
+    dayu_checked = Property('QVariantList', get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
 
 
 class MRadioButtonGroup(MButtonGroupBase):
@@ -205,7 +205,7 @@ class MRadioButtonGroup(MButtonGroupBase):
             button.setChecked(True)
             self.sig_checked_changed.emit(value)
         else:
-            print 'error'
+            print('error')
 
     def get_dayu_checked(self):
         return self._button_group.checkedId()
@@ -246,7 +246,7 @@ class MToolButtonGroup(MButtonGroupBase):
             button.setChecked(True)
             self.sig_checked_changed.emit(value)
         else:
-            print 'error'
+            print('error')
 
     def get_dayu_checked(self):
         return self._button_group.checkedId()

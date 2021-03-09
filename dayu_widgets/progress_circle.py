@@ -9,7 +9,7 @@
 from dayu_widgets import dayu_theme
 from dayu_widgets import utils
 from dayu_widgets.label import MLabel
-from dayu_widgets.qt import QHBoxLayout, Qt, QSize, QPen, QPainter, Property, QProgressBar
+from dayu_widgets.qt import QHBoxLayout, Qt, QSize, QPen, QPainter, Property, QProgressBar,QColor
 
 
 class MProgressCircle(QProgressBar):
@@ -52,6 +52,8 @@ class MProgressCircle(QProgressBar):
         :return: None
         """
         self.setTextVisible(False)
+        if not widget.styleSheet():
+            widget.setStyleSheet("background:transparent")
         self._main_lay.addWidget(widget)
 
     def get_dayu_width(self):
@@ -108,7 +110,7 @@ class MProgressCircle(QProgressBar):
         # draw background circle
         pen_background = QPen()
         pen_background.setWidth(pen_width)
-        pen_background.setColor(dayu_theme.background_selected_color)
+        pen_background.setColor(QColor(dayu_theme.background_selected_color))
         pen_background.setCapStyle(Qt.RoundCap)
         painter.setPen(pen_background)
         painter.drawArc(pen_width / 2.0 + 1,
@@ -121,7 +123,7 @@ class MProgressCircle(QProgressBar):
         # draw foreground circle
         pen_foreground = QPen()
         pen_foreground.setWidth(pen_width)
-        pen_foreground.setColor(self._color)
+        pen_foreground.setColor(QColor(self._color))
         pen_foreground.setCapStyle(Qt.RoundCap)
         painter.setPen(pen_foreground)
         painter.drawArc(pen_width / 2.0 + 1,

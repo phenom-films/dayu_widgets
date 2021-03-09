@@ -10,7 +10,6 @@ from dayu_widgets.button_group import MToolButtonGroup
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets import dayu_theme
-from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.qt import *
 
 

@@ -8,6 +8,7 @@
 """MLineEdit
 Get the user input is a text field
 """
+import six
 import functools
 
 from dayu_widgets import dayu_theme
@@ -23,7 +24,7 @@ from dayu_widgets.tool_button import MToolButton
 @focus_shadow_mixin
 class MLineEdit(QLineEdit):
     """MLineEdit"""
-    sig_delay_text_changed = Signal(basestring)
+    sig_delay_text_changed = Signal(six.string_types[0])
 
     def __init__(self, text='', parent=None):
         super(MLineEdit, self).__init__(text, parent)

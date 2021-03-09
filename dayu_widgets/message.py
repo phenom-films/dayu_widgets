@@ -79,13 +79,13 @@ class MMessage(QWidget):
         self._pos_ani.setTargetObject(self)
         self._pos_ani.setEasingCurve(QEasingCurve.OutCubic)
         self._pos_ani.setDuration(300)
-        self._pos_ani.setPropertyName('pos')
+        self._pos_ani.setPropertyName(b'pos')
 
         self._opacity_ani = QPropertyAnimation()
         self._opacity_ani.setTargetObject(self)
         self._opacity_ani.setDuration(300)
         self._opacity_ani.setEasingCurve(QEasingCurve.OutCubic)
-        self._opacity_ani.setPropertyName('windowOpacity')
+        self._opacity_ani.setPropertyName(b'windowOpacity')
         self._opacity_ani.setStartValue(0.0)
         self._opacity_ani.setEndValue(1.0)
 

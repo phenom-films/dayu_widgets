@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###################################################################
 # Author: Mu yanru
@@ -6,17 +5,12 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-try:
-    from PySide2.QtCore import *
-    from PySide2.QtGui import *
-    from PySide2.QtWidgets import *
-    from PySide2.QtSvg import QSvgRenderer
-except ImportError:
-    from PySide.QtCore import *
-    from PySide.QtGui import *
-    from PySide.QtSvg import QSvgRenderer
+import six
 
-
+from Qt.QtCore import *
+from Qt.QtGui import *
+from Qt.QtWidgets import *
+from Qt.QtSvg import QSvgRenderer
 class MCacheDict(object):
     _render = QSvgRenderer()
 
@@ -34,7 +28,7 @@ class MCacheDict(object):
             data_content = f.read()
             if replace_color is not None:
                 data_content = data_content.replace('#555555', replace_color)
-            self._render.load(QByteArray(data_content))
+            self._render.load(QByteArray(six.b(data_content)))
             pix = QPixmap(128, 128)
             pix.fill(Qt.transparent)
             painter = QPainter(pix)

@@ -73,6 +73,7 @@ class MCarousel(QGraphicsView):
 
         hud_widget = QWidget(self)
         hud_widget.setLayout(self.navigate_lay)
+        hud_widget.setStyleSheet("background:transparent")
         hud_widget.move(width / 2 - total_width / 2, height - 30)
 
         self.setFixedWidth(width + 2)
@@ -81,7 +82,7 @@ class MCarousel(QGraphicsView):
         self.loading_ani.setTargetObject(self.hor_bar)
         self.loading_ani.setEasingCurve(QEasingCurve.InOutQuad)
         self.loading_ani.setDuration(500)
-        self.loading_ani.setPropertyName('value')
+        self.loading_ani.setPropertyName(b'value')
         self.autoplay_timer = QTimer(self)
         self.autoplay_timer.setInterval(2000)
         self.autoplay_timer.timeout.connect(self.next_page)

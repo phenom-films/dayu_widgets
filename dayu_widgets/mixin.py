@@ -10,7 +10,7 @@ mixin decorators to add Qt class feature.
 """
 
 from dayu_widgets.qt import QEvent, QPoint, QApplication, Qt, QGraphicsDropShadowEffect, QWidget, \
-    QPropertyAnimation, QEasingCurve, QGraphicsOpacityEffect
+    QPropertyAnimation, QEasingCurve, QGraphicsOpacityEffect,QColor
 
 
 def property_mixin(cls):
@@ -18,7 +18,7 @@ def property_mixin(cls):
 
     def _new_event(self, event):
         if event.type() == QEvent.DynamicPropertyChange:
-            prp = event.propertyName()
+            prp = event.propertyName().data().decode()
             if hasattr(self, '_set_{}'.format(prp)):
                 callback = getattr(self, '_set_{}'.format(prp))
                 callback(self.property(str(prp)))
@@ -70,7 +70,7 @@ def focus_shadow_mixin(cls):
             shadow_effect = QGraphicsDropShadowEffect(self)
             dayu_type = self.property('dayu_type')
             color = vars(dayu_theme).get('{}_color'.format(dayu_type or 'primary'))
-            shadow_effect.setColor(color)
+            shadow_effect.setColor(QColor(color))
             shadow_effect.setOffset(0, 0)
             shadow_effect.setBlurRadius(5)
             shadow_effect.setEnabled(False)
@@ -104,7 +104,7 @@ def hover_shadow_mixin(cls):
             shadow_effect = QGraphicsDropShadowEffect(self)
             dayu_type = self.property('type')
             color = vars(dayu_theme).get('{}_color'.format(dayu_type or 'primary'))
-            shadow_effect.setColor(color)
+            shadow_effect.setColor(QColor(color))
             shadow_effect.setOffset(0, 0)
             shadow_effect.setBlurRadius(5)
             shadow_effect.setEnabled(False)
@@ -144,13 +144,13 @@ def stacked_animation_mixin(cls):
         self._previous_index = 0
         self._to_show_pos_ani = QPropertyAnimation()
         self._to_show_pos_ani.setDuration(400)
-        self._to_show_pos_ani.setPropertyName('pos')
+        self._to_show_pos_ani.setPropertyName(b'pos')
         self._to_show_pos_ani.setEndValue(QPoint(0, 0))
         self._to_show_pos_ani.setEasingCurve(QEasingCurve.OutCubic)
 
         self._to_hide_pos_ani = QPropertyAnimation()
         self._to_hide_pos_ani.setDuration(400)
-        self._to_hide_pos_ani.setPropertyName('pos')
+        self._to_hide_pos_ani.setPropertyName(b'pos')
         self._to_hide_pos_ani.setEndValue(QPoint(0, 0))
         self._to_hide_pos_ani.setEasingCurve(QEasingCurve.OutCubic)
 
@@ -158,7 +158,7 @@ def stacked_animation_mixin(cls):
         self._opacity_ani = QPropertyAnimation()
         self._opacity_ani.setDuration(400)
         self._opacity_ani.setEasingCurve(QEasingCurve.InCubic)
-        self._opacity_ani.setPropertyName('opacity')
+        self._opacity_ani.setPropertyName(b'opacity')
         self._opacity_ani.setStartValue(0.0)
         self._opacity_ani.setEndValue(1.0)
         self._opacity_ani.setTargetObject(self._opacity_eff)

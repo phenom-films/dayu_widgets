@@ -34,7 +34,7 @@ class MTableModel(QAbstractItemModel):
         self.data_generator = None
         self.header_list = []
         self.timer = QTimer(self)
-        self.connect(self.timer, SIGNAL('timeout()'), self.fetchMore)
+        self.timer.timeout.connect(self.fetchMore)
 
     def set_header_list(self, header_list):
         self.header_list = header_list
@@ -199,13 +199,13 @@ class MTableModel(QAbstractItemModel):
                 key += '_checked'
                 # 更新自己
                 set_obj_value(data_obj, key, value)
-                self.emit(SIGNAL('dataChanged(QModelIndex, QModelIndex)'), index, index)
+                self.dataChanged.emit(index, index)
 
                 # 更新它的children
                 for row, sub_obj in enumerate(get_obj_value(data_obj, 'children', [])):
                     set_obj_value(sub_obj, key, value)
                     sub_index = index.child(row, index.column())
-                    self.emit(SIGNAL('dataChanged(QModelIndex, QModelIndex)'), sub_index, sub_index)
+                    self.dataChanged.emit(sub_index, sub_index)
 
                 # 更新它的parent
                 parent_index = index.parent()
@@ -219,13 +219,13 @@ class MTableModel(QAbstractItemModel):
                             break
                     if new_parent_value != old_parent_value:
                         set_obj_value(parent_obj, key, new_parent_value)
-                        self.emit(SIGNAL('dataChanged(QModelIndex, QModelIndex)'), parent_index, parent_index)
+                        self.dataChanged.emit(parent_index, parent_index)
             else:
                 set_obj_value(data_obj, key, value)
                 # 采用 self.dataChanged.emit方式在houdini16里面会报错
                 # TypeError: dataChanged(QModelIndex,QModelIndex,QVector<int>) only accepts 3 arguments, 3 given!
                 # 所以临时使用旧式信号的发射方式
-                self.emit(SIGNAL('dataChanged(QModelIndex, QModelIndex)'), index, index)
+                self.dataChanged.emit(index, index)
                 # self.dataChanged.emit(index, index)
             return True
         else:
@@ -255,7 +255,7 @@ class MSortFilterModel(QSortFilterProxyModel):
                 if data_dict.get('searchable', False):
                     model_index = self.sourceModel().index(source_row, index, source_parent)
                     value = self.sourceModel().data(model_index)
-                    if self.search_reg.indexIn(value) != -1:
+                    if self.search_reg.indexIn(six.text_type(value)) != -1:
                         # 搜索匹配上了
                         break
             else:
