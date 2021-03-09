@@ -100,7 +100,7 @@ class MMenu(QMenu):
     def _get_parent(self, result, obj):
         if obj.property('parent_menu'):
             parent_menu = obj.property('parent_menu')
-            result.insert(0, parent_menu.title())
+            result.insert(0, parent_menu.property('value'))
             self._get_parent(result, parent_menu)
 
     @Slot(QAction)
