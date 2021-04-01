@@ -42,11 +42,12 @@ class MHeaderView(QHeaderView):
             action_select_all = context_menu.addAction(self.tr('Select All'))
             action_select_none = context_menu.addAction(self.tr('Select None'))
             action_select_invert = context_menu.addAction(self.tr('Select Invert'))
-            self.connect(action_select_all, SIGNAL('triggered()'),
-                         functools.partial(self._slot_set_select, logical_column, Qt.Checked))
-            self.connect(action_select_none, SIGNAL('triggered()'),
+            action_select_all.triggered.connect(functools.partial(self._slot_set_select,
+                                                                       logical_column,
+                                                                       Qt.Checked))
+            action_select_none.triggered.connect(
                          functools.partial(self._slot_set_select, logical_column, Qt.Unchecked))
-            self.connect(action_select_invert, SIGNAL('triggered()'),
+            action_select_invert.triggered.connect(
                          functools.partial(self._slot_set_select, logical_column, None))
             context_menu.addSeparator()
 
@@ -75,7 +76,7 @@ class MHeaderView(QHeaderView):
             else:
                 utils.set_obj_value(data_obj, attr, state)
         source_model.endResetModel()
-        source_model.emit(SIGNAL('dataChanged(QModelIndex, QModelIndex)'), None, None)
+        source_model.dataChanged.emit(None, None)
 
     @Slot(QModelIndex, int)
     def _slot_set_section_visible(self, index, flag):
