@@ -52,15 +52,15 @@ class MAlert(QWidget):
         self.setLayout(self._main_lay)
 
         self.set_show_icon(True)
-        self.set_closeable(False)
+        self.set_closable(False)
         self._dayu_type = None
         self._dayu_text = None
         self.set_dayu_type(MAlert.InfoType)
         self.set_dayu_text(text)
 
-    def set_closeable(self, closeable):
+    def set_closable(self, closable):
         """Display the close icon button or not."""
-        self._close_button.setVisible(closeable)
+        self._close_button.setVisible(closable)
 
     def set_show_icon(self, show_icon):
         """Display the information type icon or not."""
@@ -132,5 +132,5 @@ class MAlert(QWidget):
 
     def closable(self):
         """Set MAlert closebale is True"""
-        self.set_closeable(True)
+        self.set_closable(True)
         return self
