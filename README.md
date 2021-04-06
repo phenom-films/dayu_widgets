@@ -114,7 +114,7 @@ Components for PySide
 ![pageres](screenshots/message_light.gif)![pageres](screenshots/message_dark.gif)
 
 ### MProgressBar <- QProgressBar
-![pageres](screenshots/progress_bar_light.gif)![pageres](screenshots/progress_bar_dark.gif)
+![pageres](screenshots/progressbar_light.gif)![pageres](screenshots/progressbar_dark.gif)
 
 ### MProgressCircle <- QProgressBar
 ![pageres](screenshots/progress_circle_light.png)![pageres](screenshots/progress_circle_dark.png)
