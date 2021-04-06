@@ -84,7 +84,7 @@ Components for PySide
 
 
 ### MCarousel <- QGraphicsView
-![pageres](screenshots/carousel_light.png)![pageres](screenshots/carousel_dark.png)
+![pageres](screenshots/carousel_light.gif)![pageres](screenshots/carousel_dark.gif)
 
 ### MCard <- QWidget
 ![pageres](screenshots/card_light.png)![pageres](screenshots/card_dark.png)
