@@ -28,11 +28,11 @@ class AlertExample(QWidget, MFieldMixin):
         main_lay.addWidget(MAlert(text='Warning Message', parent=self).warning())
         main_lay.addWidget(MAlert(text='Error Message', parent=self).error())
 
-        closeable_alert = MAlert('Some Message', parent=self).closable()
+        closable_alert = MAlert('Some Message', parent=self).closable()
 
         main_lay.addWidget(MLabel(u'不同的提示信息类型'))
         main_lay.addWidget(MDivider('closable'))
-        main_lay.addWidget(closeable_alert)
+        main_lay.addWidget(closable_alert)
         main_lay.addWidget(MDivider('data bind'))
         self.register_field('msg', '')
         self.register_field('msg_type', MAlert.InfoType)
