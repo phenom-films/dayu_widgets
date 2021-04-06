@@ -9,7 +9,6 @@
 import functools
 
 from dayu_widgets.label import MLabel
-from dayu_widgets import dayu_theme
 from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import *
@@ -19,7 +18,7 @@ from dayu_widgets.qt import *
 class MSectionItem(QWidget):
     sig_context_menu = Signal(object)
 
-    def __init__(self, title='', expand=False, widget=None, closeable=False, parent=None):
+    def __init__(self, title='', expand=False, widget=None, closable=False, parent=None):
         super(MSectionItem, self).__init__(parent)
         self._central_widget = None
         self.setAttribute(Qt.WA_StyledBackground)
@@ -57,7 +56,7 @@ class MSectionItem(QWidget):
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.setMouseTracking(True)
         self.set_title(title)
-        self.set_closeable(closeable)
+        self.set_closable(closable)
         if widget:
             self.set_content(widget)
         self.set_expand(expand)
@@ -72,10 +71,10 @@ class MSectionItem(QWidget):
     def get_content(self):
         return self._central_widget
 
-    def set_closeable(self, value):
-        self.setProperty('closeable', value)
+    def set_closable(self, value):
+        self.setProperty('closable', value)
 
-    def _set_closeable(self, value):
+    def _set_closable(self, value):
         self.content_widget.setVisible(value)
         self._close_button.setVisible(value)
 
@@ -113,7 +112,7 @@ class MCollapse(QWidget):
         section_widget = MSectionItem(title=section_data.get('title'),
                                       expand=section_data.get('expand', False),
                                       widget=section_data.get('widget'),
-                                      closeable=section_data.get('closable', False)
+                                      closable=section_data.get('closable', False)
                                       )
         self._main_layout.insertWidget(self._main_layout.count(), section_widget)
         return section_widget

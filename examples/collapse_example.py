@@ -10,9 +10,11 @@ from dayu_widgets.collapse import MCollapse
 from dayu_widgets.label import MLabel
 from dayu_widgets.qt import *
 
+
 class CollapseExample(QWidget):
     def __init__(self, parent=None):
         super(CollapseExample, self).__init__(parent)
+        self.setWindowTitle('Examples for MCollapse')
         self._init_ui()
 
     def _init_ui(self):
@@ -29,6 +31,11 @@ class CollapseExample(QWidget):
                 'title': u'史蒂夫乔布斯',
                 'expand': True,
                 'widget': label_1
+            }, {
+                'title': u'可关闭的',
+                'expand': True,
+                'widget': MLabel('This is a closable collapse item'),
+                'closable': True
             }, {
                 'title': u'斯蒂夫·盖瑞·沃兹尼亚克',
                 'expand': True,
