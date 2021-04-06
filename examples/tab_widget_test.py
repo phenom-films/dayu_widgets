@@ -34,7 +34,7 @@ class MTabWidgetTest(QWidget):
         self.tab_closable.tabCloseRequested.connect(self.slot_close_tab)
         main_lay.addWidget(MDivider('Normal'))
         main_lay.addWidget(tab_card)
-        main_lay.addWidget(MDivider('Closeable'))
+        main_lay.addWidget(MDivider('Closable'))
         main_lay.addWidget(self.tab_closable)
         main_lay.addStretch()
         self.setLayout(main_lay)
