@@ -90,7 +90,7 @@ Components for PySide
 ![pageres](screenshots/card_light.png)![pageres](screenshots/card_dark.png)
 
 ### MCollapse <- QWidget
-![pageres](screenshots/collapse_light.png)![pageres](screenshots/collapse_dark.png)
+![pageres](screenshots/collapse_light.gif)![pageres](screenshots/collapse_dark.gif)
 
 ### MLineTabWidget <- QWidget
 ![pageres](screenshots/line_tab_widget_light.gif)![pageres](screenshots/line_tab_widget_dark.gif)
@@ -114,7 +114,7 @@ Components for PySide
 ![pageres](screenshots/message_light.gif)![pageres](screenshots/message_dark.gif)
 
 ### MProgressBar <- QProgressBar
-![pageres](screenshots/progress_bar_light.png)![pageres](screenshots/progress_bar_dark.png)
+![pageres](screenshots/progress_bar_light.gif)![pageres](screenshots/progress_bar_dark.gif)
 
 ### MProgressCircle <- QProgressBar
 ![pageres](screenshots/progress_circle_light.png)![pageres](screenshots/progress_circle_dark.png)
