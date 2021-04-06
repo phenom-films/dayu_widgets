@@ -269,7 +269,7 @@ class MTreeView(QTreeView):
 
     def __init__(self, parent=None):
         super(MTreeView, self).__init__(parent)
-        self._no_date_image = None
+        self._no_data_image = None
         self._no_data_text = self.tr('No Data')
         self.header_list = []
         self.header_view = MHeaderView(Qt.Horizontal)
