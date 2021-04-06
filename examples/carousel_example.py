@@ -16,6 +16,7 @@ from dayu_widgets.qt import *
 class CarouselExample(QWidget):
     def __init__(self, parent=None):
         super(CarouselExample, self).__init__(parent)
+        self.setWindowTitle('Examples for MCarousel')
         self._init_ui()
 
     def _init_ui(self):

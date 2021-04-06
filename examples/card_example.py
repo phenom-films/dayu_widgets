@@ -17,6 +17,7 @@ from dayu_widgets import dayu_theme
 class CardExample(QWidget):
     def __init__(self, parent=None):
         super(CardExample, self).__init__(parent)
+        self.setWindowTitle('Examples for MCard')
         geo = QApplication.desktop().screenGeometry()
         width = float(geo.width())
         height = float(geo.height())
