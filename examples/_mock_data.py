@@ -24,7 +24,7 @@ header_list = [
         'key': 'name',
         'checkable': True,
         'searchable': True,
-        'font': lambda x,y: {'underline':True},
+        'font': lambda x, y: {'underline': True},
         'icon': 'user_fill.svg'
     }, {
         'label': 'Sex',
@@ -39,7 +39,7 @@ header_list = [
         'searchable': True,
         'editable': True,
         'display': lambda x, y: u'{} 岁'.format(x),
-        'font': lambda x,y: {'bold':True},
+        'font': lambda x, y: {'bold': True},
     }, {
         'label': 'Address',
         'key': 'city',
@@ -93,6 +93,58 @@ data_list = [
         'city': '',
         'city_list': ['Beijing', 'Shanghai', 'Shenzhen', 'Guangzhou'],
         'date': '2016-10-02',
+    }, {
+        'name': 'Jon Snow',
+        'sex': 'Female',
+        'sex_list': ['Male', 'Female'],
+        'age': 26,
+        'score': 60,
+        'city': 'Ottawa',
+        'city_list': ['New York', 'Ottawa', 'London', 'Sydney'],
+        'date': '2016-10-04',
+    }, {
+        'name': 'Li Xiaohua',
+        'sex': 'Female',
+        'sex_list': ['Male', 'Female'],
+        'age': 18,
+        'score': 97,
+        'city': 'Ottawa',
+        'city_list': ['New York', 'Ottawa', 'London', 'Sydney'],
+        'date': '2016-10-04',
+    }
+]
+
+tree_data_list = [
+    {
+        'name': 'John Brown',
+        'sex': 'Male',
+        'sex_list': ['Male', 'Female'],
+        'age': 18,
+        'score': 89,
+        'city': 'New York',
+        'city_list': ['New York', 'Ottawa', 'London', 'Sydney'],
+        'date': '2016-10-03',
+        'children': [
+            {
+                'name': 'Jim Green',
+                'sex': 'Male',
+                'sex_list': ['Male', 'Female'],
+                'age': 24,
+                'score': 55,
+                'city': 'London',
+                'city_list': ['New York', 'Ottawa', 'London', 'Sydney'],
+                'date': '2016-10-01',
+            }, {
+                'name': 'Zhang Xiaoming',
+                'sex': 'Male',
+                'sex_list': ['Male', 'Female'],
+                'age': 30,
+                'score': 70,
+                'city': '',
+                'city_list': ['Beijing', 'Shanghai', 'Shenzhen', 'Guangzhou'],
+                'date': '2016-10-02',
+            },
+        ]
     }, {
         'name': 'Jon Snow',
         'sex': 'Female',
