@@ -26,7 +26,6 @@ from dayu_widgets.item_view_set import MItemViewSet
 import codecs
 
 def get_test_widget():
-    result = []
     DIR = os.path.dirname(__file__)
     for i in os.listdir(DIR):
         if i.startswith('__') or (not i.endswith('.py')) or i == 'demo.py':
@@ -37,8 +36,9 @@ def get_test_widget():
         module = importlib.import_module(module_name, class_name)
         if hasattr(module, class_name):
             with codecs.open(os.path.join(DIR,"%s.py" % name),encoding='utf-8') as f:
-                result.append((name, getattr(module, class_name), f.readlines()))
-    return result
+                code = f.readlines()
+                
+            yield (name, getattr(module, class_name), code)
 
 
 @dayu_theme.deco
