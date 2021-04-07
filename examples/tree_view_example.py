@@ -5,43 +5,15 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
-import functools
 
 import examples._mock_data as mock
 from dayu_widgets import dayu_theme
-from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.item_model import MTableModel, MSortFilterModel
 from dayu_widgets.item_view import MTreeView
 from dayu_widgets.line_edit import MLineEdit
-from dayu_widgets.loading import MLoadingWrapper
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import *
-
-def h(*args):
-    cls = args[0]
-    widget = cls()
-    for i in args:
-        if isinstance(i, dict):
-            for attr, value in i.get('props', {}).items():
-                widget.setProperty(attr, value)
-            for signal, slot in i.get('on', {}).items():
-                widget.connect(widget, SIGNAL(signal), slot)
-        elif isinstance(i, list):
-            lay = QHBoxLayout()
-            for j in i:
-                lay.addWidget(j)
-            widget.setLayout(lay)
-    return widget
-
-
-class MFetchDataThread(QThread):
-    def __init__(self, parent=None):
-        super(MFetchDataThread, self).__init__(parent)
-
-    def run(self, *args, **kwargs):
-        import time
-        time.sleep(4)
 
 
 class TreeViewExample(QWidget, MFieldMixin):
