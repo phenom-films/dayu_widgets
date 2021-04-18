@@ -281,10 +281,10 @@ class MTreeView(QTreeView):
         """Override paintEvent when there is no data to show, draw the preset picture and text."""
         model = utils.real_model(self.model())
         if model is None:
-            draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+            draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+                draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         return super(MTreeView, self).paintEvent(event)
 
     def set_no_data_text(self, text):
@@ -299,7 +299,7 @@ class MBigView(QListView):
 
     def __init__(self, parent=None):
         super(MBigView, self).__init__(parent)
-        self._no_date_image = None
+        self._no_data_image = None
         self._no_data_text = self.tr('No Data')
         self.header_list = []
         self.header_view = None
@@ -328,10 +328,10 @@ class MBigView(QListView):
         """Override paintEvent when there is no data to show, draw the preset picture and text."""
         model = utils.real_model(self.model())
         if model is None:
-            draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+            draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+                draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         return super(MBigView, self).paintEvent(event)
 
     def set_no_data_text(self, text):
@@ -346,7 +346,7 @@ class MListView(QListView):
 
     def __init__(self, size=None, parent=None):
         super(MListView, self).__init__(parent)
-        self._no_date_image = None
+        self._no_data_image = None
         self._no_data_text = self.tr('No Data')
         self.setProperty('dayu_size', size or dayu_theme.default_size)
         self.header_list = []
@@ -366,10 +366,10 @@ class MListView(QListView):
         """Override paintEvent when there is no data to show, draw the preset picture and text."""
         model = utils.real_model(self.model())
         if model is None:
-            draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+            draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                draw_empty_content(self.viewport(), self._no_data_text, self._no_date_image)
+                draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         return super(MListView, self).paintEvent(event)
 
     def set_no_data_text(self, text):
