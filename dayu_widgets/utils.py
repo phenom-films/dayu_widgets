@@ -14,7 +14,12 @@ import datetime as dt
 import math
 import os
 
-from singledispatch import singledispatch
+import functools
+
+if hasattr(functools, 'singledispatch'):
+    from functools import singledispatch
+else:
+    from singledispatch import singledispatch
 
 from dayu_widgets import DEFAULT_STATIC_FOLDER, CUSTOM_STATIC_FOLDERS
 from dayu_widgets.qt import QColor, QSortFilterProxyModel, QModelIndex, QFont, MIcon, QIcon
