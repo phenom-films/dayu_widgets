@@ -24,7 +24,7 @@ class ComboBoxExample(QWidget, MFieldMixin):
 
     def _init_ui(self):
         self.register_field('button1_selected', u'北京')
-        menu1 = MMenu()
+        menu1 = MMenu(parent=self)
         menu1.set_data([u'北京', u'上海', u'广州', u'深圳'])
         size_list = [('Large', dayu_theme.large),
                      ('Medium', dayu_theme.medium),
@@ -39,7 +39,7 @@ class ComboBoxExample(QWidget, MFieldMixin):
             self.bind('button1_selected', combo_box, 'value', signal='sig_value_changed')
 
         self.register_field('button2_selected', [u'北京'])
-        menu2 = MMenu(exclusive=False)
+        menu2 = MMenu(exclusive=False, parent=self)
         menu2.set_data([u'北京', u'上海', u'广州', u'深圳'])
         select2 = MComboBox()
         select2.set_menu(menu2)
@@ -52,7 +52,7 @@ class ComboBoxExample(QWidget, MFieldMixin):
             return data[start:end]
 
         self.register_field('button3_selected', '')
-        menu3 = MMenu()
+        menu3 = MMenu(parent=self)
         menu3.set_load_callback(dynamic_get_city)
         select3 = MComboBox()
         select3.set_menu(menu3)
@@ -74,7 +74,7 @@ class ComboBoxExample(QWidget, MFieldMixin):
               'label': u'\u6c5f\u82cf'}]
 
         self.register_field('button4_selected', '')
-        menu4 = MMenu(cascader=True)
+        menu4 = MMenu(cascader=True, parent=self)
         menu4.set_data(a)
         select4 = MComboBox()
         select4.set_menu(menu4)
@@ -82,7 +82,7 @@ class ComboBoxExample(QWidget, MFieldMixin):
         self.bind('button4_selected', select4, 'value', signal='sig_value_changed')
 
         self.register_field('button5_selected', '')
-        menu5 = MMenu(exclusive=False)
+        menu5 = MMenu(exclusive=False, parent=self)
         menu5.set_data([u'北京', u'上海', u'广州', u'深圳'])
         select5 = MComboBox()
         select5.set_menu(menu5)

@@ -41,7 +41,7 @@ class MProgressCircle(QProgressBar):
             self._max_delta_angle = 270 * 16
             self._height_factor = (2 + pow(2, 0.5)) / 4 + 0.03
 
-        self.set_dayu_width(120)
+        self.set_dayu_width(dayu_theme.progress_circle_default_radius)
         self.set_dayu_color(dayu_theme.primary_color)
 
     def set_widget(self, widget):

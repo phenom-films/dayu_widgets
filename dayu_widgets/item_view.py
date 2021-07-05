@@ -375,5 +375,3 @@ class MListView(QListView):
     def set_no_data_text(self, text):
         self._no_data_text = text
 
-    def minimumSizeHint(self, *args, **kwargs):
-        return QSize(200, 50)

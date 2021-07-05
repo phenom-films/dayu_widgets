@@ -4,7 +4,7 @@
     font-family: @font_family;
     color: @primary_text_color;
     background-color: @background_color;
-    font-size: @font_size_base@unit;
+    font-size: @font_size_base@font_unit;
     selection-color: @text_color_inverse;
     selection-background-color: @primary_color;
 }
@@ -50,7 +50,7 @@ QAbstractButton[dayu_size="@huge"],
 QAbstractSpinBox[dayu_size="@huge"],
 QComboBox[dayu_size="@huge"],
 QLineEdit[dayu_size="@huge"]{
-    font-size: @font_size_large@unit;
+    font-size: @font_size_large@font_unit;
     border-radius: @border_radius_large@unit;
     min-height: @huge@unit;
     max-height: @huge@unit;
@@ -60,7 +60,7 @@ QAbstractButton[dayu_size="@large"],
 QAbstractSpinBox[dayu_size="@large"],
 QComboBox[dayu_size="@large"],
 QLineEdit[dayu_size="@large"]{
-    font-size: @font_size_large@unit;
+    font-size: @font_size_large@font_unit;
     border-radius: @border_radius_large@unit;
     min-height: @large@unit;
     max-height: @large@unit;
@@ -70,7 +70,7 @@ QAbstractButton[dayu_size="@medium"],
 QAbstractSpinBox[dayu_size="@medium"],
 QComboBox[dayu_size="@medium"],
 QLineEdit[dayu_size="@medium"]{
-    font-size: @font_size_base@unit;
+    font-size: @font_size_base@font_unit;
     border-radius: @border_radius_base@unit;
     min-height: @medium@unit;
     max-height: @medium@unit;
@@ -80,8 +80,8 @@ QAbstractButton[dayu_size="@small"],
 QAbstractSpinBox[dayu_size="@small"],
 QComboBox[dayu_size="@small"],
 QLineEdit[dayu_size="@small"]{
-    font-size: @font_size_small@unit;
-    border-radius: @border_radius_small@unit;
+    font-size: @font_size_base@font_unit;
+    border-radius: @border_radius_base@unit;
     min-height: @small@unit;
     max-height: @small@unit;
 }
@@ -89,7 +89,7 @@ QAbstractButton[dayu_size="@tiny"],
 QAbstractSpinBox[dayu_size="@tiny"],
 QComboBox[dayu_size="@tiny"],
 QLineEdit[dayu_size="@tiny"]{
-    font-size: @font_size_small@unit;
+    font-size: @font_size_small@font_unit;
     border-radius: @border_radius_small@unit;
     min-height: @tiny@unit;
     max-height: @tiny@unit;
@@ -97,19 +97,19 @@ QLineEdit[dayu_size="@tiny"]{
 
 
 MComboBox[dayu_size="@huge"]::drop-down{
-    height: 20px;
+    height: @drop_down_huge@unit;
 }
 MComboBox[dayu_size="@large"]::drop-down{
-    height: 16px;
+    height: @drop_down_large@unit;
 }
 MComboBox[dayu_size="@medium"]::drop-down{
-    height: 14px;
+    height: @drop_down_medium@unit;
 }
 MComboBox[dayu_size="@small"]::drop-down{
-    height: 10px;
+    height: @drop_down_small@unit;
 }
 MComboBox[dayu_size="@tiny"]::drop-down{
-    height: 8px;
+    height: @drop_down_tiny@unit;
 }
 
 /* MCalendarWidget*/
@@ -122,9 +122,9 @@ MComboBox[dayu_size="@tiny"]::drop-down{
 }
 
 QCalenderWidget > QToolButton {
-    icon-size: 14px, 14px;
-    width: 16px;
-    height: 16px;
+    icon-size: @drop_down_medium@unit, @drop_down_medium@unit;
+    width: @drop_down_large@unit;
+    height: @drop_down_large@unit;
     background: @background_out_color;
 }
 
@@ -137,18 +137,18 @@ QToolButton#qt_calendar_nextmonth {
 }
 
 QToolButton#qt_calendar_monthbutton {
-    padding-right: 20px;
+    padding-right: @drop_down_huge@unit;
 }
 
 QToolButton#qt_calendar_yearbutton {
-    padding-right: 20px;
+    padding-right: @drop_down_huge@unit;
 }
 
 QToolButton#qt_calendar_monthbutton::menu-indicator {
     subcontrol-origin: padding;
     subcontrol-position: center right;
     right: 0;
-    width: 10px;
+    width: @drop_down_small@unit;
 }
 
 QCalendarWidget QWidget {
@@ -206,69 +206,69 @@ QAbstractSpinBox::down-arrow:off {
     background-color: @disable_color;
 }
 QAbstractSpinBox[dayu_size="@huge"]::up-button{
-    width: 28px;
+    width: @spin_box_huge@unit;
     border-top-right-radius: @border_radius_large@unit;
 }
 QAbstractSpinBox[dayu_size="@huge"]::down-button{
-    width: 28px;
+    width: @spin_box_huge@unit;
     border-bottom-right-radius: @border_radius_large@unit;
 }
 QAbstractSpinBox[dayu_size="@large"]::up-button{
-    width: 26px;
+    width: @spin_box_large@unit;
     border-top-right-radius: @border_radius_large@unit;
 }
 QAbstractSpinBox[dayu_size="@large"]::down-button{
-    width: 26px;
+    width: @spin_box_large@unit;
     border-bottom-right-radius: @border_radius_large@unit;
 }
 QAbstractSpinBox[dayu_size="@medium"]::up-button{
-    width: 24px;
+    width: @spin_box_medium@unit;
     border-top-right-radius: @border_radius_base@unit;
 }
 QAbstractSpinBox[dayu_size="@medium"]::down-button{
-    width: 24px;
+    width: @spin_box_medium@unit;
     border-bottom-right-radius: @border_radius_base@unit;
 }
 QAbstractSpinBox[dayu_size="@small"]::up-button{
-    width: 20px;
+    width: @spin_box_small@unit;
     border-top-right-radius: @border_radius_small@unit;
 }
 QAbstractSpinBox[dayu_size="@small"]::down-button{
-    width: 20px;
+    width: @spin_box_small@unit;
     border-bottom-right-radius: @border_radius_small@unit;
 }
 QAbstractSpinBox[dayu_size="@tiny"]::up-button{
-    width: 18px;
+    width: @spin_box_tiny@unit;
     border-top-right-radius: @border_radius_small@unit;
 }
 QAbstractSpinBox[dayu_size="@tiny"]::down-button{
-    width: 18px;
+    width: @spin_box_tiny@unit;
     border-bottom-right-radius: @border_radius_small@unit;
 }
 QAbstractSpinBox[dayu_size="@huge"]::up-arrow,
 QAbstractSpinBox[dayu_size="@huge"]::down-arrow {
-    width: 14px;
-    height: 14px;
+    width: @spin_box_icon_huge@unit;
+    height: @spin_box_icon_huge@unit;
 }
 QAbstractSpinBox[dayu_size="@large"]::up-arrow,
 QAbstractSpinBox[dayu_size="@large"]::down-arrow {
-    width: 12px;
-    height: 12px;
+    width: @spin_box_icon_large@unit;
+    height: @spin_box_icon_large@unit;
 }
 QAbstractSpinBox[dayu_size="@medium"]::up-arrow,
 QAbstractSpinBox[dayu_size="@medium"]::down-arrow {
-    width: 10px;
-    height: 10px;
+    width: @spin_box_icon_medium@unit;
+    height: @spin_box_icon_medium@unit;
 }
 QAbstractSpinBox[dayu_size="@small"]::up-arrow,
 QAbstractSpinBox[dayu_size="@small"]::down-arrow {
-    width: 8px;
-    height: 8px;
+    width: @spin_box_icon_small@unit;
+    height: @spin_box_icon_small@unit;
 }
 QAbstractSpinBox[dayu_size="@tiny"]::up-arrow,
 QAbstractSpinBox[dayu_size="@tiny"]::down-arrow {
-    width: 6px;
-    height: 6px;
+    width: @spin_box_icon_tiny@unit;
+    height: @spin_box_icon_tiny@unit;
 }
 MDateTimeEdit::drop-down, MDateEdit::drop-down{
     subcontrol-origin: border;
@@ -279,7 +279,7 @@ MDateTimeEdit::drop-down, MDateEdit::drop-down{
 /* MAlert */
 MAlert{
     border: 1px solid @border_color;
-    border-radius: 4px;
+    border-radius: @border_radius_base@unit;
 }
 MAlert[dayu_type=info]{
     border-color: @info_3;
@@ -308,11 +308,11 @@ MBadge{
     margin: 0;
 }
 MBadge > QPushButton{
-    font-size:10px;
-    min-height:16px;
-    max-height:16px;
-    min-width:16px;
-    border-radius: 8px;
+    font-size:9@font_unit;
+    min-height:@badge_width@unit;
+    max-height:@badge_width@unit;
+    min-width:@badge_width@unit;
+    border-radius: @badge_width_radius@unit;
     background-color: red;
     border: none;
     color: white;
@@ -321,11 +321,11 @@ MBadge > QPushButton{
 }
 
 MBadge[dayu_dot=true] > QPushButton{
-    min-height:8px;
-    max-height:8px;
-    min-width:8px;
-    max-width:8px;
-    border-radius: 4px;
+    min-height:@badge_dot@unit;
+    max-height:@badge_dot@unit;
+    min-width:@badge_dot@unit;
+    max-width:@badge_dot@unit;
+    border-radius: @badge_dot_radius@unit;
     padding: 0 0;
 }
 
@@ -428,9 +428,9 @@ MToolButton::menu-indicator {
 MDragFileButton, MDragFolderButton{
     color: @primary_text_color;
     background-color: @background_color;
-    border: 2px dashed @border_color;
-    border-radius: 10px;
-    padding: 20px 40px;
+    border: @drag_border@unit dashed @border_color;
+    border-radius: @drag_border_radius@unit;
+    padding: @drag_padding_x@unit @drag_padding_y@unit;
 }
 MDragFileButton:hover, MDragFolderButton:hover{
     color: @primary_color;
@@ -443,7 +443,7 @@ MDragFileButton:pressed, MDragFolderButton:pressed{
 
 /* MCheckBox */
 MCheckBox {
-    spacing: 4px;
+    spacing: @check_box_spacing@unit;
 }
 MCheckBox:disabled {
     color: @disable_color;
@@ -457,8 +457,8 @@ MTreeView::indicator,
 MColumnView::indicator,
 MTableView::indicator,
 MCheckBox::indicator{
-    width: 13px;
-    height: 13px;
+    width: @check_box_size@unit;
+    height: @check_box_size@unit;
     border-radius: 2px;
     border: 1px solid @border_color;
     background-color: @background_in_color;
@@ -646,7 +646,7 @@ MPushButton::menu-indicator {
 
 /*MRadioButton*/
 MRadioButton {
-    spacing: 4px;
+    spacing: @radio_spacing@unit;
 }
 MRadioButton:disabled {
     color: @disable_color;
@@ -654,9 +654,9 @@ MRadioButton:disabled {
 
 MMenu::indicator:exclusive,
 MRadioButton::indicator{
-    width: 14px;
-    height: 14px;
-    border-radius: 8px;
+    width: @radio_size@unit;
+    height: @radio_size@unit;
+    border-radius: @radio_radius@unit;
     border: 1px solid @border_color;
     background-color: @background_in_color;
 }
@@ -691,29 +691,29 @@ MSwitch::indicator{
     image: url(@icon_sphere);
 }
 MSwitch[dayu_size="@huge"]::indicator{
-    width: 58px;
-    height: 30px;
-    border-radius: 15px;
+    width: @switch_width_huge@unit;
+    height: @switch_height_huge@unit;
+    border-radius: @switch_radius_huge@unit;
 }
 MSwitch[dayu_size="@large"]::indicator{
-    width: 48px;
-    height: 24px;
-    border-radius: 12px;
+    width: @switch_width_large@unit;
+    height: @switch_height_large@unit;
+    border-radius: @switch_radius_large@unit;
 }
 MSwitch[dayu_size="@medium"]::indicator{
-    width: 38px;
-    height: 19px;
-    border-radius: 9px;
+    width: @switch_width_medium@unit;
+    height: @switch_height_medium@unit;
+    border-radius: @switch_radius_medium@unit;
 }
 MSwitch[dayu_size="@small"]::indicator{
-    width: 28px;
-    height: 14px;
-    border-radius: 7px;
+    width: @switch_width_small@unit;
+    height: @switch_height_small@unit;
+    border-radius: @switch_radius_small@unit;
 }
 MSwitch[dayu_size="@tiny"]::indicator{
-    width: 18px;
-    height: 10px;
-    border-radius: 5px;
+    width: @switch_width_tiny@unit;
+    height: @switch_height_tiny@unit;
+    border-radius: @switch_radius_tiny@unit;
 }
 MSwitch::indicator:checked{
     image-position: center right;
@@ -748,27 +748,27 @@ MComboBox:disabled{
 MLabel{
     padding: 2px;
     background-color: transparent;
-    font-size: @font_size_base@unit;
+    font-size: @font_size_base@font_unit;
     color: @primary_text_color;
     font-weight: 400;
 }
 MLabel[dayu_level="1"]{
-    font-size: @h1_size@unit;
+    font-size: @h1_size@font_unit;
     font-weight: 500;
     color: @title_color;
 }
 MLabel[dayu_level="2"]{
-    font-size: @h2_size@unit;
+    font-size: @h2_size@font_unit;
     font-weight: 500;
     color: @title_color;
 }
 MLabel[dayu_level="3"]{
-    font-size: @h3_size@unit;
+    font-size: @h3_size@font_unit;
     font-weight: 500;
     color: @title_color;
 }
 MLabel[dayu_level="4"]{
-    font-size: @h4_size@unit;
+    font-size: @h4_size@font_unit;
     font-weight: 500;
     color: @title_color;
 }
@@ -918,8 +918,6 @@ MTabBar QToolButton::left-arrow {
 /* MHeaderView */
 MHeaderView {
     background-color: @background_out_color;
-    font-size: @h3_size;
-    font-weight: 500;
     color: @title_color;
 }
 MHeaderView::section{
@@ -1130,31 +1128,31 @@ MMenuTabWidget QWidget#bar_widget{
 }
 
 MSlider::groove:horizontal {
-    border-radius: 3px;
-    height: 4px;
+    border-radius: @slider_radius@unit;
+    height: @slider_height@unit;
 }
 
 MSlider::handle {
     background: @background_in_color;
     border: 2px solid @primary_color;
-    width: 8px;
-    height: 8px;
-    border-radius: 6px;
+    width: @slider_handle_size@unit;
+    height: @slider_handle_size@unit;
+    border-radius: @slider_handle_radius@unit;
 }
 MSlider::handle:disabled{
     border-color: @disable_color;
 }
 
 MSlider::handle:horizontal {
-    margin: -4px 0;
+    margin: -@slider_height@unit 0;
 }
 MSlider::groove:vertical {
-    border-radius: 3px;
-    width: 4px;
+    border-radius: @slider_radius@unit;
+    width: @slider_height@unit;
 }
 
 MSlider::handle:vertical {
-    margin: 0 -4px;
+    margin: 0 -@slider_height@unit;
 }
 
 MSlider::add-page:horizontal {
@@ -1175,7 +1173,7 @@ MSlider::sub-page:vertical {
     background: @border_color;
 }
 MDockWidget {
-    font-size: @h3_size;
+    font-size: @h3_size@font_unit;
     font-weight: 500;
     color: @title_color;
     titlebar-close-icon: url(@icon_close);
@@ -1204,19 +1202,19 @@ MDockWidget::close-button:hover, MDockWidget::float-button:hover {
 }
 
 MProgressBar {
-    font-size: @font_size_small;
+    font-size: @font_size_base@font_unit;
     color: @primary_text_color;
     border: 0 solid @border_color;
     background-color: @border_color;
-    min-height: 12px;
-    max-height: 12px;
-    border-radius: 6px;
+    min-height: @progress_bar_size@unit;
+    max-height: @progress_bar_size@unit;
+    border-radius: @progress_bar_radius@unit;
 }
 
 MProgressBar::chunk {
-    min-height: 12px;
-    max-height: 12px;
-    border-radius: 5px;
+    min-height: @progress_bar_size@unit;
+    max-height: @progress_bar_size@unit;
+    border-radius: @progress_bar_radius@unit;
 }
 MProgressBar[dayu_status=error]::chunk {
     background-color: @error_6;
@@ -1275,7 +1273,7 @@ MCheckableTag{
     padding-bottom: 4px;
     padding-right: 8px;
     border-radius: @border_radius_base@unit;
-    font-size: @font_size_small@unit;
+    font-size: @font_size_small@font_unit;
 }
 MCheckableTag::indicator{
     width: 0;

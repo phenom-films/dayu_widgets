@@ -46,7 +46,7 @@ class MToast(QWidget):
             _icon_lay.addWidget(MLoading(size=dayu_theme.huge, color=dayu_theme.text_color_inverse))
         else:
             _icon_label = MAvatar()
-            _icon_label.set_dayu_size(60)
+            _icon_label.set_dayu_size(dayu_theme.toast_icon_size)
             _icon_label.set_dayu_image(MPixmap('{}_line.svg'.format(dayu_type or MToast.InfoType),
                                                dayu_theme.text_color_inverse))
             _icon_lay.addWidget(_icon_label)
@@ -64,7 +64,7 @@ class MToast(QWidget):
         _main_lay.addWidget(_content_label)
         _main_lay.addStretch()
         self.setLayout(_main_lay)
-        self.setFixedSize(QSize(120, 120))
+        self.setFixedSize(QSize(dayu_theme.toast_size, dayu_theme.toast_size))
 
         _close_timer = QTimer(self)
         _close_timer.setSingleShot(True)

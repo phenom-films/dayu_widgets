@@ -11,6 +11,8 @@ from Qt.QtCore import *
 from Qt.QtGui import *
 from Qt.QtWidgets import *
 from Qt.QtSvg import QSvgRenderer
+
+
 class MCacheDict(object):
     _render = QSvgRenderer()
 
@@ -53,6 +55,18 @@ class MCacheDict(object):
                 pix_map = self.cls(full_path)
             self._cache_pix_dict.update({key: pix_map})
         return pix_map
+
+
+scale_factor_x = None
+scale_factor_y = None
+
+
+def get_scale_factor():
+    standard_dpi = 96.0
+    global scale_factor_x, scale_factor_y
+    scale_factor_x = QApplication.desktop().logicalDpiX() / standard_dpi
+    scale_factor_y = QApplication.desktop().logicalDpiY() / standard_dpi
+    return scale_factor_x, scale_factor_y
 
 
 MPixmap = MCacheDict(QPixmap)

@@ -41,7 +41,6 @@ def get_test_widget():
     return result
 
 
-@dayu_theme.deco
 class MDemo(QMainWindow):
     def __init__(self, parent=None):
         super(MDemo, self).__init__(parent)
@@ -85,9 +84,10 @@ if __name__ == '__main__':
     from dayu_widgets.qt import QApplication
 
     app = QApplication(sys.argv)
-    
+
     try:
         test = MDemo()
+        dayu_theme.apply(test)
         test.show()
     except:
         import traceback

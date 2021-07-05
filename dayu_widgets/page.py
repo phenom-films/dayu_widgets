@@ -51,11 +51,9 @@ class MPage(QWidget, MFieldMixin):
         self.register_field('can_next',
                             lambda: self.field('current_page') < self.field('total_page'))
         page_setting_menu = MMenu(parent=self)
-
         self._display_label = MLabel()
         self._display_label.setAlignment(Qt.AlignCenter)
         self._change_page_size_button = MComboBox().small()
-        self._change_page_size_button.setFixedWidth(110)
         self._change_page_size_button.set_menu(page_setting_menu)
         self._change_page_size_button.set_formatter(lambda x: u'{} per page'.format(x))
         self._change_page_size_button.sig_value_changed.connect(self._emit_page_changed)

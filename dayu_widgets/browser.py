@@ -20,6 +20,8 @@ from dayu_widgets.mixin import property_mixin, cursor_mixin
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import QFileDialog, Signal, QSize, QSizePolicy, Property
 from dayu_widgets.tool_button import MToolButton
+from dayu_widgets import dayu_theme
+
 
 # NOTE PySide2 Crash without QObject wrapper
 # @Slot()
@@ -257,10 +259,10 @@ class MDragFileButton(MToolButton):
         self.setMouseTracking(True)
         self.text_under_icon()
         self.setText(text)
-
-        self.set_dayu_size(60)
+        size = dayu_theme.drag_size
+        self.set_dayu_size(size)
+        self.setIconSize(QSize(size, size))
         self.set_dayu_svg('cloud_line.svg')
-        self.setIconSize(QSize(60, 60))
 
         self.clicked.connect(self.slot_browser_file)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -479,8 +481,9 @@ class MDragFolderButton(MToolButton):
         self.setMouseTracking(True)
         self.text_under_icon()
         self.set_dayu_svg('folder_line.svg')
-        self.set_dayu_size(60)
-        self.setIconSize(QSize(60, 60))
+        size = dayu_theme.drag_size
+        self.set_dayu_size(size)
+        self.setIconSize(QSize(size, size))
         self.setText(self.tr('Click or drag folder here'))
         self.clicked.connect(self.slot_browser_folder)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)

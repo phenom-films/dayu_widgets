@@ -13,7 +13,6 @@ from dayu_widgets.qt import *
 
 
 @property_mixin
-@dayu_theme.deco
 class MMenu(QMenu):
     sig_value_changed = Signal(object)
 
