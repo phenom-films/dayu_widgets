@@ -132,7 +132,10 @@ class MTableModel(QAbstractItemModel):
         else:
             parent_item = self.root_item
         children_obj = get_obj_value(parent_item, 'children')
-        return len(children_obj) if not hasattr(children_obj, 'next') else 0
+        if hasattr(children_obj, 'next') or (children_obj is None):
+            return 0
+        else:
+            return len(children_obj)
 
     def hasChildren(self, parent_index=None):
         if parent_index and parent_index.isValid():
@@ -235,6 +238,8 @@ class MTableModel(QAbstractItemModel):
 class MSortFilterModel(QSortFilterProxyModel):
     def __init__(self, parent=None):
         super(MSortFilterModel, self).__init__(parent)
+        if hasattr(self, 'setRecursiveFilteringEnabled'):
+            self.setRecursiveFilteringEnabled(True)
         self.header_list = []
         self.search_reg = QRegExp()
         self.search_reg.setCaseSensitivity(Qt.CaseInsensitive)
