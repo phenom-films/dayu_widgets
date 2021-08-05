@@ -13,7 +13,16 @@ from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.toast import MToast
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import QWidget, QHBoxLayout, QVBoxLayout
+from dayu_widgets.qt import QWidget, QHBoxLayout, QVBoxLayout, QThread
+
+
+class MWorkThread(QThread):
+    def __init__(self, parent=None):
+        super(MWorkThread, self).__init__(parent)
+
+    def run(self):
+        import time
+        time.sleep(3)
 
 
 class ToastExample(QWidget, MFieldMixin):
@@ -61,8 +70,14 @@ class ToastExample(QWidget, MFieldMixin):
         func(**config)
 
     def slot_show_loading(self):
-        msg = MToast.loading(u'正在加载中', parent=self)
-        msg.sig_closed.connect(functools.partial(MToast.success, u'加载成功', self))
+        my_thread = MWorkThread(parent=self)
+        my_thread.finished.connect(self.slot_finished)
+        my_thread.start()
+        self.msg = MToast.loading(u'正在加载中', parent=self)
+
+    def slot_finished(self):
+        self.msg.close()
+        MToast.success(u'加载成功', self)
 
 
 if __name__ == '__main__':

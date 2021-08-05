@@ -71,13 +71,10 @@ class MToast(QWidget):
         _close_timer.timeout.connect(self.close)
         _close_timer.timeout.connect(self.sig_closed)
         _close_timer.setInterval((duration or self.default_config.get('duration')) * 1000)
+        self.has_played = False
 
-        _ani_timer = QTimer(self)
-        _ani_timer.timeout.connect(self._fade_out)
-        _ani_timer.setInterval((duration or self.default_config.get('duration')) * 1000 - 300)
-
-        _close_timer.start()
-        _ani_timer.start()
+        if dayu_type != MToast.LoadingType:
+            _close_timer.start()
 
         self._opacity_ani = QPropertyAnimation()
         self._opacity_ani.setTargetObject(self)
@@ -90,8 +87,17 @@ class MToast(QWidget):
         self._get_center_position(parent)
         self._fade_int()
 
+    def closeEvent(self, event):
+        if self.has_played:
+            event.accept()
+        else:
+            self._fade_out()
+            event.ignore()
+
     def _fade_out(self):
+        self.has_played = True
         self._opacity_ani.setDirection(QAbstractAnimation.Backward)
+        self._opacity_ani.finished.connect(self.close)
         self._opacity_ani.start()
 
     def _fade_int(self):
@@ -139,7 +145,8 @@ class MToast(QWidget):
 
     @classmethod
     def loading(cls, text, parent):
-        """Show a toast message with loading animation"""
+        """Show a toast message with loading animation.
+        You should close this widget by yourself."""
         inst = cls(text, dayu_type=MToast.LoadingType, parent=parent)
         inst.show()
         return inst
