@@ -1126,7 +1126,12 @@ MMenuTabWidget QWidget#bar_widget{
     spacing: 3px;
     border-radius: 0;
 }
-
+MMenuTabWidget[dayu_size="@huge"] QWidget#bar_widget{
+    height: @huge@unit;
+}
+MMenuTabWidget[dayu_size="@large"] QWidget#bar_widget{
+    height: @large@unit;
+}
 MSlider::groove:horizontal {
     border-radius: @slider_radius@unit;
     height: @slider_height@unit;

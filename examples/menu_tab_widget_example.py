@@ -31,18 +31,24 @@ class MenuTabWidgetExample(QWidget):
              'clicked': functools.partial(MMessage.info, u'查看通知', parent=self)},
         ]
         tool_bar = MMenuTabWidget()
+        tool_bar_huge = MMenuTabWidget()
+        tool_bar_huge.set_dayu_size(dayu_theme.huge)
         tool_bar.tool_bar_insert_widget(MLabel('DaYu').h4().secondary().strong())
+        tool_bar_huge.tool_bar_insert_widget(MLabel('DaYu').h4().secondary().strong())
         tool_bar.tool_bar_append_widget(
             MBadge.dot(show=True, widget=MToolButton().icon_only().svg('user_fill.svg').large()))
-        self.content_widget = MLabel()
         for index, data_dict in enumerate(item_list):
             tool_bar.add_menu(data_dict, index)
+            tool_bar_huge.add_menu(data_dict, index)
         tool_bar.tool_button_group.set_dayu_checked(0)
+        tool_bar_huge.tool_button_group.set_dayu_checked(0)
 
         main_lay = QVBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
         main_lay.addWidget(tool_bar)
-        main_lay.addWidget(self.content_widget)
+        main_lay.addWidget(MLabel('Menu Tab Widget (Large)'))
+        main_lay.addWidget(tool_bar_huge)
+        main_lay.addWidget(MLabel('Menu Tab Widget (Huge)'))
 
         self.setLayout(main_lay)
 

@@ -26,9 +26,10 @@ class MBlockButtonGroup(MButtonGroupBase):
     """MBlockButtonGroup"""
     sig_checked_changed = Signal(int)
 
-    def __init__(self, parent=None):
+    def __init__(self, tab, parent=None):
         super(MBlockButtonGroup, self).__init__(parent=parent)
         self.set_spacing(1)
+        self._menu_tab = tab
         self._button_group.setExclusive(True)
         self._button_group.buttonClicked[int].connect(self.sig_checked_changed)
 
@@ -43,8 +44,12 @@ class MBlockButtonGroup(MButtonGroupBase):
                 button.text_only()
         else:
             button.icon_only()
-        button.set_dayu_size(dayu_theme.large)
+        button.set_dayu_size(self._menu_tab.get_dayu_size())
         return button
+
+    def update_size(self, size):
+        for button in self._button_group.buttons():
+            button.set_dayu_size(size)
 
     def set_dayu_checked(self, value):
         """Set current checked button's id"""
@@ -64,7 +69,7 @@ class MMenuTabWidget(QWidget):
 
     def __init__(self, parent=None):
         super(MMenuTabWidget, self).__init__(parent=parent)
-        self.tool_button_group = MBlockButtonGroup()
+        self.tool_button_group = MBlockButtonGroup(tab=self)
         self._bar_layout = QHBoxLayout()
         self._bar_layout.setContentsMargins(10, 0, 10, 0)
         self._bar_layout.addWidget(self.tool_button_group)
@@ -80,7 +85,7 @@ class MMenuTabWidget(QWidget):
         main_lay.addWidget(MDivider())
         main_lay.addSpacing(5)
         self.setLayout(main_lay)
-        self.setFixedHeight(dayu_theme.large + 10)
+        self._dayu_size = dayu_theme.large
 
     def tool_bar_append_widget(self, widget):
         """Add the widget too menubar's right position."""
@@ -93,3 +98,22 @@ class MMenuTabWidget(QWidget):
     def add_menu(self, data_dict, index=None):
         """Add a menu"""
         self.tool_button_group.add_button(data_dict, index)
+
+    def get_dayu_size(self):
+        """
+        Get the push button height
+        :return: integer
+        """
+        return self._dayu_size
+
+    def set_dayu_size(self, value):
+        """
+        Set the  push button size.
+        :param value: integer
+        :return: None
+        """
+        self._dayu_size = value
+        self.tool_button_group.update_size(self._dayu_size)
+        self.style().polish(self)
+
+    dayu_size = Property(int, get_dayu_size, set_dayu_size)
