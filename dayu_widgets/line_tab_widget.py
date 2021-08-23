@@ -12,6 +12,7 @@ from dayu_widgets.divider import MDivider
 from dayu_widgets.qt import Signal, QWidget, Property, Qt, QHBoxLayout, QVBoxLayout
 from dayu_widgets.stacked_widget import MStackedWidget
 from dayu_widgets.tool_button import MToolButton
+from dayu_widgets import dayu_theme
 
 
 class MUnderlineButton(MToolButton):
@@ -26,8 +27,9 @@ class MUnderlineButtonGroup(MButtonGroupBase):
     """MUnderlineButtonGroup"""
     sig_checked_changed = Signal(int)
 
-    def __init__(self, parent=None):
+    def __init__(self, tab, parent=None):
         super(MUnderlineButtonGroup, self).__init__(parent=parent)
+        self._line_tab = tab
         self.set_spacing(1)
         self._button_group.setExclusive(True)
         self._button_group.buttonClicked[int].connect(self.sig_checked_changed)
@@ -43,7 +45,12 @@ class MUnderlineButtonGroup(MButtonGroupBase):
                 button.text_only()
         else:
             button.icon_only()
+        button.set_dayu_size(self._line_tab.get_dayu_size())
         return button
+
+    def update_size(self, size):
+        for button in self._button_group.buttons():
+            button.set_dayu_size(size)
 
     def set_dayu_checked(self, value):
         """Set current checked button's id"""
@@ -63,7 +70,7 @@ class MLineTabWidget(QWidget):
 
     def __init__(self, alignment=Qt.AlignCenter, parent=None):
         super(MLineTabWidget, self).__init__(parent=parent)
-        self.tool_button_group = MUnderlineButtonGroup()
+        self.tool_button_group = MUnderlineButtonGroup(tab=self)
         self.bar_layout = QHBoxLayout()
         self.bar_layout.setContentsMargins(0, 0, 0, 0)
         if alignment == Qt.AlignCenter:
@@ -86,8 +93,36 @@ class MLineTabWidget(QWidget):
         main_lay.addSpacing(5)
         main_lay.addWidget(self.stack_widget)
         self.setLayout(main_lay)
+        self._dayu_size = dayu_theme.default
+
+    def append_widget(self, widget):
+        """Add the widget to line tab's right position."""
+        self.bar_layout.addWidget(widget)
+
+    def insert_widget(self, widget):
+        """Insert the widget to line tab's left position."""
+        self.bar_layout.insertWidget(0, widget)
 
     def add_tab(self, widget, data_dict):
         """Add a tab"""
         self.stack_widget.addWidget(widget)
         self.tool_button_group.add_button(data_dict, self.stack_widget.count() - 1)
+
+    def get_dayu_size(self):
+        """
+        Get the line tab size.
+        :return: integer
+        """
+        return self._dayu_size
+
+    def set_dayu_size(self, value):
+        """
+        Set the line tab size.
+        :param value: integer
+        :return: None
+        """
+        self._dayu_size = value
+        self.tool_button_group.update_size(self._dayu_size)
+        self.style().polish(self)
+
+    dayu_size = Property(int, get_dayu_size, set_dayu_size)

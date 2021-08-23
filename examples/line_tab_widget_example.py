@@ -7,6 +7,7 @@
 ###################################################################
 from dayu_widgets.divider import MDivider
 from dayu_widgets.label import MLabel
+from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.line_tab_widget import MLineTabWidget
 from dayu_widgets.qt import QWidget, QVBoxLayout, Qt
 
@@ -39,6 +40,23 @@ class LineTabWidgetExample(QWidget):
         tab_right.add_tab(MLabel('test 3 ' * 10), u'Tab 3')
         tab_right.tool_button_group.set_dayu_checked(0)
 
+        tab_huge = MLineTabWidget()
+        tab_huge.set_dayu_size(dayu_theme.huge)
+        tab_huge.add_tab(MLabel('test 1 ' * 10),
+                         {'text': u'Tab 1', 'svg': 'user_line.svg'})
+        tab_huge.add_tab(MLabel('test 2 ' * 10), u'Tab 2')
+        tab_huge.add_tab(MLabel('test 3 ' * 10), u'Tab 3')
+        tab_huge.tool_button_group.set_dayu_checked(0)
+
+        tab_append_insert = MLineTabWidget()
+        tab_append_insert.add_tab(MLabel('test 1 ' * 10),
+                         {'text': u'Tab 1', 'svg': 'user_line.svg'})
+        tab_append_insert.add_tab(MLabel('test 2 ' * 10), u'Tab 2')
+        tab_append_insert.add_tab(MLabel('test 3 ' * 10), u'Tab 3')
+        tab_append_insert.tool_button_group.set_dayu_checked(0)
+        tab_append_insert.insert_widget(MLabel("Insert Label").h4())
+        tab_append_insert.append_widget(MToolButton().svg("refresh_line.svg").icon_only())
+
         main_lay.addWidget(MDivider('Center'))
         main_lay.addWidget(tab_center)
         main_lay.addSpacing(20)
@@ -47,6 +65,11 @@ class LineTabWidgetExample(QWidget):
         main_lay.addSpacing(20)
         main_lay.addWidget(MDivider('Right'))
         main_lay.addWidget(tab_right)
+        main_lay.addSpacing(20)
+        main_lay.addWidget(MDivider('Huge'))
+        main_lay.addWidget(tab_huge)
+        main_lay.addWidget(MDivider('append_widget/insert_widget'))
+        main_lay.addWidget(tab_append_insert)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
