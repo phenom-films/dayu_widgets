@@ -101,14 +101,14 @@ class MMenuTabWidget(QWidget):
 
     def get_dayu_size(self):
         """
-        Get the push button height
+        Get the menu tab size.
         :return: integer
         """
         return self._dayu_size
 
     def set_dayu_size(self, value):
         """
-        Set the  push button size.
+        Set the menu tab size.
         :param value: integer
         :return: None
         """
