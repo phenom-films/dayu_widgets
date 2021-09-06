@@ -16,7 +16,12 @@ from dayu_widgets.label import MLabel
 from dayu_widgets import dayu_theme
 from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.mixin import property_mixin
-from dayu_widgets.qt import QWidget, QHBoxLayout, MPixmap, Qt, MIcon, Property
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import MPixmap
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import get_scale_factor
 
 
 @property_mixin
@@ -41,9 +46,10 @@ class MAlert(QWidget):
         self._content_label = MLabel().secondary()
         self._close_button = MToolButton().svg('close_line.svg').tiny().icon_only()
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
-
+        scale_x, _ = get_scale_factor()
+        margin = 8 * scale_x
         self._main_lay = QHBoxLayout()
-        self._main_lay.setContentsMargins(8, 8, 8, 8)
+        self._main_lay.setContentsMargins(margin, margin, margin, margin)
         self._main_lay.addWidget(self._icon_label)
         self._main_lay.addWidget(self._content_label)
         self._main_lay.addStretch()
@@ -80,13 +86,19 @@ class MAlert(QWidget):
         self._set_dayu_text()
 
     def _set_dayu_type(self):
-        self._icon_label.set_dayu_image(MPixmap('{}_fill.svg'.format(self._dayu_type),
-                                                vars(dayu_theme).get(self._dayu_type + '_color')))
+        self._icon_label.set_dayu_image(
+            MPixmap('{}_fill.svg'.format(self._dayu_type),
+                    vars(dayu_theme).get(self._dayu_type + '_color')))
         self.style().polish(self)
 
     def set_dayu_type(self, value):
         """Set feedback type."""
-        if value in [MAlert.InfoType, MAlert.SuccessType, MAlert.WarningType, MAlert.ErrorType]:
+        if value in [
+            MAlert.InfoType,
+            MAlert.SuccessType,
+            MAlert.WarningType,
+            MAlert.ErrorType
+        ]:
             self._dayu_type = value
         else:
             raise ValueError("Input argument 'value' should be one of "
