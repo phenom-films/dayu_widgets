@@ -9,6 +9,7 @@ from dayu_widgets.divider import MDivider
 from dayu_widgets.label import MLabel
 from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.line_tab_widget import MLineTabWidget
+from dayu_widgets import dayu_theme
 from dayu_widgets.qt import QWidget, QVBoxLayout, Qt
 
 
@@ -50,12 +51,13 @@ class LineTabWidgetExample(QWidget):
 
         tab_append_insert = MLineTabWidget()
         tab_append_insert.add_tab(MLabel('test 1 ' * 10),
-                         {'text': u'Tab 1', 'svg': 'user_line.svg'})
+                                  {'text': u'Tab 1', 'svg': 'user_line.svg'})
         tab_append_insert.add_tab(MLabel('test 2 ' * 10), u'Tab 2')
         tab_append_insert.add_tab(MLabel('test 3 ' * 10), u'Tab 3')
         tab_append_insert.tool_button_group.set_dayu_checked(0)
         tab_append_insert.insert_widget(MLabel("Insert Label").h4())
-        tab_append_insert.append_widget(MToolButton().svg("refresh_line.svg").icon_only())
+        tab_append_insert.append_widget(
+            MToolButton().svg("refresh_line.svg").icon_only())
 
         main_lay.addWidget(MDivider('Center'))
         main_lay.addWidget(tab_center)
@@ -77,7 +79,6 @@ class LineTabWidgetExample(QWidget):
 if __name__ == '__main__':
     import sys
     from dayu_widgets.qt import QApplication
-    from dayu_widgets import dayu_theme
 
     app = QApplication(sys.argv)
     test = LineTabWidgetExample()
