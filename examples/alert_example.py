@@ -13,7 +13,9 @@ from dayu_widgets.button_group import MPushButtonGroup
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
-from dayu_widgets.qt import QWidget, QVBoxLayout, QApplication
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QApplication
 
 
 class AlertExample(QWidget, MFieldMixin):
@@ -46,15 +48,19 @@ class AlertExample(QWidget, MFieldMixin):
         button_grp.set_button_list([
             {
                 'text': 'error',
-                'clicked': functools.partial(self.slot_change_alert, 'password is wrong',
+                'clicked': functools.partial(self.slot_change_alert,
+                                             'password is wrong',
                                              MAlert.ErrorType)},
             {
                 'text': 'success',
-                'clicked': functools.partial(self.slot_change_alert, 'login success',
+                'clicked': functools.partial(self.slot_change_alert,
+                                             'login success',
                                              MAlert.SuccessType)},
             {
                 'text': 'no more error',
-                'clicked': functools.partial(self.slot_change_alert, '', MAlert.InfoType)}
+                'clicked': functools.partial(self.slot_change_alert,
+                                             '',
+                                             MAlert.InfoType)}
         ])
         main_lay.addWidget(button_grp)
         main_lay.addWidget(data_bind_alert)
