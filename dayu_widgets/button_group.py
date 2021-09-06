@@ -13,8 +13,18 @@ from dayu_widgets.menu import MMenu
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.radio_button import MRadioButton
 from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.qt import QWidget, QButtonGroup, QSizePolicy, Qt, QBoxLayout, QIcon, Property, \
-    Signal, Slot, QPoint, QCursor
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import QButtonGroup
+from dayu_widgets.qt import QSizePolicy
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import QBoxLayout
+from dayu_widgets.qt import QIcon
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import Signal
+from dayu_widgets.qt import Slot
+from dayu_widgets.qt import QPoint
+from dayu_widgets.qt import QCursor
+from dayu_widgets.qt import get_scale_factor
 from dayu_widgets import dayu_theme
 
 
@@ -121,7 +131,8 @@ class MCheckBoxGroup(MButtonGroupBase):
 
     def __init__(self, orientation=Qt.Horizontal, parent=None):
         super(MCheckBoxGroup, self).__init__(orientation=orientation, parent=parent)
-        self.set_spacing(15)
+        scale_x, _ = get_scale_factor()
+        self.set_spacing(15 * scale_x)
         self._button_group.setExclusive(False)
 
         self.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -139,9 +150,12 @@ class MCheckBoxGroup(MButtonGroupBase):
         action_select_all = context_menu.addAction('Select All')
         action_select_none = context_menu.addAction('Select None')
         action_select_invert = context_menu.addAction('Select Invert')
-        action_select_all.triggered.connect(functools.partial(self._slot_set_select, True))
-        action_select_none.triggered.connect(functools.partial(self._slot_set_select, False))
-        action_select_invert.triggered.connect(functools.partial(self._slot_set_select, None))
+        action_select_all.triggered.connect(
+            functools.partial(self._slot_set_select, True))
+        action_select_none.triggered.connect(
+            functools.partial(self._slot_set_select, False))
+        action_select_invert.triggered.connect(
+            functools.partial(self._slot_set_select, None))
         context_menu.exec_(QCursor.pos() + QPoint(10, 10))
 
     @Slot(bool)
@@ -175,10 +189,10 @@ class MCheckBoxGroup(MButtonGroupBase):
 
     def get_dayu_checked(self):
         return [check_box.text() for check_box in self._button_group.buttons() if
-                              check_box.isChecked()]
+                check_box.isChecked()]
 
-    # TODO: pyside 的 Property 不直接支持 list，需要寻求解决办法
-    dayu_checked = Property('QVariantList', get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
+    dayu_checked = Property('QVariantList', get_dayu_checked, set_dayu_checked,
+                            notify=sig_checked_changed)
 
 
 class MRadioButtonGroup(MButtonGroupBase):
@@ -190,7 +204,8 @@ class MRadioButtonGroup(MButtonGroupBase):
 
     def __init__(self, orientation=Qt.Horizontal, parent=None):
         super(MRadioButtonGroup, self).__init__(orientation=orientation, parent=parent)
-        self.set_spacing(15)
+        scale_x, _ = get_scale_factor()
+        self.set_spacing(15 * scale_x)
         self._button_group.setExclusive(True)
         self._button_group.buttonClicked[int].connect(self.sig_checked_changed)
 
@@ -210,7 +225,8 @@ class MRadioButtonGroup(MButtonGroupBase):
     def get_dayu_checked(self):
         return self._button_group.checkedId()
 
-    dayu_checked = Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
+    dayu_checked = Property(int, get_dayu_checked, set_dayu_checked,
+                            notify=sig_checked_changed)
 
 
 class MToolButtonGroup(MButtonGroupBase):
@@ -251,4 +267,5 @@ class MToolButtonGroup(MButtonGroupBase):
     def get_dayu_checked(self):
         return self._button_group.checkedId()
 
-    dayu_checked = Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
+    dayu_checked = Property(int, get_dayu_checked, set_dayu_checked,
+                            notify=sig_checked_changed)
