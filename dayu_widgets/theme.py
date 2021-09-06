@@ -8,13 +8,11 @@
 import string
 
 from dayu_widgets import utils, DEFAULT_STATIC_FOLDER
-from dayu_widgets.qt import get_scale_factor, scale_factor_x, scale_factor_y
+from dayu_widgets.qt import get_scale_factor
 
 
 def get_theme_size():
-    global scale_factor_x, scale_factor_y
-    if scale_factor_x is None:
-        scale_factor_x, scale_factor_y = get_scale_factor()
+    scale_factor_x, scale_factor_y = get_scale_factor()
     return {
         'border_radius_large': int(6 * scale_factor_x),
         'border_radius_base': int(4 * scale_factor_x),
@@ -53,7 +51,7 @@ def get_theme_size():
         'drag_border_radius': int(10 * scale_factor_x),
         'drag_padding_x': int(20 * scale_factor_x),
         'drag_padding_y': int(40 * scale_factor_x),
-        'drag_size': int(60*scale_factor_x),
+        'drag_size': int(60 * scale_factor_x),
         'switch_width_huge': int(58 * scale_factor_x),
         'switch_height_huge': int(30 * scale_factor_x),
         'switch_radius_huge': int(15 * scale_factor_x),
@@ -81,8 +79,8 @@ def get_theme_size():
         'progress_circle_default_radius': int(120 * scale_factor_x),
         'progress_bar_size': int(12 * scale_factor_x),
         'progress_bar_radius': int(12 * scale_factor_x) / 2.0,
-        'toast_size': int(120* scale_factor_x),
-        'toast_icon_size': int(60*scale_factor_x)
+        'toast_size': int(120 * scale_factor_x),
+        'toast_icon_size': int(60 * scale_factor_x)
     }
 
 

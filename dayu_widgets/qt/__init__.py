@@ -57,13 +57,8 @@ class MCacheDict(object):
         return pix_map
 
 
-scale_factor_x = None
-scale_factor_y = None
-
-
 def get_scale_factor():
     standard_dpi = 96.0
-    global scale_factor_x, scale_factor_y
     scale_factor_x = QApplication.desktop().logicalDpiX() / standard_dpi
     scale_factor_y = QApplication.desktop().logicalDpiY() / standard_dpi
     return scale_factor_x, scale_factor_y
