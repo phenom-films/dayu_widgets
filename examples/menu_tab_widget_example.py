@@ -11,8 +11,10 @@ from dayu_widgets.badge import MBadge
 from dayu_widgets.label import MLabel
 from dayu_widgets.menu_tab_widget import MMenuTabWidget
 from dayu_widgets.message import MMessage
-from dayu_widgets.qt import QWidget, QVBoxLayout
 from dayu_widgets.tool_button import MToolButton
+from dayu_widgets import dayu_theme
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import QVBoxLayout
 
 
 class MenuTabWidgetExample(QWidget):
@@ -36,7 +38,8 @@ class MenuTabWidgetExample(QWidget):
         tool_bar.tool_bar_insert_widget(MLabel('DaYu').h4().secondary().strong())
         tool_bar_huge.tool_bar_insert_widget(MLabel('DaYu').h4().secondary().strong())
         tool_bar.tool_bar_append_widget(
-            MBadge.dot(show=True, widget=MToolButton().icon_only().svg('user_fill.svg').large()))
+            MBadge.dot(show=True,
+                       widget=MToolButton().icon_only().svg('user_fill.svg').large()))
         for index, data_dict in enumerate(item_list):
             tool_bar.add_menu(data_dict, index)
             tool_bar_huge.add_menu(data_dict, index)
@@ -55,7 +58,6 @@ class MenuTabWidgetExample(QWidget):
 
 if __name__ == '__main__':
     import sys
-    from dayu_widgets import dayu_theme
     from dayu_widgets.qt import QApplication
 
     app = QApplication(sys.argv)
