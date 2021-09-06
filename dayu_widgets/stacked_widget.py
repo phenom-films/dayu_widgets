@@ -17,3 +17,6 @@ class MStackedWidget(QStackedWidget):
 
     def __init__(self, parent=None):
         super(MStackedWidget, self).__init__(parent)
+
+    def disable_animation(self):
+        self.currentChanged.disconnect(self._play_anim)
