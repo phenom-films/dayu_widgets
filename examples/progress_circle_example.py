@@ -16,7 +16,8 @@ from dayu_widgets.label import MLabel
 from dayu_widgets.progress_circle import MProgressCircle
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import QWidget, QVBoxLayout, QHBoxLayout, Qt
-from dayu_widgets.qt import scale_factor_x
+from dayu_widgets.qt import get_scale_factor
+
 
 class ProgressCircleExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
@@ -62,13 +63,14 @@ class ProgressCircleExample(QWidget, MFieldMixin):
         main_lay.addLayout(dashboard_lay)
         main_lay.addWidget(MDivider('different radius'))
 
+        scale_x, _ = get_scale_factor()
         circle_4 = MProgressCircle(parent=self)
-        circle_4.set_dayu_width(100 * scale_factor_x)
+        circle_4.set_dayu_width(100 * scale_x)
         circle_4.setValue(40)
         circle_5 = MProgressCircle(parent=self)
         circle_5.setValue(40)
         circle_6 = MProgressCircle(parent=self)
-        circle_6.set_dayu_width(160 * scale_factor_x)
+        circle_6.set_dayu_width(160 * scale_x)
         circle_6.setValue(40)
         lay2 = QHBoxLayout()
         lay2.addWidget(circle_4)
@@ -115,7 +117,7 @@ class ProgressCircleExample(QWidget, MFieldMixin):
         custom_layout.addWidget(lab3)
         custom_layout.addStretch()
         custom_circle = MProgressCircle()
-        custom_circle.set_dayu_width(180 * scale_factor_x)
+        custom_circle.set_dayu_width(180 * scale_x)
         custom_circle.setValue(75)
         custom_circle.set_widget(custom_widget)
 
