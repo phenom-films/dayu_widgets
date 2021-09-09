@@ -9,9 +9,19 @@
 from dayu_widgets.divider import MDivider
 from dayu_widgets.tool_button import MToolButton
 from dayu_widgets.label import MLabel
-from dayu_widgets import dayu_theme
-from dayu_widgets.qt import QWidget, Qt, Signal, QHBoxLayout, QTimer, QPropertyAnimation, \
-    QEasingCurve, QAbstractAnimation, QGraphicsDropShadowEffect, QPoint, Property, QScrollArea, QVBoxLayout, QFrame
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QAbstractAnimation
+from dayu_widgets.qt import QEasingCurve
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QPropertyAnimation
+from dayu_widgets.qt import QPoint
+from dayu_widgets.qt import QScrollArea
+from dayu_widgets.qt import QTimer
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import Signal
+from dayu_widgets.qt import get_scale_factor
 
 
 class MDrawer(QWidget):
@@ -28,7 +38,7 @@ class MDrawer(QWidget):
     def __init__(self, title, position='right', closable=True, parent=None):
         super(MDrawer, self).__init__(parent)
         self.setObjectName('message')
-        self.setWindowFlags(Qt.Popup )
+        self.setWindowFlags(Qt.Popup)
         # self.setWindowFlags(
         #     Qt.FramelessWindowHint | Qt.Popup | Qt.WA_TranslucentBackground)
         self.setAttribute(Qt.WA_StyledBackground)
@@ -37,16 +47,19 @@ class MDrawer(QWidget):
         # self._title_label.set_elide_mode(Qt.ElideRight)
         self._title_label.setText(title)
 
-        self._close_button = MToolButton(parent=self).icon_only().svg('close_line.svg').small()
+        self._close_button = MToolButton(parent=self).icon_only().svg(
+            'close_line.svg').small()
         self._close_button.clicked.connect(self.close)
         self._close_button.setVisible(closable or False)
 
+        self._title_extra_lay = QHBoxLayout()
         _title_lay = QHBoxLayout()
         _title_lay.addWidget(self._title_label)
         _title_lay.addStretch()
+        _title_lay.addLayout(self._title_extra_lay)
         _title_lay.addWidget(self._close_button)
-        self._button_lay = QHBoxLayout()
-        self._button_lay.addStretch()
+        self._bottom_lay = QHBoxLayout()
+        self._bottom_lay.addStretch()
 
         self._scroll_area = QScrollArea()
         self._main_lay = QVBoxLayout()
@@ -54,7 +67,7 @@ class MDrawer(QWidget):
         self._main_lay.addWidget(MDivider())
         self._main_lay.addWidget(self._scroll_area)
         self._main_lay.addWidget(MDivider())
-        self._main_lay.addLayout(self._button_lay)
+        self._main_lay.addLayout(self._bottom_lay)
         self.setLayout(self._main_lay)
 
         self._position = position
@@ -79,19 +92,15 @@ class MDrawer(QWidget):
         self._opacity_ani.setPropertyName(b'windowOpacity')
         self._opacity_ani.setStartValue(0.0)
         self._opacity_ani.setEndValue(1.0)
-        # self._shadow_effect = QGraphicsDropShadowEffect(self)
-        # color = dayu_theme.red
-        # self._shadow_effect.setColor(color)
-        # self._shadow_effect.setOffset(0, 0)
-        # self._shadow_effect.setBlurRadius(5)
-        # self._shadow_effect.setEnabled(False)
-        # self.setGraphicsEffect(self._shadow_effect)
 
     def set_widget(self, widget):
         self._scroll_area.setWidget(widget)
 
-    def add_button(self, button):
-        self._button_lay.addWidget(button)
+    def add_widget_to_bottom(self, button):
+        self._bottom_lay.addWidget(button)
+
+    def add_widget_to_top(self, button):
+        self._title_extra_lay.addWidget(button)
 
     def _fade_out(self):
         self._pos_ani.setDirection(QAbstractAnimation.Backward)
@@ -147,10 +156,11 @@ class MDrawer(QWidget):
         :return: None
         """
         self._position = value
+        scale_x, _ = get_scale_factor()
         if value in [MDrawer.BottomPos, MDrawer.TopPos]:
-            self.setFixedHeight(200)
+            self.setFixedHeight(200 * scale_x)
         else:
-            self.setFixedWidth(200)
+            self.setFixedWidth(200 * scale_x)
 
     def get_dayu_position(self):
         """
@@ -194,47 +204,3 @@ class MDrawer(QWidget):
             event.ignore()
         else:
             event.accept()
-
-class MLoadingWrapper(QWidget):
-    """
-    A wrapper widget to show the loading widget or hide.
-    Property:
-        dayu_loading: bool. current loading state.
-    """
-    def __init__(self, loading=True, parent=None):
-        super(MLoadingWrapper, self).__init__(parent)
-        self._mask_widget = QFrame()
-        self._mask_widget.setObjectName('mask')
-        self._mask_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self._loading_widget = MLoading()
-        self._loading_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-
-        self._main_lay = QGridLayout()
-        self._main_lay.setContentsMargins(0, 0, 0, 0)
-        self._main_lay.addWidget(self._mask_widget, 0, 0)
-        self._main_lay.addWidget(self._loading_widget, 0, 0, Qt.AlignCenter)
-        self.setLayout(self._main_lay)
-        self._loading = None
-        self.set_dayu_loading(loading)
-
-    def _set_loading(self):
-        self._loading_widget.setVisible(self._loading)
-        self._mask_widget.setVisible(self._loading)
-
-    def set_dayu_loading(self, loading):
-        """
-        Set current state to loading or not
-        :param loading: bool
-        :return: None
-        """
-        self._loading = loading
-        self._set_loading()
-
-    def get_dayu_loading(self):
-        """
-        Get current loading widget is loading or not.
-        :return: bool
-        """
-        return self._loading
-
-    dayu_loading = Property(bool, get_dayu_loading, set_dayu_loading)
