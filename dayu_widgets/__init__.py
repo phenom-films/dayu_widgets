@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 
-__author__ = 'muyr'
-__version__ = '0.0.1'
-
 DEFAULT_STATIC_FOLDER = os.path.join(__path__[0], 'static')
 CUSTOM_STATIC_FOLDERS = []
 from .theme import MTheme
