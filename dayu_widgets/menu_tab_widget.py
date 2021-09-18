@@ -26,8 +26,8 @@ class MBlockButtonGroup(MButtonGroupBase):
     """MBlockButtonGroup"""
     sig_checked_changed = Signal(int)
 
-    def __init__(self, tab, parent=None):
-        super(MBlockButtonGroup, self).__init__(parent=parent)
+    def __init__(self, tab, orientation=Qt.Horizontal, parent=None):
+        super(MBlockButtonGroup, self).__init__(orientation=orientation, parent=parent)
         self.set_spacing(1)
         self._menu_tab = tab
         self._button_group.setExclusive(True)
@@ -67,10 +67,15 @@ class MBlockButtonGroup(MButtonGroupBase):
 class MMenuTabWidget(QWidget):
     """MMenuTabWidget"""
 
-    def __init__(self, parent=None):
+    def __init__(self, orientation=Qt.Horizontal, parent=None):
         super(MMenuTabWidget, self).__init__(parent=parent)
-        self.tool_button_group = MBlockButtonGroup(tab=self)
-        self._bar_layout = QHBoxLayout()
+        self.tool_button_group = MBlockButtonGroup(tab=self, orientation=orientation)
+
+        if orientation == Qt.Horizontal:
+            self._bar_layout = QHBoxLayout()
+        else:
+            self._bar_layout = QVBoxLayout()
+
         self._bar_layout.setContentsMargins(10, 0, 10, 0)
         self._bar_layout.addWidget(self.tool_button_group)
         self._bar_layout.addStretch()
