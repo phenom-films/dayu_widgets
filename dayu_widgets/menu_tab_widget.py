@@ -73,10 +73,11 @@ class MMenuTabWidget(QWidget):
 
         if orientation == Qt.Horizontal:
             self._bar_layout = QHBoxLayout()
+            self._bar_layout.setContentsMargins(10, 0, 10, 0)
         else:
             self._bar_layout = QVBoxLayout()
+            self._bar_layout.setContentsMargins(0, 0, 0, 0)
 
-        self._bar_layout.setContentsMargins(10, 0, 10, 0)
         self._bar_layout.addWidget(self.tool_button_group)
         self._bar_layout.addStretch()
         bar_widget = QWidget()
