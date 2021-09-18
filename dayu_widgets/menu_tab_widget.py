@@ -88,7 +88,10 @@ class MMenuTabWidget(QWidget):
         main_lay.setContentsMargins(0, 0, 0, 0)
         main_lay.setSpacing(0)
         main_lay.addWidget(bar_widget)
-        main_lay.addWidget(MDivider())
+
+        if orientation == Qt.Horizontal:
+            main_lay.addWidget(MDivider())
+
         main_lay.addSpacing(5)
         self.setLayout(main_lay)
         self._dayu_size = dayu_theme.large
