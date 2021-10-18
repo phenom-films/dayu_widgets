@@ -21,10 +21,11 @@ class ToolButtonExample(QWidget, MFieldMixin):
     def _init_ui(self):
         size_lay = QVBoxLayout()
         sub_lay1 = QHBoxLayout()
-        sub_lay1.addWidget(MToolButton().svg('left_line.svg').icon_only())
-        sub_lay1.addWidget(MToolButton().svg('right_line.svg').icon_only())
+        sub_lay1.addWidget(MToolButton().svg('left_line.svg').icon_only().huge())
+        sub_lay1.addWidget(MToolButton().svg('right_line.svg').icon_only().large())
         sub_lay1.addWidget(MToolButton().svg('up_line.svg').icon_only())
-        sub_lay1.addWidget(MToolButton().svg('down_line.svg').icon_only())
+        sub_lay1.addWidget(MToolButton().svg('up_line.svg').icon_only().small())
+        sub_lay1.addWidget(MToolButton().svg('down_line.svg').icon_only().tiny())
         sub_lay1.addStretch()
         size_lay.addLayout(sub_lay1)
 
