@@ -141,6 +141,9 @@ class MItemViewFullSet(QWidget):
         if data_list:
             self.source_model.set_data_list(data_list)
         self.set_record_count(len(data_list))
+        for index in range(self.stack_widget.count()):
+            view = self.stack_widget.widget(index)
+            view.set_header_list(self.source_model.header_list)
 
     @Slot(int)
     def set_record_count(self, total):

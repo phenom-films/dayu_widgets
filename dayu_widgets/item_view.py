@@ -11,7 +11,7 @@ from dayu_widgets.item_model import MTableModel
 from dayu_widgets.menu import MMenu
 from dayu_widgets.qt import QPainter, QPen, Qt, QBrush, MPixmap, QStyledItemDelegate, QStyle, Slot, \
     Signal, QPoint, QSortFilterProxyModel, QSize, QTableView, QListView, QTreeView, QSettings, \
-    QAbstractItemView , QColor
+    QAbstractItemView, QColor, get_scale_factor
 
 
 def draw_empty_content(view, text=None, pix_map=None):
@@ -107,12 +107,13 @@ class MOptionDelegate(QStyledItemDelegate):
 
 
 def set_header_list(self, header_list):
+    scale_x, _ = get_scale_factor()
     self.header_list = header_list
     if self.header_view:
         self.header_view.setSortIndicator(-1, Qt.AscendingOrder)
         for index, i in enumerate(header_list):
             self.header_view.setSectionHidden(index, i.get('hide', False))
-            self.header_view.resizeSection(index, i.get('width', 100))
+            self.header_view.resizeSection(index, i.get('width', 100) * scale_x)
             if i.get('order', None) is not None:
                 self.header_view.setSortIndicator(index, i.get('order'))
             if i.get('selectable', False):

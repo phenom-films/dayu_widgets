@@ -69,6 +69,7 @@ class MItemViewSet(QWidget):
         self.source_model.clear()
         if data_list:
             self.source_model.set_data_list(data_list)
+            self.item_view.set_header_list(self.source_model.header_list)
 
     def get_data(self):
         return self.source_model.get_data_list()
