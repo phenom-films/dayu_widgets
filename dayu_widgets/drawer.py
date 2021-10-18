@@ -62,6 +62,7 @@ class MDrawer(QWidget):
         self._bottom_lay.addStretch()
 
         self._scroll_area = QScrollArea()
+        self._scroll_area.setWidgetResizable(True)
         self._main_lay = QVBoxLayout()
         self._main_lay.addLayout(_title_lay)
         self._main_lay.addWidget(MDivider())
