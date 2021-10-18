@@ -24,6 +24,7 @@ header_list = [
         'key': 'name',
         'checkable': True,
         'searchable': True,
+        'width': 200,
         'font': lambda x, y: {'underline': True},
         'icon': 'user_fill.svg'
     }, {

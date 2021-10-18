@@ -9,6 +9,7 @@ import functools
 
 import examples._mock_data as mock
 from dayu_widgets import dayu_theme
+from dayu_widgets.alert import MAlert
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.item_model import MTableModel, MSortFilterModel
@@ -97,6 +98,7 @@ class TableViewExample(QWidget, MFieldMixin):
         main_lay.addWidget(MDivider('With Grid'))
         main_lay.addWidget(table_grid)
         main_lay.addStretch()
+        main_lay.addWidget(MAlert('Simply use "MItemViewSet" or "MItemViewFullSet"'))
         self.setLayout(main_lay)
 
 
