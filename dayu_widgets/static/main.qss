@@ -630,7 +630,6 @@ MComboBox[combine=vertical][position=bottom]{
 MPushButton:disabled{
     color: @disable_color;
     border: 2px dashed @disable_color;
-    padding: none;
     background-color: @background_color;
 }
 
