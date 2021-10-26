@@ -115,7 +115,7 @@ class MTheme(object):
         self.primary_1, self.primary_2, self.primary_3, self.primary_4, self.primary_5, \
         self.primary_6, self.primary_7, self.primary_8, self.primary_9, self.primary_10, \
             = (None,) * 10
-
+        self.hyperlink_style = ''
         self._init_color()
         self.set_primary_color(primary_color or MTheme.blue)
         self.set_theme(theme)
@@ -149,6 +149,14 @@ class MTheme(object):
         self.primary_10 = utils.generate_color(color, 10)
         # item
         self.item_hover_bg = self.primary_1
+        # rich text hyperlink style
+        self.hyperlink_style = '''
+        <style>
+         a {{
+            text-decoration: none;
+            color: {0};
+        }}
+        </style>'''.format(self.primary_color)
 
     def _init_icon(self, theme):
         # icon

@@ -6,6 +6,7 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+from dayu_widgets import dayu_theme
 from dayu_widgets.qt import QLabel, QSizePolicy, Qt, QSize, Property, QEvent
 
 
@@ -132,6 +133,17 @@ class MLabel(QLabel):
         self.setProperty('text',text)
         self._update_elided_text()
         self.setToolTip(text)
+
+    def set_link(self, href, text=None):
+        """
+
+        :param href: The href attr of a tag
+        :param text: The a tag text content
+        """
+        # 这里富文本的超链接必须使用 html 的样式，使用 qss 不起作用
+        link_style = dayu_theme.hyperlink_style
+        return f'{link_style}<a href="{href}">{text or href}</a>'
+
 
     def _update_elided_text(self):
         """

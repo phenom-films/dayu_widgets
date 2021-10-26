@@ -22,9 +22,12 @@ else:
     from singledispatch import singledispatch
 
 from dayu_widgets import DEFAULT_STATIC_FOLDER, CUSTOM_STATIC_FOLDERS
-from dayu_widgets.qt import QColor, QSortFilterProxyModel, QModelIndex, QFont, MIcon, QIcon
+from dayu_widgets.qt import QColor, QSortFilterProxyModel, QModelIndex, QFont, MIcon, \
+    QIcon, QSettings, QRect, QByteArray, QPainter, QPainterPath, QPixmap, Qt, QPen, \
+    QApplication, get_scale_factor
 
-ItemViewMenuEvent = collections.namedtuple('ItemViewMenuEvent', ['view', 'selection', 'extra'])
+ItemViewMenuEvent = collections.namedtuple('ItemViewMenuEvent',
+                                           ['view', 'selection', 'extra'])
 
 
 def get_static_file(path):
@@ -401,3 +404,138 @@ def get_page_display_string(current, per, total):
         start=((current - 1) * per + 1) if current else 0,
         end=min(total, current * per),
         total=total)
+
+
+def add_settings(organization, app_name, event_name="closeEvent"):
+    def _read_settings():
+        settings = QSettings(
+            QSettings.IniFormat, QSettings.UserScope, organization, app_name
+        )
+        result_dict = {key: settings.value(key) for key in settings.childKeys()}
+        for grp_name in settings.childGroups():
+            settings.beginGroup(grp_name)
+            result_dict.update(
+                {
+                    grp_name + "/" + key: settings.value(key)
+                    for key in settings.childKeys()
+                }
+            )
+            settings.endGroup()
+        return result_dict
+
+    def _write_settings(self):
+        settings = QSettings(
+            QSettings.IniFormat, QSettings.UserScope, organization, app_name
+        )
+        for attr, widget, property in self._bind_data:
+            settings.setValue(
+                attr,
+                widget.saveGeometry()
+                if property == "geometry"
+                else widget.property(property),
+            )
+
+    def trigger_event(self, event):
+        # 一般是 closeEvent 或者 hideEvent
+        # 当窗口作为子组件，比如 tab 的一页时、关闭最顶层窗口时，都不会触发 closeEvent，
+        # 此时请使用 hideEvent
+        # 如果是作为一个独立的窗口，请使用 closeEvent
+        self._write_settings()
+        old_event = getattr(self, "old_trigger_event")
+        return old_event(event)
+
+    def bind(self, attr, widget, property, default=None, formatter=None):
+        old_setting_dict = _read_settings()
+        value = old_setting_dict.get(attr, default)
+        if callable(formatter):  # 二次处理 value，比如存入的 bool，读取后要恢复成 bool
+            value = formatter(value)
+        if property == "geometry":  # 窗口大小位置需要特殊处理
+            if isinstance(value, QRect):  # setting 并没有存，使用用户default传入进来的geo
+                widget.setGeometry(value)
+            elif isinstance(value, QByteArray):  # settings 有保存值
+                widget.restoreGeometry(value)
+        else:
+            widget.setProperty(property, value)
+        self._bind_data.append((attr, widget, property))
+
+    def unbind(self, attr, widget, property):
+        self._write_settings()
+        self._bind_data.remove((attr, widget, property))
+
+    def wrapper(cls):
+        cls.bind = bind
+        cls.unbind = unbind
+        cls._write_settings = _write_settings
+        cls._bind_data = []
+        if hasattr(cls, event_name):
+            old_event = getattr(cls, event_name)
+            setattr(cls, "old_trigger_event", old_event)
+            setattr(cls, event_name, trigger_event)
+        return cls
+
+    return wrapper
+
+
+def get_fit_geometry():
+    geo = next((screen.availableGeometry() for screen in QApplication.screens()), None)
+    return QRect(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
+
+
+def convert_to_round_pixmap(orig_pix):
+    scale_x, _ = get_scale_factor()
+    w = min(orig_pix.width(), orig_pix.height())
+    pix_map = QPixmap(w, w)
+    pix_map.fill(Qt.transparent)
+
+    painter = QPainter(pix_map)
+    painter.setRenderHints(QPainter.Antialiasing | QPainter.SmoothPixmapTransform)
+
+    path = QPainterPath()
+    path.addEllipse(0, 0, w, w)
+    painter.setClipPath(path)
+    painter.drawPixmap(0, 0, w, w, orig_pix)
+    return pix_map
+
+
+def generate_text_pixmap(width, height, text, alignment=Qt.AlignCenter):
+    from dayu_widgets import dayu_theme
+    # draw a pixmap with text
+    pix_map = QPixmap(width, height)
+    pix_map.fill(QColor(dayu_theme.background_in_color))
+    painter = QPainter(pix_map)
+    painter.setRenderHints(QPainter.TextAntialiasing)
+    font = painter.font()
+    font.setFamily(dayu_theme.font_family)
+    painter.setFont(font)
+    painter.setPen(QPen(QColor(dayu_theme.secondary_text_color)))
+
+    font_metrics = painter.fontMetrics()
+    text_width = font_metrics.horizontalAdvance(text)
+    text_height = font_metrics.height()
+    x = width / 2 - text_width / 2
+    y = height / 2 - text_height / 2
+    if alignment & Qt.AlignLeft:
+        x = 0
+    elif alignment & Qt.AlignRight:
+        x = width - text_width
+    elif alignment & Qt.AlignTop:
+        y = 0
+    elif alignment & Qt.AlignBottom:
+        y = height - text_height
+
+    painter.drawText(x, y, text)
+    painter.end()
+    return pix_map
+
+
+def get_color_icon(color, size=24):
+    scale_x, y = get_scale_factor()
+    pix = QPixmap(size * scale_x, size * scale_x)
+    q_color = color
+    if isinstance(color, str):
+        if color.startswith("#"):
+            q_color = QColor(str)
+        elif color.count(",") == 2:
+            q_color = QColor(*tuple(map(int, color.split(","))))
+    pix.fill(q_color)
+    return QIcon(pix)

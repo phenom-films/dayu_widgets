@@ -183,8 +183,10 @@ def mouse_release_event(self, event):
 
 
 class MTableView(QTableView):
-    sig_context_menu = Signal(object)
     set_header_list = set_header_list
+    enable_context_menu = enable_context_menu
+    slot_context_menu = slot_context_menu
+    sig_context_menu = Signal(object)
 
     def __init__(self, size=None, show_row_count=False, parent=None):
         super(MTableView, self).__init__(parent)
