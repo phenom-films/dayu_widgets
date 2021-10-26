@@ -27,7 +27,8 @@ class MLabel(QLabel):
 
     def __init__(self, text='', parent=None, flags=Qt.Widget):
         super(MLabel, self).__init__(text, parent, flags)
-        self.setTextInteractionFlags(Qt.TextBrowserInteraction | Qt.LinksAccessibleByMouse)
+        self.setTextInteractionFlags(
+            Qt.TextBrowserInteraction | Qt.LinksAccessibleByMouse)
         self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
         self._dayu_type = ''
         self._dayu_underline = False
@@ -130,7 +131,7 @@ class MLabel(QLabel):
 
         :param text:    The text to set on the label
         """
-        self.setProperty('text',text)
+        self.setProperty('text', text)
         self._update_elided_text()
         self.setToolTip(text)
 
@@ -142,8 +143,12 @@ class MLabel(QLabel):
         """
         # 这里富文本的超链接必须使用 html 的样式，使用 qss 不起作用
         link_style = dayu_theme.hyperlink_style
-        return f'{link_style}<a href="{href}">{text or href}</a>'
-
+        self.setText('{style}<a href="{href}">{text}</a>'.format(
+            style=link_style,
+            href=href,
+            text=text or href)
+        )
+        self.setOpenExternalLinks(True)
 
     def _update_elided_text(self):
         """

@@ -85,6 +85,19 @@ class LabelExample(QWidget, MFieldMixin):
         lay_elide.addWidget(label_middle)
         lay_elide.addWidget(label_right)
 
+        hyper_label_1 = MLabel()
+        hyper_label_1.set_link("https://baidu.com", text="baidu")
+        hyper_label_2 = MLabel()
+        hyper_label_2.set_link("https://baidu.com")
+        hyper_label_3 = MLabel()
+        hyper_label_3.set_link("https://github.com/phenom-films/dayu_widgets", text="Dayu Widgets")
+
+        hyperlink_lay = QVBoxLayout()
+        hyperlink_lay.addWidget(hyper_label_1)
+        hyperlink_lay.addWidget(hyper_label_2)
+        hyperlink_lay.addWidget(hyper_label_3)
+        # hyperlink_lay.addWidget()
+
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider('different level'))
         main_lay.addLayout(title_lay)
@@ -99,6 +112,8 @@ class LabelExample(QWidget, MFieldMixin):
         # main_lay.addLayout(data_bind_lay)
         main_lay.addWidget(MDivider('elide mode'))
         main_lay.addLayout(lay_elide)
+        main_lay.addWidget(MDivider('hyperlink'))
+        main_lay.addLayout(hyperlink_lay)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
