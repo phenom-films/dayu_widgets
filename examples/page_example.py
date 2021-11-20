@@ -6,15 +6,17 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import local modules
 from dayu_widgets.divider import MDivider
 from dayu_widgets.page import MPage
-from dayu_widgets.qt import QWidget, QVBoxLayout
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
 
 
 class PageExample(QWidget):
     def __init__(self, parent=None):
         super(PageExample, self).__init__(parent)
-        self.setWindowTitle('Examples for MPage')
+        self.setWindowTitle("Examples for MPage")
         self._init_ui()
 
     def _init_ui(self):
@@ -33,8 +35,11 @@ class PageExample(QWidget):
         main_lay.addStretch()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Import built-in modules
     import sys
+
+    # Import local modules
     from dayu_widgets import dayu_theme
     from dayu_widgets.qt import QApplication
 

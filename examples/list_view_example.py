@@ -5,14 +5,19 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
+# Import third-party modules
 import examples._mock_data as mock
+
+# Import local modules
+from dayu_widgets import dayu_theme
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
-from dayu_widgets.item_model import MTableModel, MSortFilterModel
+from dayu_widgets.item_model import MSortFilterModel
+from dayu_widgets.item_model import MTableModel
 from dayu_widgets.item_view import MListView
 from dayu_widgets.line_edit import MLineEdit
-from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
+
 
 class ListViewExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
@@ -42,17 +47,18 @@ class ListViewExample(QWidget, MFieldMixin):
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(line_edit)
-        main_lay.addWidget(MDivider('Small Size'))
+        main_lay.addWidget(MDivider("Small Size"))
         main_lay.addWidget(table_small)
-        main_lay.addWidget(MDivider('Default Size'))
+        main_lay.addWidget(MDivider("Default Size"))
         main_lay.addWidget(table_default)
-        main_lay.addWidget(MDivider('Large Size'))
+        main_lay.addWidget(MDivider("Large Size"))
         main_lay.addWidget(table_large)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Import built-in modules
     import sys
 
     app = QApplication(sys.argv)

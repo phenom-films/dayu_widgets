@@ -4,7 +4,7 @@ from dayu_widgets.slider import MSlider
 from dayu_widgets.qt import Qt
 
 
-@pytest.mark.parametrize('orient', (Qt.Horizontal, Qt.Vertical))
+@pytest.mark.parametrize("orient", (Qt.Horizontal, Qt.Vertical))
 def test_slider_init(qtbot, orient):
     """Test MSlider init"""
     slider = MSlider(orientation=orient)
@@ -20,4 +20,3 @@ def test_slider_init(qtbot, orient):
     # qtbot.mouseMove(slider)  # click
 
     # assert slider.toolTip() == '10'
-

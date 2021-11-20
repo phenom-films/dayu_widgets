@@ -4,13 +4,16 @@ from dayu_widgets.switch import MSwitch
 from dayu_widgets import dayu_theme
 
 
-@pytest.mark.parametrize('cls, size', (
-        ('tiny', dayu_theme.tiny),
-        ('small', dayu_theme.small),
-        ('medium', dayu_theme.medium),
-        ('large', dayu_theme.large),
-        ('huge', dayu_theme.huge),
-))
+@pytest.mark.parametrize(
+    "cls, size",
+    (
+        ("tiny", dayu_theme.tiny),
+        ("small", dayu_theme.small),
+        ("medium", dayu_theme.medium),
+        ("large", dayu_theme.large),
+        ("huge", dayu_theme.huge),
+    ),
+)
 def test_switch_class_method(qtbot, cls, size):
     """test MSwitch class method"""
     switch = MSwitch()

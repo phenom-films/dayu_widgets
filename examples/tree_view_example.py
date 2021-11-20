@@ -6,10 +6,14 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import third-party modules
 import examples._mock_data as mock
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.field_mixin import MFieldMixin
-from dayu_widgets.item_model import MTableModel, MSortFilterModel
+from dayu_widgets.item_model import MSortFilterModel
+from dayu_widgets.item_model import MTableModel
 from dayu_widgets.item_view import MTreeView
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.push_button import MPushButton
@@ -37,9 +41,9 @@ class TreeViewExample(QWidget, MFieldMixin):
         line_edit = MLineEdit().search().small()
         line_edit.textChanged.connect(model_sort.set_search_pattern)
 
-        expand_all_button = MPushButton('Expand All').small()
+        expand_all_button = MPushButton("Expand All").small()
         expand_all_button.clicked.connect(tree_view.expandAll)
-        collapse_all_button = MPushButton('Collapse All').small()
+        collapse_all_button = MPushButton("Collapse All").small()
         collapse_all_button.clicked.connect(tree_view.collapseAll)
         button_lay = QHBoxLayout()
         button_lay.addWidget(expand_all_button)
@@ -54,7 +58,8 @@ class TreeViewExample(QWidget, MFieldMixin):
         self.setLayout(main_lay)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Import built-in modules
     import sys
 
     app = QApplication(sys.argv)

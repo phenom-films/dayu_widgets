@@ -6,8 +6,10 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import built-in modules
 import functools
 
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.button_group import MPushButtonGroup
 from dayu_widgets.divider import MDivider
@@ -15,23 +17,26 @@ from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.progress_circle import MProgressCircle
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import QWidget, QVBoxLayout, QHBoxLayout, Qt
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
 from dayu_widgets.qt import get_scale_factor
 
 
 class ProgressCircleExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(ProgressCircleExample, self).__init__(parent)
-        self.setWindowTitle('Examples for MProgressCircle')
+        self.setWindowTitle("Examples for MProgressCircle")
         self._init_ui()
 
     def _init_ui(self):
         main_lay = QVBoxLayout()
         self.setLayout(main_lay)
-        main_lay.addWidget(MDivider('circle'))
+        main_lay.addWidget(MDivider("circle"))
         lay1 = QHBoxLayout()
         circle_1 = MProgressCircle(parent=self)
-        circle_1.setFormat(u'%p Days')
+        circle_1.setFormat("%p Days")
         circle_1.setValue(80)
         circle_2 = MProgressCircle(parent=self)
         circle_2.set_dayu_color(dayu_theme.success_color)
@@ -41,7 +46,7 @@ class ProgressCircleExample(QWidget, MFieldMixin):
         circle_3.setValue(40)
 
         dashboard_1 = MProgressCircle.dashboard(parent=self)
-        dashboard_1.setFormat(u'%p Days')
+        dashboard_1.setFormat("%p Days")
         dashboard_1.setValue(80)
         dashboard_2 = MProgressCircle.dashboard(parent=self)
         dashboard_2.set_dayu_color(dayu_theme.success_color)
@@ -59,9 +64,9 @@ class ProgressCircleExample(QWidget, MFieldMixin):
         dashboard_lay.addWidget(dashboard_2)
         dashboard_lay.addWidget(dashboard_3)
         main_lay.addLayout(lay1)
-        main_lay.addWidget(MDivider('dashboard'))
+        main_lay.addWidget(MDivider("dashboard"))
         main_lay.addLayout(dashboard_lay)
-        main_lay.addWidget(MDivider('different radius'))
+        main_lay.addWidget(MDivider("different radius"))
 
         scale_x, _ = get_scale_factor()
         circle_4 = MProgressCircle(parent=self)
@@ -78,23 +83,31 @@ class ProgressCircleExample(QWidget, MFieldMixin):
         lay2.addWidget(circle_6)
 
         main_lay.addLayout(lay2)
-        main_lay.addWidget(MDivider('data bind'))
+        main_lay.addWidget(MDivider("data bind"))
 
-        self.register_field('percent', 0)
-        self.register_field('color', self.get_color)
-        self.register_field('format', self.get_format)
+        self.register_field("percent", 0)
+        self.register_field("color", self.get_color)
+        self.register_field("format", self.get_format)
         circle = MProgressCircle(parent=self)
 
-        self.bind('percent', circle, 'value')
-        self.bind('color', circle, 'dayu_color')
-        self.bind('format', circle, 'format')
+        self.bind("percent", circle, "value")
+        self.bind("color", circle, "dayu_color")
+        self.bind("format", circle, "format")
         lay3 = QHBoxLayout()
         button_grp = MPushButtonGroup()
         button_grp.set_dayu_type(MPushButton.DefaultType)
-        button_grp.set_button_list([
-            {'text': '+', 'clicked': functools.partial(self.slot_change_percent, 10)},
-            {'text': '-', 'clicked': functools.partial(self.slot_change_percent, -10)},
-        ])
+        button_grp.set_button_list(
+            [
+                {
+                    "text": "+",
+                    "clicked": functools.partial(self.slot_change_percent, 10),
+                },
+                {
+                    "text": "-",
+                    "clicked": functools.partial(self.slot_change_percent, -10),
+                },
+            ]
+        )
         lay3.addWidget(circle)
         lay3.addWidget(button_grp)
         lay3.addStretch()
@@ -105,9 +118,9 @@ class ProgressCircleExample(QWidget, MFieldMixin):
         custom_layout.setContentsMargins(20, 20, 20, 20)
         custom_layout.addStretch()
         custom_widget.setLayout(custom_layout)
-        lab1 = MLabel(text='42,001,776').h3()
-        lab2 = MLabel(text=u'消费人群规模').secondary()
-        lab3 = MLabel(text=u'总占人数 75%').secondary()
+        lab1 = MLabel(text="42,001,776").h3()
+        lab2 = MLabel(text="消费人群规模").secondary()
+        lab3 = MLabel(text="总占人数 75%").secondary()
         lab1.setAlignment(Qt.AlignCenter)
         lab2.setAlignment(Qt.AlignCenter)
         lab3.setAlignment(Qt.AlignCenter)
@@ -121,12 +134,12 @@ class ProgressCircleExample(QWidget, MFieldMixin):
         custom_circle.setValue(75)
         custom_circle.set_widget(custom_widget)
 
-        main_lay.addWidget(MDivider('custom circle'))
+        main_lay.addWidget(MDivider("custom circle"))
         main_lay.addWidget(custom_circle)
         main_lay.addStretch()
 
     def get_color(self):
-        p = self.field('percent')
+        p = self.field("percent")
         if p < 30:
             return dayu_theme.error_color
         if p < 60:
@@ -136,21 +149,24 @@ class ProgressCircleExample(QWidget, MFieldMixin):
         return dayu_theme.success_color
 
     def get_format(self):
-        p = self.field('percent')
+        p = self.field("percent")
         if p < 30:
-            return u'>_<'
+            return ">_<"
         if p < 60:
-            return u'0_0'
+            return "0_0"
         if p < 100:
-            return u'^_^'
-        return u'^o^'
+            return "^_^"
+        return "^o^"
 
     def slot_change_percent(self, value):
-        self.set_field('percent', max(0, min(self.field('percent') + value, 100)))
+        self.set_field("percent", max(0, min(self.field("percent") + value, 100)))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Import built-in modules
     import sys
+
+    # Import local modules
     from dayu_widgets.qt import QApplication
 
     app = QApplication(sys.argv)

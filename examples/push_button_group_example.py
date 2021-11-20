@@ -6,12 +6,13 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import local modules
+from dayu_widgets import dayu_theme
 from dayu_widgets.button_group import MPushButtonGroup
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets import dayu_theme
 from dayu_widgets.qt import *
 
 
@@ -22,9 +23,21 @@ class PushButtonGroupExample(QWidget, MFieldMixin):
 
     def _init_ui(self):
         button_config_list = [
-            {'text': 'Add', 'icon': MIcon('add_line.svg', '#fff'), 'type': MPushButton.PrimaryType},
-            {'text': 'Edit', 'icon': MIcon('edit_fill.svg', '#fff'), 'type': MPushButton.WarningType},
-            {'text': 'Delete', 'icon': MIcon('trash_line.svg', '#fff'), 'type': MPushButton.DangerType},
+            {
+                "text": "Add",
+                "icon": MIcon("add_line.svg", "#fff"),
+                "type": MPushButton.PrimaryType,
+            },
+            {
+                "text": "Edit",
+                "icon": MIcon("edit_fill.svg", "#fff"),
+                "type": MPushButton.WarningType,
+            },
+            {
+                "text": "Delete",
+                "icon": MIcon("trash_line.svg", "#fff"),
+                "type": MPushButton.DangerType,
+            },
         ]
         button_group_h = MPushButtonGroup()
         button_group_h.set_dayu_size(dayu_theme.large)
@@ -41,21 +54,27 @@ class PushButtonGroupExample(QWidget, MFieldMixin):
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(
-            MLabel(u'MPushButtonGroup is MPushButton collection. they are not exclusive.'))
-        main_lay.addWidget(MDivider('MPushButton group: Horizontal & Small Size'))
+            MLabel(
+                "MPushButtonGroup is MPushButton collection. they are not exclusive."
+            )
+        )
+        main_lay.addWidget(MDivider("MPushButton group: Horizontal & Small Size"))
         main_lay.addLayout(h_lay)
-        main_lay.addWidget(MDivider('MPushButton group: Vertical & Default Size'))
+        main_lay.addWidget(MDivider("MPushButton group: Vertical & Default Size"))
         main_lay.addLayout(h_lay_2)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Import built-in modules
     import sys
 
     app = QApplication(sys.argv)
     test = PushButtonGroupExample()
+    # Import local modules
     from dayu_widgets import dayu_theme
+
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())

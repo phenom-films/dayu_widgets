@@ -10,12 +10,10 @@ from dayu_widgets.label import MLabel
 from dayu_widgets.qt import Qt, QWidget, QVBoxLayout
 
 
-@pytest.mark.parametrize('func,text,attr', (
-    ('h1', 'any', 1),
-    ('h2', '', 2),
-    ('h3', 'test', 3),
-    ('h4', 'doesn\'t matter', 4)
-))
+@pytest.mark.parametrize(
+    "func,text,attr",
+    (("h1", "any", 1), ("h2", "", 2), ("h3", "test", 3), ("h4", "doesn't matter", 4)),
+)
 def test_label_dayu_level(qtbot, func, text, attr):
     """Test MLabel with different level"""
     label = MLabel(text)
@@ -26,12 +24,15 @@ def test_label_dayu_level(qtbot, func, text, attr):
     assert label.text() == text
 
 
-@pytest.mark.parametrize('func,text,attr', (
-    (None, 'any', ''),
-    ('secondary', 'Secondary', 'secondary'),
-    ('warning', 'Warning', 'warning'),
-    ('danger', 'Danger', 'danger')
-))
+@pytest.mark.parametrize(
+    "func,text,attr",
+    (
+        (None, "any", ""),
+        ("secondary", "Secondary", "secondary"),
+        ("warning", "Warning", "warning"),
+        ("danger", "Danger", "danger"),
+    ),
+)
 def test_label_dayu_type(qtbot, func, text, attr):
     """Test MLabel with different type"""
     label = MLabel(text)
@@ -43,13 +44,16 @@ def test_label_dayu_type(qtbot, func, text, attr):
     assert label.text() == text
 
 
-@pytest.mark.parametrize('text, func, attr', (
-    ('Mark', 'mark', 'dayu_mark'),
-    ('Code', 'code', 'dayu_code'),
-    ('Underline', 'underline', 'dayu_underline'),
-    ('Delete', 'delete', 'dayu_delete'),
-    ('Strong', 'strong', 'dayu_strong')
-))
+@pytest.mark.parametrize(
+    "text, func, attr",
+    (
+        ("Mark", "mark", "dayu_mark"),
+        ("Code", "code", "dayu_code"),
+        ("Underline", "underline", "dayu_underline"),
+        ("Delete", "delete", "dayu_delete"),
+        ("Strong", "strong", "dayu_strong"),
+    ),
+)
 def test_label_dayu_style(qtbot, func, text, attr):
     """Test MLabel with different style"""
     label = MLabel(text)
@@ -60,10 +64,7 @@ def test_label_dayu_style(qtbot, func, text, attr):
     assert label.text() == text
 
 
-@pytest.mark.parametrize('text, elide', (
-    ('test' * 30, True),
-    ('test', False)
-))
+@pytest.mark.parametrize("text, elide", (("test" * 30, True), ("test", False)))
 def test_label_elide_mode(qtbot, text, elide):
     """Test MLabel elide mode"""
     main_widget = QWidget()
@@ -88,17 +89,16 @@ def test_label_elide_mode(qtbot, text, elide):
     qtbot.addWidget(main_widget)
 
     main_widget.show()
-    ellipsis = u'…'
+    ellipsis = "…"
     if elide:
-        assert label_left.property('text').startswith(ellipsis)
-        assert label_right.property('text').endswith(ellipsis)
-        center_text = label_center.property('text')
-        assert center_text.count(ellipsis) \
-               and not center_text.endswith(ellipsis)
+        assert label_left.property("text").startswith(ellipsis)
+        assert label_right.property("text").endswith(ellipsis)
+        center_text = label_center.property("text")
+        assert center_text.count(ellipsis) and not center_text.endswith(ellipsis)
     else:
-        assert label_left.property('text') == label_left.text()
-        assert label_right.property('text') == label_right.text()
-        assert label_center.property('text') == label_center.text()
+        assert label_left.property("text") == label_left.text()
+        assert label_right.property("text") == label_right.text()
+        assert label_center.property("text") == label_center.text()
     assert label_left.get_elide_mode() == Qt.ElideLeft
     assert label_right.get_elide_mode() == Qt.ElideRight
     assert label_center.get_elide_mode() == Qt.ElideMiddle

@@ -7,13 +7,16 @@ from dayu_widgets.badge import MBadge
 from dayu_widgets.qt import QLabel, QWidget, QVBoxLayout
 
 
-@pytest.mark.parametrize('show, visible', (
-    (True, True),
-    (False, False),
-))
+@pytest.mark.parametrize(
+    "show, visible",
+    (
+        (True, True),
+        (False, False),
+    ),
+)
 def test_badge_dot(qtbot, show, visible):
     """Test MBadge init."""
-    label = QLabel('test')
+    label = QLabel("test")
     badge_1 = MBadge.dot(show=show, widget=label)
     badge_2 = MBadge.dot(show)
     main_widget = QWidget()
@@ -34,15 +37,18 @@ def test_badge_dot(qtbot, show, visible):
     assert badge_2.get_dayu_count() is None
 
 
-@pytest.mark.parametrize('num, text, visible', (
-    (1, '1', True),
-    (100, '99+', True),
-    (0, '0', False),
-    (-1, '-1', False),
-))
+@pytest.mark.parametrize(
+    "num, text, visible",
+    (
+        (1, "1", True),
+        (100, "99+", True),
+        (0, "0", False),
+        (-1, "-1", False),
+    ),
+)
 def test_badge_count(qtbot, num, text, visible):
     """Test MBadge init."""
-    label = QLabel('test')
+    label = QLabel("test")
     badge_1 = MBadge.count(count=num, widget=label)
     badge_2 = MBadge.count(num)
     main_widget = QWidget()
@@ -67,12 +73,15 @@ def test_badge_count(qtbot, num, text, visible):
     assert badge_2.get_dayu_overflow() == 99
 
 
-@pytest.mark.parametrize('num, text, overflow', (
-    (99, '99', 99),
-    (100, '99+', 99),
-    (20, '10+', 10),
-    (9, '9', 10),
-))
+@pytest.mark.parametrize(
+    "num, text, overflow",
+    (
+        (99, "99", 99),
+        (100, "99+", 99),
+        (20, "10+", 10),
+        (9, "9", 10),
+    ),
+)
 def test_badge_overflow(qtbot, num, text, overflow):
     """Test MBadge init."""
     badge = MBadge.count(num)
@@ -91,13 +100,16 @@ def test_badge_overflow(qtbot, num, text, overflow):
     assert badge.get_dayu_overflow() == overflow
 
 
-@pytest.mark.parametrize('content,text,visible', (
-    ('hot', 'hot', True),
-    ('', '', False),
-))
+@pytest.mark.parametrize(
+    "content,text,visible",
+    (
+        ("hot", "hot", True),
+        ("", "", False),
+    ),
+)
 def test_badge_text(qtbot, content, text, visible):
     """Test MBadge init."""
-    label = QLabel('test')
+    label = QLabel("test")
     badge_1 = MBadge.text(text=content, widget=label)
     badge_2 = MBadge.text(text=content)
     main_widget = QWidget()

@@ -5,14 +5,19 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
+# Import built-in modules
 import functools
 
+# Import third-party modules
 import examples._mock_data as mock
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.alert import MAlert
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
-from dayu_widgets.item_model import MTableModel, MSortFilterModel
+from dayu_widgets.item_model import MSortFilterModel
+from dayu_widgets.item_model import MTableModel
 from dayu_widgets.item_view_set import MItemViewSet
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.loading import MLoadingWrapper
@@ -47,15 +52,15 @@ class ItemViewSetExample(QWidget, MFieldMixin):
         item_view_set_search.insert_widget(expand_button)
 
         main_lay = QVBoxLayout()
-        main_lay.addWidget(MDivider('Table View'))
+        main_lay.addWidget(MDivider("Table View"))
         main_lay.addWidget(item_view_set_table)
-        main_lay.addWidget(MDivider('List View'))
+        main_lay.addWidget(MDivider("List View"))
         main_lay.addWidget(item_view_set_list)
-        main_lay.addWidget(MDivider('Tree View'))
+        main_lay.addWidget(MDivider("Tree View"))
         main_lay.addWidget(item_view_set_tree)
-        main_lay.addWidget(MDivider('Big View'))
+        main_lay.addWidget(MDivider("Big View"))
         main_lay.addWidget(item_view_set_thumbnail)
-        main_lay.addWidget(MDivider('With Search line edit'))
+        main_lay.addWidget(MDivider("With Search line edit"))
         main_lay.addWidget(item_view_set_search)
         main_lay.addStretch()
         self.setLayout(main_lay)
@@ -67,9 +72,13 @@ class ItemViewSetExample(QWidget, MFieldMixin):
         item_view_set_search.setup_data((mock.tree_data_list))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Import built-in modules
     import sys
+
+    # Import local modules
     from dayu_widgets.qt import QApplication
+
     app = QApplication(sys.argv)
     test = ItemViewSetExample()
     dayu_theme.apply(test)

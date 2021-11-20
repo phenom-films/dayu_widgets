@@ -6,10 +6,11 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import local modules
 from dayu_widgets.browser import MDragFileButton
 from dayu_widgets.divider import MDivider
-from dayu_widgets.sequence_file import MSequenceFile
 from dayu_widgets.qt import *
+from dayu_widgets.sequence_file import MSequenceFile
 
 
 class SequenceFileExample(QWidget):
@@ -18,13 +19,13 @@ class SequenceFileExample(QWidget):
         self._init_ui()
 
     def _init_ui(self):
-        browser = MDragFileButton(text='Click or drag files')
-        browser.set_dayu_filters(['.py', 'pyc', '.jpg', '.mov', 'exr'])
+        browser = MDragFileButton(text="Click or drag files")
+        browser.set_dayu_filters([".py", "pyc", ".jpg", ".mov", "exr"])
         browser.sig_file_changed.connect(self.slot_add_file)
         self.sequence_file_1 = MSequenceFile()
 
         main_lay = QVBoxLayout()
-        main_lay.addWidget(MDivider('different size'))
+        main_lay.addWidget(MDivider("different size"))
         main_lay.addWidget(browser)
         main_lay.addWidget(self.sequence_file_1)
         main_lay.addStretch()
@@ -35,12 +36,15 @@ class SequenceFileExample(QWidget):
         self.sequence_file_1.set_path(f)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Import built-in modules
     import sys
 
     app = QApplication(sys.argv)
     test = SequenceFileExample()
+    # Import local modules
     from dayu_widgets import dayu_theme
+
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())
