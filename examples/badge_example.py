@@ -37,19 +37,19 @@ class BadgeExample(QWidget, MFieldMixin):
         standalone_lay.addWidget(MBadge.count(100))
         standalone_lay.addWidget(MBadge.dot(True))
         standalone_lay.addWidget(MBadge.text("new"))
-        standalone_lay.addStretch()
+        # standalone_lay.addStretch()
 
         button = MToolButton().svg("trash_line.svg")
         avatar = MAvatar.large(MPixmap("avatar.png"))
         button_alert = MToolButton().svg("alert_fill.svg").large()
-        badge_1 = MBadge.dot(True, widget=button)
-        badge_2 = MBadge.dot(True, widget=avatar)
-        badge_3 = MBadge.dot(True, widget=button_alert)
-        button.clicked.connect(lambda: badge_1.set_dayu_dot(False))
+        self.badge_1 = MBadge.dot(True, widget=button)
+        self.badge_2 = MBadge.dot(True, widget=avatar)
+        self.badge_3 = MBadge.dot(True, widget=button_alert)
+        button.clicked.connect(lambda: self.badge_1.set_dayu_dot(False))
 
         spin_box = MSpinBox()
         spin_box.setRange(0, 9999)
-        spin_box.valueChanged.connect(badge_3.set_dayu_count)
+        spin_box.valueChanged.connect(self.badge_3.set_dayu_count)
         spin_box.setValue(1)
 
         self.register_field("button1_selected", "北京")
@@ -59,16 +59,16 @@ class BadgeExample(QWidget, MFieldMixin):
         select1.set_menu(menu1)
         self.bind("button1_selected", select1, "value", signal="sig_value_changed")
 
-        badge_hot = MBadge.text("hot", widget=MLabel("你的理想城市  "))
+        self.badge_hot = MBadge.text("hot", widget=MLabel("你的理想城市  "))
 
         sub_lay1 = QHBoxLayout()
-        sub_lay1.addWidget(badge_1)
-        sub_lay1.addWidget(badge_2)
-        sub_lay1.addWidget(badge_3)
+        sub_lay1.addWidget(self.badge_1)
+        sub_lay1.addWidget(self.badge_2)
+        sub_lay1.addWidget(self.badge_3)
         sub_lay1.addStretch()
 
         sub_lay2 = QHBoxLayout()
-        sub_lay2.addWidget(badge_hot)
+        sub_lay2.addWidget(self.badge_hot)
         sub_lay2.addWidget(select1)
         sub_lay2.addStretch()
 

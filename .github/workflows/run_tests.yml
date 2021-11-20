@@ -1,25 +1,83 @@
-name: run unittests
-on: [pull_request]
+name: Tests
+
+on:
+  push:
+    paths-ignore:
+      - 'docs/**'
+    branches:
+      - master
+      - develop
+  pull_request:
+    paths-ignore:
+      - 'docs/**'
+    branches:
+      - '**'
+
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
 
 jobs:
-  python-check:
-    runs-on: windows-2019
+  tests:
+    name: ${{ matrix.os }} / ${{ matrix.python-version }} ${{ matrix.suffix }}
+    runs-on: ${{ matrix.image }}
     strategy:
-      max-parallel: 5
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
-
+        os: [Ubuntu, macOS, Windows]
+        python-version: ["3.6", "3.7", "3.8"]
+        include:
+          - os: Ubuntu
+            image: ubuntu-latest
+          - os: Windows
+            image: windows-2022
+          - os: macOS
+            image: macos-11
+      fail-fast: false
+    defaults:
+      run:
+        shell: bash
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install -U pip poetry
-        poetry --version
-        poetry install
-        poetry run test
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Get full Python version
+        id: full-python-version
+        run: echo ::set-output name=version::$(python -c "import sys; print('-'.join(str(v) for v in sys.version_info))")
+
+      - name: Bootstrap poetry
+        run: |
+          curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
+      - name: Update PATH
+        if: ${{ matrix.os != 'Windows' }}
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Update Path for Windows
+        if: ${{ matrix.os == 'Windows' }}
+        run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
+
+      - name: Configure poetry
+        run: poetry config virtualenvs.in-project true
+
+      - name: Set up cache
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Ensure cache is healthy
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: timeout 10s poetry run pip --version || rm -rf .venv
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Install pytest plugin
+        run: poetry run pip install pytest-github-actions-annotate-failures
+
+      - name: Run pytest
+        run: poetry run python -m pytest -p no:sugar -q

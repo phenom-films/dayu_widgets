@@ -47,7 +47,6 @@ class TestAlertExample(object):
             widget.set_dayu_size(size)
 
         qtbot.addWidget(widget)
-
         assert widget.height() == result
         assert widget.width() == result
         assert widget.get_dayu_size() == result
