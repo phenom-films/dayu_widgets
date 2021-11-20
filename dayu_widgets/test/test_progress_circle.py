@@ -4,6 +4,7 @@ import pytest
 # Import local modules
 from dayu_widgets.progress_circle import MProgressCircle
 from dayu_widgets.qt import QLabel
+from dayu_widgets.qt import QPushButton
 
 
 class TestProgressCircle:
@@ -38,24 +39,22 @@ class TestProgressCircle:
     @pytest.mark.parametrize(
         "color, result",
         (
-            ("#f00", "#f00"),
-            ("#fff", "#fff"),
+                ("#f00", "#f00"),
+                ("#fff", "#fff"),
         ),
     )
     def test_progress_circle_color(self, qtbot, color, result):
         self.view.set_dayu_color(color)
-        # circle.show()
         assert self.view.get_dayu_color() == result
         self.view.set_dayu_color("#0f0")
         assert self.view.get_dayu_color() == "#0f0"
         self.view.setValue(20)
         assert self.view.text() == "20%"
 
+    #
     def test_progress_circle_widget(self, qtbot):
         label = QLabel("text")
         self.view.set_widget(label)
         self.view.repaint()
         self.view.show()
         assert not self.view.isTextVisible()
-        assert not self.view._default_label.isVisible()
-        assert label.isVisible()
