@@ -55,10 +55,10 @@ class _HasIconObject(object):
             [{"code": "pl_0010", "id": 111}, {"code": "pl_0020", "id": 112}],
             "pl_0010,pl_0020",
         ),
-        ({"id": 111, "age": 18}, "{'age': 18, 'id': 111}"),
+        ({"id": 111, "age": 18}, "{'id': 111, 'age': 18}"),
         (
             [{"id": 111, "age": 18}, {"id": 112, "age": 19}],
-            "{'age': 18, 'id': 111},{'age': 19, 'id': 112}",
+            "{'id': 111, 'age': 18},{'id': 112, 'age': 19}",
         ),
         ("test", "test"),
         (["test", "test2"], "test,test2"),
@@ -72,11 +72,11 @@ class _HasIconObject(object):
         (_HasNameAndCodeObject("Jim", "pl_0010", 18), "Jim"),
         (_NoNameAndCodeObject(), "MyNoNameAndCodeObject()"),
         (datetime.datetime(2019, 1, 1), "2019-01-01 00:00:00"),
-        (20, "20"),
+        (20, 20),
         (20.051, "20.05"),
         (20.058, "20.06"),
         ([20, 20.058], "20,20.06"),
-        (set(), "set([])"),
+        (set(), "set()"),
     ),
 )
 def test_utils_default_formatter(input_value, result):

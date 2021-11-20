@@ -8,11 +8,27 @@
 
 # Import built-in modules
 from functools import partial
-from itertools import izip_longest
+import os
+
+
+try:
+    # Import built-in modules
+    from itertools import izip_longest as zip_longest
+except ImportError:
+    from itertools import zip_longest
 
 # Import local modules
-from qt import *
-import utils
+from dayu_widgets import utils
+from dayu_widgets.qt import QApplication
+from dayu_widgets.qt import QFrame
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QMenu
+from dayu_widgets.qt import QSize
+from dayu_widgets.qt import QToolButton
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import Signal
+from dayu_widgets.qt import Slot
 
 
 def parse_db_orm(orm):
@@ -31,9 +47,7 @@ def parse_db_orm(orm):
 
 
 def parse_path(path):
-    # Import built-in modules
-    import os
-
+    # TODO: unused code
     # Import local modules
     from static import request_file
 
@@ -112,6 +126,7 @@ class MBaseButton(QWidget):
 class MDBPathButtons(QFrame):
     sig_current_changed = Signal()
 
+    # TODO: AttributeError: module 'dayu_widgets.utils' has no attribute 'dayu_css'
     @utils.dayu_css()
     def __init__(self, parent=None):
         super(MDBPathButtons, self).__init__(parent)
@@ -182,7 +197,7 @@ class MDBPathButtons(QFrame):
     @Slot(object)
     def slot_go_to(self, obj_list):
         for index, (his_obj, our_obj) in enumerate(
-            izip_longest(obj_list, self.get_obj_list())
+            zip_longest(obj_list, self.get_obj_list())
         ):
             if his_obj is None:
                 # 如果传来的 obj_list 最后一个是 None，则我方的 obj 多，直接清理掉多余的

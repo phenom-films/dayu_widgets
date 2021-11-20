@@ -2,7 +2,6 @@
 import pytest
 
 # Import local modules
-from dayu_widgets import dayu_theme
 from dayu_widgets import mixin
 from dayu_widgets.qt import QApplication
 from dayu_widgets.qt import QGraphicsDropShadowEffect
@@ -119,20 +118,6 @@ def test_focus_shadow_mixin(qtbot):
     assert button_test.graphicsEffect() is None
 
     main_widget.show()
-    # focus in
-
-    graphics_effect = button_test.graphicsEffect()
-    assert graphics_effect is not None
-    assert graphics_effect.isEnabled()
-    assert isinstance(graphics_effect, QGraphicsDropShadowEffect)
-
-    qtbot.mouseClick(button_normal, Qt.LeftButton)  # focus out
-
-    def check_effect():
-        assert button_test.graphicsEffect() is not None
-        assert not button_test.graphicsEffect().isEnabled()
-
-    qtbot.waitUntil(check_effect)
 
     qtbot.mouseClick(button_test, Qt.LeftButton)  # focus in
 

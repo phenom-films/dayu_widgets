@@ -19,7 +19,11 @@ from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.mixin import property_mixin
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import Signal
 
 
 @property_mixin

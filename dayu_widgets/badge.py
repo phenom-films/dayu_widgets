@@ -8,9 +8,6 @@
 """
 MBadge
 """
-# Import third-party modules
-import six
-
 # Import local modules
 from dayu_widgets import utils
 from dayu_widgets.qt import Property

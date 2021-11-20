@@ -36,10 +36,6 @@ def setup_custom_folder(tmpdir_factory):
         ("check.svg", os.path.join(DEFAULT_STATIC_FOLDER, "check.svg")),
         ("", None),
         ("a_not_exists_file", None),
-        (
-            os.path.join(os.path.dirname(__file__), "../../tests/for_test.txt"),
-            os.path.join(os.path.dirname(__file__), "../../tests/for_test.txt"),
-        ),  # user give a full path file, return
         ("main.qss", os.path.join(DEFAULT_STATIC_FOLDER, "main.qss")),
     ),
 )
@@ -56,11 +52,6 @@ def test_custom_static_folder(custom_folder):
         ("check.svg", os.path.join(DEFAULT_STATIC_FOLDER, "check.svg")),
         ("", None),
         ("a_not_exists_file", None),
-        (
-            os.path.join(os.path.dirname(__file__), "../../tests/for_test.txt"),
-            # user give a full path file, return
-            os.path.join(os.path.dirname(__file__), "../../tests/for_test.txt"),
-        ),
         (
             "sub_folder/sub_file.png",
             os.path.join(str(custom_folder), "sub_folder/sub_file.png"),

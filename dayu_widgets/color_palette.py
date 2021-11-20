@@ -13,7 +13,18 @@ import functools
 from dayu_widgets.divider import MDivider
 from dayu_widgets.label import MLabel
 from dayu_widgets.message import MMessage
-from dayu_widgets.qt import *
+from dayu_widgets.qt import QApplication
+from dayu_widgets.qt import QColor
+from dayu_widgets.qt import QColorDialog
+from dayu_widgets.qt import QDialog
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QLabel
+from dayu_widgets.qt import QPushButton
+from dayu_widgets.qt import QSize
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import Slot
 import dayu_widgets.utils as utils
 
 
