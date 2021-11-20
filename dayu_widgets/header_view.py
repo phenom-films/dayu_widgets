@@ -6,11 +6,13 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import built-in modules
 import functools
 
-import dayu_widgets.utils as utils
+# Import local modules
 from dayu_widgets.menu import MMenu
 from dayu_widgets.qt import *
+import dayu_widgets.utils as utils
 
 
 class MHeaderView(QHeaderView):
@@ -22,7 +24,9 @@ class MHeaderView(QHeaderView):
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self._slot_context_menu)
         self.setDefaultAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-        self.setProperty('orientation', 'horizontal' if orientation == Qt.Horizontal else 'vertical')
+        self.setProperty(
+            "orientation", "horizontal" if orientation == Qt.Horizontal else "vertical"
+        )
 
     # def enterEvent(self, *args, **kwargs):
     #     # 调整表头宽度的 cursor 就被覆盖了
@@ -38,27 +42,37 @@ class MHeaderView(QHeaderView):
         context_menu = MMenu(parent=self)
         logical_column = self.logicalIndexAt(point)
         model = utils.real_model(self.model())
-        if logical_column >= 0 and model.header_list[logical_column].get('checkable', False):
-            action_select_all = context_menu.addAction(self.tr('Select All'))
-            action_select_none = context_menu.addAction(self.tr('Select None'))
-            action_select_invert = context_menu.addAction(self.tr('Select Invert'))
-            action_select_all.triggered.connect(functools.partial(self._slot_set_select,
-                                                                       logical_column,
-                                                                       Qt.Checked))
+        if logical_column >= 0 and model.header_list[logical_column].get(
+            "checkable", False
+        ):
+            action_select_all = context_menu.addAction(self.tr("Select All"))
+            action_select_none = context_menu.addAction(self.tr("Select None"))
+            action_select_invert = context_menu.addAction(self.tr("Select Invert"))
+            action_select_all.triggered.connect(
+                functools.partial(self._slot_set_select, logical_column, Qt.Checked)
+            )
             action_select_none.triggered.connect(
-                         functools.partial(self._slot_set_select, logical_column, Qt.Unchecked))
+                functools.partial(self._slot_set_select, logical_column, Qt.Unchecked)
+            )
             action_select_invert.triggered.connect(
-                         functools.partial(self._slot_set_select, logical_column, None))
+                functools.partial(self._slot_set_select, logical_column, None)
+            )
             context_menu.addSeparator()
 
-        fit_action = context_menu.addAction(self.tr('Fit Size'))
-        fit_action.triggered.connect(functools.partial(self._slot_set_resize_mode, True))
+        fit_action = context_menu.addAction(self.tr("Fit Size"))
+        fit_action.triggered.connect(
+            functools.partial(self._slot_set_resize_mode, True)
+        )
         context_menu.addSeparator()
         for column in range(self.count()):
-            action = context_menu.addAction(model.headerData(column, Qt.Horizontal, Qt.DisplayRole))
+            action = context_menu.addAction(
+                model.headerData(column, Qt.Horizontal, Qt.DisplayRole)
+            )
             action.setCheckable(True)
             action.setChecked(not self.isSectionHidden(column))
-            action.toggled.connect(functools.partial(self._slot_set_section_visible, column))
+            action.toggled.connect(
+                functools.partial(self._slot_set_section_visible, column)
+            )
         context_menu.exec_(QCursor.pos() + QPoint(10, 10))
 
     @Slot(int, int)
@@ -66,13 +80,17 @@ class MHeaderView(QHeaderView):
         current_model = self.model()
         source_model = utils.real_model(current_model)
         source_model.beginResetModel()
-        attr = '{}_checked'.format(source_model.header_list[column].get('key'))
+        attr = "{}_checked".format(source_model.header_list[column].get("key"))
         for row in range(current_model.rowCount()):
             real_index = utils.real_index(current_model.index(row, column))
             data_obj = real_index.internalPointer()
             if state is None:
                 old_state = utils.get_obj_value(data_obj, attr)
-                utils.set_obj_value(data_obj, attr, Qt.Unchecked if old_state == Qt.Checked else Qt.Checked)
+                utils.set_obj_value(
+                    data_obj,
+                    attr,
+                    Qt.Unchecked if old_state == Qt.Checked else Qt.Checked,
+                )
             else:
                 utils.set_obj_value(data_obj, attr, state)
         source_model.endResetModel()

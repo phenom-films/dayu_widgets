@@ -1,7 +1,10 @@
 """
 Test Color helper functions.
 """
+# Import third-party modules
 import pytest
+
+# Import local modules
 from dayu_widgets import utils
 from dayu_widgets.qt import QColor
 

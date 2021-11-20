@@ -1,10 +1,13 @@
 """
 Test the display_formatter icon_formatter font_formatter
 """
+# Import built-in modules
 import datetime
 
+# Import third-party modules
 import pytest
 
+# Import local modules
 from dayu_widgets import utils
 from dayu_widgets.qt import MCacheDict
 

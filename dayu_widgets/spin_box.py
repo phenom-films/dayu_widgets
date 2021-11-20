@@ -10,9 +10,15 @@ Custom Stylesheet for QSpinBox, QDoubleSpinBox, QDateTimeEdit, QDateEdit, QTimeE
 Only add size arg for their __init__.
 """
 
-from dayu_widgets.mixin import cursor_mixin
-from dayu_widgets.qt import QSpinBox, QDoubleSpinBox, QDateTimeEdit, QDateEdit, QTimeEdit, Property
+# Import local modules
 from dayu_widgets import dayu_theme
+from dayu_widgets.mixin import cursor_mixin
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QDateEdit
+from dayu_widgets.qt import QDateTimeEdit
+from dayu_widgets.qt import QDoubleSpinBox
+from dayu_widgets.qt import QSpinBox
+from dayu_widgets.qt import QTimeEdit
 
 
 @cursor_mixin

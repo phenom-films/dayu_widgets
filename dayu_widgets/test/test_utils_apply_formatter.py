@@ -1,6 +1,8 @@
 """Test utils.apply_formatter function."""
+# Import third-party modules
 import pytest
 
+# Import local modules
 from dayu_widgets import utils
 
 

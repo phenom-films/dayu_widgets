@@ -1,22 +1,22 @@
+# Import third-party modules
 import pytest
-from dayu_widgets.qt import QApplication, Qt
-from dayu_widgets.qt import (
-    QWidget,
-    QPushButton,
-    QVBoxLayout,
-    QStackedWidget,
-    QLabel,
-    QStackedLayout,
-    QTabWidget,
-    QTabBar,
-)
-from dayu_widgets.qt import (
-    QGraphicsDropShadowEffect,
-    QPropertyAnimation,
-    QGraphicsOpacityEffect,
-)
-from dayu_widgets import mixin
+
+# Import local modules
 from dayu_widgets import dayu_theme
+from dayu_widgets import mixin
+from dayu_widgets.qt import QApplication
+from dayu_widgets.qt import QGraphicsDropShadowEffect
+from dayu_widgets.qt import QGraphicsOpacityEffect
+from dayu_widgets.qt import QLabel
+from dayu_widgets.qt import QPropertyAnimation
+from dayu_widgets.qt import QPushButton
+from dayu_widgets.qt import QStackedLayout
+from dayu_widgets.qt import QStackedWidget
+from dayu_widgets.qt import QTabBar
+from dayu_widgets.qt import QTabWidget
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
 
 
 def test_property_mixin(qtbot):

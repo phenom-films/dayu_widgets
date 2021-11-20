@@ -1,10 +1,13 @@
 """Test class: MSpinBox MDoubleSpinBox MDateTimeEdit MDateEdit MTimeEdit"""
+# Import built-in modules
 import datetime
 
+# Import third-party modules
 import pytest
 
-from dayu_widgets import spin_box
+# Import local modules
 from dayu_widgets import dayu_theme
+from dayu_widgets import spin_box
 
 
 @pytest.mark.parametrize(

@@ -1,9 +1,13 @@
 """Test MPushButton"""
 
+# Import third-party modules
 import pytest
-from dayu_widgets.push_button import MPushButton
+
+# Import local modules
 from dayu_widgets import dayu_theme
+from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import MIcon
+
 
 MPUSHBUTTON_TYPE_LIST = (
     MPushButton.DefaultType,

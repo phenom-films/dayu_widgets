@@ -1,10 +1,14 @@
 """
 Test class MBadge.
 """
+# Import third-party modules
 import pytest
 
+# Import local modules
 from dayu_widgets.badge import MBadge
-from dayu_widgets.qt import QLabel, QWidget, QVBoxLayout
+from dayu_widgets.qt import QLabel
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
 
 
 @pytest.mark.parametrize(

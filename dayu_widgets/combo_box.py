@@ -5,17 +5,25 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
-import dayu_widgets.utils as utils
+# Import local modules
 from dayu_widgets import dayu_theme
-from dayu_widgets.mixin import property_mixin, cursor_mixin, focus_shadow_mixin
-from dayu_widgets.qt import QComboBox, Signal, QEvent, QSizePolicy, Property, QPoint
+from dayu_widgets.mixin import cursor_mixin
+from dayu_widgets.mixin import focus_shadow_mixin
+from dayu_widgets.mixin import property_mixin
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QComboBox
+from dayu_widgets.qt import QEvent
+from dayu_widgets.qt import QPoint
+from dayu_widgets.qt import QSizePolicy
+from dayu_widgets.qt import Signal
+import dayu_widgets.utils as utils
 
 
 @property_mixin
 @cursor_mixin
 @focus_shadow_mixin
 class MComboBox(QComboBox):
-    Separator = '/'
+    Separator = "/"
     sig_value_changed = Signal(object)
 
     def __init__(self, parent=None):
@@ -26,12 +34,12 @@ class MComboBox(QComboBox):
         line_edit = self.lineEdit()
         line_edit.setReadOnly(True)
         line_edit.setTextMargins(4, 0, 4, 0)
-        line_edit.setStyleSheet('background-color:transparent')
+        line_edit.setStyleSheet("background-color:transparent")
         # line_edit.setCursor(Qt.PointingHandCursor)
         line_edit.installEventFilter(self)
         self._has_custom_view = False
-        self.set_value('')
-        self.set_placeholder(self.tr('Please Select'))
+        self.set_value("")
+        self.set_placeholder(self.tr("Please Select"))
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         self._dayu_size = dayu_theme.default_size
 
@@ -49,7 +57,7 @@ class MComboBox(QComboBox):
         :return: None
         """
         self._dayu_size = value
-        self.lineEdit().setProperty('dayu_size', value)
+        self.lineEdit().setProperty("dayu_size", value)
         self.style().polish(self)
 
     dayu_size = Property(int, get_dayu_size, set_dayu_size)
@@ -62,10 +70,10 @@ class MComboBox(QComboBox):
         self.lineEdit().setPlaceholderText(text)
 
     def set_value(self, value):
-        self.setProperty('value', value)
+        self.setProperty("value", value)
 
     def _set_value(self, value):
-        self.lineEdit().setProperty('text', self._display_formatter(value))
+        self.lineEdit().setProperty("text", self._display_formatter(value))
         if self._root_menu:
             self._root_menu.set_value(value)
 

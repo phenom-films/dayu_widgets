@@ -6,7 +6,10 @@
 # Email : muyanru345@163.com
 ###################################################################
 """MSlider"""
-from dayu_widgets.qt import QSlider, Qt, QToolTip
+# Import local modules
+from dayu_widgets.qt import QSlider
+from dayu_widgets.qt import QToolTip
+from dayu_widgets.qt import Qt
 
 
 class MSlider(QSlider):

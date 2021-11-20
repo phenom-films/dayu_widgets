@@ -8,7 +8,14 @@
 """MFlowLayout"""
 
 
-from dayu_widgets.qt import QLayout, QWidgetItem, Qt, QRect, QSize, QSizePolicy, QPoint
+# Import local modules
+from dayu_widgets.qt import QLayout
+from dayu_widgets.qt import QPoint
+from dayu_widgets.qt import QRect
+from dayu_widgets.qt import QSize
+from dayu_widgets.qt import QSizePolicy
+from dayu_widgets.qt import QWidgetItem
+from dayu_widgets.qt import Qt
 
 
 class MFlowLayout(QLayout):
@@ -16,6 +23,7 @@ class MFlowLayout(QLayout):
     FlowLayout, the code is come from PySide/examples/layouts/flowlayout.py
     I change the code style and add insertWidget method.
     """
+
     def __init__(self, parent=None, margin=0, spacing=-1):
         super(MFlowLayout, self).__init__(parent)
 
@@ -80,7 +88,9 @@ class MFlowLayout(QLayout):
         for item in self.item_list:
             size = size.expandedTo(item.minimumSize())
 
-        size += QSize(2 * self.contentsMargins().top(), 2 * self.contentsMargins().top())
+        size += QSize(
+            2 * self.contentsMargins().top(), 2 * self.contentsMargins().top()
+        )
         return size
 
     def do_layout(self, rect, test_only):
@@ -90,12 +100,12 @@ class MFlowLayout(QLayout):
 
         for item in self.item_list:
             wid = item.widget()
-            space_x = self.spacing() + wid.style().layoutSpacing(QSizePolicy.PushButton,
-                                                                 QSizePolicy.PushButton,
-                                                                 Qt.Horizontal)
-            space_y = self.spacing() + wid.style().layoutSpacing(QSizePolicy.PushButton,
-                                                                 QSizePolicy.PushButton,
-                                                                 Qt.Vertical)
+            space_x = self.spacing() + wid.style().layoutSpacing(
+                QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Horizontal
+            )
+            space_y = self.spacing() + wid.style().layoutSpacing(
+                QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Vertical
+            )
             next_x = x + item.sizeHint().width() + space_x
             if next_x - space_x > rect.right() and line_height > 0:
                 x = rect.x()

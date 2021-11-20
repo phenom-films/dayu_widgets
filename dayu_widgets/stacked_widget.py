@@ -7,6 +7,7 @@
 ###################################################################
 """MStackedWidget"""
 
+# Import local modules
 from dayu_widgets.mixin import stacked_animation_mixin
 from dayu_widgets.qt import QStackedWidget
 

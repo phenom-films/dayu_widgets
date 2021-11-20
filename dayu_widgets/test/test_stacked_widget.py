@@ -1,6 +1,7 @@
 """Test MStackedWidget class"""
-from dayu_widgets.stacked_widget import MStackedWidget
+# Import local modules
 from dayu_widgets.qt import QLabel
+from dayu_widgets.stacked_widget import MStackedWidget
 
 
 def test_stacked_widget_init(qtbot):

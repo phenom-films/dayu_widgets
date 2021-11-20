@@ -5,39 +5,46 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
-import six
+# Import built-in modules
 import functools
 
+# Import third-party modules
+import six
+
+# Import local modules
+from dayu_widgets import dayu_theme
 from dayu_widgets.check_box import MCheckBox
 from dayu_widgets.menu import MMenu
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.radio_button import MRadioButton
-from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import QButtonGroup
-from dayu_widgets.qt import QSizePolicy
-from dayu_widgets.qt import Qt
-from dayu_widgets.qt import QBoxLayout
-from dayu_widgets.qt import QIcon
 from dayu_widgets.qt import Property
+from dayu_widgets.qt import QBoxLayout
+from dayu_widgets.qt import QButtonGroup
+from dayu_widgets.qt import QCursor
+from dayu_widgets.qt import QIcon
+from dayu_widgets.qt import QPoint
+from dayu_widgets.qt import QSizePolicy
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
 from dayu_widgets.qt import Signal
 from dayu_widgets.qt import Slot
-from dayu_widgets.qt import QPoint
-from dayu_widgets.qt import QCursor
 from dayu_widgets.qt import get_scale_factor
-from dayu_widgets import dayu_theme
+from dayu_widgets.radio_button import MRadioButton
+from dayu_widgets.tool_button import MToolButton
 
 
 class MButtonGroupBase(QWidget):
     def __init__(self, orientation=Qt.Horizontal, parent=None):
         super(MButtonGroupBase, self).__init__(parent=parent)
         self._main_layout = QBoxLayout(
-            QBoxLayout.LeftToRight if orientation == Qt.Horizontal else QBoxLayout.TopToBottom)
+            QBoxLayout.LeftToRight
+            if orientation == Qt.Horizontal
+            else QBoxLayout.TopToBottom
+        )
         self._main_layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self._main_layout)
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         self._button_group = QButtonGroup()
-        self._orientation = 'horizontal' if orientation == Qt.Horizontal else 'vertical'
+        self._orientation = "horizontal" if orientation == Qt.Horizontal else "vertical"
 
     def set_spacing(self, value):
         self._main_layout.setSpacing(value)
@@ -50,29 +57,29 @@ class MButtonGroupBase(QWidget):
 
     def add_button(self, data_dict, index=None):
         if isinstance(data_dict, six.string_types):
-            data_dict = {'text': data_dict}
+            data_dict = {"text": data_dict}
         elif isinstance(data_dict, QIcon):
-            data_dict = {'icon': data_dict}
+            data_dict = {"icon": data_dict}
         button = self.create_button(data_dict)
-        button.setProperty('combine', self._orientation)
-        if data_dict.get('text'):
-            button.setProperty('text', data_dict.get('text'))
-        if data_dict.get('icon'):
-            button.setProperty('icon', data_dict.get('icon'))
-        if data_dict.get('data'):
-            button.setProperty('data', data_dict.get('data'))
-        if data_dict.get('checked'):
-            button.setProperty('checked', data_dict.get('checked'))
-        if data_dict.get('shortcut'):
-            button.setProperty('shortcut', data_dict.get('shortcut'))
-        if data_dict.get('tooltip'):
-            button.setProperty('toolTip', data_dict.get('tooltip'))
-        if data_dict.get('checkable'):
-            button.setProperty('checkable', data_dict.get('checkable'))
-        if data_dict.get('clicked'):
-            button.clicked.connect(data_dict.get('clicked'))
-        if data_dict.get('toggled'):
-            button.toggled.connect(data_dict.get('toggled'))
+        button.setProperty("combine", self._orientation)
+        if data_dict.get("text"):
+            button.setProperty("text", data_dict.get("text"))
+        if data_dict.get("icon"):
+            button.setProperty("icon", data_dict.get("icon"))
+        if data_dict.get("data"):
+            button.setProperty("data", data_dict.get("data"))
+        if data_dict.get("checked"):
+            button.setProperty("checked", data_dict.get("checked"))
+        if data_dict.get("shortcut"):
+            button.setProperty("shortcut", data_dict.get("shortcut"))
+        if data_dict.get("tooltip"):
+            button.setProperty("toolTip", data_dict.get("tooltip"))
+        if data_dict.get("checkable"):
+            button.setProperty("checkable", data_dict.get("checkable"))
+        if data_dict.get("clicked"):
+            button.clicked.connect(data_dict.get("clicked"))
+        if data_dict.get("toggled"):
+            button.toggled.connect(data_dict.get("toggled"))
 
         if index is None:
             self._button_group.addButton(button)
@@ -89,11 +96,11 @@ class MButtonGroupBase(QWidget):
         for index, data_dict in enumerate(button_list):
             button = self.add_button(data_dict, index)
             if index == 0:
-                button.setProperty('position', 'left')
+                button.setProperty("position", "left")
             elif index == len(button_list) - 1:
-                button.setProperty('position', 'right')
+                button.setProperty("position", "right")
             else:
-                button.setProperty('position', 'center')
+                button.setProperty("position", "center")
 
 
 class MPushButtonGroup(MButtonGroupBase):
@@ -106,8 +113,8 @@ class MPushButtonGroup(MButtonGroupBase):
 
     def create_button(self, data_dict):
         button = MPushButton()
-        button.set_dayu_size(data_dict.get('dayu_size', self._dayu_size))
-        button.set_dayu_type(data_dict.get('dayu_type', self._dayu_type))
+        button.set_dayu_size(data_dict.get("dayu_size", self._dayu_size))
+        button.set_dayu_type(data_dict.get("dayu_type", self._dayu_type))
         return button
 
     def get_dayu_size(self):
@@ -147,15 +154,18 @@ class MCheckBoxGroup(MButtonGroupBase):
     @Slot(QPoint)
     def _slot_context_menu(self, point):
         context_menu = MMenu(parent=self)
-        action_select_all = context_menu.addAction('Select All')
-        action_select_none = context_menu.addAction('Select None')
-        action_select_invert = context_menu.addAction('Select Invert')
+        action_select_all = context_menu.addAction("Select All")
+        action_select_none = context_menu.addAction("Select None")
+        action_select_invert = context_menu.addAction("Select Invert")
         action_select_all.triggered.connect(
-            functools.partial(self._slot_set_select, True))
+            functools.partial(self._slot_set_select, True)
+        )
         action_select_none.triggered.connect(
-            functools.partial(self._slot_set_select, False))
+            functools.partial(self._slot_set_select, False)
+        )
         action_select_invert.triggered.connect(
-            functools.partial(self._slot_set_select, None))
+            functools.partial(self._slot_set_select, None)
+        )
         context_menu.exec_(QCursor.pos() + QPoint(10, 10))
 
     @Slot(bool)
@@ -171,8 +181,12 @@ class MCheckBoxGroup(MButtonGroupBase):
     @Slot(int)
     def _slot_map_signal(self, state=None):
         self.sig_checked_changed.emit(
-            [check_box.text() for check_box in self._button_group.buttons() if
-             check_box.isChecked()])
+            [
+                check_box.text()
+                for check_box in self._button_group.buttons()
+                if check_box.isChecked()
+            ]
+        )
 
     def set_dayu_checked(self, value):
         if not isinstance(value, list):
@@ -188,11 +202,15 @@ class MCheckBoxGroup(MButtonGroupBase):
         self.sig_checked_changed.emit(value)
 
     def get_dayu_checked(self):
-        return [check_box.text() for check_box in self._button_group.buttons() if
-                check_box.isChecked()]
+        return [
+            check_box.text()
+            for check_box in self._button_group.buttons()
+            if check_box.isChecked()
+        ]
 
-    dayu_checked = Property('QVariantList', get_dayu_checked, set_dayu_checked,
-                            notify=sig_checked_changed)
+    dayu_checked = Property(
+        "QVariantList", get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
+    )
 
 
 class MRadioButtonGroup(MButtonGroupBase):
@@ -200,6 +218,7 @@ class MRadioButtonGroup(MButtonGroupBase):
     Property:
         dayu_checked
     """
+
     sig_checked_changed = Signal(int)
 
     def __init__(self, orientation=Qt.Horizontal, parent=None):
@@ -220,20 +239,27 @@ class MRadioButtonGroup(MButtonGroupBase):
             button.setChecked(True)
             self.sig_checked_changed.emit(value)
         else:
-            print('error')
+            print("error")
 
     def get_dayu_checked(self):
         return self._button_group.checkedId()
 
-    dayu_checked = Property(int, get_dayu_checked, set_dayu_checked,
-                            notify=sig_checked_changed)
+    dayu_checked = Property(
+        int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
+    )
 
 
 class MToolButtonGroup(MButtonGroupBase):
     sig_checked_changed = Signal(int)
 
-    def __init__(self, size=None, type=None, exclusive=False, orientation=Qt.Horizontal,
-                 parent=None):
+    def __init__(
+        self,
+        size=None,
+        type=None,
+        exclusive=False,
+        orientation=Qt.Horizontal,
+        parent=None,
+    ):
         super(MToolButtonGroup, self).__init__(orientation=orientation, parent=parent)
         self.set_spacing(1)
         self._button_group.setExclusive(exclusive)
@@ -243,10 +269,10 @@ class MToolButtonGroup(MButtonGroupBase):
 
     def create_button(self, data_dict):
         button = MToolButton()
-        if data_dict.get('svg'):
-            button.svg(data_dict.get('svg'))
-        if data_dict.get('text'):
-            if data_dict.get('svg') or data_dict.get('icon'):
+        if data_dict.get("svg"):
+            button.svg(data_dict.get("svg"))
+        if data_dict.get("text"):
+            if data_dict.get("svg") or data_dict.get("icon"):
                 button.text_beside_icon()
             else:
                 button.text_only()
@@ -262,10 +288,11 @@ class MToolButtonGroup(MButtonGroupBase):
             button.setChecked(True)
             self.sig_checked_changed.emit(value)
         else:
-            print('error')
+            print("error")
 
     def get_dayu_checked(self):
         return self._button_group.checkedId()
 
-    dayu_checked = Property(int, get_dayu_checked, set_dayu_checked,
-                            notify=sig_checked_changed)
+    dayu_checked = Property(
+        int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
+    )

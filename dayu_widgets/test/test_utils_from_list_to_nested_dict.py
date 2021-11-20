@@ -2,9 +2,12 @@
 """
 Test the function from_list_to_nested_dict.
 """
+# Import third-party modules
 import pytest
 
+# Import local modules
 from dayu_widgets import utils
+
 
 TEST_DATA = (
     (

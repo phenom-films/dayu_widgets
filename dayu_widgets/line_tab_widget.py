@@ -7,12 +7,18 @@
 ###################################################################
 """MLineTabWidget"""
 
+# Import local modules
+from dayu_widgets import dayu_theme
 from dayu_widgets.button_group import MButtonGroupBase
 from dayu_widgets.divider import MDivider
-from dayu_widgets.qt import Signal, QWidget, Property, Qt, QHBoxLayout, QVBoxLayout
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import Signal
 from dayu_widgets.stacked_widget import MStackedWidget
 from dayu_widgets.tool_button import MToolButton
-from dayu_widgets import dayu_theme
 
 
 class MUnderlineButton(MToolButton):
@@ -25,6 +31,7 @@ class MUnderlineButton(MToolButton):
 
 class MUnderlineButtonGroup(MButtonGroupBase):
     """MUnderlineButtonGroup"""
+
     sig_checked_changed = Signal(int)
 
     def __init__(self, tab, parent=None):
@@ -36,10 +43,10 @@ class MUnderlineButtonGroup(MButtonGroupBase):
 
     def create_button(self, data_dict):
         button = MUnderlineButton(parent=self)
-        if data_dict.get('svg'):
-            button.svg(data_dict.get('svg'))
-        if data_dict.get('text'):
-            if data_dict.get('svg') or data_dict.get('icon'):
+        if data_dict.get("svg"):
+            button.svg(data_dict.get("svg"))
+        if data_dict.get("text"):
+            if data_dict.get("svg") or data_dict.get("icon"):
                 button.text_beside_icon()
             else:
                 button.text_only()
@@ -62,7 +69,9 @@ class MUnderlineButtonGroup(MButtonGroupBase):
         """Get current checked button's id"""
         return self._button_group.checkedId()
 
-    dayu_checked = Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
+    dayu_checked = Property(
+        int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
+    )
 
 
 class MLineTabWidget(QWidget):
@@ -84,7 +93,9 @@ class MLineTabWidget(QWidget):
             self.bar_layout.addStretch()
             self.bar_layout.addWidget(self.tool_button_group)
         self.stack_widget = MStackedWidget()
-        self.tool_button_group.sig_checked_changed.connect(self.stack_widget.setCurrentIndex)
+        self.tool_button_group.sig_checked_changed.connect(
+            self.stack_widget.setCurrentIndex
+        )
         main_lay = QVBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
         main_lay.setSpacing(0)

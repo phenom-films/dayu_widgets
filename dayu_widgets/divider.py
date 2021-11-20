@@ -8,25 +8,35 @@
 """
 MDivider
 """
+# Import third-party modules
 import six
+
+# Import local modules
 from dayu_widgets.label import MLabel
-from dayu_widgets.qt import QWidget, Qt, QFrame, QHBoxLayout, Property
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QFrame
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
 
 
 class MDivider(QWidget):
-    '''
+    """
     A divider line separates different content.
 
     Property:
         dayu_text: six.string_types
-    '''
+    """
+
     _alignment_map = {
         Qt.AlignCenter: 50,
         Qt.AlignLeft: 20,
         Qt.AlignRight: 80,
     }
 
-    def __init__(self, text='', orientation=Qt.Horizontal, alignment=Qt.AlignCenter, parent=None):
+    def __init__(
+        self, text="", orientation=Qt.Horizontal, alignment=Qt.AlignCenter, parent=None
+    ):
         super(MDivider, self).__init__(parent)
         self._orient = orientation
         self._text_label = MLabel().secondary()
@@ -51,10 +61,12 @@ class MDivider(QWidget):
             self._left_frame.setFrameShape(QFrame.VLine)
             self._left_frame.setFrameShadow(QFrame.Plain)
             self.setFixedWidth(2)
-        self._main_lay.setStretchFactor(self._left_frame,
-                                        self._alignment_map.get(alignment, 50))
-        self._main_lay.setStretchFactor(self._right_frame,
-                                        100 - self._alignment_map.get(alignment, 50))
+        self._main_lay.setStretchFactor(
+            self._left_frame, self._alignment_map.get(alignment, 50)
+        )
+        self._main_lay.setStretchFactor(
+            self._right_frame, 100 - self._alignment_map.get(alignment, 50)
+        )
         self._text = None
         self.set_dayu_text(text)
 
@@ -82,17 +94,17 @@ class MDivider(QWidget):
     dayu_text = Property(six.string_types[0], get_dayu_text, set_dayu_text)
 
     @classmethod
-    def left(cls, text=''):
+    def left(cls, text=""):
         """Create a horizontal divider with text at left."""
         return cls(text, alignment=Qt.AlignLeft)
 
     @classmethod
-    def right(cls, text=''):
+    def right(cls, text=""):
         """Create a horizontal divider with text at right."""
         return cls(text, alignment=Qt.AlignRight)
 
     @classmethod
-    def center(cls, text=''):
+    def center(cls, text=""):
         """Create a horizontal divider with text at center."""
         return cls(text, alignment=Qt.AlignCenter)
 

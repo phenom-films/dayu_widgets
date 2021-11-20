@@ -3,11 +3,16 @@
 """
 Test get_static_file function.
 """
+# Import built-in modules
 import os
 
+# Import third-party modules
 import pytest
 
-from dayu_widgets import utils, DEFAULT_STATIC_FOLDER, CUSTOM_STATIC_FOLDERS
+# Import local modules
+from dayu_widgets import CUSTOM_STATIC_FOLDERS
+from dayu_widgets import DEFAULT_STATIC_FOLDER
+from dayu_widgets import utils
 
 
 @pytest.fixture(scope="module", name="custom_folder")
@@ -32,8 +37,8 @@ def setup_custom_folder(tmpdir_factory):
         ("", None),
         ("a_not_exists_file", None),
         (
-            os.path.join(os.path.dirname(__file__), "for_test.txt"),
-            os.path.join(os.path.dirname(__file__), "for_test.txt"),
+            os.path.join(os.path.dirname(__file__), "../../tests/for_test.txt"),
+            os.path.join(os.path.dirname(__file__), "../../tests/for_test.txt"),
         ),  # user give a full path file, return
         ("main.qss", os.path.join(DEFAULT_STATIC_FOLDER, "main.qss")),
     ),
@@ -52,9 +57,9 @@ def test_custom_static_folder(custom_folder):
         ("", None),
         ("a_not_exists_file", None),
         (
-            os.path.join(os.path.dirname(__file__), "for_test.txt"),
+            os.path.join(os.path.dirname(__file__), "../../tests/for_test.txt"),
             # user give a full path file, return
-            os.path.join(os.path.dirname(__file__), "for_test.txt"),
+            os.path.join(os.path.dirname(__file__), "../../tests/for_test.txt"),
         ),
         (
             "sub_folder/sub_file.png",
@@ -82,6 +87,6 @@ def test_with_wrong_type(input_file, error_type):
 
     exception_msg = exc_info.value.args[0]
     assert (
-        exception_msg == "Input argument 'path' should be basestring type, "
+        exception_msg == "Input argument 'path' should be six.string_types type, "
         "but get {}".format(error_type)
     )

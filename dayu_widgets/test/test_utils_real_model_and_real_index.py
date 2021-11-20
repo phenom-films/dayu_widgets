@@ -2,8 +2,11 @@
 Test helper functions about Qt MVC: real_model, real_index
 """
 
+# Import local modules
 from dayu_widgets import utils
-from dayu_widgets.qt import QSortFilterProxyModel, QStringListModel, QStandardItemModel
+from dayu_widgets.qt import QSortFilterProxyModel
+from dayu_widgets.qt import QStandardItemModel
+from dayu_widgets.qt import QStringListModel
 
 
 def test_with_string_list_model():

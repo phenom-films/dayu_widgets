@@ -6,7 +6,9 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.mixin import cursor_mixin, stacked_animation_mixin
+# Import local modules
+from dayu_widgets.mixin import cursor_mixin
+from dayu_widgets.mixin import stacked_animation_mixin
 from dayu_widgets.qt import *
 
 
@@ -19,9 +21,15 @@ class MTabBar(QTabBar):
     def tabSizeHint(self, index):
         tab_text = self.tabText(index)
         if self.tabsClosable():
-            return QSize(self.fontMetrics().width(tab_text) + 70, self.fontMetrics().height() + 20)
+            return QSize(
+                self.fontMetrics().width(tab_text) + 70,
+                self.fontMetrics().height() + 20,
+            )
         else:
-            return QSize(self.fontMetrics().width(tab_text) + 50, self.fontMetrics().height() + 20)
+            return QSize(
+                self.fontMetrics().width(tab_text) + 50,
+                self.fontMetrics().height() + 20,
+            )
 
 
 @stacked_animation_mixin

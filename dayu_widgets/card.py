@@ -6,22 +6,32 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.label import MLabel
-from dayu_widgets.tool_button import MToolButton
+# Import local modules
+from dayu_widgets import dayu_theme
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.divider import MDivider
-from dayu_widgets import dayu_theme
-from dayu_widgets.mixin import hover_shadow_mixin, cursor_mixin
-from dayu_widgets.qt import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFormLayout, QSize, Qt
+from dayu_widgets.label import MLabel
+from dayu_widgets.mixin import cursor_mixin
+from dayu_widgets.mixin import hover_shadow_mixin
+from dayu_widgets.qt import QFormLayout
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QLabel
+from dayu_widgets.qt import QSize
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
+from dayu_widgets.tool_button import MToolButton
 
 
 @hover_shadow_mixin
 @cursor_mixin
 class MCard(QWidget):
-    def __init__(self, title=None, image=None, size=None, extra=None, type=None, parent=None):
+    def __init__(
+        self, title=None, image=None, size=None, extra=None, type=None, parent=None
+    ):
         super(MCard, self).__init__(parent=parent)
         self.setAttribute(Qt.WA_StyledBackground)
-        self.setProperty('border', False)
+        self.setProperty("border", False)
         size = size or dayu_theme.default_size
         map_label = {
             dayu_theme.large: (MLabel.H2Level, 20),
@@ -42,7 +52,7 @@ class MCard(QWidget):
         self._title_layout.addWidget(self._title_label)
         self._title_layout.addStretch()
         if extra:
-            self._extra_button = MToolButton().icon_only().svg('more.svg')
+            self._extra_button = MToolButton().icon_only().svg("more.svg")
             self._title_layout.addWidget(self._extra_button)
 
         self._content_layout = QVBoxLayout()
@@ -63,7 +73,7 @@ class MCard(QWidget):
         self._content_layout.addWidget(widget)
 
     def border(self):
-        self.setProperty('border', True)
+        self.setProperty("border", True)
         self.style().polish(self)
         return self
 
@@ -71,8 +81,15 @@ class MCard(QWidget):
 @hover_shadow_mixin
 @cursor_mixin
 class MMeta(QWidget):
-    def __init__(self, cover=None, avatar=None, title=None, description=None, extra=False,
-                 parent=None):
+    def __init__(
+        self,
+        cover=None,
+        avatar=None,
+        title=None,
+        description=None,
+        extra=False,
+        parent=None,
+    ):
         super(MMeta, self).__init__(parent)
         self.setAttribute(Qt.WA_StyledBackground)
         self._cover_label = QLabel()
@@ -84,7 +101,7 @@ class MMeta(QWidget):
         self._title_layout = QHBoxLayout()
         self._title_layout.addWidget(self._title_label)
         self._title_layout.addStretch()
-        self._extra_button = MToolButton(parent=self).icon_only().svg('more.svg')
+        self._extra_button = MToolButton(parent=self).icon_only().svg("more.svg")
         self._title_layout.addWidget(self._extra_button)
         self._extra_button.setVisible(extra)
 
@@ -110,28 +127,31 @@ class MMeta(QWidget):
         return self._extra_button
 
     def setup_data(self, data_dict):
-        if data_dict.get('title'):
-            self._title_label.setText(data_dict.get('title'))
+        if data_dict.get("title"):
+            self._title_label.setText(data_dict.get("title"))
             self._title_label.setVisible(True)
         else:
             self._title_label.setVisible(False)
 
-        if data_dict.get('description'):
-            self._description_label.setText(data_dict.get('description'))
+        if data_dict.get("description"):
+            self._description_label.setText(data_dict.get("description"))
             self._description_label.setVisible(True)
         else:
             self._description_label.setVisible(False)
 
-        if data_dict.get('avatar'):
-            self._avatar.set_dayu_image(data_dict.get('avatar'))
+        if data_dict.get("avatar"):
+            self._avatar.set_dayu_image(data_dict.get("avatar"))
             self._avatar.setVisible(True)
         else:
             self._avatar.setVisible(False)
 
-        if data_dict.get('cover'):
+        if data_dict.get("cover"):
             fixed_height = self._cover_label.width()
             self._cover_label.setPixmap(
-                data_dict.get('cover').scaledToWidth(fixed_height, Qt.SmoothTransformation))
+                data_dict.get("cover").scaledToWidth(
+                    fixed_height, Qt.SmoothTransformation
+                )
+            )
             self._cover_label.setVisible(True)
         else:
             self._cover_label.setVisible(False)

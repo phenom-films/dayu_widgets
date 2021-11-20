@@ -4,10 +4,14 @@
 """
 Test class MLabel.
 """
+# Import third-party modules
 import pytest
 
+# Import local modules
 from dayu_widgets.label import MLabel
-from dayu_widgets.qt import Qt, QWidget, QVBoxLayout
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
 
 
 @pytest.mark.parametrize(

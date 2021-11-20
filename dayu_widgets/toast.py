@@ -8,12 +8,23 @@
 """
 MToast
 """
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.label import MLabel
 from dayu_widgets.loading import MLoading
-from dayu_widgets.qt import QWidget, Signal, Qt, QSize, MPixmap, QHBoxLayout, QVBoxLayout, \
-    QTimer, QPropertyAnimation, QEasingCurve, QAbstractAnimation, QPoint
+from dayu_widgets.qt import MPixmap
+from dayu_widgets.qt import QAbstractAnimation
+from dayu_widgets.qt import QEasingCurve
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QPoint
+from dayu_widgets.qt import QPropertyAnimation
+from dayu_widgets.qt import QSize
+from dayu_widgets.qt import QTimer
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import Signal
 
 
 class MToast(QWidget):
@@ -21,14 +32,15 @@ class MToast(QWidget):
     MToast
     A Phone style message.
     """
-    InfoType = 'info'
-    SuccessType = 'success'
-    WarningType = 'warning'
-    ErrorType = 'error'
-    LoadingType = 'loading'
+
+    InfoType = "info"
+    SuccessType = "success"
+    WarningType = "warning"
+    ErrorType = "error"
+    LoadingType = "loading"
 
     default_config = {
-        'duration': 2,
+        "duration": 2,
     }
 
     sig_closed = Signal()
@@ -36,19 +48,29 @@ class MToast(QWidget):
     def __init__(self, text, duration=None, dayu_type=None, parent=None):
         super(MToast, self).__init__(parent)
         self.setWindowFlags(
-            Qt.FramelessWindowHint | Qt.Dialog | Qt.WA_TranslucentBackground | Qt.WA_DeleteOnClose)
+            Qt.FramelessWindowHint
+            | Qt.Dialog
+            | Qt.WA_TranslucentBackground
+            | Qt.WA_DeleteOnClose
+        )
         self.setAttribute(Qt.WA_StyledBackground)
 
         _icon_lay = QHBoxLayout()
         _icon_lay.addStretch()
 
         if dayu_type == MToast.LoadingType:
-            _icon_lay.addWidget(MLoading(size=dayu_theme.huge, color=dayu_theme.text_color_inverse))
+            _icon_lay.addWidget(
+                MLoading(size=dayu_theme.huge, color=dayu_theme.text_color_inverse)
+            )
         else:
             _icon_label = MAvatar()
             _icon_label.set_dayu_size(dayu_theme.toast_icon_size)
-            _icon_label.set_dayu_image(MPixmap('{}_line.svg'.format(dayu_type or MToast.InfoType),
-                                               dayu_theme.text_color_inverse))
+            _icon_label.set_dayu_image(
+                MPixmap(
+                    "{}_line.svg".format(dayu_type or MToast.InfoType),
+                    dayu_theme.text_color_inverse,
+                )
+            )
             _icon_lay.addWidget(_icon_label)
         _icon_lay.addStretch()
 
@@ -70,7 +92,9 @@ class MToast(QWidget):
         _close_timer.setSingleShot(True)
         _close_timer.timeout.connect(self.close)
         _close_timer.timeout.connect(self.sig_closed)
-        _close_timer.setInterval((duration or self.default_config.get('duration')) * 1000)
+        _close_timer.setInterval(
+            (duration or self.default_config.get("duration")) * 1000
+        )
         self.has_played = False
 
         if dayu_type != MToast.LoadingType:
@@ -80,7 +104,7 @@ class MToast(QWidget):
         self._opacity_ani.setTargetObject(self)
         self._opacity_ani.setDuration(300)
         self._opacity_ani.setEasingCurve(QEasingCurve.OutCubic)
-        self._opacity_ani.setPropertyName(b'windowOpacity')
+        self._opacity_ani.setPropertyName(b"windowOpacity")
         self._opacity_ani.setStartValue(0.0)
         self._opacity_ani.setEndValue(0.9)
 
@@ -105,15 +129,18 @@ class MToast(QWidget):
 
     def _get_center_position(self, parent):
         parent_geo = parent.geometry()
-        pos = parent_geo.topLeft() \
-            if parent.parent() is None else parent.mapToGlobal(parent_geo.topLeft())
+        pos = (
+            parent_geo.topLeft()
+            if parent.parent() is None
+            else parent.mapToGlobal(parent_geo.topLeft())
+        )
         offset = 0
         for child in parent.children():
             if isinstance(child, MToast) and child.isVisible():
                 offset = max(offset, child.y())
         target_x = pos.x() + parent_geo.width() / 2 - self.width() / 2
         target_y = pos.y() + parent_geo.height() / 2 - self.height() / 2
-        self.setProperty('pos', QPoint(target_x, target_y))
+        self.setProperty("pos", QPoint(target_x, target_y))
 
     @classmethod
     def info(cls, text, parent, duration=None):
@@ -159,4 +186,4 @@ class MToast(QWidget):
         :return: None
         """
         if duration is not None:
-            cls.default_config['duration'] = duration
+            cls.default_config["duration"] = duration

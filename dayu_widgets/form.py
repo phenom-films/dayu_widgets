@@ -6,13 +6,17 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import QWidget, QHBoxLayout, QVBoxLayout, QFormLayout
+# Import local modules
+from dayu_widgets.qt import QFormLayout
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
 
 
 class MForm(QWidget):
-    Horizontal = 'horizontal'
-    Vertical = 'vertical'
-    Inline = 'inline'
+    Horizontal = "horizontal"
+    Vertical = "vertical"
+    Inline = "inline"
 
     def __init__(self, layout=None, parent=None):
         super(MForm, self).__init__(parent)

@@ -8,9 +8,12 @@
 """
 MSwitch
 """
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import cursor_mixin
-from dayu_widgets.qt import QSize, QRadioButton, Property
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QRadioButton
+from dayu_widgets.qt import QSize
 
 
 @cursor_mixin

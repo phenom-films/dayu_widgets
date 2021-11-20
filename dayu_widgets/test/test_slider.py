@@ -1,7 +1,10 @@
 """Test MSlider class"""
+# Import third-party modules
 import pytest
-from dayu_widgets.slider import MSlider
+
+# Import local modules
 from dayu_widgets.qt import Qt
+from dayu_widgets.slider import MSlider
 
 
 @pytest.mark.parametrize("orient", (Qt.Horizontal, Qt.Vertical))

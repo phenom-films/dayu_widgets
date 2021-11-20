@@ -1,5 +1,8 @@
 """Test MDockWidget class"""
+# Import third-party modules
 import pytest
+
+# Import local modules
 from dayu_widgets.dock_widget import MDockWidget
 
 

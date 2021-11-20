@@ -1,5 +1,7 @@
+# Import third-party modules
 import pytest
 
+# Import local modules
 from dayu_widgets.progress_circle import MProgressCircle
 from dayu_widgets.qt import QLabel
 

@@ -8,9 +8,17 @@
 """
 MBadge
 """
+# Import third-party modules
 import six
+
+# Import local modules
 from dayu_widgets import utils
-from dayu_widgets.qt import QWidget, QPushButton, QGridLayout, QSizePolicy, Qt, Property
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QGridLayout
+from dayu_widgets.qt import QPushButton
+from dayu_widgets.qt import QSizePolicy
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
 
 
 class MBadge(QWidget):
@@ -79,7 +87,7 @@ class MBadge(QWidget):
         :return: None
         """
         self._dot = show
-        self._badge_button.setText('')
+        self._badge_button.setText("")
         self._badge_button.setVisible(show)
         self.style().polish(self)
 
@@ -101,7 +109,9 @@ class MBadge(QWidget):
         self._update_number()
 
     def _update_number(self):
-        self._badge_button.setText(utils.overflow_format(self._count, self._overflow_count))
+        self._badge_button.setText(
+            utils.overflow_format(self._count, self._overflow_count)
+        )
         self._badge_button.setVisible(self._count > 0)
         self._dot = False
         self.style().polish(self)
@@ -155,7 +165,7 @@ class MBadge(QWidget):
         return inst
 
     @classmethod
-    def text(cls, text='', widget=None):
+    def text(cls, text="", widget=None):
         """
         Create a Badge with text style.
         :param text: six.string_types

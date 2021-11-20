@@ -1,11 +1,15 @@
 """
 Test MLoading and MLoadingWrapper class
 """
+# Import third-party modules
 import pytest
 
+# Import local modules
 from dayu_widgets import dayu_theme
-from dayu_widgets.loading import MLoading, MLoadingWrapper
-from dayu_widgets.qt import QLabel, QSize
+from dayu_widgets.loading import MLoading
+from dayu_widgets.loading import MLoadingWrapper
+from dayu_widgets.qt import QLabel
+from dayu_widgets.qt import QSize
 
 
 @pytest.mark.parametrize(

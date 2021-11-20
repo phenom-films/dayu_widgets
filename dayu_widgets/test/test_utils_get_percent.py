@@ -1,8 +1,10 @@
 """
 Test get_percent.
 """
+# Import third-party modules
 import pytest
 
+# Import local modules
 from dayu_widgets import utils
 
 

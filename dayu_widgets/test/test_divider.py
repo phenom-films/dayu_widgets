@@ -1,10 +1,14 @@
 """
 Test class MDivider.
 """
+# Import third-party modules
 import pytest
 
+# Import local modules
 from dayu_widgets.divider import MDivider
-from dayu_widgets.qt import QWidget, QVBoxLayout, Qt
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
 
 
 @pytest.mark.parametrize("text, visible_text", (("", False), ("test", True)))
