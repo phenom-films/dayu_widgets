@@ -29,7 +29,6 @@ for text in (None, "", "test"):
 
 
 class TestAlertExample(object):
-
     @pytest.fixture(autouse=True)
     def set_up(self, qtbot):
         """Set up to test the view."""
@@ -71,19 +70,19 @@ class TestAlertExample(object):
 
         exception_msg = exc_info.value.args[0]
         assert (
-                exception_msg == "Input argument 'value' should be "
-                                 "one of info/success/warning/error string."
+            exception_msg == "Input argument 'value' should be "
+            "one of info/success/warning/error string."
         )
 
     @pytest.mark.parametrize(
         "input_text, error_type",
         (
-                (3, int),
-                ([], list),
-                ((1,), tuple),
-                (set(), set),
-                ({}, dict),
-                (object(), object),
+            (3, int),
+            ([], list),
+            ((1,), tuple),
+            (set(), set),
+            ({}, dict),
+            (object(), object),
         ),
     )
     def test_malert_with_wrong_text(slef, qtbot, input_text, error_type):
@@ -95,6 +94,6 @@ class TestAlertExample(object):
 
         exception_msg = exc_info.value.args[0]
         assert (
-                exception_msg == "Input argument 'value' should be string type, "
-                                 "but get {}".format(error_type)
+            exception_msg == "Input argument 'value' should be string type, "
+            "but get {}".format(error_type)
         )

@@ -9,7 +9,6 @@ from dayu_widgets.qt import MPixmap
 
 
 class TestAlertExample(object):
-
     @pytest.fixture(autouse=True)
     def set_up(self, qtbot):
         """Set up to test the view."""
@@ -26,7 +25,6 @@ class TestAlertExample(object):
         image = self.view.pix_map_list[1]
         self.view.set_field("image", image)
         assert self.view.field("image") == image
-
 
     @pytest.mark.parametrize("image", ("check.svg", None))
     @pytest.mark.parametrize(
@@ -68,7 +66,6 @@ class TestAlertExample(object):
         assert pix.width() == result
         assert orig is widget.get_dayu_image()
 
-
     @pytest.mark.parametrize("image", ("check.svg", None))
     @pytest.mark.parametrize(
         "cls, result",
@@ -96,7 +93,6 @@ class TestAlertExample(object):
         assert pix.width() == result
         assert pix.width() == result
 
-
     @pytest.mark.parametrize(
         "input_file, error_type",
         (
@@ -121,4 +117,3 @@ class TestAlertExample(object):
             exception_msg == "Input argument 'value' should be QPixmap or None,"
             " but get {}".format(error_type)
         )
-

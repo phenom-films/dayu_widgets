@@ -1,4 +1,4 @@
-name: Import Test
+name: run unittests
 on: [pull_request]
 
 jobs:
@@ -7,7 +7,7 @@ jobs:
     strategy:
       max-parallel: 5
       matrix:
-        python-version: [2.7, 3.6, 3.7, 3.8, 3.9]
+        python-version: [3.6, 3.7, 3.8, 3.9]
 
     steps:
     - uses: actions/checkout@v2
@@ -22,4 +22,4 @@ jobs:
         python -m pip install -U pip poetry
         poetry --version
         poetry install
-        poetry run python -c "from photoshop import Session"
+        poetry run test
