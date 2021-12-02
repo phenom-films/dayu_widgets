@@ -5,17 +5,20 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
+from Qt import QtCore, QtGui, QtWidgets
+
 import dayu_widgets.utils as utils
 from dayu_widgets import dayu_theme
-from dayu_widgets.mixin import property_mixin, cursor_mixin, focus_shadow_mixin
-from dayu_widgets.qt import QComboBox, Signal, QEvent, QSizePolicy, Property, QPoint
+from dayu_widgets.mixin import cursor_mixin, focus_shadow_mixin, property_mixin
+from dayu_widgets.qt import (Property, QComboBox, QEvent, QPoint, QSizePolicy,
+                             Signal)
 
 
 @property_mixin
 @cursor_mixin
 @focus_shadow_mixin
 class MComboBox(QComboBox):
-    Separator = '/'
+    Separator = "/"
     sig_value_changed = Signal(object)
 
     def __init__(self, parent=None):
@@ -26,14 +29,48 @@ class MComboBox(QComboBox):
         line_edit = self.lineEdit()
         line_edit.setReadOnly(True)
         line_edit.setTextMargins(4, 0, 4, 0)
-        line_edit.setStyleSheet('background-color:transparent')
+        line_edit.setStyleSheet("background-color:transparent")
         # line_edit.setCursor(Qt.PointingHandCursor)
         line_edit.installEventFilter(self)
         self._has_custom_view = False
-        self.set_value('')
-        self.set_placeholder(self.tr('Please Select'))
+        self.set_value("")
+        self.set_placeholder(self.tr("Please Select"))
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         self._dayu_size = dayu_theme.default_size
+
+        self.filter_model = QtCore.QSortFilterProxyModel(self)
+        self.filter_model.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
+        self.filter_model.setSourceModel(self.model())
+        self.completer = QtWidgets.QCompleter(self)
+        self.completer.setCompletionMode(QtWidgets.QCompleter.UnfilteredPopupCompletion)
+        self.completer.setModel(self.filter_model)
+
+    def search(self):
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setEditable(True)
+
+        popup = self.completer.popup()
+        dayu_theme.apply(popup)
+        self.completer.setPopup(popup)
+        self.setCompleter(self.completer)
+
+        edit = self.lineEdit()
+        edit.setReadOnly(False)
+        edit.returnPressed.disconnect()
+        edit.textEdited.connect(self.filter_model.setFilterFixedString)
+        self.completer.activated.connect(
+            lambda t: t and self.setCurrentIndex(self.findText(t))
+        )
+
+    def setModel(self, model):
+        super(MComboBox, self).setModel(model)
+        self.filter_model.setSourceModel(model)
+        self.completer.setModel(self.filter_model)
+
+    def setModelColumn(self, column):
+        self.completer.setCompletionColumn(column)
+        self.filter_model.setFilterKeyColumn(column)
+        super(MComboBox, self).setModelColumn(column)
 
     def get_dayu_size(self):
         """
@@ -49,7 +86,7 @@ class MComboBox(QComboBox):
         :return: None
         """
         self._dayu_size = value
-        self.lineEdit().setProperty('dayu_size', value)
+        self.lineEdit().setProperty("dayu_size", value)
         self.style().polish(self)
 
     dayu_size = Property(int, get_dayu_size, set_dayu_size)
@@ -62,10 +99,10 @@ class MComboBox(QComboBox):
         self.lineEdit().setPlaceholderText(text)
 
     def set_value(self, value):
-        self.setProperty('value', value)
+        self.setProperty("value", value)
 
     def _set_value(self, value):
-        self.lineEdit().setProperty('text', self._display_formatter(value))
+        self.lineEdit().setProperty("text", self._display_formatter(value))
         if self._root_menu:
             self._root_menu.set_value(value)
 
@@ -91,7 +128,7 @@ class MComboBox(QComboBox):
     #     raise NotImplementedError
 
     def eventFilter(self, widget, event):
-        if widget is self.lineEdit():
+        if widget is self.lineEdit() and widget.isReadOnly():
             if event.type() == QEvent.MouseButtonPress:
                 self.showPopup()
         return super(MComboBox, self).eventFilter(widget, event)
