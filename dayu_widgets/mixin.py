@@ -40,17 +40,29 @@ def cursor_mixin(cls):
 
     def _new_enter_event(self, *args, **kwargs):
         old_enter_event(self, *args, **kwargs)
+        self.__dict__.update({"__dayu_enter": True})
         QApplication.setOverrideCursor(
             Qt.PointingHandCursor if self.isEnabled() else Qt.ForbiddenCursor)
         return super(cls, self).enterEvent(*args, **kwargs)
 
     def _new_leave_event(self, *args, **kwargs):
         old_leave_event(self, *args, **kwargs)
-        QApplication.restoreOverrideCursor()
+        if self.__dict__.get("__dayu_enter", False):
+            QApplication.restoreOverrideCursor()
+            self.__dict__.update({"__dayu_enter": False})
         return super(cls, self).leaveEvent(*args, **kwargs)
+
+
+    def _new_hide_event(self, *args, **kwargs):
+        old_leave_event(self, *args, **kwargs)
+        if self.__dict__.get("__dayu_enter", False):
+            QApplication.restoreOverrideCursor()
+            self.__dict__.update({"__dayu_enter": False})
+        return super(cls, self).hideEvent(*args, **kwargs)
 
     setattr(cls, 'enterEvent', _new_enter_event)
     setattr(cls, 'leaveEvent', _new_leave_event)
+    setattr(cls, 'hideEvent', _new_hide_event)
     return cls
 
 
