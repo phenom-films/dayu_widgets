@@ -93,6 +93,35 @@ class MenuExample(QWidget, MFieldMixin):
         sub_lay4.addWidget(button4)
         sub_lay4.addWidget(label4)
 
+        sub_lay5 = QHBoxLayout()
+        button = MPushButton(text=u"滚动菜单")
+        menu = MMenu(parent=self)
+        items = [u"北京", u"上海", u"广州", u"深圳", u"北戴河", "BBC/data", "BBC/hello", "American"]
+        menu.set_data(items)
+        menu.search()
+        menu.setProperty("max_scroll_count", 5)
+        button.setMenu(menu)
+        sub_lay5.addWidget(button)
+        
+        sub_lay6 = QHBoxLayout()
+        button = MPushButton(text=u"搜索菜单")
+        menu = MMenu(parent=self)
+        items = [u"北京", u"上海", u"广州", u"深圳", u"北戴河"]
+        for item in items:
+            menu.addAction(item)
+        sub_menu = MMenu(parent=self,title="BBC")
+        for item in ["data","hello"]:
+            _menu = MMenu(parent=self,title=item)
+            _menu.addAction("tencent")
+            _menu.addAction("baidu")
+            _menu.addAction("google")
+            _menu.search()
+            sub_menu.addMenu(_menu)
+        menu.addMenu(sub_menu)
+        menu.search()
+        button.setMenu(menu)
+        sub_lay6.addWidget(button)
+        
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider(u'Select'))
         main_lay.addLayout(sub_lay1)
@@ -100,13 +129,16 @@ class MenuExample(QWidget, MFieldMixin):
         main_lay.addLayout(sub_lay3)
         main_lay.addWidget(MDivider(u'级联选择'))
         main_lay.addLayout(sub_lay4)
+        main_lay.addLayout(sub_lay5)
+        main_lay.addLayout(sub_lay6)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
 
 if __name__ == '__main__':
     import sys
-
+    import signal
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
     app = QApplication(sys.argv)
     test = MenuExample()
     from dayu_widgets import dayu_theme
