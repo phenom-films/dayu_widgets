@@ -6,23 +6,23 @@
 * 组件
 
     * 通用
-        
+
         * [MIcon](/icon.md)
         * [MLabel](/zh-cn/label.md)
         * [MLoading 加载图标](/zh-cn/loading.md)
         * [MPixmap](/zh-cn/pixmap.md)
         * [MPushButton](/zh-cn/push_button.md)
         * [MToolButton 按钮](/zh-cn/tool_button.md)
-        
+
     * 布局
         * [MFlowLayout 浮动布局](/zh-cn/flow_layou.md)
-        
+
     * 导航
         * [MBreadcrumb 面包屑](/zh-cn/breadcrumb.md)
         * [MMenuTabWidget 菜单形式的导航栏](/zh-cn/menu_tab_widget.md)
         * [MPage 分页](/zh-cn/page.md)
         * [MWizard 步骤](/zh-cn/wizard.md)
-                
+
     * 数据录入
         * [MCheckbox](/zh-cn/check_box.md)
         * [MCascader 级联选择](/cascader.md)
@@ -36,7 +36,7 @@
         * [MDateEdit](/zh-cn/date_edit.md)
         * [MTimeEdit](/zh-cn/time_edit.md)
         * [Upload 上传](/zh-cn/browser.md)
-    
+
     * 数据展示
         * [MAvatar 头像](/zh-cn/avatar.md)
         * [MBadge 徽标](/zh-cn/badge.md)
@@ -51,7 +51,7 @@
         * [MItemViewSet](/zh-cn/item_view_set.md)
         * [MItemViewFullSet](/zh-cn/item_view_full_set.md)
         * [MSequenceFile](/zh-cn/sequence_file.md)
-        
+
     * 反馈
         * [MAlert 警告提示](/zh-cn/alert.md)
         * [MDrawer 抽屉](/zh-cn/drawer.md)
@@ -59,6 +59,6 @@
         * [MProgressBar](/zh-cn/progress_bar.md)
         * [MProgressCircle 环形进度](/zh-cn/circle.md)
         * [MToast](/zh-cn/toast.md)
-        
+
     * 其他
         * [MDivider 分割线](/zh-cn/divider.md)

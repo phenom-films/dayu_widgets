@@ -1,10 +1,25 @@
-import pytest
-from dayu_widgets.qt import QApplication, Qt
-from dayu_widgets.qt import QWidget, QPushButton, QVBoxLayout, QStackedWidget, QLabel, \
-    QStackedLayout, QTabWidget, QTabBar
-from dayu_widgets.qt import QGraphicsDropShadowEffect, QPropertyAnimation, QGraphicsOpacityEffect
-from dayu_widgets import mixin
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
 from dayu_widgets import dayu_theme
+from dayu_widgets import mixin
+from dayu_widgets.qt import QApplication
+from dayu_widgets.qt import QGraphicsDropShadowEffect
+from dayu_widgets.qt import QGraphicsOpacityEffect
+from dayu_widgets.qt import QLabel
+from dayu_widgets.qt import QPropertyAnimation
+from dayu_widgets.qt import QPushButton
+from dayu_widgets.qt import QStackedLayout
+from dayu_widgets.qt import QStackedWidget
+from dayu_widgets.qt import QTabBar
+from dayu_widgets.qt import QTabWidget
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
+import pytest
 
 
 def test_property_mixin(qtbot):
@@ -13,19 +28,19 @@ def test_property_mixin(qtbot):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
             self._test_attr = None
-            self.set_my_property('first_value')
+            self.set_my_property("first_value")
 
         def set_my_property(self, value):
-            self.setProperty('my_property', value)
+            self.setProperty("my_property", value)
 
         def _set_my_property(self, value):
             self._test_attr = value
 
     test_widget = _TestClass()
-    assert test_widget._test_attr == 'first_value'
+    assert test_widget._test_attr == "first_value"
     qtbot.addWidget(test_widget)
-    test_widget.set_my_property('test_string')
-    assert test_widget._test_attr == 'test_string'
+    test_widget.set_my_property("test_string")
+    assert test_widget._test_attr == "test_string"
 
 
 def test_cursor_mixin(qtbot):
@@ -34,7 +49,9 @@ def test_cursor_mixin(qtbot):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
             geo = QApplication.desktop().screenGeometry()
-            self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
+            self.setGeometry(
+                geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2
+            )
 
     main_widget = QWidget()
     button_test = _TestClass()
@@ -87,7 +104,9 @@ def test_focus_shadow_mixin(qtbot):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
             geo = QApplication.desktop().screenGeometry()
-            self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
+            self.setGeometry(
+                geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2
+            )
 
     main_widget = QWidget()
     button_test = _TestClass()
@@ -133,7 +152,9 @@ def test_hover_shadow_mixin(qtbot):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
             geo = QApplication.desktop().screenGeometry()
-            self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
+            self.setGeometry(
+                geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2
+            )
 
     main_widget = QWidget()
     button_test = _TestClass()
@@ -176,14 +197,17 @@ def test_hover_shadow_mixin(qtbot):
     qtbot.waitUntil(check_effect)
 
 
-@pytest.mark.parametrize('input_widget, result', (
-    (QLabel, False),
-    (QWidget, False),
-    (QStackedWidget, True),
-    (QStackedLayout, False),
-    (QTabWidget, True),
-    (QTabBar, False),
-))
+@pytest.mark.parametrize(
+    "input_widget, result",
+    (
+        (QLabel, False),
+        (QWidget, False),
+        (QStackedWidget, True),
+        (QStackedLayout, False),
+        (QTabWidget, True),
+        (QTabBar, False),
+    ),
+)
 def test_stackable(input_widget, result):
     assert mixin._stackable(input_widget) == result
 
@@ -196,19 +220,19 @@ def test_stacked_animation_mixin_normal(qtbot):
 
     main_widget = _TestClass()
     qtbot.addWidget(main_widget)
-    assert hasattr(main_widget, '_to_show_pos_ani')
+    assert hasattr(main_widget, "_to_show_pos_ani")
     assert isinstance(main_widget._to_show_pos_ani, QPropertyAnimation)
-    assert hasattr(main_widget, '_to_hide_pos_ani')
+    assert hasattr(main_widget, "_to_hide_pos_ani")
     assert isinstance(main_widget._to_hide_pos_ani, QPropertyAnimation)
-    assert hasattr(main_widget, '_opacity_eff')
+    assert hasattr(main_widget, "_opacity_eff")
     assert isinstance(main_widget._opacity_eff, QGraphicsOpacityEffect)
-    assert hasattr(main_widget, '_opacity_ani')
+    assert hasattr(main_widget, "_opacity_ani")
     assert isinstance(main_widget._opacity_ani, QPropertyAnimation)
-    assert hasattr(main_widget, '_play_anim')
-    assert hasattr(main_widget, '_disable_opacity')
+    assert hasattr(main_widget, "_play_anim")
+    assert hasattr(main_widget, "_disable_opacity")
 
     assert main_widget._previous_index == 0
-    label_1 = QLabel('test')
+    label_1 = QLabel("test")
     index_1 = main_widget.addWidget(label_1)
 
     def check_index():
@@ -217,7 +241,7 @@ def test_stacked_animation_mixin_normal(qtbot):
 
     qtbot.waitUntil(check_index)
 
-    label_2 = QLabel('test2')
+    label_2 = QLabel("test2")
     index_2 = main_widget.addWidget(label_2)
     main_widget.setCurrentIndex(index_1)
 
@@ -243,10 +267,9 @@ def test_stacked_animation_mixin_error(qtbot):
 
     main_widget = _TestClass()
     qtbot.addWidget(main_widget)
-    assert not hasattr(main_widget, '_to_show_pos_ani')
-    assert not hasattr(main_widget, '_to_hide_pos_ani')
-    assert not hasattr(main_widget, '_opacity_eff')
-    assert not hasattr(main_widget, '_opacity_ani')
-    assert not hasattr(main_widget, '_play_anim')
-    assert not hasattr(main_widget, '_disable_opacity')
-
+    assert not hasattr(main_widget, "_to_show_pos_ani")
+    assert not hasattr(main_widget, "_to_hide_pos_ani")
+    assert not hasattr(main_widget, "_opacity_eff")
+    assert not hasattr(main_widget, "_opacity_ani")
+    assert not hasattr(main_widget, "_play_anim")
+    assert not hasattr(main_widget, "_disable_opacity")

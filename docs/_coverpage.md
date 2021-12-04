@@ -2,7 +2,7 @@
 
 # DaYu Widgets <small>0.0.1</small>
 
-> Web Style Components for PySide 
+> Web Style Components for PySide
 
 * Based on PySide
 * Easy to use

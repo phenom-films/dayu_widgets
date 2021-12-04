@@ -6,14 +6,31 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
 from dayu_widgets.button_group import MToolButtonGroup
-from dayu_widgets.item_model import MSortFilterModel, MTableModel
-from dayu_widgets.item_view import MTableView, MBigView
+from dayu_widgets.item_model import MSortFilterModel
+from dayu_widgets.item_model import MTableModel
+from dayu_widgets.item_view import MBigView
+from dayu_widgets.item_view import MTableView
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.page import MPage
+from dayu_widgets.qt import MIcon
+from dayu_widgets.qt import QApplication
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QItemSelection
+from dayu_widgets.qt import QModelIndex
+from dayu_widgets.qt import QStackedWidget
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import Signal
+from dayu_widgets.qt import Slot
 from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.qt import QModelIndex, QItemSelection, Signal, Slot, QStackedWidget, MIcon, \
-    QWidget, QHBoxLayout, QVBoxLayout, QApplication, Qt
 
 
 class MItemViewFullSet(QWidget):
@@ -41,18 +58,18 @@ class MItemViewFullSet(QWidget):
             self.table_view.pressed.connect(self.slot_left_clicked)
             self.table_view.setModel(self.sort_filter_model)
             self.stack_widget.addWidget(self.table_view)
-            data_group.append({'svg': 'table_view.svg',
-                               'checkable': True,
-                               'tooltip': u'Table View'})
+            data_group.append(
+                {"svg": "table_view.svg", "checkable": True, "tooltip": "Table View"}
+            )
         if big_view:
             self.big_view = MBigView()
             self.big_view.doubleClicked.connect(self.sig_double_clicked)
             self.big_view.pressed.connect(self.slot_left_clicked)
             self.big_view.setModel(self.sort_filter_model)
             self.stack_widget.addWidget(self.big_view)
-            data_group.append({'svg': 'big_view.svg',
-                               'checkable': True,
-                               'tooltip': u'Big View'})
+            data_group.append(
+                {"svg": "big_view.svg", "checkable": True, "tooltip": "Big View"}
+            )
 
         # 设置多个view 共享 MItemSelectionModel
         leader_view = self.stack_widget.widget(0)
@@ -65,21 +82,27 @@ class MItemViewFullSet(QWidget):
 
         self.selection_model.currentChanged.connect(self.sig_current_changed)
         self.selection_model.currentRowChanged.connect(self.sig_current_row_changed)
-        self.selection_model.currentColumnChanged.connect(self.sig_current_column_changed)
+        self.selection_model.currentColumnChanged.connect(
+            self.sig_current_column_changed
+        )
         self.selection_model.selectionChanged.connect(self.sig_selection_changed)
 
         self.tool_bar = QWidget()
         self.top_lay = QHBoxLayout()
         self.top_lay.setContentsMargins(0, 0, 0, 0)
         if data_group and len(data_group) > 1:
-            self.view_button_grp.sig_checked_changed.connect(self.stack_widget.setCurrentIndex)
+            self.view_button_grp.sig_checked_changed.connect(
+                self.stack_widget.setCurrentIndex
+            )
             self.view_button_grp.set_button_list(data_group)
             self.view_button_grp.set_dayu_checked(0)
             self.top_lay.addWidget(self.view_button_grp)
         self.search_line_edit = MLineEdit().search().small()
-        self.search_attr_button = MToolButton().icon_only().svg('down_fill.svg').small()
+        self.search_attr_button = MToolButton().icon_only().svg("down_fill.svg").small()
         self.search_line_edit.set_prefix_widget(self.search_attr_button)
-        self.search_line_edit.textChanged.connect(self.sort_filter_model.set_search_pattern)
+        self.search_line_edit.textChanged.connect(
+            self.sort_filter_model.set_search_pattern
+        )
         self.search_line_edit.setVisible(False)
 
         self.top_lay.addStretch()

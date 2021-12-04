@@ -8,15 +8,27 @@
 """
 Example code for MDateTimeEdit, MDoubleSpinBox, MSpinBox, MTimeEdit, MDateEdit
 """
-from dayu_widgets.spin_box import MDateTimeEdit, MDoubleSpinBox, MSpinBox, MTimeEdit, MDateEdit
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
 from dayu_widgets.divider import MDivider
-from dayu_widgets.qt import QWidget, QVBoxLayout, QHBoxLayout
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.spin_box import MDateEdit
+from dayu_widgets.spin_box import MDateTimeEdit
+from dayu_widgets.spin_box import MDoubleSpinBox
+from dayu_widgets.spin_box import MSpinBox
+from dayu_widgets.spin_box import MTimeEdit
 
 
 class SpinBoxExample(QWidget):
     def __init__(self, parent=None):
         super(SpinBoxExample, self).__init__(parent)
-        self.setWindowTitle('Examples for Spin Box')
+        self.setWindowTitle("Examples for Spin Box")
 
         main_lay = QVBoxLayout()
         class_list = [MSpinBox, MDoubleSpinBox, MDateTimeEdit, MDateEdit, MTimeEdit]
@@ -28,7 +40,7 @@ class SpinBoxExample(QWidget):
             lay.addWidget(cls().small())
             main_lay.addLayout(lay)
 
-        main_lay.addWidget(MDivider('Pop Calendar Widget'))
+        main_lay.addWidget(MDivider("Pop Calendar Widget"))
         date_time_edit = MDateTimeEdit()
         date_time_edit.setCalendarPopup(True)
         date_edit = MDateEdit()
@@ -45,10 +57,14 @@ class SpinBoxExample(QWidget):
         self.setLayout(main_lay)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Import built-in modules
     import sys
+
+    # Import third-party modules
     from dayu_widgets import dayu_theme
     from dayu_widgets.qt import QApplication
+
     app = QApplication(sys.argv)
     test = SpinBoxExample()
     dayu_theme.apply(test)

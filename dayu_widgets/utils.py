@@ -7,27 +7,52 @@
 """
 Some helper functions for handling color and formatter.
 """
-import six
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 
+# Import built-in modules
 import collections
 import datetime as dt
+import functools
 import math
 import os
 
-import functools
+# Import third-party modules
+import six
 
-if hasattr(functools, 'singledispatch'):
+
+if hasattr(functools, "singledispatch"):
+    # Import built-in modules
     from functools import singledispatch
 else:
     from singledispatch import singledispatch
 
-from dayu_widgets import DEFAULT_STATIC_FOLDER, CUSTOM_STATIC_FOLDERS
-from dayu_widgets.qt import QColor, QSortFilterProxyModel, QModelIndex, QFont, MIcon, \
-    QIcon, QSettings, QRect, QByteArray, QPainter, QPainterPath, QPixmap, Qt, QPen, \
-    QApplication, get_scale_factor
+# Import third-party modules
+from dayu_widgets import CUSTOM_STATIC_FOLDERS
+from dayu_widgets import DEFAULT_STATIC_FOLDER
+from dayu_widgets.qt import MIcon
+from dayu_widgets.qt import QApplication
+from dayu_widgets.qt import QByteArray
+from dayu_widgets.qt import QColor
+from dayu_widgets.qt import QFont
+from dayu_widgets.qt import QIcon
+from dayu_widgets.qt import QModelIndex
+from dayu_widgets.qt import QPainter
+from dayu_widgets.qt import QPainterPath
+from dayu_widgets.qt import QPen
+from dayu_widgets.qt import QPixmap
+from dayu_widgets.qt import QRect
+from dayu_widgets.qt import QSettings
+from dayu_widgets.qt import QSortFilterProxyModel
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import get_scale_factor
 
-ItemViewMenuEvent = collections.namedtuple('ItemViewMenuEvent',
-                                           ['view', 'selection', 'extra'])
+
+ItemViewMenuEvent = collections.namedtuple(
+    "ItemViewMenuEvent", ["view", "selection", "extra"]
+)
 
 
 def get_static_file(path):
@@ -39,12 +64,18 @@ def get_static_file(path):
     :return: if input file found, return the full path, else return None
     """
     if not isinstance(path, six.string_types):
-        raise TypeError("Input argument 'path' should be six.string_types type, "
-                        "but get {}".format(type(path)))
-    full_path = next((os.path.join(prefix, path)
-                      for prefix in ['', DEFAULT_STATIC_FOLDER] + CUSTOM_STATIC_FOLDERS
-                      if os.path.isfile(os.path.join(prefix, path))),
-                     path)
+        raise TypeError(
+            "Input argument 'path' should be six.string_types type, "
+            "but get {}".format(type(path))
+        )
+    full_path = next(
+        (
+            os.path.join(prefix, path)
+            for prefix in ["", DEFAULT_STATIC_FOLDER] + CUSTOM_STATIC_FOLDERS
+            if os.path.isfile(os.path.join(prefix, path))
+        ),
+        path,
+    )
     if os.path.isfile(full_path):
         return full_path
     return None
@@ -58,11 +89,15 @@ def from_list_to_nested_dict(input_arg, sep="/"):
     :return: a list of nested dict
     """
     if not isinstance(input_arg, (list, tuple, set)):
-        raise TypeError("Input argument 'input' should be list or tuple or set, "
-                        "but get {}".format(type(input_arg)))
+        raise TypeError(
+            "Input argument 'input' should be list or tuple or set, "
+            "but get {}".format(type(input_arg))
+        )
     if not isinstance(sep, six.string_types):
-        raise TypeError("Input argument 'sep' should be six.string_types, "
-                        "but get {}".format(type(sep)))
+        raise TypeError(
+            "Input argument 'sep' should be six.string_types, "
+            "but get {}".format(type(sep))
+        )
 
     result = []
     for item in input_arg:
@@ -70,13 +105,13 @@ def from_list_to_nested_dict(input_arg, sep="/"):
         component_count = len(components)
         current = result
         for i, comp in enumerate(components):
-            atom = next((x for x in current if x['value'] == comp), None)
+            atom = next((x for x in current if x["value"] == comp), None)
             if atom is None:
-                atom = {'value': comp, 'label': comp, 'children': []}
+                atom = {"value": comp, "label": comp, "children": []}
                 current.append(atom)
-            current = atom['children']
+            current = atom["children"]
             if i == component_count - 1:
-                atom.pop('children')
+                atom.pop("children")
     return result
 
 
@@ -89,7 +124,9 @@ def fade_color(color, alpha):
     :return: qss/css color format rgba(r, g, b, a)
     """
     q_color = QColor(color)
-    return 'rgba({}, {}, {}, {})'.format(q_color.red(), q_color.green(), q_color.blue(), alpha)
+    return "rgba({}, {}, {}, {})".format(
+        q_color.red(), q_color.green(), q_color.blue(), alpha
+    )
 
 
 def generate_color(primary_color, index):
@@ -144,12 +181,16 @@ def generate_color(primary_color, index):
         return max((v_comp * 100 - brightness_step2 * i) / 100, 0.0)
 
     light = index <= 6
-    hsv_color = QColor(primary_color) if isinstance(primary_color, six.string_types) else primary_color
+    hsv_color = (
+        QColor(primary_color)
+        if isinstance(primary_color, six.string_types)
+        else primary_color
+    )
     index = light_color_count + 1 - index if light else index - light_color_count - 1
     return QColor.fromHsvF(
         _get_hue(hsv_color, index, light),
         _get_saturation(hsv_color, index, light),
-        _get_value(hsv_color, index, light)
+        _get_value(hsv_color, index, light),
     ).name()
 
 
@@ -234,10 +275,10 @@ def display_formatter(input_other_type):
 
 @display_formatter.register(dict)
 def _(input_dict):
-    if 'name' in input_dict.keys():
-        return display_formatter(input_dict.get('name'))
-    elif 'code' in input_dict.keys():
-        return display_formatter(input_dict.get('code'))
+    if "name" in input_dict.keys():
+        return display_formatter(input_dict.get("name"))
+    elif "code" in input_dict.keys():
+        return display_formatter(input_dict.get("code"))
     return str(input_dict)
 
 
@@ -246,13 +287,13 @@ def _(input_list):
     result = []
     for i in input_list:
         result.append(display_formatter(i))
-    return ','.join(result)
+    return ",".join(result)
 
 
 @display_formatter.register(str)
 def _(input_str):
     # ['utf-8', 'windows-1250', 'windows-1252', 'ISO-8859-1']
-    return input_str.decode('windows-1252')
+    return input_str.decode("windows-1252")
     # return obj.decode()
 
 
@@ -263,7 +304,7 @@ def _(input_unicode):
 
 @display_formatter.register(type(None))
 def _(input_none):
-    return '--'
+    return "--"
 
 
 @display_formatter.register(int)
@@ -275,21 +316,21 @@ def _(input_int):
 
 @display_formatter.register(float)
 def _(input_float):
-    return '{:.2f}'.format(round(input_float, 2))
+    return "{:.2f}".format(round(input_float, 2))
 
 
 @display_formatter.register(object)
 def _(input_object):
-    if hasattr(input_object, 'name'):
-        return display_formatter(getattr(input_object, 'name'))
-    if hasattr(input_object, 'code'):
-        return display_formatter(getattr(input_object, 'code'))
+    if hasattr(input_object, "name"):
+        return display_formatter(getattr(input_object, "name"))
+    if hasattr(input_object, "code"):
+        return display_formatter(getattr(input_object, "code"))
     return str(input_object)
 
 
 @display_formatter.register(dt.datetime)
 def _(input_datetime):
-    return input_datetime.strftime('%Y-%m-%d %H:%M:%S')
+    return input_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
 
 def font_formatter(setting_dict):
@@ -300,8 +341,8 @@ def font_formatter(setting_dict):
     :return: a QFont instance with given style
     """
     _font = QFont()
-    _font.setUnderline(setting_dict.get('underline') or False)
-    _font.setBold(setting_dict.get('bold') or False)
+    _font.setUnderline(setting_dict.get("underline") or False)
+    _font.setBold(setting_dict.get("bold") or False)
     return _font
 
 
@@ -319,7 +360,7 @@ def icon_formatter(input_other_type):
 
 @icon_formatter.register(dict)
 def _(input_dict):
-    attr_list = ['icon']
+    attr_list = ["icon"]
     path = next((get_obj_value(input_dict, attr) for attr in attr_list), None)
     return icon_formatter(path)
 
@@ -331,7 +372,7 @@ def _(input_dict):
 
 @icon_formatter.register(object)
 def _(input_object):
-    attr_list = ['icon']
+    attr_list = ["icon"]
     path = next((get_obj_value(input_object, attr) for attr in attr_list), None)
     return icon_formatter(path)
 
@@ -348,7 +389,7 @@ def _(input_tuple):
 
 @icon_formatter.register(type(None))
 def _(input_none):
-    return icon_formatter('confirm_fill.svg')
+    return icon_formatter("confirm_fill.svg")
 
 
 def overflow_format(num, overflow):
@@ -357,12 +398,15 @@ def overflow_format(num, overflow):
     When this integer is large than given overflow, return "overflow+"
     """
     if not isinstance(num, int):
-        raise ValueError("Input argument 'num' should be int type, "
-                         "but get {}".format(type(num)))
+        raise ValueError(
+            "Input argument 'num' should be int type, " "but get {}".format(type(num))
+        )
     if not isinstance(overflow, int):
-        raise ValueError("Input argument 'overflow' should be int type, "
-                         "but get {}".format(type(overflow)))
-    return str(num) if num <= overflow else '{}+'.format(overflow)
+        raise ValueError(
+            "Input argument 'overflow' should be int type, "
+            "but get {}".format(type(overflow))
+        )
+    return str(num) if num <= overflow else "{}+".format(overflow)
 
 
 def get_percent(value, minimum, maximum):
@@ -400,10 +444,11 @@ def get_page_display_string(current, per, total):
     :param total: total count
     :return: str
     """
-    return '{start} - {end} of {total}'.format(
+    return "{start} - {end} of {total}".format(
         start=((current - 1) * per + 1) if current else 0,
         end=min(total, current * per),
-        total=total)
+        total=total,
+    )
 
 
 def add_settings(organization, app_name, event_name="closeEvent"):
@@ -498,7 +543,9 @@ def convert_to_round_pixmap(orig_pix):
 
 
 def generate_text_pixmap(width, height, text, alignment=Qt.AlignCenter):
+    # Import third-party modules
     from dayu_widgets import dayu_theme
+
     # draw a pixmap with text
     pix_map = QPixmap(width, height)
     pix_map.fill(QColor(dayu_theme.background_in_color))

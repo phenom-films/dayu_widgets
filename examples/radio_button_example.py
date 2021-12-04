@@ -6,31 +6,40 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
+from dayu_widgets.qt import MIcon
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
 from dayu_widgets.radio_button import MRadioButton
-from dayu_widgets.qt import QWidget, QHBoxLayout, QVBoxLayout, MIcon
 
 
 class RadioButtonExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(RadioButtonExample, self).__init__(parent)
-        self.setWindowTitle('Example for MRadioButton')
+        self.setWindowTitle("Example for MRadioButton")
         widget_1 = QWidget()
         lay_1 = QHBoxLayout()
-        lay_1.addWidget(MRadioButton('Maya'))
-        lay_1.addWidget(MRadioButton('Nuke'))
-        lay_1.addWidget(MRadioButton('Houdini'))
+        lay_1.addWidget(MRadioButton("Maya"))
+        lay_1.addWidget(MRadioButton("Nuke"))
+        lay_1.addWidget(MRadioButton("Houdini"))
         widget_1.setLayout(lay_1)
 
-        check_box_icon_1 = MRadioButton('Folder')
-        check_box_icon_1.setIcon(MIcon('folder_fill.svg'))
-        check_box_icon_2 = MRadioButton('Media')
-        check_box_icon_2.setIcon(MIcon('media_fill.svg'))
-        check_box_icon_3 = MRadioButton('User')
-        check_box_icon_3.setIcon(MIcon('user_fill.svg'))
+        check_box_icon_1 = MRadioButton("Folder")
+        check_box_icon_1.setIcon(MIcon("folder_fill.svg"))
+        check_box_icon_2 = MRadioButton("Media")
+        check_box_icon_2.setIcon(MIcon("media_fill.svg"))
+        check_box_icon_3 = MRadioButton("User")
+        check_box_icon_3.setIcon(MIcon("user_fill.svg"))
         check_box_icon_2.setChecked(True)
         widget_2 = QWidget()
         lay_2 = QHBoxLayout()
@@ -39,26 +48,30 @@ class RadioButtonExample(QWidget, MFieldMixin):
         lay_2.addWidget(check_box_icon_3)
         widget_2.setLayout(lay_2)
 
-        check_box_single = MRadioButton(u'支付宝')
+        check_box_single = MRadioButton("支付宝")
         check_box_single.setChecked(True)
         check_box_single.setEnabled(False)
 
-        check_box_bind = MRadioButton('Data Bind')
+        check_box_bind = MRadioButton("Data Bind")
         label = MLabel()
-        button = MPushButton(text='Change State')
-        button.clicked.connect(lambda: self.set_field('checked', not self.field('checked')))
-        self.register_field('checked', True)
-        self.register_field('checked_text', lambda: 'Yes!' if self.field('checked') else 'No!!')
-        self.bind('checked', check_box_bind, 'checked', signal='toggled')
-        self.bind('checked_text', label, 'text')
+        button = MPushButton(text="Change State")
+        button.clicked.connect(
+            lambda: self.set_field("checked", not self.field("checked"))
+        )
+        self.register_field("checked", True)
+        self.register_field(
+            "checked_text", lambda: "Yes!" if self.field("checked") else "No!!"
+        )
+        self.bind("checked", check_box_bind, "checked", signal="toggled")
+        self.bind("checked_text", label, "text")
 
         main_lay = QVBoxLayout()
-        main_lay.addWidget(MDivider('Basic'))
+        main_lay.addWidget(MDivider("Basic"))
         main_lay.addWidget(widget_1)
         main_lay.addWidget(check_box_single)
-        main_lay.addWidget(MDivider('Icon'))
+        main_lay.addWidget(MDivider("Icon"))
         main_lay.addWidget(widget_2)
-        main_lay.addWidget(MDivider('Data Bind'))
+        main_lay.addWidget(MDivider("Data Bind"))
         main_lay.addWidget(check_box_bind)
         main_lay.addWidget(label)
         main_lay.addWidget(button)
@@ -66,10 +79,14 @@ class RadioButtonExample(QWidget, MFieldMixin):
         self.setLayout(main_lay)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Import built-in modules
     import sys
-    from dayu_widgets.qt import QApplication
+
+    # Import third-party modules
     from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import QApplication
+
     app = QApplication(sys.argv)
     test = RadioButtonExample()
     dayu_theme.apply(test)

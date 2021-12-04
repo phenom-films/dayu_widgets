@@ -6,8 +6,19 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
 from dayu_widgets import dayu_theme
-from dayu_widgets.qt import QLabel, QSizePolicy, Qt, QSize, Property, QEvent
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QEvent
+from dayu_widgets.qt import QLabel
+from dayu_widgets.qt import QSize
+from dayu_widgets.qt import QSizePolicy
+from dayu_widgets.qt import Qt
 
 
 class MLabel(QLabel):
@@ -17,20 +28,22 @@ class MLabel(QLabel):
         dayu_level: integer
         dayu_type: str
     """
-    SecondaryType = 'secondary'
-    WarningType = 'warning'
-    DangerType = 'danger'
+
+    SecondaryType = "secondary"
+    WarningType = "warning"
+    DangerType = "danger"
     H1Level = 1
     H2Level = 2
     H3Level = 3
     H4Level = 4
 
-    def __init__(self, text='', parent=None, flags=Qt.Widget):
+    def __init__(self, text="", parent=None, flags=Qt.Widget):
         super(MLabel, self).__init__(text, parent, flags)
         self.setTextInteractionFlags(
-            Qt.TextBrowserInteraction | Qt.LinksAccessibleByMouse)
+            Qt.TextBrowserInteraction | Qt.LinksAccessibleByMouse
+        )
         self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
-        self._dayu_type = ''
+        self._dayu_type = ""
         self._dayu_underline = False
         self._dayu_mark = False
         self._dayu_delete = False
@@ -38,7 +51,7 @@ class MLabel(QLabel):
         self._dayu_code = False
         self._dayu_level = 0
         self._elide_mode = Qt.ElideNone
-        self.setProperty('dayu_text', text)
+        self.setProperty("dayu_text", text)
 
     def get_dayu_level(self):
         """Get MLabel level."""
@@ -123,7 +136,7 @@ class MLabel(QLabel):
 
         :returns:   The original unmodified text
         """
-        return self.property('text')
+        return self.property("text")
 
     def setText(self, text):
         """
@@ -131,7 +144,7 @@ class MLabel(QLabel):
 
         :param text:    The text to set on the label
         """
-        self.setProperty('text', text)
+        self.setProperty("text", text)
         self._update_elided_text()
         self.setToolTip(text)
 
@@ -143,10 +156,10 @@ class MLabel(QLabel):
         """
         # 这里富文本的超链接必须使用 html 的样式，使用 qss 不起作用
         link_style = dayu_theme.hyperlink_style
-        self.setText('{style}<a href="{href}">{text}</a>'.format(
-            style=link_style,
-            href=href,
-            text=text or href)
+        self.setText(
+            '{style}<a href="{href}">{text}</a>'.format(
+                style=link_style, href=href, text=text or href
+            )
         )
         self.setOpenExternalLinks(True)
 
@@ -155,10 +168,11 @@ class MLabel(QLabel):
         Update the elided text on the label
         """
         _font_metrics = self.fontMetrics()
-        text = self.property('text')
+        text = self.property("text")
         text = text if text else ""
-        _elided_text = _font_metrics.elidedText(text, self._elide_mode,
-                                                self.width() - 2 * 2)
+        _elided_text = _font_metrics.elidedText(
+            text, self._elide_mode, self.width() - 2 * 2
+        )
         super(MLabel, self).setText(_elided_text)
 
     def resizeEvent(self, event):
@@ -230,6 +244,9 @@ class MLabel(QLabel):
         return self
 
     def event(self, event):
-        if event.type() == QEvent.DynamicPropertyChange and event.propertyName() == 'dayu_text':
-            self.setText(self.property('dayu_text'))
+        if (
+            event.type() == QEvent.DynamicPropertyChange
+            and event.propertyName() == "dayu_text"
+        ):
+            self.setText(self.property("dayu_text"))
         return super(MLabel, self).event(event)

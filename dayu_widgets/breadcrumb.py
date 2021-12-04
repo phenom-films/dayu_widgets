@@ -9,9 +9,18 @@
 MBreadcrumb
 """
 
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
 from dayu_widgets.label import MLabel
+from dayu_widgets.qt import QButtonGroup
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QSizePolicy
+from dayu_widgets.qt import QWidget
 from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.qt import QHBoxLayout, QWidget, QSizePolicy, QButtonGroup
 
 
 class MBreadcrumb(QWidget):
@@ -22,7 +31,7 @@ class MBreadcrumb(QWidget):
     It allows going back to states higher up in the hierarchy.
     """
 
-    def __init__(self, separator='/', parent=None):
+    def __init__(self, separator="/", parent=None):
         super(MBreadcrumb, self).__init__(parent)
         self._separator = separator
         self._main_layout = QHBoxLayout()
@@ -50,15 +59,15 @@ class MBreadcrumb(QWidget):
     def add_item(self, data_dict, index=None):
         """Add a item"""
         button = MToolButton()
-        button.setText(data_dict.get('text'))
-        if data_dict.get('svg'):
-            button.svg(data_dict.get('svg'))
-        if data_dict.get('tooltip'):
-            button.setProperty('toolTip', data_dict.get('tooltip'))
-        if data_dict.get('clicked'):
-            button.clicked.connect(data_dict.get('clicked'))
-        if data_dict.get('text'):
-            if data_dict.get('svg') or data_dict.get('icon'):
+        button.setText(data_dict.get("text"))
+        if data_dict.get("svg"):
+            button.svg(data_dict.get("svg"))
+        if data_dict.get("tooltip"):
+            button.setProperty("toolTip", data_dict.get("tooltip"))
+        if data_dict.get("clicked"):
+            button.clicked.connect(data_dict.get("clicked"))
+        if data_dict.get("text"):
+            if data_dict.get("svg") or data_dict.get("icon"):
                 button.text_beside_icon()
             else:
                 button.text_only()

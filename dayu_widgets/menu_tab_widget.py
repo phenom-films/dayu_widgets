@@ -7,11 +7,22 @@
 ###################################################################
 """A Navigation menu"""
 
-from dayu_widgets.tool_button import MToolButton
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from dayu_widgets import dayu_theme
 from dayu_widgets.button_group import MButtonGroupBase
 from dayu_widgets.divider import MDivider
-from dayu_widgets.qt import Signal, QWidget, Property, QHBoxLayout, QVBoxLayout, Qt
-from dayu_widgets import dayu_theme
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import Signal
+from dayu_widgets.tool_button import MToolButton
 
 
 class MBlockButton(MToolButton):
@@ -24,6 +35,7 @@ class MBlockButton(MToolButton):
 
 class MBlockButtonGroup(MButtonGroupBase):
     """MBlockButtonGroup"""
+
     sig_checked_changed = Signal(int)
 
     def __init__(self, tab, orientation=Qt.Horizontal, parent=None):
@@ -35,10 +47,10 @@ class MBlockButtonGroup(MButtonGroupBase):
 
     def create_button(self, data_dict):
         button = MBlockButton()
-        if data_dict.get('svg'):
-            button.svg(data_dict.get('svg'))
-        if data_dict.get('text'):
-            if data_dict.get('svg') or data_dict.get('icon'):
+        if data_dict.get("svg"):
+            button.svg(data_dict.get("svg"))
+        if data_dict.get("text"):
+            if data_dict.get("svg") or data_dict.get("icon"):
                 button.text_beside_icon()
             else:
                 button.text_only()
@@ -61,7 +73,9 @@ class MBlockButtonGroup(MButtonGroupBase):
         """Get current checked button's id"""
         return self._button_group.checkedId()
 
-    dayu_checked = Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
+    dayu_checked = Property(
+        int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
+    )
 
 
 class MMenuTabWidget(QWidget):
@@ -81,7 +95,7 @@ class MMenuTabWidget(QWidget):
         self._bar_layout.addWidget(self.tool_button_group)
         self._bar_layout.addStretch()
         bar_widget = QWidget()
-        bar_widget.setObjectName('bar_widget')
+        bar_widget.setObjectName("bar_widget")
         bar_widget.setLayout(self._bar_layout)
         bar_widget.setAttribute(Qt.WA_StyledBackground)
         main_lay = QVBoxLayout()

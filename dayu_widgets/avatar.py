@@ -8,8 +8,19 @@
 """
 MAvatar.
 """
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
 from dayu_widgets import dayu_theme
-from dayu_widgets.qt import QPixmap, QLabel, MPixmap, QSize, Qt, Property
+from dayu_widgets.qt import MPixmap
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QLabel
+from dayu_widgets.qt import QPixmap
+from dayu_widgets.qt import QSize
+from dayu_widgets.qt import Qt
 
 
 class MAvatar(QLabel):
@@ -23,7 +34,7 @@ class MAvatar(QLabel):
 
     def __init__(self, parent=None, flags=Qt.Widget):
         super(MAvatar, self).__init__(parent, flags)
-        self._default_pix = MPixmap('user_fill.svg')
+        self._default_pix = MPixmap("user_fill.svg")
         self._pixmap = self._default_pix
         self._dayu_size = 0
         self.set_dayu_size(dayu_theme.default_size)
@@ -42,7 +53,9 @@ class MAvatar(QLabel):
         self._set_dayu_image()
 
     def _set_dayu_image(self):
-        self.setPixmap(self._pixmap.scaledToWidth(self.height(), Qt.SmoothTransformation))
+        self.setPixmap(
+            self._pixmap.scaledToWidth(self.height(), Qt.SmoothTransformation)
+        )
 
     def set_dayu_image(self, value):
         """
@@ -55,8 +68,10 @@ class MAvatar(QLabel):
         elif isinstance(value, QPixmap):
             self._pixmap = self._default_pix if value.isNull() else value
         else:
-            raise TypeError("Input argument 'value' should be QPixmap or None, "
-                            "but get {}".format(type(value)))
+            raise TypeError(
+                "Input argument 'value' should be QPixmap or None, "
+                "but get {}".format(type(value))
+            )
         self._set_dayu_image()
 
     def get_dayu_image(self):

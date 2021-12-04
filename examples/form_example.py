@@ -6,8 +6,16 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
 from dayu_widgets.form import MForm
 from dayu_widgets.qt import *
+
+
 # from schematics.models import Model
 # from schematics.types import StringType
 #
@@ -23,10 +31,13 @@ from dayu_widgets.qt import *
 #         super(MFormTest, self).__init__(parent)
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Import built-in modules
     import sys
+
+    # Import third-party modules
     from dayu_widgets import dayu_theme
+
     app = QApplication(sys.argv)
     test = MFormTest()
     dayu_theme.apply(test)
