@@ -7,9 +7,6 @@
 ###################################################################
 
 import random
-import signal
-
-signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 from dayu_widgets import dayu_theme
 from dayu_widgets.combo_box import MComboBox
@@ -143,11 +140,12 @@ class ComboBoxExample(QWidget, MFieldMixin):
         sub_lay5.addWidget(select5)
         sub_lay5.addStretch()
 
-        layout = QHBoxLayout()
+        sub_lay6 = QHBoxLayout()
         combo = MComboBox()
-        combo.addItems([u"北京", u"上海", u"广州", u"深圳"])
-        combo.search()
-        layout.addWidget(combo)
+        combo.addItems([u"北京", u"上海", u"广州", u"深圳","北戴河"])
+        combo.setProperty("search",True)
+        sub_lay6.addWidget(MLabel(u"搜索补全"))
+        sub_lay6.addWidget(combo)
 
         main_lay = QVBoxLayout()
         main_lay.addWidget(MDivider(u"Select"))
@@ -157,7 +155,7 @@ class ComboBoxExample(QWidget, MFieldMixin):
         main_lay.addWidget(MDivider(u"自定义格式"))
         main_lay.addLayout(sub_lay4)
         main_lay.addLayout(sub_lay5)
-        main_lay.addLayout(layout)
+        main_lay.addLayout(sub_lay6)
         main_lay.addStretch()
 
         self.setLayout(main_lay)
@@ -165,10 +163,12 @@ class ComboBoxExample(QWidget, MFieldMixin):
 
 if __name__ == "__main__":
     import sys
+    import signal
+    from dayu_widgets import dayu_theme
 
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
     app = QApplication(sys.argv)
     test = ComboBoxExample()
-    from dayu_widgets import dayu_theme
 
     dayu_theme.apply(test)
     test.show()
