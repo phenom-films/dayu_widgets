@@ -195,7 +195,9 @@ class MDrawer(QWidget):
     def show(self):
         self._set_proper_position()
         self._fade_int()
-        return super(MDrawer, self).show()
+        super(MDrawer, self).show()
+        # NOTES(timmyliang): for chinese input
+        self.activateWindow()
 
     def closeEvent(self, event):
         if self._is_first_close:
