@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+###################################################################
+# Author: Mu yanru
+# Date  : 2019.2
+# Email : muyanru345@163.com
+###################################################################
+
 # Import future modules
 from __future__ import absolute_import
 from __future__ import division
@@ -87,9 +95,9 @@ header_list = [
 ]
 
 
-class TableViewExample(QtWidgets.QWidget):
+class DelegateButtonExample(QtWidgets.QWidget):
     def __init__(self, parent=None):
-        super(TableViewExample, self).__init__(parent)
+        super(DelegateButtonExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -144,7 +152,7 @@ if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
-    test = TableViewExample()
+    test = DelegateButtonExample()
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())

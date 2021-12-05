@@ -14,7 +14,6 @@ from __future__ import print_function
 # Import third-party modules
 from Qt import QtWidgets
 from dayu_widgets.divider import MDivider
-from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.text_edit import MTextEdit
 
