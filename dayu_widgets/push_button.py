@@ -8,14 +8,22 @@
 """
 MPushButton.
 """
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
-from dayu_widgets.mixin import cursor_mixin, focus_shadow_mixin
-from dayu_widgets.qt import QPushButton, Property
+from dayu_widgets.mixin import cursor_mixin
+from dayu_widgets.mixin import focus_shadow_mixin
 
 
 @cursor_mixin
 @focus_shadow_mixin
-class MPushButton(QPushButton):
+class MPushButton(QtWidgets.QPushButton):
     """
     QPushButton.
 
@@ -23,13 +31,14 @@ class MPushButton(QPushButton):
         dayu_size: The size of push button
         dayu_type: The type of push button.
     """
-    DefaultType = 'default'
-    PrimaryType = 'primary'
-    SuccessType = 'success'
-    WarningType = 'warning'
-    DangerType = 'danger'
 
-    def __init__(self, text='', icon=None, parent=None):
+    DefaultType = "default"
+    PrimaryType = "primary"
+    SuccessType = "success"
+    WarningType = "warning"
+    DangerType = "danger"
+
+    def __init__(self, text="", icon=None, parent=None):
         if icon is None:
             super(MPushButton, self).__init__(text=text, parent=parent)
         else:
@@ -65,19 +74,23 @@ class MPushButton(QPushButton):
         Set the push button type.
         :return: None
         """
-        if value in [MPushButton.DefaultType,
-                     MPushButton.PrimaryType,
-                     MPushButton.SuccessType,
-                     MPushButton.WarningType,
-                     MPushButton.DangerType]:
+        if value in [
+            MPushButton.DefaultType,
+            MPushButton.PrimaryType,
+            MPushButton.SuccessType,
+            MPushButton.WarningType,
+            MPushButton.DangerType,
+        ]:
             self._dayu_type = value
         else:
-            raise ValueError("Input argument 'value' should be one of "
-                             "default/primary/success/warning/danger string.")
+            raise ValueError(
+                "Input argument 'value' should be one of "
+                "default/primary/success/warning/danger string."
+            )
         self.style().polish(self)
 
-    dayu_type = Property(str, get_dayu_type, set_dayu_type)
-    dayu_size = Property(int, get_dayu_size, set_dayu_size)
+    dayu_type = QtCore.Property(str, get_dayu_type, set_dayu_type)
+    dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)
 
     def primary(self):
         """Set MPushButton to PrimaryType"""

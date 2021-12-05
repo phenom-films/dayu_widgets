@@ -6,24 +6,32 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets.button_group import MToolButtonGroup
-from dayu_widgets.item_model import MSortFilterModel, MTableModel
-from dayu_widgets.item_view import MTableView, MBigView
+from dayu_widgets.item_model import MSortFilterModel
+from dayu_widgets.item_model import MTableModel
+from dayu_widgets.item_view import MBigView
+from dayu_widgets.item_view import MTableView
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.page import MPage
 from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.qt import QModelIndex, QItemSelection, Signal, Slot, QStackedWidget, MIcon, \
-    QWidget, QHBoxLayout, QVBoxLayout, QApplication, Qt
 
 
-class MItemViewFullSet(QWidget):
-    sig_double_clicked = Signal(QModelIndex)
-    sig_left_clicked = Signal(QModelIndex)
-    sig_current_changed = Signal(QModelIndex, QModelIndex)
-    sig_current_row_changed = Signal(QModelIndex, QModelIndex)
-    sig_current_column_changed = Signal(QModelIndex, QModelIndex)
-    sig_selection_changed = Signal(QItemSelection, QItemSelection)
-    sig_context_menu = Signal(object)
+class MItemViewFullSet(QtWidgets.QWidget):
+    sig_double_clicked = QtCore.Signal(QtCore.QModelIndex)
+    sig_left_clicked = QtCore.Signal(QtCore.QModelIndex)
+    sig_current_changed = QtCore.Signal(QtCore.QModelIndex, QtCore.QModelIndex)
+    sig_current_row_changed = QtCore.Signal(QtCore.QModelIndex, QtCore.QModelIndex)
+    sig_current_column_changed = QtCore.Signal(QtCore.QModelIndex, QtCore.QModelIndex)
+    sig_selection_changed = QtCore.Signal(QtCore.QItemSelection, QtCore.QItemSelection)
+    sig_context_menu = QtCore.Signal(object)
 
     def __init__(self, table_view=True, big_view=False, parent=None):
         super(MItemViewFullSet, self).__init__(parent)
@@ -31,7 +39,7 @@ class MItemViewFullSet(QWidget):
         self.source_model = MTableModel()
         self.sort_filter_model.setSourceModel(self.source_model)
 
-        self.stack_widget = QStackedWidget()
+        self.stack_widget = QtWidgets.QStackedWidget()
 
         self.view_button_grp = MToolButtonGroup(exclusive=True)
         data_group = []
@@ -41,18 +49,18 @@ class MItemViewFullSet(QWidget):
             self.table_view.pressed.connect(self.slot_left_clicked)
             self.table_view.setModel(self.sort_filter_model)
             self.stack_widget.addWidget(self.table_view)
-            data_group.append({'svg': 'table_view.svg',
-                               'checkable': True,
-                               'tooltip': u'Table View'})
+            data_group.append(
+                {"svg": "table_view.svg", "checkable": True, "tooltip": "Table View"}
+            )
         if big_view:
             self.big_view = MBigView()
             self.big_view.doubleClicked.connect(self.sig_double_clicked)
             self.big_view.pressed.connect(self.slot_left_clicked)
             self.big_view.setModel(self.sort_filter_model)
             self.stack_widget.addWidget(self.big_view)
-            data_group.append({'svg': 'big_view.svg',
-                               'checkable': True,
-                               'tooltip': u'Big View'})
+            data_group.append(
+                {"svg": "big_view.svg", "checkable": True, "tooltip": "Big View"}
+            )
 
         # 设置多个view 共享 MItemSelectionModel
         leader_view = self.stack_widget.widget(0)
@@ -65,21 +73,27 @@ class MItemViewFullSet(QWidget):
 
         self.selection_model.currentChanged.connect(self.sig_current_changed)
         self.selection_model.currentRowChanged.connect(self.sig_current_row_changed)
-        self.selection_model.currentColumnChanged.connect(self.sig_current_column_changed)
+        self.selection_model.currentColumnChanged.connect(
+            self.sig_current_column_changed
+        )
         self.selection_model.selectionChanged.connect(self.sig_selection_changed)
 
-        self.tool_bar = QWidget()
-        self.top_lay = QHBoxLayout()
+        self.tool_bar = QtWidgets.QWidget()
+        self.top_lay = QtWidgets.QHBoxLayout()
         self.top_lay.setContentsMargins(0, 0, 0, 0)
         if data_group and len(data_group) > 1:
-            self.view_button_grp.sig_checked_changed.connect(self.stack_widget.setCurrentIndex)
+            self.view_button_grp.sig_checked_changed.connect(
+                self.stack_widget.setCurrentIndex
+            )
             self.view_button_grp.set_button_list(data_group)
             self.view_button_grp.set_dayu_checked(0)
             self.top_lay.addWidget(self.view_button_grp)
         self.search_line_edit = MLineEdit().search().small()
-        self.search_attr_button = MToolButton().icon_only().svg('down_fill.svg').small()
+        self.search_attr_button = MToolButton().icon_only().svg("down_fill.svg").small()
         self.search_line_edit.set_prefix_widget(self.search_attr_button)
-        self.search_line_edit.textChanged.connect(self.sort_filter_model.set_search_pattern)
+        self.search_line_edit.textChanged.connect(
+            self.sort_filter_model.set_search_pattern
+        )
         self.search_line_edit.setVisible(False)
 
         self.top_lay.addStretch()
@@ -87,7 +101,7 @@ class MItemViewFullSet(QWidget):
         self.tool_bar.setLayout(self.top_lay)
 
         self.page_set = MPage()
-        self.main_lay = QVBoxLayout()
+        self.main_lay = QtWidgets.QVBoxLayout()
         self.main_lay.setSpacing(5)
         self.main_lay.setContentsMargins(0, 0, 0, 0)
         self.main_lay.addWidget(self.tool_bar)
@@ -114,10 +128,10 @@ class MItemViewFullSet(QWidget):
     def tool_bar_visible(self, flag):
         self.tool_bar.setVisible(flag)
 
-    @Slot(QModelIndex)
+    @QtCore.Slot(QtCore.QModelIndex)
     def slot_left_clicked(self, start_index):
-        button = QApplication.mouseButtons()
-        if button == Qt.LeftButton:
+        button = QtWidgets.QApplication.mouseButtons()
+        if button == QtCore.Qt.LeftButton:
             real_index = self.sort_filter_model.mapToSource(start_index)
             self.sig_left_clicked.emit(real_index)
 
@@ -135,7 +149,7 @@ class MItemViewFullSet(QWidget):
     def tool_bar_insert_widget(self, widget):
         self.top_lay.insertWidget(0, widget)
 
-    @Slot()
+    @QtCore.Slot()
     def setup_data(self, data_list):
         self.source_model.clear()
         if data_list:
@@ -145,7 +159,7 @@ class MItemViewFullSet(QWidget):
             view = self.stack_widget.widget(index)
             view.set_header_list(self.source_model.header_list)
 
-    @Slot(int)
+    @QtCore.Slot(int)
     def set_record_count(self, total):
         self.page_set.set_total(total)
 

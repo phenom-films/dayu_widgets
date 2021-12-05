@@ -4,39 +4,58 @@
 # Date  : 2019.3
 # Email : muyanru345@163.com
 ###################################################################
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtGui
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets import utils
 from dayu_widgets.header_view import MHeaderView
 from dayu_widgets.item_model import MTableModel
 from dayu_widgets.menu import MMenu
-from dayu_widgets.qt import QPainter, QPen, Qt, QBrush, MPixmap, QStyledItemDelegate, QStyle, Slot, \
-    Signal, QPoint, QSortFilterProxyModel, QSize, QTableView, QListView, QTreeView, QSettings, \
-    QAbstractItemView, QColor, get_scale_factor
+from dayu_widgets.qt import MPixmap
+from dayu_widgets.qt import get_scale_factor
+import six
 
 
 def draw_empty_content(view, text=None, pix_map=None):
+    # Import third-party modules
     from dayu_widgets import dayu_theme
-    pix_map = pix_map or MPixmap('empty.svg')
-    text = text or view.tr('No Data')
-    painter = QPainter(view)
+
+    pix_map = pix_map or MPixmap("empty.svg")
+    text = text or view.tr("No Data")
+    painter = QtGui.QPainter(view)
     font_metrics = painter.fontMetrics()
-    painter.setPen(QPen(QColor(dayu_theme.secondary_text_color)))
+    painter.setPen(QtGui.QPen(QtGui.QColor(dayu_theme.secondary_text_color)))
     content_height = pix_map.height() + font_metrics.height()
     padding = 10
-    proper_min_size = min(view.height() - padding * 2, view.width() - padding * 2, content_height)
+    proper_min_size = min(
+        view.height() - padding * 2, view.width() - padding * 2, content_height
+    )
     if proper_min_size < content_height:
-        pix_map = pix_map.scaledToHeight(proper_min_size - font_metrics.height(),
-                                         Qt.SmoothTransformation)
+        pix_map = pix_map.scaledToHeight(
+            proper_min_size - font_metrics.height(), QtCore.Qt.SmoothTransformation
+        )
         content_height = proper_min_size
-    painter.drawText(view.width() / 2 - font_metrics.width(text) / 2,
-                     view.height() / 2 + content_height / 2 - font_metrics.height() / 2,
-                     text)
-    painter.drawPixmap(view.width() / 2 - pix_map.width() / 2,
-                       view.height() / 2 - content_height / 2, pix_map)
+    painter.drawText(
+        view.width() / 2 - font_metrics.width(text) / 2,
+        view.height() / 2 + content_height / 2 - font_metrics.height() / 2,
+        text,
+    )
+    painter.drawPixmap(
+        view.width() / 2 - pix_map.width() / 2,
+        view.height() / 2 - content_height / 2,
+        pix_map,
+    )
     painter.end()
 
 
-class MOptionDelegate(QStyledItemDelegate):
+class MOptionDelegate(QtWidgets.QStyledItemDelegate):
     def __init__(self, parent=None):
         super(MOptionDelegate, self).__init__(parent)
         self.editor = None
@@ -52,53 +71,57 @@ class MOptionDelegate(QStyledItemDelegate):
     def createEditor(self, parent, option, index):
         self.parent_widget = parent
         self.editor = MMenu(exclusive=self.exclusive, parent=parent)
-        self.editor.setWindowFlags(Qt.FramelessWindowHint | Qt.Window)
+        self.editor.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Window)
         model = utils.real_model(index)
         real_index = utils.real_index(index)
         data_obj = real_index.internalPointer()
-        attr = '{}_list'.format(model.header_list[real_index.column()].get('key'))
+        attr = "{}_list".format(model.header_list[real_index.column()].get("key"))
 
         self.editor.set_data(utils.get_obj_value(data_obj, attr, []))
         self.editor.sig_value_changed.connect(self._slot_finish_edit)
         return self.editor
 
     def setEditorData(self, editor, index):
-        editor.set_value(index.data(Qt.EditRole))
+        editor.set_value(index.data(QtCore.Qt.EditRole))
 
     def setModelData(self, editor, model, index):
-        model.setData(index, editor.property('value'))
+        model.setData(index, editor.property("value"))
 
     def updateEditorGeometry(self, editor, option, index):
-        editor.move(self.parent_widget.mapToGlobal(
-            QPoint(option.rect.x(), option.rect.y() + option.rect.height())))
+        editor.move(
+            self.parent_widget.mapToGlobal(
+                QtCore.QPoint(option.rect.x(), option.rect.y() + option.rect.height())
+            )
+        )
 
     def paint(self, painter, option, index):
         painter.save()
         icon_color = dayu_theme.icon_color
-        if option.state & QStyle.State_MouseOver:
-            painter.fillRect(option.rect, QColor(dayu_theme.primary_5))
-            icon_color = '#fff'
-        if option.state & QStyle.State_Selected:
-            painter.fillRect(option.rect, QColor(dayu_theme.primary_6))
-            icon_color = '#fff'
-        painter.setRenderHint(QPainter.Antialiasing)
-        painter.setPen(Qt.NoPen)
-        painter.setBrush(QBrush(Qt.white))
-        pix = MPixmap('down_fill.svg', icon_color)
+        if option.state & QtWidgets.QStyle.State_MouseOver:
+            painter.fillRect(option.rect, QtGui.QColor(dayu_theme.primary_5))
+            icon_color = "#fff"
+        if option.state & QtWidgets.QStyle.State_Selected:
+            painter.fillRect(option.rect, QtGui.QColor(dayu_theme.primary_6))
+            icon_color = "#fff"
+        painter.setRenderHint(QtGui.QPainter.Antialiasing)
+        painter.setPen(QtCore.Qt.NoPen)
+        painter.setBrush(QtGui.QBrush(QtCore.Qt.white))
+        pix = MPixmap("down_fill.svg", icon_color)
         h = option.rect.height()
-        pix = pix.scaledToWidth(h * 0.5, Qt.SmoothTransformation)
-        painter.drawPixmap(option.rect.x() + option.rect.width() - h,
-                           option.rect.y() + h / 4, pix)
+        pix = pix.scaledToWidth(h * 0.5, QtCore.Qt.SmoothTransformation)
+        painter.drawPixmap(
+            option.rect.x() + option.rect.width() - h, option.rect.y() + h / 4, pix
+        )
         painter.restore()
         super(MOptionDelegate, self).paint(painter, option, index)
 
-    @Slot(object)
+    @QtCore.Slot(object)
     def _slot_finish_edit(self, obj):
         self.commitData.emit(self.editor)
 
     def sizeHint(self, option, index):
         orig = super(MOptionDelegate, self).sizeHint(option, index)
-        return QSize(orig.width() + self.arrow_space, orig.height())
+        return QtCore.QSize(orig.width() + self.arrow_space, orig.height())
 
     # def eventFilter(self, obj, event):
     #     if obj is self.editor:
@@ -110,15 +133,15 @@ def set_header_list(self, header_list):
     scale_x, _ = get_scale_factor()
     self.header_list = header_list
     if self.header_view:
-        self.header_view.setSortIndicator(-1, Qt.AscendingOrder)
+        self.header_view.setSortIndicator(-1, QtCore.Qt.AscendingOrder)
         for index, i in enumerate(header_list):
-            self.header_view.setSectionHidden(index, i.get('hide', False))
-            self.header_view.resizeSection(index, i.get('width', 100) * scale_x)
-            if i.get('order', None) is not None:
-                self.header_view.setSortIndicator(index, i.get('order'))
-            if i.get('selectable', False):
+            self.header_view.setSectionHidden(index, i.get("hide", False))
+            self.header_view.resizeSection(index, i.get("width", 100) * scale_x)
+            if i.get("order", None) is not None:
+                self.header_view.setSortIndicator(index, i.get("order"))
+            if i.get("selectable", False):
                 delegate = MOptionDelegate(parent=self)
-                delegate.set_exclusive(i.get('exclusive', True))
+                delegate.set_exclusive(i.get("exclusive", True))
                 self.setItemDelegateForColumn(index, delegate)
             elif self.itemDelegateForColumn(index):
                 self.setItemDelegateForColumn(index, None)
@@ -126,21 +149,27 @@ def set_header_list(self, header_list):
 
 def enable_context_menu(self, enable):
     if enable:
-        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self.slot_context_menu)
     else:
-        self.setContextMenuPolicy(Qt.NoContextMenu)
+        self.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
 
 
-@Slot(QPoint)
+@QtCore.Slot(QtCore.QPoint)
 def slot_context_menu(self, point):
     proxy_index = self.indexAt(point)
     if proxy_index.isValid():
-        need_map = isinstance(self.model(), QSortFilterProxyModel)
+        need_map = isinstance(self.model(), QtCore.QSortFilterProxyModel)
         selection = []
-        for index in self.selectionModel().selectedRows() or self.selectionModel().selectedIndexes():
-            data_obj = self.model().mapToSource(
-                index).internalPointer() if need_map else index.internalPointer()
+        for index in (
+            self.selectionModel().selectedRows()
+            or self.selectionModel().selectedIndexes()
+        ):
+            data_obj = (
+                self.model().mapToSource(index).internalPointer()
+                if need_map
+                else index.internalPointer()
+            )
             selection.append(data_obj)
         event = utils.ItemViewMenuEvent(view=self, selection=selection, extra={})
         self.sig_context_menu.emit(event)
@@ -152,24 +181,24 @@ def slot_context_menu(self, point):
 def mouse_move_event(self, event):
     index = self.indexAt(event.pos())
     real_index = utils.real_index(index)
-    if self.header_list[real_index.column()].get('is_link', False):
-        key_name = self.header_list[real_index.column()]['attr']
+    if self.header_list[real_index.column()].get("is_link", False):
+        key_name = self.header_list[real_index.column()]["attr"]
         data_obj = utils.real_model(self.model()).data_list[real_index.row()]
         value = utils.get_obj_value(data_obj, key_name)
         if value:
-            self.setCursor(Qt.PointingHandCursor)
+            self.setCursor(QtCore.Qt.PointingHandCursor)
             return
-    self.setCursor(Qt.ArrowCursor)
+    self.setCursor(QtCore.Qt.ArrowCursor)
 
 
 def mouse_release_event(self, event):
-    if event.button() != Qt.LeftButton:
-        QTableView.mouseReleaseEvent(self, event)
+    if event.button() != QtCore.Qt.LeftButton:
+        QtWidgets.QTableView.mouseReleaseEvent(self, event)
         return
     index = self.indexAt(event.pos())
     real_index = utils.real_index(index)
-    if self.headerList[real_index.column()].get('is_link', False):
-        key_name = self.header_list[real_index.column()]['attr']
+    if self.headerList[real_index.column()].get("is_link", False):
+        key_name = self.header_list[real_index.column()]["attr"]
         data_obj = utils.real_model(self.model()).data_list[real_index.row()]
         value = utils.get_obj_value(data_obj, key_name)
         if value:
@@ -182,28 +211,28 @@ def mouse_release_event(self, event):
                     self.sig_link_clicked.emit(i)
 
 
-class MTableView(QTableView):
+class MTableView(QtWidgets.QTableView):
     set_header_list = set_header_list
     enable_context_menu = enable_context_menu
     slot_context_menu = slot_context_menu
-    sig_context_menu = Signal(object)
+    sig_context_menu = QtCore.Signal(object)
 
     def __init__(self, size=None, show_row_count=False, parent=None):
         super(MTableView, self).__init__(parent)
         self._no_data_image = None
-        self._no_data_text = self.tr('No Data')
+        self._no_data_text = self.tr("No Data")
         size = size or dayu_theme.default_size
-        ver_header_view = MHeaderView(Qt.Vertical, parent=self)
+        ver_header_view = MHeaderView(QtCore.Qt.Vertical, parent=self)
         ver_header_view.setDefaultSectionSize(size)
         self.setVerticalHeader(ver_header_view)
         self.header_list = []
-        self.header_view = MHeaderView(Qt.Horizontal, parent=self)
+        self.header_view = MHeaderView(QtCore.Qt.Horizontal, parent=self)
         self.header_view.setFixedHeight(size)
         if not show_row_count:
             ver_header_view.hide()
         self.setHorizontalHeader(self.header_view)
         self.setSortingEnabled(True)
-        self.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.setAlternatingRowColors(True)
         self.setShowGrid(False)
 
@@ -214,8 +243,8 @@ class MTableView(QTableView):
         self._no_data_image = image
 
     def setShowGrid(self, flag):
-        self.header_view.setProperty('grid', flag)
-        self.verticalHeader().setProperty('grid', flag)
+        self.header_view.setProperty("grid", flag)
+        self.verticalHeader().setProperty("grid", flag)
         self.header_view.style().polish(self.header_view)
 
         return super(MTableView, self).setShowGrid(flag)
@@ -251,31 +280,43 @@ class MTableView(QTableView):
             draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
+                draw_empty_content(
+                    self.viewport(), self._no_data_text, self._no_data_image
+                )
         return super(MTableView, self).paintEvent(event)
 
     def save_state(self, name):
-        settings = QSettings(QSettings.IniFormat, QSettings.UserScope, 'DAYU', 'dayu_widgets')
-        settings.setValue('{}/headerState'.format(name, self.header_view.saveState()))
+        settings = QtCore.QSettings(
+            QtCore.QSettings.IniFormat,
+            QtCore.QSettings.UserScope,
+            "DAYU",
+            "dayu_widgets",
+        )
+        settings.setValue("{}/headerState".format(name, self.header_view.saveState()))
 
     def load_state(self, name):
-        settings = QSettings(QSettings.IniFormat, QSettings.UserScope, 'DAYU', 'dayu_widgets')
-        if settings.value('{}/headerState'.format(name)):
-            self.header_view.restoreState(settings.value('{}/headerState'.format(name)))
+        settings = QtCore.QSettings(
+            QtCore.QSettings.IniFormat,
+            QtCore.QSettings.UserScope,
+            "DAYU",
+            "dayu_widgets",
+        )
+        if settings.value("{}/headerState".format(name)):
+            self.header_view.restoreState(settings.value("{}/headerState".format(name)))
 
 
-class MTreeView(QTreeView):
+class MTreeView(QtWidgets.QTreeView):
     set_header_list = set_header_list
     enable_context_menu = enable_context_menu
     slot_context_menu = slot_context_menu
-    sig_context_menu = Signal(object)
+    sig_context_menu = QtCore.Signal(object)
 
     def __init__(self, parent=None):
         super(MTreeView, self).__init__(parent)
         self._no_data_image = None
-        self._no_data_text = self.tr('No Data')
+        self._no_data_text = self.tr("No Data")
         self.header_list = []
-        self.header_view = MHeaderView(Qt.Horizontal)
+        self.header_view = MHeaderView(QtCore.Qt.Horizontal)
         self.setHeader(self.header_view)
         self.setSortingEnabled(True)
         self.setAlternatingRowColors(True)
@@ -287,42 +328,44 @@ class MTreeView(QTreeView):
             draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
+                draw_empty_content(
+                    self.viewport(), self._no_data_text, self._no_data_image
+                )
         return super(MTreeView, self).paintEvent(event)
 
     def set_no_data_text(self, text):
         self._no_data_text = text
 
 
-class MBigView(QListView):
+class MBigView(QtWidgets.QListView):
     set_header_list = set_header_list
     enable_context_menu = enable_context_menu
     slot_context_menu = slot_context_menu
-    sig_context_menu = Signal(object)
+    sig_context_menu = QtCore.Signal(object)
 
     def __init__(self, parent=None):
         super(MBigView, self).__init__(parent)
         self._no_data_image = None
-        self._no_data_text = self.tr('No Data')
+        self._no_data_text = self.tr("No Data")
         self.header_list = []
         self.header_view = None
-        self.setViewMode(QListView.IconMode)
-        self.setResizeMode(QListView.Adjust)
-        self.setMovement(QListView.Static)
+        self.setViewMode(QtWidgets.QListView.IconMode)
+        self.setResizeMode(QtWidgets.QListView.Adjust)
+        self.setMovement(QtWidgets.QListView.Static)
         self.setSpacing(10)
-        self.setIconSize(QSize(128, 128))
+        self.setIconSize(QtCore.QSize(128, 128))
 
     def wheelEvent(self, event):
         """Override wheelEvent while user press ctrl, zoom the list view icon size."""
-        if event.modifiers() == Qt.ControlModifier:
+        if event.modifiers() == QtCore.Qt.ControlModifier:
             num_degrees = event.delta() / 8.0
             num_steps = num_degrees / 15.0
             factor = pow(1.125, num_steps)
             new_size = self.iconSize() * factor
             if new_size.width() > 200:
-                new_size = QSize(200, 200)
+                new_size = QtCore.QSize(200, 200)
             elif new_size.width() < 24:
-                new_size = QSize(24, 24)
+                new_size = QtCore.QSize(24, 24)
             self.setIconSize(new_size)
         else:
             super(MBigView, self).wheelEvent(event)
@@ -334,24 +377,26 @@ class MBigView(QListView):
             draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
+                draw_empty_content(
+                    self.viewport(), self._no_data_text, self._no_data_image
+                )
         return super(MBigView, self).paintEvent(event)
 
     def set_no_data_text(self, text):
         self._no_data_text = text
 
 
-class MListView(QListView):
+class MListView(QtWidgets.QListView):
     set_header_list = set_header_list
     enable_context_menu = enable_context_menu
     slot_context_menu = slot_context_menu
-    sig_context_menu = Signal(object)
+    sig_context_menu = QtCore.Signal(object)
 
     def __init__(self, size=None, parent=None):
         super(MListView, self).__init__(parent)
         self._no_data_image = None
-        self._no_data_text = self.tr('No Data')
-        self.setProperty('dayu_size', size or dayu_theme.default_size)
+        self._no_data_text = self.tr("No Data")
+        self.setProperty("dayu_size", size or dayu_theme.default_size)
         self.header_list = []
         self.header_view = None
         self.setModelColumn(0)
@@ -359,7 +404,7 @@ class MListView(QListView):
 
     def set_show_column(self, attr):
         for index, attr_dict in enumerate(self.header_list):
-            if attr_dict.get('key') == attr:
+            if attr_dict.get("key") == attr:
                 self.setModelColumn(index)
                 break
         else:
@@ -372,9 +417,10 @@ class MListView(QListView):
             draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
+                draw_empty_content(
+                    self.viewport(), self._no_data_text, self._no_data_image
+                )
         return super(MListView, self).paintEvent(event)
 
     def set_no_data_text(self, text):
         self._no_data_text = text
-

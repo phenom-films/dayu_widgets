@@ -10,13 +10,20 @@ Custom Stylesheet for QSpinBox, QDoubleSpinBox, QDateTimeEdit, QDateEdit, QTimeE
 Only add size arg for their __init__.
 """
 
-from dayu_widgets.mixin import cursor_mixin
-from dayu_widgets.qt import QSpinBox, QDoubleSpinBox, QDateTimeEdit, QDateEdit, QTimeEdit, Property
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
+from dayu_widgets.mixin import cursor_mixin
 
 
 @cursor_mixin
-class MSpinBox(QSpinBox):
+class MSpinBox(QtWidgets.QSpinBox):
     """
     MSpinBox just use stylesheet and add dayu_size. No more extend.
     Property:
@@ -43,7 +50,7 @@ class MSpinBox(QSpinBox):
         self._dayu_size = value
         self.style().polish(self)
 
-    dayu_size = Property(int, get_dayu_size, set_dayu_size)
+    dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)
 
     def huge(self):
         """Set MSpinBox to huge size"""
@@ -72,7 +79,7 @@ class MSpinBox(QSpinBox):
 
 
 @cursor_mixin
-class MDoubleSpinBox(QDoubleSpinBox):
+class MDoubleSpinBox(QtWidgets.QDoubleSpinBox):
     """
     MDoubleSpinBox just use stylesheet and add dayu_size. No more extend.
     Property:
@@ -99,7 +106,7 @@ class MDoubleSpinBox(QDoubleSpinBox):
         self._dayu_size = value
         self.style().polish(self)
 
-    dayu_size = Property(int, get_dayu_size, set_dayu_size)
+    dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)
 
     def huge(self):
         """Set MDoubleSpinBox to huge size"""
@@ -128,7 +135,7 @@ class MDoubleSpinBox(QDoubleSpinBox):
 
 
 @cursor_mixin
-class MDateTimeEdit(QDateTimeEdit):
+class MDateTimeEdit(QtWidgets.QDateTimeEdit):
     """
     MDateTimeEdit just use stylesheet and add dayu_size. No more extend.
     Property:
@@ -158,7 +165,7 @@ class MDateTimeEdit(QDateTimeEdit):
         self._dayu_size = value
         self.style().polish(self)
 
-    dayu_size = Property(int, get_dayu_size, set_dayu_size)
+    dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)
 
     def huge(self):
         """Set MDateTimeEdit to huge size"""
@@ -187,7 +194,7 @@ class MDateTimeEdit(QDateTimeEdit):
 
 
 @cursor_mixin
-class MDateEdit(QDateEdit):
+class MDateEdit(QtWidgets.QDateEdit):
     """
     MDateEdit just use stylesheet and add dayu_size. No more extend.
     Property:
@@ -217,7 +224,7 @@ class MDateEdit(QDateEdit):
         self._dayu_size = value
         self.style().polish(self)
 
-    dayu_size = Property(int, get_dayu_size, set_dayu_size)
+    dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)
 
     def huge(self):
         """Set MDateEdit to huge size"""
@@ -246,7 +253,7 @@ class MDateEdit(QDateEdit):
 
 
 @cursor_mixin
-class MTimeEdit(QTimeEdit):
+class MTimeEdit(QtWidgets.QTimeEdit):
     """
     MTimeEdit just use stylesheet and add dayu_size. No more extend.
     Property:
@@ -276,7 +283,7 @@ class MTimeEdit(QTimeEdit):
         self._dayu_size = value
         self.style().polish(self)
 
-    dayu_size = Property(int, get_dayu_size, set_dayu_size)
+    dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)
 
     def huge(self):
         """Set MTimeEdit to huge size"""

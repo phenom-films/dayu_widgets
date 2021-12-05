@@ -5,11 +5,19 @@
 # Date  : 2019.2
 # Email : muyanru345@163.com
 ###################################################################
-from Qt import QtCore, QtGui, QtWidgets
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 
-import dayu_widgets.utils as utils
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
-from dayu_widgets.mixin import cursor_mixin, focus_shadow_mixin, property_mixin
+from dayu_widgets.mixin import cursor_mixin
+from dayu_widgets.mixin import focus_shadow_mixin
+from dayu_widgets.mixin import property_mixin
+import dayu_widgets.utils as utils
 
 
 @property_mixin

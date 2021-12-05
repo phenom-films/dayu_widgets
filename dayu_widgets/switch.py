@@ -8,13 +8,20 @@
 """
 MSwitch
 """
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import cursor_mixin
-from dayu_widgets.qt import QSize, QRadioButton, Property
 
 
 @cursor_mixin
-class MSwitch(QRadioButton):
+class MSwitch(QtWidgets.QRadioButton):
     """
     Switching Selector.
 
@@ -33,7 +40,7 @@ class MSwitch(QRadioButton):
         :return:
         """
         height = self._dayu_size * 1.2
-        return QSize(height, height / 2)
+        return QtCore.QSize(height, height / 2)
 
     def get_dayu_size(self):
         """
@@ -51,7 +58,7 @@ class MSwitch(QRadioButton):
         self._dayu_size = value
         self.style().polish(self)
 
-    dayu_size = Property(int, get_dayu_size, set_dayu_size)
+    dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)
 
     def huge(self):
         """Set MSwitch to huge size"""

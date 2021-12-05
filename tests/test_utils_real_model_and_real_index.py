@@ -2,13 +2,21 @@
 Test helper functions about Qt MVC: real_model, real_index
 """
 
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
 from dayu_widgets import utils
-from dayu_widgets.qt import QSortFilterProxyModel, QStringListModel, QStandardItemModel
+from dayu_widgets.qt import QSortFilterProxyModel
+from dayu_widgets.qt import QStandardItemModel
+from dayu_widgets.qt import QStringListModel
 
 
 def test_with_string_list_model():
     """Test when source model is QStringListModel"""
-    source_model = QStringListModel(['apple', 'pear', 'orange'])
+    source_model = QStringListModel(["apple", "pear", "orange"])
     sort_filter_model_1 = QSortFilterProxyModel()
     sort_filter_model_1.setSourceModel(source_model)
     sort_filter_model_2 = QSortFilterProxyModel()
@@ -55,7 +63,7 @@ def test_with_standard_item_model():
 
 
 def test_real_index():
-    """Test real_index function. """
+    """Test real_index function."""
     source_model = QStandardItemModel(2, 2)
     sort_filter_model_1 = QSortFilterProxyModel()
     sort_filter_model_1.setSourceModel(source_model)
@@ -81,6 +89,8 @@ def compare_two_model_index(index_1, index_2):
     """
     If the two input index's row and column and their parent is equal, then they are equal for test.
     """
-    return (index_1.row() == index_2.row()) \
-           and (index_1.column() == index_2.column()) \
-           and (index_1.parent() == index_2.parent())
+    return (
+        (index_1.row() == index_2.row())
+        and (index_1.column() == index_2.column())
+        and (index_1.parent() == index_2.parent())
+    )

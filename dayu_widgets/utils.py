@@ -7,27 +7,41 @@
 """
 Some helper functions for handling color and formatter.
 """
-import six
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 
+# Import built-in modules
 import collections
 import datetime as dt
+import functools
 import math
 import os
 
-import functools
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtGui
+from Qt import QtWidgets
+import six
 
-if hasattr(functools, 'singledispatch'):
+
+if hasattr(functools, "singledispatch"):
+    # Import built-in modules
     from functools import singledispatch
 else:
     from singledispatch import singledispatch
 
-from dayu_widgets import DEFAULT_STATIC_FOLDER, CUSTOM_STATIC_FOLDERS
-from dayu_widgets.qt import QColor, QSortFilterProxyModel, QModelIndex, QFont, MIcon, \
-    QIcon, QSettings, QRect, QByteArray, QPainter, QPainterPath, QPixmap, Qt, QPen, \
-    QApplication, get_scale_factor
+# Import third-party modules
+from dayu_widgets import CUSTOM_STATIC_FOLDERS
+from dayu_widgets import DEFAULT_STATIC_FOLDER
+from dayu_widgets.qt import MIcon
+from dayu_widgets.qt import get_scale_factor
 
-ItemViewMenuEvent = collections.namedtuple('ItemViewMenuEvent',
-                                           ['view', 'selection', 'extra'])
+
+ItemViewMenuEvent = collections.namedtuple(
+    "ItemViewMenuEvent", ["view", "selection", "extra"]
+)
 
 
 def get_static_file(path):
@@ -39,12 +53,18 @@ def get_static_file(path):
     :return: if input file found, return the full path, else return None
     """
     if not isinstance(path, six.string_types):
-        raise TypeError("Input argument 'path' should be six.string_types type, "
-                        "but get {}".format(type(path)))
-    full_path = next((os.path.join(prefix, path)
-                      for prefix in ['', DEFAULT_STATIC_FOLDER] + CUSTOM_STATIC_FOLDERS
-                      if os.path.isfile(os.path.join(prefix, path))),
-                     path)
+        raise TypeError(
+            "Input argument 'path' should be six.string_types type, "
+            "but get {}".format(type(path))
+        )
+    full_path = next(
+        (
+            os.path.join(prefix, path)
+            for prefix in ["", DEFAULT_STATIC_FOLDER] + CUSTOM_STATIC_FOLDERS
+            if os.path.isfile(os.path.join(prefix, path))
+        ),
+        path,
+    )
     if os.path.isfile(full_path):
         return full_path
     return None
@@ -58,11 +78,15 @@ def from_list_to_nested_dict(input_arg, sep="/"):
     :return: a list of nested dict
     """
     if not isinstance(input_arg, (list, tuple, set)):
-        raise TypeError("Input argument 'input' should be list or tuple or set, "
-                        "but get {}".format(type(input_arg)))
+        raise TypeError(
+            "Input argument 'input' should be list or tuple or set, "
+            "but get {}".format(type(input_arg))
+        )
     if not isinstance(sep, six.string_types):
-        raise TypeError("Input argument 'sep' should be six.string_types, "
-                        "but get {}".format(type(sep)))
+        raise TypeError(
+            "Input argument 'sep' should be six.string_types, "
+            "but get {}".format(type(sep))
+        )
 
     result = []
     for item in input_arg:
@@ -70,13 +94,13 @@ def from_list_to_nested_dict(input_arg, sep="/"):
         component_count = len(components)
         current = result
         for i, comp in enumerate(components):
-            atom = next((x for x in current if x['value'] == comp), None)
+            atom = next((x for x in current if x["value"] == comp), None)
             if atom is None:
-                atom = {'value': comp, 'label': comp, 'children': []}
+                atom = {"value": comp, "label": comp, "children": []}
                 current.append(atom)
-            current = atom['children']
+            current = atom["children"]
             if i == component_count - 1:
-                atom.pop('children')
+                atom.pop("children")
     return result
 
 
@@ -88,8 +112,10 @@ def fade_color(color, alpha):
     :param alpha: string, percent 'number%'
     :return: qss/css color format rgba(r, g, b, a)
     """
-    q_color = QColor(color)
-    return 'rgba({}, {}, {}, {})'.format(q_color.red(), q_color.green(), q_color.blue(), alpha)
+    q_color = QtGui.QColor(color)
+    return "rgba({}, {}, {}, {})".format(
+        q_color.red(), q_color.green(), q_color.blue(), alpha
+    )
 
 
 def generate_color(primary_color, index):
@@ -144,12 +170,16 @@ def generate_color(primary_color, index):
         return max((v_comp * 100 - brightness_step2 * i) / 100, 0.0)
 
     light = index <= 6
-    hsv_color = QColor(primary_color) if isinstance(primary_color, six.string_types) else primary_color
+    hsv_color = (
+        QtGui.QColor(primary_color)
+        if isinstance(primary_color, six.string_types)
+        else primary_color
+    )
     index = light_color_count + 1 - index if light else index - light_color_count - 1
-    return QColor.fromHsvF(
+    return QtGui.QColor.fromHsvF(
         _get_hue(hsv_color, index, light),
         _get_saturation(hsv_color, index, light),
-        _get_value(hsv_color, index, light)
+        _get_value(hsv_color, index, light),
     ).name()
 
 
@@ -161,12 +191,12 @@ def real_model(source_model):
     return source_model
 
 
-@real_model.register(QSortFilterProxyModel)
+@real_model.register(QtCore.QSortFilterProxyModel)
 def _(proxy_model):
     return proxy_model.sourceModel()
 
 
-@real_model.register(QModelIndex)
+@real_model.register(QtCore.QModelIndex)
 def _(index):
     return real_model(index.model())
 
@@ -176,7 +206,7 @@ def real_index(index):
     Get the source index whenever user give a source index or proxy index.
     """
     model = index.model()
-    if isinstance(model, QSortFilterProxyModel):
+    if isinstance(model, QtCore.QSortFilterProxyModel):
         return model.mapToSource(index)
     return index
 
@@ -234,10 +264,10 @@ def display_formatter(input_other_type):
 
 @display_formatter.register(dict)
 def _(input_dict):
-    if 'name' in input_dict.keys():
-        return display_formatter(input_dict.get('name'))
-    elif 'code' in input_dict.keys():
-        return display_formatter(input_dict.get('code'))
+    if "name" in input_dict.keys():
+        return display_formatter(input_dict.get("name"))
+    elif "code" in input_dict.keys():
+        return display_formatter(input_dict.get("code"))
     return str(input_dict)
 
 
@@ -246,13 +276,13 @@ def _(input_list):
     result = []
     for i in input_list:
         result.append(display_formatter(i))
-    return ','.join(result)
+    return ",".join(result)
 
 
 @display_formatter.register(str)
 def _(input_str):
     # ['utf-8', 'windows-1250', 'windows-1252', 'ISO-8859-1']
-    return input_str.decode('windows-1252')
+    return input_str.decode("windows-1252")
     # return obj.decode()
 
 
@@ -263,7 +293,7 @@ def _(input_unicode):
 
 @display_formatter.register(type(None))
 def _(input_none):
-    return '--'
+    return "--"
 
 
 @display_formatter.register(int)
@@ -275,21 +305,21 @@ def _(input_int):
 
 @display_formatter.register(float)
 def _(input_float):
-    return '{:.2f}'.format(round(input_float, 2))
+    return "{:.2f}".format(round(input_float, 2))
 
 
 @display_formatter.register(object)
 def _(input_object):
-    if hasattr(input_object, 'name'):
-        return display_formatter(getattr(input_object, 'name'))
-    if hasattr(input_object, 'code'):
-        return display_formatter(getattr(input_object, 'code'))
+    if hasattr(input_object, "name"):
+        return display_formatter(getattr(input_object, "name"))
+    if hasattr(input_object, "code"):
+        return display_formatter(getattr(input_object, "code"))
     return str(input_object)
 
 
 @display_formatter.register(dt.datetime)
 def _(input_datetime):
-    return input_datetime.strftime('%Y-%m-%d %H:%M:%S')
+    return input_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
 
 def font_formatter(setting_dict):
@@ -299,9 +329,9 @@ def font_formatter(setting_dict):
     :param bold: font style bold
     :return: a QFont instance with given style
     """
-    _font = QFont()
-    _font.setUnderline(setting_dict.get('underline') or False)
-    _font.setBold(setting_dict.get('bold') or False)
+    _font = QtGui.QFont()
+    _font.setUnderline(setting_dict.get("underline") or False)
+    _font.setBold(setting_dict.get("bold") or False)
     return _font
 
 
@@ -319,19 +349,19 @@ def icon_formatter(input_other_type):
 
 @icon_formatter.register(dict)
 def _(input_dict):
-    attr_list = ['icon']
+    attr_list = ["icon"]
     path = next((get_obj_value(input_dict, attr) for attr in attr_list), None)
     return icon_formatter(path)
 
 
-@icon_formatter.register(QIcon)
+@icon_formatter.register(QtGui.QIcon)
 def _(input_dict):
     return input_dict
 
 
 @icon_formatter.register(object)
 def _(input_object):
-    attr_list = ['icon']
+    attr_list = ["icon"]
     path = next((get_obj_value(input_object, attr) for attr in attr_list), None)
     return icon_formatter(path)
 
@@ -348,7 +378,7 @@ def _(input_tuple):
 
 @icon_formatter.register(type(None))
 def _(input_none):
-    return icon_formatter('confirm_fill.svg')
+    return icon_formatter("confirm_fill.svg")
 
 
 def overflow_format(num, overflow):
@@ -357,12 +387,15 @@ def overflow_format(num, overflow):
     When this integer is large than given overflow, return "overflow+"
     """
     if not isinstance(num, int):
-        raise ValueError("Input argument 'num' should be int type, "
-                         "but get {}".format(type(num)))
+        raise ValueError(
+            "Input argument 'num' should be int type, " "but get {}".format(type(num))
+        )
     if not isinstance(overflow, int):
-        raise ValueError("Input argument 'overflow' should be int type, "
-                         "but get {}".format(type(overflow)))
-    return str(num) if num <= overflow else '{}+'.format(overflow)
+        raise ValueError(
+            "Input argument 'overflow' should be int type, "
+            "but get {}".format(type(overflow))
+        )
+    return str(num) if num <= overflow else "{}+".format(overflow)
 
 
 def get_percent(value, minimum, maximum):
@@ -400,16 +433,20 @@ def get_page_display_string(current, per, total):
     :param total: total count
     :return: str
     """
-    return '{start} - {end} of {total}'.format(
+    return "{start} - {end} of {total}".format(
         start=((current - 1) * per + 1) if current else 0,
         end=min(total, current * per),
-        total=total)
+        total=total,
+    )
 
 
 def add_settings(organization, app_name, event_name="closeEvent"):
     def _read_settings():
-        settings = QSettings(
-            QSettings.IniFormat, QSettings.UserScope, organization, app_name
+        settings = QtCore.QSettings(
+            QtCore.QSettings.IniFormat,
+            QtCore.QSettings.UserScope,
+            organization,
+            app_name,
         )
         result_dict = {key: settings.value(key) for key in settings.childKeys()}
         for grp_name in settings.childGroups():
@@ -424,8 +461,11 @@ def add_settings(organization, app_name, event_name="closeEvent"):
         return result_dict
 
     def _write_settings(self):
-        settings = QSettings(
-            QSettings.IniFormat, QSettings.UserScope, organization, app_name
+        settings = QtCore.QSettings(
+            QtCore.QSettings.IniFormat,
+            QtCore.QSettings.UserScope,
+            organization,
+            app_name,
         )
         for attr, widget, property in self._bind_data:
             settings.setValue(
@@ -450,9 +490,9 @@ def add_settings(organization, app_name, event_name="closeEvent"):
         if callable(formatter):  # 二次处理 value，比如存入的 bool，读取后要恢复成 bool
             value = formatter(value)
         if property == "geometry":  # 窗口大小位置需要特殊处理
-            if isinstance(value, QRect):  # setting 并没有存，使用用户default传入进来的geo
+            if isinstance(value, QtCore.QRect):  # setting 并没有存，使用用户default传入进来的geo
                 widget.setGeometry(value)
-            elif isinstance(value, QByteArray):  # settings 有保存值
+            elif isinstance(value, QtCore.QByteArray):  # settings 有保存值
                 widget.restoreGeometry(value)
         else:
             widget.setProperty(property, value)
@@ -477,50 +517,59 @@ def add_settings(organization, app_name, event_name="closeEvent"):
 
 
 def get_fit_geometry():
-    geo = next((screen.availableGeometry() for screen in QApplication.screens()), None)
-    return QRect(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
+    geo = next(
+        (screen.availableGeometry() for screen in QtWidgets.QApplication.screens()),
+        None,
+    )
+    return QtCore.QRect(
+        geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2
+    )
 
 
 def convert_to_round_pixmap(orig_pix):
     scale_x, _ = get_scale_factor()
     w = min(orig_pix.width(), orig_pix.height())
-    pix_map = QPixmap(w, w)
-    pix_map.fill(Qt.transparent)
+    pix_map = QtGui.QPixmap(w, w)
+    pix_map.fill(QtCore.Qt.transparent)
 
-    painter = QPainter(pix_map)
-    painter.setRenderHints(QPainter.Antialiasing | QPainter.SmoothPixmapTransform)
+    painter = QtGui.QPainter(pix_map)
+    painter.setRenderHints(
+        QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform
+    )
 
-    path = QPainterPath()
+    path = QtGui.QPainterPath()
     path.addEllipse(0, 0, w, w)
     painter.setClipPath(path)
     painter.drawPixmap(0, 0, w, w, orig_pix)
     return pix_map
 
 
-def generate_text_pixmap(width, height, text, alignment=Qt.AlignCenter):
+def generate_text_pixmap(width, height, text, alignment=QtCore.Qt.AlignCenter):
+    # Import third-party modules
     from dayu_widgets import dayu_theme
+
     # draw a pixmap with text
-    pix_map = QPixmap(width, height)
-    pix_map.fill(QColor(dayu_theme.background_in_color))
-    painter = QPainter(pix_map)
-    painter.setRenderHints(QPainter.TextAntialiasing)
+    pix_map = QtGui.QPixmap(width, height)
+    pix_map.fill(QtGui.QColor(dayu_theme.background_in_color))
+    painter = QtGui.QPainter(pix_map)
+    painter.setRenderHints(QtGui.QPainter.TextAntialiasing)
     font = painter.font()
     font.setFamily(dayu_theme.font_family)
     painter.setFont(font)
-    painter.setPen(QPen(QColor(dayu_theme.secondary_text_color)))
+    painter.setPen(QtGui.QPen(QtGui.QColor(dayu_theme.secondary_text_color)))
 
     font_metrics = painter.fontMetrics()
     text_width = font_metrics.horizontalAdvance(text)
     text_height = font_metrics.height()
     x = width / 2 - text_width / 2
     y = height / 2 - text_height / 2
-    if alignment & Qt.AlignLeft:
+    if alignment & QtCore.Qt.AlignLeft:
         x = 0
-    elif alignment & Qt.AlignRight:
+    elif alignment & QtCore.Qt.AlignRight:
         x = width - text_width
-    elif alignment & Qt.AlignTop:
+    elif alignment & QtCore.Qt.AlignTop:
         y = 0
-    elif alignment & Qt.AlignBottom:
+    elif alignment & QtCore.Qt.AlignBottom:
         y = height - text_height
 
     painter.drawText(x, y, text)
@@ -530,12 +579,12 @@ def generate_text_pixmap(width, height, text, alignment=Qt.AlignCenter):
 
 def get_color_icon(color, size=24):
     scale_x, y = get_scale_factor()
-    pix = QPixmap(size * scale_x, size * scale_x)
+    pix = QtGui.QPixmap(size * scale_x, size * scale_x)
     q_color = color
     if isinstance(color, str):
         if color.startswith("#"):
-            q_color = QColor(str)
+            q_color = QtGui.QColor(str)
         elif color.count(",") == 2:
-            q_color = QColor(*tuple(map(int, color.split(","))))
+            q_color = QtGui.QColor(*tuple(map(int, color.split(","))))
     pix.fill(q_color)
-    return QIcon(pix)
+    return QtGui.QIcon(pix)

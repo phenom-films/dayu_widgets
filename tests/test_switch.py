@@ -1,16 +1,25 @@
 """Test MSwitch class"""
-import pytest
-from dayu_widgets.switch import MSwitch
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
 from dayu_widgets import dayu_theme
+from dayu_widgets.switch import MSwitch
+import pytest
 
 
-@pytest.mark.parametrize('cls, size', (
-        ('tiny', dayu_theme.tiny),
-        ('small', dayu_theme.small),
-        ('medium', dayu_theme.medium),
-        ('large', dayu_theme.large),
-        ('huge', dayu_theme.huge),
-))
+@pytest.mark.parametrize(
+    "cls, size",
+    (
+        ("tiny", dayu_theme.tiny),
+        ("small", dayu_theme.small),
+        ("medium", dayu_theme.medium),
+        ("large", dayu_theme.large),
+        ("huge", dayu_theme.huge),
+    ),
+)
 def test_switch_class_method(qtbot, cls, size):
     """test MSwitch class method"""
     switch = MSwitch()

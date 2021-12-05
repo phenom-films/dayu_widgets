@@ -1,24 +1,31 @@
 """
 Test MLoading and MLoadingWrapper class
 """
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from dayu_widgets import dayu_theme
+from dayu_widgets.loading import MLoading
+from dayu_widgets.loading import MLoadingWrapper
+from dayu_widgets.qt import QLabel
+from dayu_widgets.qt import QSize
 import pytest
 
-from dayu_widgets import dayu_theme
-from dayu_widgets.loading import MLoading, MLoadingWrapper
-from dayu_widgets.qt import QLabel, QSize
 
-
-@pytest.mark.parametrize('cls, size', (
-    (MLoading.tiny, dayu_theme.tiny),
-    (MLoading.small, dayu_theme.small),
-    (MLoading.medium, dayu_theme.medium),
-    (MLoading.large, dayu_theme.large),
-    (MLoading.huge, dayu_theme.huge),
-))
-@pytest.mark.parametrize('color', (
-        None,
-        '#13c2c2'
-))
+@pytest.mark.parametrize(
+    "cls, size",
+    (
+        (MLoading.tiny, dayu_theme.tiny),
+        (MLoading.small, dayu_theme.small),
+        (MLoading.medium, dayu_theme.medium),
+        (MLoading.large, dayu_theme.large),
+        (MLoading.huge, dayu_theme.huge),
+    ),
+)
+@pytest.mark.parametrize("color", (None, "#13c2c2"))
 def test_loading_class_method(qtbot, cls, size, color):
     """Test for MLoading class methods"""
     if color:
@@ -38,7 +45,7 @@ def test_loading_class_method(qtbot, cls, size, color):
 
 def test_loading_wrapper(qtbot):
     """Test for MLoadingWrapper class methods"""
-    label = QLabel('test')
+    label = QLabel("test")
     label.setFixedSize(QSize(100, 100))
     widget = MLoadingWrapper(label, loading=False)
     widget.show()

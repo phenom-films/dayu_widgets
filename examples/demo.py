@@ -1,96 +1,115 @@
 # -*- coding: utf-8 -*-
-# ctrl + C stop QApplication
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import built-in modules
 import signal
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
+
+
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+# Import built-in modules
+import importlib
 import os
+import sys
+
+# Import third-party modules
+import Qt
+
+
 # Qt.py global variable for preferred Qt binding
 # os.environ["QT_PREFERRED_BINDING"] = "PyQt4;PyQt5;PySide;PySide2"
 # For Houdini hython.exe
-os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = r"E:\Houdini18\bin\Qt_plugins\platforms"
+# os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = r"E:\Houdini18\bin\Qt_plugins\platforms"
 
-import sys
-MODULE = os.path.join(__file__,"..","..")
-sys.path.insert(0,MODULE) if MODULE not in sys.path else None
-import importlib
 
-import Qt
 print(Qt.__binding__)
 
-from dayu_widgets.qt import QMainWindow, QTextEdit, QStackedWidget, Qt
+# Import built-in modules
+import codecs
 
-
+# Import third-party modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.dock_widget import MDockWidget
 from dayu_widgets.item_view_set import MItemViewSet
-import codecs
+
 
 def get_test_widget():
     result = []
     DIR = os.path.dirname(__file__)
     for i in os.listdir(DIR):
-        if i.startswith('__') or (not i.endswith('.py')) or i == 'demo.py':
+        if i.startswith("__") or (not i.endswith(".py")) or i == "demo.py":
             continue
-        name = i.split('.')[0]
-        module_name = 'examples.{component}'.format(component=name)
-        class_name = ''.join(map(lambda x: x.title(), name.split('_')))
+        name = i.split(".")[0]
+        module_name = "examples.{component}".format(component=name)
+        class_name = "".join(map(lambda x: x.title(), name.split("_")))
         module = importlib.import_module(module_name, class_name)
         if hasattr(module, class_name):
-            with codecs.open(os.path.join(DIR,"%s.py" % name),encoding='utf-8') as f:
+            with codecs.open(os.path.join(DIR, "%s.py" % name), encoding="utf-8") as f:
                 result.append((name, getattr(module, class_name), f.readlines()))
     return result
 
 
-class MDemo(QMainWindow):
+class MDemo(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super(MDemo, self).__init__(parent)
-        self.setWindowTitle('Dayu Widgets Demo')
+        self.setWindowTitle("Dayu Widgets Demo")
         self._init_ui()
 
     def _init_ui(self):
-        self.text_edit = QTextEdit()
-        self.stacked_widget = QStackedWidget()
+        self.text_edit = QtWidgets.QTextEdit()
+        self.stacked_widget = QtWidgets.QStackedWidget()
 
         list_widget = MItemViewSet(view_type=MItemViewSet.ListViewType)
-        list_widget.set_header_list([{'key': 'name', 'label': 'Name', 'icon': 'list_view.svg'}])
+        list_widget.set_header_list(
+            [{"key": "name", "label": "Name", "icon": "list_view.svg"}]
+        )
         list_widget.sig_left_clicked.connect(self.slot_change_widget)
         data_list = []
         for index, (name, cls, code) in enumerate(get_test_widget()):
-            data_list.append({'name': name[:-8], 'data': code})
+            data_list.append({"name": name[:-8], "data": code})
             if not callable(cls):
                 continue
             widget = cls()
-            widget.setProperty('code', code)
+            widget.setProperty("code", code)
             self.stacked_widget.addWidget(widget)
         list_widget.setup_data(data_list)
 
-        test_widget = MDockWidget('Example List')
+        test_widget = MDockWidget("Example List")
         test_widget.setWidget(list_widget)
-        self.addDockWidget(Qt.LeftDockWidgetArea, test_widget)
+        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, test_widget)
 
-        code_widget = MDockWidget('Example Code')
+        code_widget = MDockWidget("Example Code")
         code_widget.setWidget(self.text_edit)
-        self.addDockWidget(Qt.RightDockWidgetArea, code_widget)
+        self.addDockWidget(QtCore.Qt.RightDockWidgetArea, code_widget)
         self.setCentralWidget(self.stacked_widget)
 
     def slot_change_widget(self, index):
         self.stacked_widget.setCurrentIndex(index.row())
         widget = self.stacked_widget.widget(index.row())
-        self.text_edit.setPlainText(''.join(widget.property('code')))
+        self.text_edit.setPlainText("".join(widget.property("code")))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Import built-in modules
     import sys
-    from dayu_widgets.qt import QApplication
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
 
     try:
         test = MDemo()
         dayu_theme.apply(test)
         test.show()
     except:
+        # Import built-in modules
         import traceback
+
         traceback.print_exc()
 
     sys.exit(app.exec_())

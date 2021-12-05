@@ -10,10 +10,10 @@
         * [MPixmap](/pixmap.md)
         * [MPushButton](/push_button.md)
         * [MToolButton](/tool_button.md)
-        
+
     * Layout
         * [MFlowLayout](flow_layou.md)
-        
+
     * Navigation
         * [MBreadcrumb](/breadcrumb.md)
         * [MMenuTabWidget](/menu_tab_widget.md)
@@ -48,7 +48,7 @@
         * [MItemViewSet](/item_view_set.md)
         * [MItemViewFullSet](/item_view_full_set.md)
         * [MSequenceFile](/sequence_file.md)
-        
+
     * Feedback
         * [MAlert](/alert.md)
         * [MDrawer](/drawer.md)

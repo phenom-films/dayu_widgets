@@ -8,55 +8,73 @@
 """
 MToast
 """
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.label import MLabel
 from dayu_widgets.loading import MLoading
-from dayu_widgets.qt import QWidget, Signal, Qt, QSize, MPixmap, QHBoxLayout, QVBoxLayout, \
-    QTimer, QPropertyAnimation, QEasingCurve, QAbstractAnimation, QPoint
+from dayu_widgets.qt import MPixmap
 
 
-class MToast(QWidget):
+class MToast(QtWidgets.QWidget):
     """
     MToast
     A Phone style message.
     """
-    InfoType = 'info'
-    SuccessType = 'success'
-    WarningType = 'warning'
-    ErrorType = 'error'
-    LoadingType = 'loading'
+
+    InfoType = "info"
+    SuccessType = "success"
+    WarningType = "warning"
+    ErrorType = "error"
+    LoadingType = "loading"
 
     default_config = {
-        'duration': 2,
+        "duration": 2,
     }
 
-    sig_closed = Signal()
+    sig_closed = QtCore.Signal()
 
     def __init__(self, text, duration=None, dayu_type=None, parent=None):
         super(MToast, self).__init__(parent)
         self.setWindowFlags(
-            Qt.FramelessWindowHint | Qt.Dialog | Qt.WA_TranslucentBackground | Qt.WA_DeleteOnClose)
-        self.setAttribute(Qt.WA_StyledBackground)
+            QtCore.Qt.FramelessWindowHint
+            | QtCore.Qt.Dialog
+            | QtCore.Qt.WA_TranslucentBackground
+            | QtCore.Qt.WA_DeleteOnClose
+        )
+        self.setAttribute(QtCore.Qt.WA_StyledBackground)
 
-        _icon_lay = QHBoxLayout()
+        _icon_lay = QtWidgets.QHBoxLayout()
         _icon_lay.addStretch()
 
         if dayu_type == MToast.LoadingType:
-            _icon_lay.addWidget(MLoading(size=dayu_theme.huge, color=dayu_theme.text_color_inverse))
+            _icon_lay.addWidget(
+                MLoading(size=dayu_theme.huge, color=dayu_theme.text_color_inverse)
+            )
         else:
             _icon_label = MAvatar()
             _icon_label.set_dayu_size(dayu_theme.toast_icon_size)
-            _icon_label.set_dayu_image(MPixmap('{}_line.svg'.format(dayu_type or MToast.InfoType),
-                                               dayu_theme.text_color_inverse))
+            _icon_label.set_dayu_image(
+                MPixmap(
+                    "{}_line.svg".format(dayu_type or MToast.InfoType),
+                    dayu_theme.text_color_inverse,
+                )
+            )
             _icon_lay.addWidget(_icon_label)
         _icon_lay.addStretch()
 
         _content_label = MLabel()
         _content_label.setText(text)
-        _content_label.setAlignment(Qt.AlignCenter)
+        _content_label.setAlignment(QtCore.Qt.AlignCenter)
 
-        _main_lay = QVBoxLayout()
+        _main_lay = QtWidgets.QVBoxLayout()
         _main_lay.setContentsMargins(0, 0, 0, 0)
         _main_lay.addStretch()
         _main_lay.addLayout(_icon_lay)
@@ -64,23 +82,25 @@ class MToast(QWidget):
         _main_lay.addWidget(_content_label)
         _main_lay.addStretch()
         self.setLayout(_main_lay)
-        self.setFixedSize(QSize(dayu_theme.toast_size, dayu_theme.toast_size))
+        self.setFixedSize(QtCore.QSize(dayu_theme.toast_size, dayu_theme.toast_size))
 
-        _close_timer = QTimer(self)
+        _close_timer = QtCore.QTimer(self)
         _close_timer.setSingleShot(True)
         _close_timer.timeout.connect(self.close)
         _close_timer.timeout.connect(self.sig_closed)
-        _close_timer.setInterval((duration or self.default_config.get('duration')) * 1000)
+        _close_timer.setInterval(
+            (duration or self.default_config.get("duration")) * 1000
+        )
         self.has_played = False
 
         if dayu_type != MToast.LoadingType:
             _close_timer.start()
 
-        self._opacity_ani = QPropertyAnimation()
+        self._opacity_ani = QtCore.QPropertyAnimation()
         self._opacity_ani.setTargetObject(self)
         self._opacity_ani.setDuration(300)
-        self._opacity_ani.setEasingCurve(QEasingCurve.OutCubic)
-        self._opacity_ani.setPropertyName(b'windowOpacity')
+        self._opacity_ani.setEasingCurve(QtCore.QEasingCurve.OutCubic)
+        self._opacity_ani.setPropertyName(b"windowOpacity")
         self._opacity_ani.setStartValue(0.0)
         self._opacity_ani.setEndValue(0.9)
 
@@ -96,7 +116,7 @@ class MToast(QWidget):
 
     def _fade_out(self):
         self.has_played = True
-        self._opacity_ani.setDirection(QAbstractAnimation.Backward)
+        self._opacity_ani.setDirection(QtCore.QAbstractAnimation.Backward)
         self._opacity_ani.finished.connect(self.close)
         self._opacity_ani.start()
 
@@ -105,15 +125,18 @@ class MToast(QWidget):
 
     def _get_center_position(self, parent):
         parent_geo = parent.geometry()
-        pos = parent_geo.topLeft() \
-            if parent.parent() is None else parent.mapToGlobal(parent_geo.topLeft())
+        pos = (
+            parent_geo.topLeft()
+            if parent.parent() is None
+            else parent.mapToGlobal(parent_geo.topLeft())
+        )
         offset = 0
         for child in parent.children():
             if isinstance(child, MToast) and child.isVisible():
                 offset = max(offset, child.y())
         target_x = pos.x() + parent_geo.width() / 2 - self.width() / 2
         target_y = pos.y() + parent_geo.height() / 2 - self.height() / 2
-        self.setProperty('pos', QPoint(target_x, target_y))
+        self.setProperty("pos", QtCore.QPoint(target_x, target_y))
 
     @classmethod
     def info(cls, text, parent, duration=None):
@@ -159,4 +182,4 @@ class MToast(QWidget):
         :return: None
         """
         if duration is not None:
-            cls.default_config['duration'] = duration
+            cls.default_config["duration"] = duration

@@ -9,22 +9,29 @@
 mixin decorators to add Qt class feature.
 """
 
-from dayu_widgets.qt import QEvent, QPoint, QApplication, Qt, QGraphicsDropShadowEffect, QWidget, \
-    QPropertyAnimation, QEasingCurve, QGraphicsOpacityEffect,QColor
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtGui
+from Qt import QtWidgets
 
 
 def property_mixin(cls):
     """Run function after dynamic property value changed"""
 
     def _new_event(self, event):
-        if event.type() == QEvent.DynamicPropertyChange:
+        if event.type() == QtCore.QEvent.DynamicPropertyChange:
             prp = event.propertyName().data().decode()
-            if hasattr(self, '_set_{}'.format(prp)):
-                callback = getattr(self, '_set_{}'.format(prp))
+            if hasattr(self, "_set_{}".format(prp)):
+                callback = getattr(self, "_set_{}".format(prp))
                 callback(self.property(str(prp)))
         return super(cls, self).event(event)
 
-    setattr(cls, 'event', _new_event)
+    setattr(cls, "event", _new_event)
     return cls
 
 
@@ -41,28 +48,30 @@ def cursor_mixin(cls):
     def _new_enter_event(self, *args, **kwargs):
         old_enter_event(self, *args, **kwargs)
         self.__dict__.update({"__dayu_enter": True})
-        QApplication.setOverrideCursor(
-            Qt.PointingHandCursor if self.isEnabled() else Qt.ForbiddenCursor)
+        QtWidgets.QApplication.setOverrideCursor(
+            QtCore.Qt.PointingHandCursor
+            if self.isEnabled()
+            else QtCore.Qt.ForbiddenCursor
+        )
         return super(cls, self).enterEvent(*args, **kwargs)
 
     def _new_leave_event(self, *args, **kwargs):
         old_leave_event(self, *args, **kwargs)
         if self.__dict__.get("__dayu_enter", False):
-            QApplication.restoreOverrideCursor()
+            QtWidgets.QApplication.restoreOverrideCursor()
             self.__dict__.update({"__dayu_enter": False})
         return super(cls, self).leaveEvent(*args, **kwargs)
-
 
     def _new_hide_event(self, *args, **kwargs):
         old_leave_event(self, *args, **kwargs)
         if self.__dict__.get("__dayu_enter", False):
-            QApplication.restoreOverrideCursor()
+            QtWidgets.QApplication.restoreOverrideCursor()
             self.__dict__.update({"__dayu_enter": False})
         return super(cls, self).hideEvent(*args, **kwargs)
 
-    setattr(cls, 'enterEvent', _new_enter_event)
-    setattr(cls, 'leaveEvent', _new_leave_event)
-    setattr(cls, 'hideEvent', _new_hide_event)
+    setattr(cls, "enterEvent", _new_enter_event)
+    setattr(cls, "leaveEvent", _new_leave_event)
+    setattr(cls, "hideEvent", _new_hide_event)
     return cls
 
 
@@ -78,11 +87,13 @@ def focus_shadow_mixin(cls):
     def _new_focus_in_event(self, *args, **kwargs):
         old_focus_in_event(self, *args, **kwargs)
         if not self.graphicsEffect():
+            # Import third-party modules
             from dayu_widgets import dayu_theme
-            shadow_effect = QGraphicsDropShadowEffect(self)
-            dayu_type = self.property('dayu_type')
-            color = vars(dayu_theme).get('{}_color'.format(dayu_type or 'primary'))
-            shadow_effect.setColor(QColor(color))
+
+            shadow_effect = QtWidgets.QGraphicsDropShadowEffect(self)
+            dayu_type = self.property("dayu_type")
+            color = vars(dayu_theme).get("{}_color".format(dayu_type or "primary"))
+            shadow_effect.setColor(QtGui.QColor(color))
             shadow_effect.setOffset(0, 0)
             shadow_effect.setBlurRadius(5)
             shadow_effect.setEnabled(False)
@@ -95,8 +106,8 @@ def focus_shadow_mixin(cls):
         if self.graphicsEffect():
             self.graphicsEffect().setEnabled(False)
 
-    setattr(cls, 'focusInEvent', _new_focus_in_event)
-    setattr(cls, 'focusOutEvent', _new_focus_out_event)
+    setattr(cls, "focusInEvent", _new_focus_in_event)
+    setattr(cls, "focusOutEvent", _new_focus_out_event)
     return cls
 
 
@@ -112,11 +123,13 @@ def hover_shadow_mixin(cls):
     def _new_enter_event(self, *args, **kwargs):
         old_enter_event(self, *args, **kwargs)
         if not self.graphicsEffect():
+            # Import third-party modules
             from dayu_widgets import dayu_theme
-            shadow_effect = QGraphicsDropShadowEffect(self)
-            dayu_type = self.property('type')
-            color = vars(dayu_theme).get('{}_color'.format(dayu_type or 'primary'))
-            shadow_effect.setColor(QColor(color))
+
+            shadow_effect = QtWidgets.QGraphicsDropShadowEffect(self)
+            dayu_type = self.property("type")
+            color = vars(dayu_theme).get("{}_color".format(dayu_type or "primary"))
+            shadow_effect.setColor(QtGui.QColor(color))
             shadow_effect.setOffset(0, 0)
             shadow_effect.setBlurRadius(5)
             shadow_effect.setEnabled(False)
@@ -129,8 +142,8 @@ def hover_shadow_mixin(cls):
         if self.graphicsEffect():
             self.graphicsEffect().setEnabled(False)
 
-    setattr(cls, 'enterEvent', _new_enter_event)
-    setattr(cls, 'leaveEvent', _new_leave_event)
+    setattr(cls, "enterEvent", _new_enter_event)
+    setattr(cls, "leaveEvent", _new_leave_event)
     return cls
 
 
@@ -138,8 +151,11 @@ def _stackable(widget):
     """Used for stacked_animation_mixin to only add mixin for widget who can stacked."""
     # We use widget() to get currentWidget, use currentChanged to play the animation.
     # For now just QTabWidget and QStackedWidget can use this decorator.
-    return issubclass(widget, QWidget) and hasattr(widget, 'widget') and hasattr(widget,
-                                                                                 'currentChanged')
+    return (
+        issubclass(widget, QtWidgets.QWidget)
+        and hasattr(widget, "widget")
+        and hasattr(widget, "currentChanged")
+    )
 
 
 def stacked_animation_mixin(cls):
@@ -154,23 +170,23 @@ def stacked_animation_mixin(cls):
     def _new_init(self, *args, **kwargs):
         old_init(self, *args, **kwargs)
         self._previous_index = 0
-        self._to_show_pos_ani = QPropertyAnimation()
+        self._to_show_pos_ani = QtCore.QPropertyAnimation()
         self._to_show_pos_ani.setDuration(400)
-        self._to_show_pos_ani.setPropertyName(b'pos')
-        self._to_show_pos_ani.setEndValue(QPoint(0, 0))
-        self._to_show_pos_ani.setEasingCurve(QEasingCurve.OutCubic)
+        self._to_show_pos_ani.setPropertyName(b"pos")
+        self._to_show_pos_ani.setEndValue(QtCore.QPoint(0, 0))
+        self._to_show_pos_ani.setEasingCurve(QtCore.QEasingCurve.OutCubic)
 
-        self._to_hide_pos_ani = QPropertyAnimation()
+        self._to_hide_pos_ani = QtCore.QPropertyAnimation()
         self._to_hide_pos_ani.setDuration(400)
-        self._to_hide_pos_ani.setPropertyName(b'pos')
-        self._to_hide_pos_ani.setEndValue(QPoint(0, 0))
-        self._to_hide_pos_ani.setEasingCurve(QEasingCurve.OutCubic)
+        self._to_hide_pos_ani.setPropertyName(b"pos")
+        self._to_hide_pos_ani.setEndValue(QtCore.QPoint(0, 0))
+        self._to_hide_pos_ani.setEasingCurve(QtCore.QEasingCurve.OutCubic)
 
-        self._opacity_eff = QGraphicsOpacityEffect()
-        self._opacity_ani = QPropertyAnimation()
+        self._opacity_eff = QtWidgets.QGraphicsOpacityEffect()
+        self._opacity_ani = QtCore.QPropertyAnimation()
         self._opacity_ani.setDuration(400)
-        self._opacity_ani.setEasingCurve(QEasingCurve.InCubic)
-        self._opacity_ani.setPropertyName(b'opacity')
+        self._opacity_ani.setEasingCurve(QtCore.QEasingCurve.InCubic)
+        self._opacity_ani.setPropertyName(b"opacity")
         self._opacity_ani.setStartValue(0.0)
         self._opacity_ani.setEndValue(1.0)
         self._opacity_ani.setTargetObject(self._opacity_eff)
@@ -180,11 +196,11 @@ def stacked_animation_mixin(cls):
     def _play_anim(self, index):
         current_widget = self.widget(index)
         if self._previous_index < index:
-            self._to_show_pos_ani.setStartValue(QPoint(self.width(), 0))
+            self._to_show_pos_ani.setStartValue(QtCore.QPoint(self.width(), 0))
             self._to_show_pos_ani.setTargetObject(current_widget)
             self._to_show_pos_ani.start()
         else:
-            self._to_hide_pos_ani.setStartValue(QPoint(-self.width(), 0))
+            self._to_hide_pos_ani.setStartValue(QtCore.QPoint(-self.width(), 0))
             self._to_hide_pos_ani.setTargetObject(current_widget)
             self._to_hide_pos_ani.start()
         current_widget.setGraphicsEffect(self._opacity_eff)
@@ -197,7 +213,7 @@ def stacked_animation_mixin(cls):
         # QPainter::begin: A paint device can only be painted by one painter at a time.
         self.currentWidget().graphicsEffect().setEnabled(False)
 
-    setattr(cls, '__init__', _new_init)
-    setattr(cls, '_play_anim', _play_anim)
-    setattr(cls, '_disable_opacity', _disable_opacity)
+    setattr(cls, "__init__", _new_init)
+    setattr(cls, "_play_anim", _play_anim)
+    setattr(cls, "_disable_opacity", _disable_opacity)
     return cls

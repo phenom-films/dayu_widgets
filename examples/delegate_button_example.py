@@ -1,19 +1,28 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+###################################################################
+# Author: Mu yanru
+# Date  : 2019.2
+# Email : muyanru345@163.com
+###################################################################
+
 # Import future modules
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets import utils
 from dayu_widgets.item_model import MSortFilterModel
 from dayu_widgets.item_model import MTableModel
 from dayu_widgets.item_view import MTableView
-from dayu_widgets.qt import *
 
 
-class MPushButtonDelegate(QStyledItemDelegate):
-    sig_clicked = Signal(object)
+class MPushButtonDelegate(QtWidgets.QStyledItemDelegate):
+    sig_clicked = QtCore.Signal(object)
 
     def __init__(self, parent=None):
         super(MPushButtonDelegate, self).__init__(parent)
@@ -23,19 +32,21 @@ class MPushButtonDelegate(QStyledItemDelegate):
         self.parent_widget = None
 
     def editorEvent(self, pEvent, model, option, index):
-        if pEvent.type() == QEvent.MouseButtonRelease:
+        if pEvent.type() == QtCore.QEvent.MouseButtonRelease:
             index = utils.real_index(index)
             self.sig_clicked.emit(index.internalPointer())
             return True
         return False
 
     def paint(self, painter, option, index):
-        button = QStyleOptionButton()
+        button = QtWidgets.QStyleOptionButton()
         button.rect = option.rect
-        button.text = "Click Me (" + str(index.data(Qt.DisplayRole)) + ")"
-        button.state = QStyle.State_Enabled
+        button.text = "Click Me (" + str(index.data(QtCore.Qt.DisplayRole)) + ")"
+        button.state = QtWidgets.QStyle.State_Enabled
 
-        QApplication.style().drawControl(QStyle.CE_PushButton, button, painter)
+        QtWidgets.QApplication.style().drawControl(
+            QtWidgets.QStyle.CE_PushButton, button, painter
+        )
 
 
 header_list = [
@@ -84,9 +95,9 @@ header_list = [
 ]
 
 
-class TableViewExample(QWidget):
+class DelegateButtonExample(QtWidgets.QWidget):
     def __init__(self, parent=None):
-        super(TableViewExample, self).__init__(parent)
+        super(DelegateButtonExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
@@ -128,7 +139,7 @@ class TableViewExample(QWidget):
             ]
         )
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(table_grid)
         self.setLayout(main_lay)
 
@@ -140,8 +151,8 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
-    test = TableViewExample()
+    app = QtWidgets.QApplication(sys.argv)
+    test = DelegateButtonExample()
     dayu_theme.apply(test)
     test.show()
     sys.exit(app.exec_())

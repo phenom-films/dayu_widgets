@@ -16,13 +16,18 @@ repos:
       # - id: mixed-line-ending  # Replace or check mixed line ending
       #   args: ["--fix=lf"]
       - id: check-added-large-files
-        exclude: images/
+        exclude: dayu_widgets/static/
   - repo: https://github.com/ambv/black
     rev: 21.11b1
     hooks:
       - id: black
         language: python
         types: [python]
+  - repo: https://github.com/hadialqattan/pycln
+    rev: v1.1.0
+    hooks:
+    - id: pycln
+      args: [--config=pyproject.toml]
   - repo: https://github.com/pycqa/isort
     rev: 5.10.1
     hooks:

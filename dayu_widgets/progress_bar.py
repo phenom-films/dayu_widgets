@@ -6,29 +6,37 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import QProgressBar, Qt, Property, Slot
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 
 
-class MProgressBar(QProgressBar):
-    '''
+class MProgressBar(QtWidgets.QProgressBar):
+    """
     props:
         status: str
 
-    '''
-    ErrorStatus = 'error'
-    NormalStatus = 'primary'
-    SuccessStatus = 'success'
+    """
+
+    ErrorStatus = "error"
+    NormalStatus = "primary"
+    SuccessStatus = "success"
 
     def __init__(self, parent=None):
         super(MProgressBar, self).__init__(parent=parent)
-        self.setAlignment(Qt.AlignCenter)
+        self.setAlignment(QtCore.Qt.AlignCenter)
         self._status = MProgressBar.NormalStatus
 
     def auto_color(self):
         self.valueChanged.connect(self._update_color)
         return self
 
-    @Slot(int)
+    @QtCore.Slot(int)
     def _update_color(self, value):
         if value >= self.maximum():
             self.set_dayu_status(MProgressBar.SuccessStatus)
@@ -42,7 +50,7 @@ class MProgressBar(QProgressBar):
         self._status = value
         self.style().polish(self)
 
-    dayu_status = Property(str, get_dayu_status, set_dayu_status)
+    dayu_status = QtCore.Property(str, get_dayu_status, set_dayu_status)
 
     def normal(self):
         self.set_dayu_status(MProgressBar.NormalStatus)

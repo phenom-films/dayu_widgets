@@ -7,11 +7,18 @@
 ###################################################################
 """A Navigation menu"""
 
-from dayu_widgets.tool_button import MToolButton
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
+from dayu_widgets import dayu_theme
 from dayu_widgets.button_group import MButtonGroupBase
 from dayu_widgets.divider import MDivider
-from dayu_widgets.qt import Signal, QWidget, Property, QHBoxLayout, QVBoxLayout, Qt
-from dayu_widgets import dayu_theme
+from dayu_widgets.tool_button import MToolButton
 
 
 class MBlockButton(MToolButton):
@@ -24,9 +31,10 @@ class MBlockButton(MToolButton):
 
 class MBlockButtonGroup(MButtonGroupBase):
     """MBlockButtonGroup"""
-    sig_checked_changed = Signal(int)
 
-    def __init__(self, tab, orientation=Qt.Horizontal, parent=None):
+    sig_checked_changed = QtCore.Signal(int)
+
+    def __init__(self, tab, orientation=QtCore.Qt.Horizontal, parent=None):
         super(MBlockButtonGroup, self).__init__(orientation=orientation, parent=parent)
         self.set_spacing(1)
         self._menu_tab = tab
@@ -35,10 +43,10 @@ class MBlockButtonGroup(MButtonGroupBase):
 
     def create_button(self, data_dict):
         button = MBlockButton()
-        if data_dict.get('svg'):
-            button.svg(data_dict.get('svg'))
-        if data_dict.get('text'):
-            if data_dict.get('svg') or data_dict.get('icon'):
+        if data_dict.get("svg"):
+            button.svg(data_dict.get("svg"))
+        if data_dict.get("text"):
+            if data_dict.get("svg") or data_dict.get("icon"):
                 button.text_beside_icon()
             else:
                 button.text_only()
@@ -61,35 +69,37 @@ class MBlockButtonGroup(MButtonGroupBase):
         """Get current checked button's id"""
         return self._button_group.checkedId()
 
-    dayu_checked = Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
+    dayu_checked = QtCore.Property(
+        int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
+    )
 
 
-class MMenuTabWidget(QWidget):
+class MMenuTabWidget(QtWidgets.QWidget):
     """MMenuTabWidget"""
 
-    def __init__(self, orientation=Qt.Horizontal, parent=None):
+    def __init__(self, orientation=QtCore.Qt.Horizontal, parent=None):
         super(MMenuTabWidget, self).__init__(parent=parent)
         self.tool_button_group = MBlockButtonGroup(tab=self, orientation=orientation)
 
-        if orientation == Qt.Horizontal:
-            self._bar_layout = QHBoxLayout()
+        if orientation == QtCore.Qt.Horizontal:
+            self._bar_layout = QtWidgets.QHBoxLayout()
             self._bar_layout.setContentsMargins(10, 0, 10, 0)
         else:
-            self._bar_layout = QVBoxLayout()
+            self._bar_layout = QtWidgets.QVBoxLayout()
             self._bar_layout.setContentsMargins(0, 0, 0, 0)
 
         self._bar_layout.addWidget(self.tool_button_group)
         self._bar_layout.addStretch()
-        bar_widget = QWidget()
-        bar_widget.setObjectName('bar_widget')
+        bar_widget = QtWidgets.QWidget()
+        bar_widget.setObjectName("bar_widget")
         bar_widget.setLayout(self._bar_layout)
-        bar_widget.setAttribute(Qt.WA_StyledBackground)
-        main_lay = QVBoxLayout()
+        bar_widget.setAttribute(QtCore.Qt.WA_StyledBackground)
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
         main_lay.setSpacing(0)
         main_lay.addWidget(bar_widget)
 
-        if orientation == Qt.Horizontal:
+        if orientation == QtCore.Qt.Horizontal:
             main_lay.addWidget(MDivider())
 
         main_lay.addSpacing(5)
@@ -125,4 +135,4 @@ class MMenuTabWidget(QWidget):
         self.tool_button_group.update_size(self._dayu_size)
         self.style().polish(self)
 
-    dayu_size = Property(int, get_dayu_size, set_dayu_size)
+    dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)

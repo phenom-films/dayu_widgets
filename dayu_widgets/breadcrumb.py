@@ -9,12 +9,18 @@
 MBreadcrumb
 """
 
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.label import MLabel
 from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.qt import QHBoxLayout, QWidget, QSizePolicy, QButtonGroup
 
 
-class MBreadcrumb(QWidget):
+class MBreadcrumb(QtWidgets.QWidget):
     """
     MBreadcrumb
 
@@ -22,16 +28,16 @@ class MBreadcrumb(QWidget):
     It allows going back to states higher up in the hierarchy.
     """
 
-    def __init__(self, separator='/', parent=None):
+    def __init__(self, separator="/", parent=None):
         super(MBreadcrumb, self).__init__(parent)
         self._separator = separator
-        self._main_layout = QHBoxLayout()
+        self._main_layout = QtWidgets.QHBoxLayout()
         self._main_layout.setContentsMargins(0, 0, 0, 0)
         self._main_layout.setSpacing(0)
         self._main_layout.addStretch()
         self.setLayout(self._main_layout)
-        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        self._button_group = QButtonGroup()
+        self.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self._button_group = QtWidgets.QButtonGroup()
         self._label_list = []
 
     def set_item_list(self, data_list):
@@ -50,15 +56,15 @@ class MBreadcrumb(QWidget):
     def add_item(self, data_dict, index=None):
         """Add a item"""
         button = MToolButton()
-        button.setText(data_dict.get('text'))
-        if data_dict.get('svg'):
-            button.svg(data_dict.get('svg'))
-        if data_dict.get('tooltip'):
-            button.setProperty('toolTip', data_dict.get('tooltip'))
-        if data_dict.get('clicked'):
-            button.clicked.connect(data_dict.get('clicked'))
-        if data_dict.get('text'):
-            if data_dict.get('svg') or data_dict.get('icon'):
+        button.setText(data_dict.get("text"))
+        if data_dict.get("svg"):
+            button.svg(data_dict.get("svg"))
+        if data_dict.get("tooltip"):
+            button.setProperty("toolTip", data_dict.get("tooltip"))
+        if data_dict.get("clicked"):
+            button.clicked.connect(data_dict.get("clicked"))
+        if data_dict.get("text"):
+            if data_dict.get("svg") or data_dict.get("icon"):
                 button.text_beside_icon()
             else:
                 button.text_only()

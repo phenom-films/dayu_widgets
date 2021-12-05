@@ -6,17 +6,24 @@
 # Email : muyanru345@163.com
 ###################################################################
 """MSlider"""
-from dayu_widgets.qt import QSlider, Qt, QToolTip
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 
 
-class MSlider(QSlider):
+class MSlider(QtWidgets.QSlider):
     """
     A Slider component for displaying current value and intervals in range.
 
     MSlider just apply qss for QSlider.
     """
 
-    def __init__(self, orientation=Qt.Horizontal, parent=None):
+    def __init__(self, orientation=QtCore.Qt.Horizontal, parent=None):
         super(MSlider, self).__init__(orientation, parent=parent)
         self._show_text_when_move = True
 
@@ -26,5 +33,5 @@ class MSlider(QSlider):
     def mouseMoveEvent(self, event):
         """Override the mouseMoveEvent to show current value as a tooltip."""
         if self._show_text_when_move:
-            QToolTip.showText(event.globalPos(), str(self.value()), self)
+            QtWidgets.QToolTip.showText(event.globalPos(), str(self.value()), self)
         return super(MSlider, self).mouseMoveEvent(event)

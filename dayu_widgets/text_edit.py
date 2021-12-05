@@ -6,22 +6,31 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import QSizeGrip, QTextEdit, QGridLayout, Qt
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 
 
-class MSizeGrip(QSizeGrip):
+class MSizeGrip(QtWidgets.QSizeGrip):
     def __init__(self, parent=None):
         super(MSizeGrip, self).__init__(parent)
 
 
-class MTextEdit(QTextEdit):
+class MTextEdit(QtWidgets.QTextEdit):
     def __init__(self, parent=None):
         super(MTextEdit, self).__init__(parent)
-        self.setWindowFlags(Qt.SubWindow)
+        self.setWindowFlags(QtCore.Qt.SubWindow)
         self._size_grip = MSizeGrip(self)
-        layout = QGridLayout()
+        layout = QtWidgets.QGridLayout()
         layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(self._size_grip, 0, 0, Qt.AlignBottom | Qt.AlignRight)
+        layout.addWidget(
+            self._size_grip, 0, 0, QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight
+        )
         self.setLayout(layout)
         self._size_grip.setVisible(False)
 
@@ -32,7 +41,7 @@ class MTextEdit(QTextEdit):
     def _autosize_text_edit(self):
         # w = self.width()
         doc = self.document()
-        print (self.width(), doc.lineCount(), doc.idealWidth())
+        print(self.width(), doc.lineCount(), doc.idealWidth())
 
     def resizeable(self):
         """Show the size grip on bottom right. User can use it to resize MTextEdit"""

@@ -6,23 +6,29 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import QWidget, QHBoxLayout, QVBoxLayout, QFormLayout
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from Qt import QtWidgets
 
 
-class MForm(QWidget):
-    Horizontal = 'horizontal'
-    Vertical = 'vertical'
-    Inline = 'inline'
+class MForm(QtWidgets.QWidget):
+    Horizontal = "horizontal"
+    Vertical = "vertical"
+    Inline = "inline"
 
     def __init__(self, layout=None, parent=None):
         super(MForm, self).__init__(parent)
         layout = layout or MForm.Horizontal
         if layout == MForm.Inline:
-            self._main_layout = QHBoxLayout()
+            self._main_layout = QtWidgets.QHBoxLayout()
         elif layout == MForm.Vertical:
-            self._main_layout = QVBoxLayout()
+            self._main_layout = QtWidgets.QVBoxLayout()
         else:
-            self._main_layout = QFormLayout()
+            self._main_layout = QtWidgets.QFormLayout()
         self._model = None
         self._label_list = []
 
