@@ -15,16 +15,16 @@ from __future__ import print_function
 import random
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.combo_box import MComboBox
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.menu import MMenu
-from dayu_widgets.qt import *
 
 
-class ComboBoxExample(QWidget, MFieldMixin):
+class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(ComboBoxExample, self).__init__(parent)
         self._init_ui()
@@ -38,7 +38,7 @@ class ComboBoxExample(QWidget, MFieldMixin):
             ("Medium", dayu_theme.medium),
             ("Small", dayu_theme.small),
         ]
-        size_lay = QHBoxLayout()
+        size_lay = QtWidgets.QHBoxLayout()
         for label, size in size_list:
             combo_box = MComboBox()
             combo_box.set_dayu_size(size)
@@ -126,35 +126,35 @@ class ComboBoxExample(QWidget, MFieldMixin):
         select5.set_formatter(lambda x: " & ".join(x))
         self.bind("button5_selected", select5, "value", signal="sig_value_changed")
 
-        sub_lay1 = QHBoxLayout()
+        sub_lay1 = QtWidgets.QHBoxLayout()
         sub_lay1.addWidget(MLabel("普通单选各种尺寸"))
         sub_lay1.addLayout(size_lay)
         sub_lay1.addStretch()
-        sub_lay2 = QHBoxLayout()
+        sub_lay2 = QtWidgets.QHBoxLayout()
         sub_lay2.addWidget(MLabel("多选"))
         sub_lay2.addWidget(select2)
         sub_lay2.addStretch()
-        sub_lay3 = QHBoxLayout()
+        sub_lay3 = QtWidgets.QHBoxLayout()
         sub_lay3.addWidget(MLabel("动态生成选项"))
         sub_lay3.addWidget(select3)
         sub_lay3.addStretch()
-        sub_lay4 = QHBoxLayout()
+        sub_lay4 = QtWidgets.QHBoxLayout()
         sub_lay4.addWidget(MLabel("级联选择"))
         sub_lay4.addWidget(select4)
         sub_lay4.addStretch()
-        sub_lay5 = QHBoxLayout()
+        sub_lay5 = QtWidgets.QHBoxLayout()
         sub_lay5.addWidget(MLabel("自定义显示"))
         sub_lay5.addWidget(select5)
         sub_lay5.addStretch()
 
-        sub_lay6 = QHBoxLayout()
+        sub_lay6 = QtWidgets.QHBoxLayout()
         combo = MComboBox()
         combo.addItems(["北京", "上海", "广州", "深圳", "北戴河"])
         combo.setProperty("search", True)
         sub_lay6.addWidget(MLabel("搜索补全"))
         sub_lay6.addWidget(combo)
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("Select"))
         main_lay.addLayout(sub_lay1)
         main_lay.addLayout(sub_lay2)
@@ -177,7 +177,7 @@ if __name__ == "__main__":
     from dayu_widgets import dayu_theme
 
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = ComboBoxExample()
 
     dayu_theme.apply(test)

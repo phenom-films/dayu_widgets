@@ -12,30 +12,27 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets.check_box import MCheckBox
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import MIcon
-from dayu_widgets.qt import QGridLayout
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
 
 
-class CheckBoxExample(QWidget, MFieldMixin):
+class CheckBoxExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(CheckBoxExample, self).__init__(parent)
         self.setWindowTitle("Example for MCheckBox")
-        grid_lay = QGridLayout()
+        grid_lay = QtWidgets.QGridLayout()
 
         for index, (text, state) in enumerate(
             [
-                ("Unchecked", Qt.Unchecked),
-                ("Checked", Qt.Checked),
-                ("Partially", Qt.PartiallyChecked),
+                ("Unchecked", QtCore.Qt.Unchecked),
+                ("Checked", QtCore.Qt.Checked),
+                ("Partially", QtCore.Qt.PartiallyChecked),
             ]
         ):
             check_box_normal = MCheckBox(text)
@@ -48,7 +45,7 @@ class CheckBoxExample(QWidget, MFieldMixin):
             grid_lay.addWidget(check_box_normal, 0, index)
             grid_lay.addWidget(check_box_disabled, 1, index)
 
-        icon_lay = QHBoxLayout()
+        icon_lay = QtWidgets.QHBoxLayout()
         for text, icon in [
             ("Maya", MIcon("app-maya.png")),
             ("Nuke", MIcon("app-nuke.png")),
@@ -71,7 +68,7 @@ class CheckBoxExample(QWidget, MFieldMixin):
         self.bind("checked", check_box_bind, "checked", signal="stateChanged")
         self.bind("checked_text", label, "text")
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("Basic"))
         main_lay.addLayout(grid_lay)
         main_lay.addWidget(MDivider("Icon"))
@@ -88,10 +85,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    # Import third-party modules
-    from dayu_widgets.qt import QApplication
-
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = CheckBoxExample()
     # Import third-party modules
     from dayu_widgets import dayu_theme

@@ -12,6 +12,7 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.button_group import MRadioButtonGroup
 from dayu_widgets.divider import MDivider
 from dayu_widgets.drawer import MDrawer
@@ -19,16 +20,12 @@ from dayu_widgets.label import MLabel
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import MIcon
-from dayu_widgets.qt import QFormLayout
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 from dayu_widgets.qt import get_scale_factor
 from dayu_widgets.spin_box import MDateEdit
 from dayu_widgets.spin_box import MSpinBox
 
 
-class DrawerExample(QWidget):
+class DrawerExample(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(DrawerExample, self).__init__(parent)
         self.setWindowTitle("Examples for MDrawer")
@@ -43,7 +40,7 @@ class DrawerExample(QWidget):
 
         open_button_2 = MPushButton("Open").primary()
         open_button_2.clicked.connect(self.slot_open_button_2)
-        placement_lay = QHBoxLayout()
+        placement_lay = QtWidgets.QHBoxLayout()
         placement_lay.addWidget(self.button_grp)
         placement_lay.addSpacing(20 * scale_x)
         placement_lay.addWidget(open_button_2)
@@ -53,12 +50,12 @@ class DrawerExample(QWidget):
             text="New account", icon=MIcon("add_line.svg", "#fff")
         ).primary()
         new_account_button.clicked.connect(self.slot_new_account)
-        new_account_lay = QHBoxLayout()
+        new_account_lay = QtWidgets.QHBoxLayout()
         new_account_lay.addWidget(MLabel("Submit form in drawer"))
         new_account_lay.addWidget(new_account_button)
         new_account_lay.addStretch()
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("Custom Placement"))
         main_lay.addLayout(placement_lay)
         main_lay.addWidget(MDivider("Submit form in drawer"))
@@ -68,8 +65,8 @@ class DrawerExample(QWidget):
         self.setLayout(main_lay)
 
     def slot_open_button(self):
-        custom_widget = QWidget()
-        custom_lay = QVBoxLayout()
+        custom_widget = QtWidgets.QWidget()
+        custom_lay = QtWidgets.QVBoxLayout()
         custom_lay.addWidget(MLabel("Some contents..."))
         custom_lay.addWidget(MLabel("Some contents..."))
         custom_lay.addWidget(MLabel("Some contents..."))
@@ -82,8 +79,8 @@ class DrawerExample(QWidget):
         drawer.show()
 
     def slot_open_button_2(self):
-        custom_widget = QWidget()
-        custom_lay = QVBoxLayout()
+        custom_widget = QtWidgets.QWidget()
+        custom_lay = QtWidgets.QVBoxLayout()
         custom_lay.addWidget(MLabel("Some contents..."))
         custom_lay.addWidget(MLabel("Some contents..."))
         custom_lay.addWidget(MLabel("Some contents..."))
@@ -100,8 +97,8 @@ class DrawerExample(QWidget):
         drawer.show()
 
     def slot_new_account(self):
-        custom_widget = QWidget()
-        custom_lay = QFormLayout()
+        custom_widget = QtWidgets.QWidget()
+        custom_lay = QtWidgets.QFormLayout()
         custom_lay.addRow("Name", MLineEdit())
         custom_lay.addRow("Age", MSpinBox())
         custom_lay.addRow("Birth", MDateEdit())
@@ -124,9 +121,8 @@ if __name__ == "__main__":
 
     # Import third-party modules
     from dayu_widgets import dayu_theme
-    from dayu_widgets.qt import QApplication
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = DrawerExample()
     dayu_theme.apply(test)
     test.show()

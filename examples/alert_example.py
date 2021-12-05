@@ -15,21 +15,19 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.alert import MAlert
 from dayu_widgets.button_group import MPushButtonGroup
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
-from dayu_widgets.qt import QApplication
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 
 
-class AlertExample(QWidget, MFieldMixin):
+class AlertExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(AlertExample, self).__init__(parent)
         self.setWindowTitle("Example for MAlert")
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         self.setLayout(main_lay)
         main_lay.addWidget(MDivider("different type"))
         main_lay.addWidget(MAlert(text="Information Message", parent=self).info())
@@ -90,7 +88,7 @@ if __name__ == "__main__":
     # Import third-party modules
     from dayu_widgets import dayu_theme
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = AlertExample()
     dayu_theme.apply(test)
     test.show()

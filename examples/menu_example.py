@@ -12,15 +12,15 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.menu import MMenu
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import *
 
 
-class MenuExample(QWidget, MFieldMixin):
+class MenuExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MenuExample, self).__init__(parent)
         self._init_ui()
@@ -123,20 +123,20 @@ class MenuExample(QWidget, MFieldMixin):
             },
         ]
 
-        sub_lay1 = QHBoxLayout()
+        sub_lay1 = QtWidgets.QHBoxLayout()
         sub_lay1.addWidget(button1)
         sub_lay1.addWidget(label1)
-        sub_lay2 = QHBoxLayout()
+        sub_lay2 = QtWidgets.QHBoxLayout()
         sub_lay2.addWidget(button2)
         sub_lay2.addWidget(label2)
-        sub_lay3 = QHBoxLayout()
+        sub_lay3 = QtWidgets.QHBoxLayout()
         sub_lay3.addWidget(button3)
         sub_lay3.addWidget(label3)
-        sub_lay4 = QHBoxLayout()
+        sub_lay4 = QtWidgets.QHBoxLayout()
         sub_lay4.addWidget(button4)
         sub_lay4.addWidget(label4)
 
-        sub_lay5 = QHBoxLayout()
+        sub_lay5 = QtWidgets.QHBoxLayout()
         button = MPushButton(text="滚动菜单")
         menu = MMenu(parent=self)
         items = ["北京", "上海", "广州", "深圳", "北戴河", "BBC/data", "BBC/hello", "American"]
@@ -146,7 +146,7 @@ class MenuExample(QWidget, MFieldMixin):
         button.setMenu(menu)
         sub_lay5.addWidget(button)
 
-        sub_lay6 = QHBoxLayout()
+        sub_lay6 = QtWidgets.QHBoxLayout()
         button = MPushButton(text="搜索菜单")
         menu = MMenu(parent=self)
         items = ["北京", "上海", "广州", "深圳", "北戴河"]
@@ -165,7 +165,7 @@ class MenuExample(QWidget, MFieldMixin):
         button.setMenu(menu)
         sub_lay6.addWidget(button)
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("Select"))
         main_lay.addLayout(sub_lay1)
         main_lay.addLayout(sub_lay2)
@@ -184,7 +184,7 @@ if __name__ == "__main__":
     import sys
 
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = MenuExample()
     # Import third-party modules
     from dayu_widgets import dayu_theme

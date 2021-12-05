@@ -12,48 +12,56 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets.qt import *
+from Qt import QtCore
+from Qt import QtGui
 from dayu_widgets.utils import apply_formatter
 from dayu_widgets.utils import display_formatter
 from dayu_widgets.utils import font_formatter
 from dayu_widgets.utils import get_obj_value
 from dayu_widgets.utils import icon_formatter
 from dayu_widgets.utils import set_obj_value
+import six
 
 
 SETTING_MAP = {
-    Qt.BackgroundRole: {"config": "bg_color", "formatter": QColor},
-    Qt.DisplayRole: {"config": "display", "formatter": display_formatter},
-    Qt.EditRole: {"config": "edit", "formatter": None},
-    Qt.TextAlignmentRole: {
+    QtCore.Qt.BackgroundRole: {"config": "bg_color", "formatter": QtGui.QColor},
+    QtCore.Qt.DisplayRole: {"config": "display", "formatter": display_formatter},
+    QtCore.Qt.EditRole: {"config": "edit", "formatter": None},
+    QtCore.Qt.TextAlignmentRole: {
         "config": "alignment",
         "formatter": {
-            "right": Qt.AlignRight,
-            "left": Qt.AlignLeft,
-            "center": Qt.AlignCenter,
+            "right": QtCore.Qt.AlignRight,
+            "left": QtCore.Qt.AlignLeft,
+            "center": QtCore.Qt.AlignCenter,
         },
     },
-    Qt.ForegroundRole: {"config": "color", "formatter": QColor},
-    Qt.FontRole: {"config": "font", "formatter": font_formatter},
-    Qt.DecorationRole: {"config": "icon", "formatter": icon_formatter},
-    Qt.ToolTipRole: {"config": "tooltip", "formatter": display_formatter},
-    Qt.InitialSortOrderRole: {
+    QtCore.Qt.ForegroundRole: {"config": "color", "formatter": QtGui.QColor},
+    QtCore.Qt.FontRole: {"config": "font", "formatter": font_formatter},
+    QtCore.Qt.DecorationRole: {"config": "icon", "formatter": icon_formatter},
+    QtCore.Qt.ToolTipRole: {"config": "tooltip", "formatter": display_formatter},
+    QtCore.Qt.InitialSortOrderRole: {
         "config": "order",
-        "formatter": {"asc": Qt.AscendingOrder, "des": Qt.DescendingOrder},
+        "formatter": {
+            "asc": QtCore.Qt.AscendingOrder,
+            "des": QtCore.Qt.DescendingOrder,
+        },
     },
-    Qt.SizeHintRole: {"config": "size", "formatter": lambda args: QSize(*args)},
-    Qt.UserRole: {"config": "data"},  # anything
+    QtCore.Qt.SizeHintRole: {
+        "config": "size",
+        "formatter": lambda args: QtCore.QSize(*args),
+    },
+    QtCore.Qt.UserRole: {"config": "data"},  # anything
 }
 
 
-class MTableModel(QAbstractItemModel):
+class MTableModel(QtCore.QAbstractItemModel):
     def __init__(self, parent=None):
         super(MTableModel, self).__init__(parent)
         self.origin_count = 0
         self.root_item = {"name": "root", "children": []}
         self.data_generator = None
         self.header_list = []
-        self.timer = QTimer(self)
+        self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.fetchMore)
 
     def set_header_list(self, header_list):
@@ -87,32 +95,32 @@ class MTableModel(QAbstractItemModel):
 
     def remove(self, data_dict):
         row = self.root_item["children"].index(data_dict)
-        self.beginRemoveRows(QModelIndex(), row, row)
+        self.beginRemoveRows(QtCore.QModelIndex(), row, row)
         self.root_item["children"].remove(data_dict)
         self.endRemoveRows()
 
     def flags(self, index):
-        result = QAbstractItemModel.flags(self, index)
+        result = QtCore.QAbstractItemModel.flags(self, index)
         if not index.isValid():
-            return Qt.ItemIsEnabled
+            return QtCore.Qt.ItemIsEnabled
         if self.header_list[index.column()].get("checkable", False):
-            result |= Qt.ItemIsUserCheckable
+            result |= QtCore.Qt.ItemIsUserCheckable
         if self.header_list[index.column()].get("selectable", False):
-            result |= Qt.ItemIsEditable
+            result |= QtCore.Qt.ItemIsEditable
         if self.header_list[index.column()].get("editable", False):
-            result |= Qt.ItemIsEditable
+            result |= QtCore.Qt.ItemIsEditable
         if self.header_list[index.column()].get("draggable", False):
-            result |= Qt.ItemIsDragEnabled
+            result |= QtCore.Qt.ItemIsDragEnabled
         if self.header_list[index.column()].get("droppable", False):
-            result |= Qt.ItemIsDropEnabled
-        return Qt.ItemFlags(result)
+            result |= QtCore.Qt.ItemIsDropEnabled
+        return QtCore.Qt.ItemFlags(result)
 
-    def headerData(self, section, orientation, role=Qt.DisplayRole):
-        if orientation == Qt.Vertical:
+    def headerData(self, section, orientation, role=QtCore.Qt.DisplayRole):
+        if orientation == QtCore.Qt.Vertical:
             return super(MTableModel, self).headerData(section, orientation, role)
         if not self.header_list or section >= len(self.header_list):
             return None
-        if role == Qt.DisplayRole:
+        if role == QtCore.Qt.DisplayRole:
             return self.header_list[section]["label"]
         return None
 
@@ -128,21 +136,21 @@ class MTableModel(QAbstractItemModel):
             if child_item:
                 set_obj_value(child_item, "_parent", parent_item)
                 return self.createIndex(row, column, child_item)
-        return QModelIndex()
+        return QtCore.QModelIndex()
 
     def parent(self, index):
         if not index.isValid():
-            return QModelIndex()
+            return QtCore.QModelIndex()
 
         child_item = index.internalPointer()
         parent_item = get_obj_value(child_item, "_parent")
 
         if parent_item is None:
-            return QModelIndex()
+            return QtCore.QModelIndex()
 
         grand_item = get_obj_value(parent_item, "_parent")
         if grand_item is None:
-            return QModelIndex()
+            return QtCore.QModelIndex()
         parent_list = get_obj_value(grand_item, "children")
         return self.createIndex(parent_list.index(parent_item), 0, parent_item)
 
@@ -189,7 +197,7 @@ class MTableModel(QAbstractItemModel):
         self.beginResetModel()
         self.endResetModel()
 
-    def data(self, index, role=Qt.DisplayRole):
+    def data(self, index, role=QtCore.Qt.DisplayRole):
         if not index.isValid():
             return None
 
@@ -200,9 +208,9 @@ class MTableModel(QAbstractItemModel):
             role_key = SETTING_MAP[role].get("config")  # role 配置的关键字
             formatter_from_config = attr_dict.get(role_key)  # header中该role的配置
             if not formatter_from_config and role not in [
-                Qt.DisplayRole,
-                Qt.EditRole,
-                Qt.ToolTipRole,
+                QtCore.Qt.DisplayRole,
+                QtCore.Qt.EditRole,
+                QtCore.Qt.ToolTipRole,
             ]:
                 # 如果header中没有配置该role，而且也不是 DisplayRole/EditRole，直接返回None
                 return None
@@ -216,17 +224,17 @@ class MTableModel(QAbstractItemModel):
             result = apply_formatter(formatter_from_model, value)
             return result
 
-        if role == Qt.CheckStateRole and attr_dict.get("checkable", False):
+        if role == QtCore.Qt.CheckStateRole and attr_dict.get("checkable", False):
             state = get_obj_value(data_obj, attr + "_checked")
-            return Qt.Unchecked if state is None else state
+            return QtCore.Qt.Unchecked if state is None else state
         return None
 
-    def setData(self, index, value, role=Qt.EditRole):
-        if index.isValid() and role in [Qt.CheckStateRole, Qt.EditRole]:
+    def setData(self, index, value, role=QtCore.Qt.EditRole):
+        if index.isValid() and role in [QtCore.Qt.CheckStateRole, QtCore.Qt.EditRole]:
             attr_dict = self.header_list[index.column()]
             key = attr_dict.get("key")
             data_obj = index.internalPointer()
-            if role == Qt.CheckStateRole and attr_dict.get("checkable", False):
+            if role == QtCore.Qt.CheckStateRole and attr_dict.get("checkable", False):
                 key += "_checked"
                 # 更新自己
                 set_obj_value(data_obj, key, value)
@@ -265,22 +273,22 @@ class MTableModel(QAbstractItemModel):
             return False
 
 
-class MSortFilterModel(QSortFilterProxyModel):
+class MSortFilterModel(QtCore.QSortFilterProxyModel):
     def __init__(self, parent=None):
         super(MSortFilterModel, self).__init__(parent)
         if hasattr(self, "setRecursiveFilteringEnabled"):
             self.setRecursiveFilteringEnabled(True)
         self.header_list = []
-        self.search_reg = QRegExp()
-        self.search_reg.setCaseSensitivity(Qt.CaseInsensitive)
-        self.search_reg.setPatternSyntax(QRegExp.Wildcard)
+        self.search_reg = QtCore.QRegExp()
+        self.search_reg.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
+        self.search_reg.setPatternSyntax(QtCore.QRegExp.Wildcard)
 
     def set_header_list(self, header_list):
         self.header_list = header_list
         for head in self.header_list:
-            reg_exp = QRegExp()
-            reg_exp.setCaseSensitivity(Qt.CaseInsensitive)
-            reg_exp.setPatternSyntax(QRegExp.RegExp)
+            reg_exp = QtCore.QRegExp()
+            reg_exp.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
+            reg_exp.setPatternSyntax(QtCore.QRegExp.RegExp)
             head.update({"reg": reg_exp})
 
     def filterAcceptsRow(self, source_row, source_parent):

@@ -14,16 +14,16 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import cursor_mixin
 from dayu_widgets.mixin import focus_shadow_mixin
-from dayu_widgets.qt import Property
-from dayu_widgets.qt import QPushButton
 
 
 @cursor_mixin
 @focus_shadow_mixin
-class MPushButton(QPushButton):
+class MPushButton(QtWidgets.QPushButton):
     """
     QPushButton.
 
@@ -89,8 +89,8 @@ class MPushButton(QPushButton):
             )
         self.style().polish(self)
 
-    dayu_type = Property(str, get_dayu_type, set_dayu_type)
-    dayu_size = Property(int, get_dayu_size, set_dayu_size)
+    dayu_type = QtCore.Property(str, get_dayu_type, set_dayu_type)
+    dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)
 
     def primary(self):
         """Set MPushButton to PrimaryType"""

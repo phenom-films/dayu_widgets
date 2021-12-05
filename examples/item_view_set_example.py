@@ -14,6 +14,7 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.alert import MAlert
 from dayu_widgets.divider import MDivider
@@ -24,12 +25,10 @@ from dayu_widgets.item_view_set import MItemViewSet
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.loading import MLoadingWrapper
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 import examples._mock_data as mock
 
 
-class ItemViewSetExample(QWidget, MFieldMixin):
+class ItemViewSetExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(ItemViewSetExample, self).__init__(parent)
         self._init_ui()
@@ -54,7 +53,7 @@ class ItemViewSetExample(QWidget, MFieldMixin):
         item_view_set_search.insert_widget(coll_button)
         item_view_set_search.insert_widget(expand_button)
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("Table View"))
         main_lay.addWidget(item_view_set_table)
         main_lay.addWidget(MDivider("List View"))
@@ -79,10 +78,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    # Import third-party modules
-    from dayu_widgets.qt import QApplication
-
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = ItemViewSetExample()
     dayu_theme.apply(test)
     test.show()

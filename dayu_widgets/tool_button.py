@@ -13,19 +13,15 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import cursor_mixin
 from dayu_widgets.qt import MIcon
-from dayu_widgets.qt import Property
-from dayu_widgets.qt import QSize
-from dayu_widgets.qt import QSizePolicy
-from dayu_widgets.qt import QToolButton
-from dayu_widgets.qt import Qt
-from dayu_widgets.qt import Slot
 
 
 @cursor_mixin
-class MToolButton(QToolButton):
+class MToolButton(QtWidgets.QToolButton):
     """MToolButton"""
 
     def __init__(self, parent=None):
@@ -36,11 +32,11 @@ class MToolButton(QToolButton):
 
         self._polish_icon()
         self.toggled.connect(self._polish_icon)
-        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
 
         self._dayu_size = dayu_theme.default_size
 
-    @Slot(bool)
+    @QtCore.Slot(bool)
     def _polish_icon(self, checked=None):
         if self._dayu_svg:
             if self.isCheckable() and self.isChecked():
@@ -74,8 +70,8 @@ class MToolButton(QToolButton):
         """
         self._dayu_size = value
         self.style().polish(self)
-        if self.toolButtonStyle() == Qt.ToolButtonIconOnly:
-            self.setFixedSize(QSize(self._dayu_size, self._dayu_size))
+        if self.toolButtonStyle() == QtCore.Qt.ToolButtonIconOnly:
+            self.setFixedSize(QtCore.QSize(self._dayu_size, self._dayu_size))
 
     def get_dayu_svg(self):
         """Get current svg path"""
@@ -86,7 +82,7 @@ class MToolButton(QToolButton):
         self._dayu_svg = path
         self._polish_icon()
 
-    dayu_size = Property(int, get_dayu_size, set_dayu_size)
+    dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)
 
     def huge(self):
         """Set MPushButton to PrimaryType"""
@@ -120,21 +116,21 @@ class MToolButton(QToolButton):
 
     def icon_only(self):
         """Set tool button style to icon only"""
-        self.setToolButtonStyle(Qt.ToolButtonIconOnly)
-        self.setFixedSize(QSize(self._dayu_size, self._dayu_size))
+        self.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
+        self.setFixedSize(QtCore.QSize(self._dayu_size, self._dayu_size))
         return self
 
     def text_only(self):
         """Set tool button style to text only"""
-        self.setToolButtonStyle(Qt.ToolButtonTextOnly)
+        self.setToolButtonStyle(QtCore.Qt.ToolButtonTextOnly)
         return self
 
     def text_beside_icon(self):
         """Set tool button style to text beside icon"""
-        self.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        self.setToolButtonStyle(QtCore.Qt.ToolButtonTextBesideIcon)
         return self
 
     def text_under_icon(self):
         """Set tool button style to text under icon"""
-        self.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
         return self

@@ -12,23 +12,21 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import MIcon
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 from dayu_widgets.radio_button import MRadioButton
 
 
-class RadioButtonExample(QWidget, MFieldMixin):
+class RadioButtonExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(RadioButtonExample, self).__init__(parent)
         self.setWindowTitle("Example for MRadioButton")
-        widget_1 = QWidget()
-        lay_1 = QHBoxLayout()
+        widget_1 = QtWidgets.QWidget()
+        lay_1 = QtWidgets.QHBoxLayout()
         lay_1.addWidget(MRadioButton("Maya"))
         lay_1.addWidget(MRadioButton("Nuke"))
         lay_1.addWidget(MRadioButton("Houdini"))
@@ -41,8 +39,8 @@ class RadioButtonExample(QWidget, MFieldMixin):
         check_box_icon_3 = MRadioButton("User")
         check_box_icon_3.setIcon(MIcon("user_fill.svg"))
         check_box_icon_2.setChecked(True)
-        widget_2 = QWidget()
-        lay_2 = QHBoxLayout()
+        widget_2 = QtWidgets.QWidget()
+        lay_2 = QtWidgets.QHBoxLayout()
         lay_2.addWidget(check_box_icon_1)
         lay_2.addWidget(check_box_icon_2)
         lay_2.addWidget(check_box_icon_3)
@@ -65,7 +63,7 @@ class RadioButtonExample(QWidget, MFieldMixin):
         self.bind("checked", check_box_bind, "checked", signal="toggled")
         self.bind("checked_text", label, "text")
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("Basic"))
         main_lay.addWidget(widget_1)
         main_lay.addWidget(check_box_single)
@@ -85,9 +83,8 @@ if __name__ == "__main__":
 
     # Import third-party modules
     from dayu_widgets import dayu_theme
-    from dayu_widgets.qt import QApplication
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = RadioButtonExample()
     dayu_theme.apply(test)
     test.show()

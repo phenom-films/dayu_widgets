@@ -12,6 +12,8 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets.combo_box import MComboBox
 from dayu_widgets.divider import MDivider
 from dayu_widgets.label import MLabel
@@ -19,22 +21,17 @@ from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.menu import MMenu
 from dayu_widgets.message import MMessage
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
-from dayu_widgets.qt import Slot
 from dayu_widgets.tool_button import MToolButton
 
 
-class LineEditExample(QWidget):
+class LineEditExample(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(LineEditExample, self).__init__(parent)
         self.setWindowTitle("Examples for MLineEdit")
         self._init_ui()
 
     def _init_ui(self):
-        size_lay = QHBoxLayout()
+        size_lay = QtWidgets.QHBoxLayout()
         line_edit_l = MLineEdit().large()
         line_edit_l.setPlaceholderText("large size")
         line_edit_m = MLineEdit().medium()
@@ -52,7 +49,7 @@ class LineEditExample(QWidget):
 
         line_edit_label = MLineEdit(text="MLabel")
         tool_button = MLabel(text="User").mark().secondary()
-        tool_button.setAlignment(Qt.AlignCenter)
+        tool_button.setAlignment(QtCore.Qt.AlignCenter)
         tool_button.setFixedWidth(80)
         line_edit_label.set_prefix_widget(tool_button)
 
@@ -74,7 +71,7 @@ class LineEditExample(QWidget):
         combobox.setFixedWidth(100)
         line_edit_options.set_prefix_widget(combobox)
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("different size"))
         main_lay.addLayout(size_lay)
         main_lay.addWidget(MDivider("custom prefix and suffix widget"))
@@ -100,7 +97,7 @@ class LineEditExample(QWidget):
         main_lay.addStretch()
         self.setLayout(main_lay)
 
-    @Slot()
+    @QtCore.Slot()
     def slot_search(self):
         MMessage.info("查无此人", parent=self)
 
@@ -111,9 +108,8 @@ if __name__ == "__main__":
 
     # Import third-party modules
     from dayu_widgets import dayu_theme
-    from dayu_widgets.qt import QApplication
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = LineEditExample()
 
     dayu_theme.apply(test)

@@ -15,6 +15,8 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_path import DayuPath
 from dayu_widgets import dayu_theme
 from dayu_widgets.check_box import MCheckBox
@@ -22,11 +24,10 @@ from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.mixin import property_mixin
-from dayu_widgets.qt import *
 
 
 @property_mixin
-class MSequenceFile(QWidget, MFieldMixin):
+class MSequenceFile(QtWidgets.QWidget, MFieldMixin):
     """
     这个类必须依赖 DayuPath
     props:
@@ -34,7 +35,7 @@ class MSequenceFile(QWidget, MFieldMixin):
         sequence: bool
     """
 
-    sig_is_sequence_changed = Signal(bool)
+    sig_is_sequence_changed = QtCore.Signal(bool)
 
     def __init__(self, size=None, parent=None):
         super(MSequenceFile, self).__init__(parent)
@@ -53,9 +54,9 @@ class MSequenceFile(QWidget, MFieldMixin):
         self._error_label = MLabel().secondary()
         self._error_label.setProperty("error", True)
         self._error_label.setMinimumWidth(100)
-        self._error_label.set_elide_mode(Qt.ElideMiddle)
+        self._error_label.set_elide_mode(QtCore.Qt.ElideMiddle)
 
-        seq_lay = QHBoxLayout()
+        seq_lay = QtWidgets.QHBoxLayout()
         seq_lay.addWidget(self._is_sequence_check_box)
         seq_lay.addWidget(self._info_label)
         seq_lay.addWidget(self._error_label)
@@ -63,7 +64,7 @@ class MSequenceFile(QWidget, MFieldMixin):
         seq_lay.setStretchFactor(self._info_label, 0)
         seq_lay.setStretchFactor(self._error_label, 100)
 
-        self._main_lay = QVBoxLayout()
+        self._main_lay = QtWidgets.QVBoxLayout()
         self._main_lay.setContentsMargins(0, 0, 0, 0)
         self._main_lay.addWidget(self._file_label)
         self._main_lay.addLayout(seq_lay)

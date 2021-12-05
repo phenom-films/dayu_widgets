@@ -15,22 +15,25 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtGui
+from Qt import QtWidgets
 from dayu_widgets.menu import MMenu
-from dayu_widgets.qt import *
 import dayu_widgets.utils as utils
 
 
-class MHeaderView(QHeaderView):
+class MHeaderView(QtWidgets.QHeaderView):
     def __init__(self, orientation, parent=None):
         super(MHeaderView, self).__init__(orientation, parent)
         self.setMovable(True)
         self.setClickable(True)
         self.setSortIndicatorShown(True)
-        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self._slot_context_menu)
-        self.setDefaultAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        self.setDefaultAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.setProperty(
-            "orientation", "horizontal" if orientation == Qt.Horizontal else "vertical"
+            "orientation",
+            "horizontal" if orientation == QtCore.Qt.Horizontal else "vertical",
         )
 
     # def enterEvent(self, *args, **kwargs):
@@ -42,7 +45,7 @@ class MHeaderView(QHeaderView):
     #     QApplication.restoreOverrideCursor()
     #     return super(MHeaderViewPrivate, self).leaveEvent(*args, **kwargs)
 
-    @Slot(QPoint)
+    @QtCore.Slot(QtCore.QPoint)
     def _slot_context_menu(self, point):
         context_menu = MMenu(parent=self)
         logical_column = self.logicalIndexAt(point)
@@ -54,10 +57,14 @@ class MHeaderView(QHeaderView):
             action_select_none = context_menu.addAction(self.tr("Select None"))
             action_select_invert = context_menu.addAction(self.tr("Select Invert"))
             action_select_all.triggered.connect(
-                functools.partial(self._slot_set_select, logical_column, Qt.Checked)
+                functools.partial(
+                    self._slot_set_select, logical_column, QtCore.Qt.Checked
+                )
             )
             action_select_none.triggered.connect(
-                functools.partial(self._slot_set_select, logical_column, Qt.Unchecked)
+                functools.partial(
+                    self._slot_set_select, logical_column, QtCore.Qt.Unchecked
+                )
             )
             action_select_invert.triggered.connect(
                 functools.partial(self._slot_set_select, logical_column, None)
@@ -71,16 +78,16 @@ class MHeaderView(QHeaderView):
         context_menu.addSeparator()
         for column in range(self.count()):
             action = context_menu.addAction(
-                model.headerData(column, Qt.Horizontal, Qt.DisplayRole)
+                model.headerData(column, QtCore.Qt.Horizontal, QtCore.Qt.DisplayRole)
             )
             action.setCheckable(True)
             action.setChecked(not self.isSectionHidden(column))
             action.toggled.connect(
                 functools.partial(self._slot_set_section_visible, column)
             )
-        context_menu.exec_(QCursor.pos() + QPoint(10, 10))
+        context_menu.exec_(QtGui.QCursor.pos() + QtCore.QPoint(10, 10))
 
-    @Slot(int, int)
+    @QtCore.Slot(int, int)
     def _slot_set_select(self, column, state):
         current_model = self.model()
         source_model = utils.real_model(current_model)
@@ -94,44 +101,46 @@ class MHeaderView(QHeaderView):
                 utils.set_obj_value(
                     data_obj,
                     attr,
-                    Qt.Unchecked if old_state == Qt.Checked else Qt.Checked,
+                    Qt.UnchQtCore.Qtked
+                    if old_state == QtCore.Qt.Checked
+                    else QtCore.Qt.Checked,
                 )
             else:
                 utils.set_obj_value(data_obj, attr, state)
         source_model.endResetModel()
         source_model.dataChanged.emit(None, None)
 
-    @Slot(QModelIndex, int)
+    @QtCore.Slot(QtCore.QModelIndex, int)
     def _slot_set_section_visible(self, index, flag):
         self.setSectionHidden(index, not flag)
 
-    @Slot(bool)
+    @QtCore.Slot(bool)
     def _slot_set_resize_mode(self, flag):
         if flag:
-            self.resizeSections(QHeaderView.ResizeToContents)
+            self.resizeSections(QtWidgets.QHeaderView.ResizeToContents)
         else:
-            self.resizeSections(QHeaderView.Interactive)
+            self.resizeSections(QtWidgets.QHeaderView.Interactive)
 
     def setClickable(self, flag):
         try:
-            QHeaderView.setSectionsClickable(self, flag)
+            QtWidgets.QHeaderView.setSectionsClickable(self, flag)
         except AttributeError:
-            QHeaderView.setClickable(self, flag)
+            QtWidgets.QHeaderView.setClickable(self, flag)
 
     def setMovable(self, flag):
         try:
-            QHeaderView.setSectionsMovable(self, flag)
+            QtWidgets.QHeaderView.setSectionsMovable(self, flag)
         except AttributeError:
-            QHeaderView.setMovable(self, flag)
+            QtWidgets.QHeaderView.setMovable(self, flag)
 
     def resizeMode(self, index):
         try:
-            QHeaderView.sectionResizeMode(self, index)
+            QtWidgets.QHeaderView.sectionResizeMode(self, index)
         except AttributeError:
-            QHeaderView.resizeMode(self, index)
+            QtWidgets.QHeaderView.resizeMode(self, index)
 
     def setResizeMode(self, mode):
         try:
-            QHeaderView.setResizeMode(self, mode)
+            QtWidgets.QHeaderView.setResizeMode(self, mode)
         except AttributeError:
-            QHeaderView.setSectionResizeMode(self, mode)
+            QtWidgets.QHeaderView.setSectionResizeMode(self, mode)
