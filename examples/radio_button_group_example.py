@@ -15,14 +15,16 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets.button_group import MRadioButtonGroup
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import *
+from dayu_widgets.qt import MIcon
 
 
-class RadioButtonGroupExample(QWidget, MFieldMixin):
+class RadioButtonGroupExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(RadioButtonGroupExample, self).__init__(parent)
         self._init_ui()
@@ -30,7 +32,7 @@ class RadioButtonGroupExample(QWidget, MFieldMixin):
     def _init_ui(self):
         radio_group_h = MRadioButtonGroup()
         radio_group_h.set_button_list(["Apple", {"text": "Banana"}, {"text": "Pear"}])
-        radio_grp_1_lay = QHBoxLayout()
+        radio_grp_1_lay = QtWidgets.QHBoxLayout()
         radio_grp_1_lay.addWidget(radio_group_h)
         radio_grp_1_lay.addStretch()
 
@@ -40,16 +42,16 @@ class RadioButtonGroupExample(QWidget, MFieldMixin):
             {"text": "Houdini", "icon": MIcon("app-houdini.png")},
         ]
 
-        radio_group_v = MRadioButtonGroup(orientation=Qt.Vertical)
+        radio_group_v = MRadioButtonGroup(orientation=QtCore.Qt.Vertical)
         radio_group_v.set_button_list(app_data)
 
         radio_group_button_h = MRadioButtonGroup()
         radio_group_button_h.set_button_list(app_data)
-        radio_grp_h_lay = QHBoxLayout()
+        radio_grp_h_lay = QtWidgets.QHBoxLayout()
         radio_grp_h_lay.addWidget(radio_group_button_h)
         radio_grp_h_lay.addStretch()
 
-        radio_group_button_v = MRadioButtonGroup(orientation=Qt.Vertical)
+        radio_group_button_v = MRadioButtonGroup(orientation=QtCore.Qt.Vertical)
         radio_group_button_v.set_button_list(app_data)
 
         self.register_field("value1", -1)
@@ -83,7 +85,7 @@ class RadioButtonGroupExample(QWidget, MFieldMixin):
         self.bind("value2_text", button2, "text")
         self.bind("value3_text", button3, "text")
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("MRadioButtonGroup: orientation=Qt.Horizontal "))
         main_lay.addLayout(radio_grp_1_lay)
         main_lay.addWidget(MDivider("MRadioButtonGroup: orientation=Qt.Vertical"))
@@ -120,7 +122,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = RadioButtonGroupExample()
     # Import third-party modules
     from dayu_widgets import dayu_theme

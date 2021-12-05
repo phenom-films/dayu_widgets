@@ -14,16 +14,14 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtGui
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import MPixmap
-from dayu_widgets.qt import Property
-from dayu_widgets.qt import QLabel
-from dayu_widgets.qt import QPixmap
-from dayu_widgets.qt import QSize
-from dayu_widgets.qt import Qt
 
 
-class MAvatar(QLabel):
+class MAvatar(QtWidgets.QLabel):
     """
     Avatar component. It can be used to represent people or object.
 
@@ -32,7 +30,7 @@ class MAvatar(QLabel):
         dayu_size: the size of image.
     """
 
-    def __init__(self, parent=None, flags=Qt.Widget):
+    def __init__(self, parent=None, flags=QtCore.Qt.Widget):
         super(MAvatar, self).__init__(parent, flags)
         self._default_pix = MPixmap("user_fill.svg")
         self._pixmap = self._default_pix
@@ -49,12 +47,12 @@ class MAvatar(QLabel):
         self._set_dayu_size()
 
     def _set_dayu_size(self):
-        self.setFixedSize(QSize(self._dayu_size, self._dayu_size))
+        self.setFixedSize(QtCore.QSize(self._dayu_size, self._dayu_size))
         self._set_dayu_image()
 
     def _set_dayu_image(self):
         self.setPixmap(
-            self._pixmap.scaledToWidth(self.height(), Qt.SmoothTransformation)
+            self._pixmap.scaledToWidth(self.height(), QtCore.Qt.SmoothTransformation)
         )
 
     def set_dayu_image(self, value):
@@ -65,7 +63,7 @@ class MAvatar(QLabel):
         """
         if value is None:
             self._pixmap = self._default_pix
-        elif isinstance(value, QPixmap):
+        elif isinstance(value, QtGui.QPixmap):
             self._pixmap = self._default_pix if value.isNull() else value
         else:
             raise TypeError(
@@ -88,8 +86,8 @@ class MAvatar(QLabel):
         """
         return self._dayu_size
 
-    dayu_image = Property(QPixmap, get_dayu_image, set_dayu_image)
-    dayu_size = Property(int, get_dayu_size, set_dayu_size)
+    dayu_image = QtCore.Property(QtGui.QPixmap, get_dayu_image, set_dayu_image)
+    dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)
 
     @classmethod
     def huge(cls, image=None):

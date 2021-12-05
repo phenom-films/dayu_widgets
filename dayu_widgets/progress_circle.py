@@ -12,20 +12,15 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtGui
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets import utils
 from dayu_widgets.label import MLabel
-from dayu_widgets.qt import Property
-from dayu_widgets.qt import QColor
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QPainter
-from dayu_widgets.qt import QPen
-from dayu_widgets.qt import QProgressBar
-from dayu_widgets.qt import QSize
-from dayu_widgets.qt import Qt
 
 
-class MProgressCircle(QProgressBar):
+class MProgressCircle(QtWidgets.QProgressBar):
     """
     MProgressCircle: Display the current progress of an operation flow.
     When you need to display the completion percentage of an operation.
@@ -37,9 +32,9 @@ class MProgressCircle(QProgressBar):
 
     def __init__(self, dashboard=False, parent=None):
         super(MProgressCircle, self).__init__(parent)
-        self._main_lay = QHBoxLayout()
+        self._main_lay = QtWidgets.QHBoxLayout()
         self._default_label = MLabel().h3()
-        self._default_label.setAlignment(Qt.AlignCenter)
+        self._default_label.setAlignment(QtCore.Qt.AlignCenter)
         self._main_lay.addWidget(self._default_label)
         self.setLayout(self._main_lay)
         self._color = None
@@ -84,7 +79,9 @@ class MProgressCircle(QProgressBar):
         """
         self._width = value
         self.setFixedSize(
-            QSize(self._width * self._width_factor, self._width * self._height_factor)
+            QtCore.QSize(
+                self._width * self._width_factor, self._width * self._height_factor
+            )
         )
 
     def get_dayu_color(self):
@@ -103,8 +100,8 @@ class MProgressCircle(QProgressBar):
         self._color = value
         self.update()
 
-    dayu_color = Property(str, get_dayu_color, set_dayu_color)
-    dayu_width = Property(int, get_dayu_width, set_dayu_width)
+    dayu_color = QtCore.Property(str, get_dayu_color, set_dayu_color)
+    dayu_width = QtCore.Property(int, get_dayu_width, set_dayu_width)
 
     def paintEvent(self, event):
         """Override QProgressBar's paintEvent."""
@@ -118,14 +115,14 @@ class MProgressCircle(QProgressBar):
         pen_width = int(3 * total_width / 50.0)
         radius = total_width - pen_width - 1
 
-        painter = QPainter(self)
-        painter.setRenderHints(QPainter.Antialiasing)
+        painter = QtGui.QPainter(self)
+        painter.setRenderHints(QtGui.QPainter.Antialiasing)
 
         # draw background circle
-        pen_background = QPen()
+        pen_background = QtGui.QPen()
         pen_background.setWidth(pen_width)
-        pen_background.setColor(QColor(dayu_theme.background_selected_color))
-        pen_background.setCapStyle(Qt.RoundCap)
+        pen_background.setColor(QtGui.QColor(dayu_theme.background_selected_color))
+        pen_background.setCapStyle(QtCore.Qt.RoundCap)
         painter.setPen(pen_background)
         painter.drawArc(
             pen_width / 2.0 + 1,
@@ -137,10 +134,10 @@ class MProgressCircle(QProgressBar):
         )
 
         # draw foreground circle
-        pen_foreground = QPen()
+        pen_foreground = QtGui.QPen()
         pen_foreground.setWidth(pen_width)
-        pen_foreground.setColor(QColor(self._color))
-        pen_foreground.setCapStyle(Qt.RoundCap)
+        pen_foreground.setColor(QtGui.QColor(self._color))
+        pen_foreground.setCapStyle(QtCore.Qt.RoundCap)
         painter.setPen(pen_foreground)
         painter.drawArc(
             pen_width / 2.0 + 1,

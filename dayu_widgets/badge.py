@@ -14,17 +14,13 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import utils
-from dayu_widgets.qt import Property
-from dayu_widgets.qt import QGridLayout
-from dayu_widgets.qt import QPushButton
-from dayu_widgets.qt import QSizePolicy
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
 import six
 
 
-class MBadge(QWidget):
+class MBadge(QtWidgets.QWidget):
     """
     Badge normally appears in proximity to notifications or user avatars with eye-catching appeal,
     typically displaying unread messages count.
@@ -50,14 +46,18 @@ class MBadge(QWidget):
         self._text = None
         self._count = None
 
-        self._badge_button = QPushButton()
-        self._badge_button.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        self._badge_button = QtWidgets.QPushButton()
+        self._badge_button.setSizePolicy(
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum
+        )
 
-        self._main_lay = QGridLayout()
+        self._main_lay = QtWidgets.QGridLayout()
         self._main_lay.setContentsMargins(0, 0, 0, 0)
         if widget is not None:
             self._main_lay.addWidget(widget, 0, 0)
-        self._main_lay.addWidget(self._badge_button, 0, 0, Qt.AlignTop | Qt.AlignRight)
+        self._main_lay.addWidget(
+            self._badge_button, 0, 0, QtCore.Qt.AlignTop | QtCore.Qt.AlignRight
+        )
         self.setLayout(self._main_lay)
 
     def get_dayu_overflow(self):
@@ -138,10 +138,10 @@ class MBadge(QWidget):
         self._dot = False
         self.style().polish(self)
 
-    dayu_overflow = Property(int, get_dayu_overflow, set_dayu_overflow)
-    dayu_dot = Property(bool, get_dayu_dot, set_dayu_dot)
-    dayu_count = Property(int, get_dayu_count, set_dayu_count)
-    dayu_text = Property(str, get_dayu_text, set_dayu_text)
+    dayu_overflow = QtCore.Property(int, get_dayu_overflow, set_dayu_overflow)
+    dayu_dot = QtCore.Property(bool, get_dayu_dot, set_dayu_dot)
+    dayu_count = QtCore.Property(int, get_dayu_count, set_dayu_count)
+    dayu_text = QtCore.Property(str, get_dayu_text, set_dayu_text)
 
     @classmethod
     def dot(cls, show=False, widget=None):

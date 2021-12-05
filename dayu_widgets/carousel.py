@@ -15,17 +15,19 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtGui
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import property_mixin
-from dayu_widgets.qt import *
 
 
-class MGuidPrivate(QFrame):
-    sig_go_to_page = Signal()
+class MGuidPrivate(QtWidgets.QFrame):
+    sig_go_to_page = QtCore.Signal()
 
     def __init__(self, parent=None):
         super(MGuidPrivate, self).__init__(parent)
-        self.setCursor(Qt.PointingHandCursor)
+        self.setCursor(QtCore.Qt.PointingHandCursor)
         self.set_checked(False)
 
     def set_checked(self, value):
@@ -37,63 +39,67 @@ class MGuidPrivate(QFrame):
         self.setFixedSize(20 if value else 16, 4)
 
     def mousePressEvent(self, event):
-        if event.buttons() == Qt.LeftButton:
+        if event.buttons() == QtCore.Qt.LeftButton:
             self.sig_go_to_page.emit()
         return super(MGuidPrivate, self).mousePressEvent(event)
 
 
 @property_mixin
-class MCarousel(QGraphicsView):
+class MCarousel(QtWidgets.QGraphicsView):
     def __init__(self, pix_list, autoplay=True, width=500, height=500, parent=None):
         super(MCarousel, self).__init__(parent)
-        self.scene = QGraphicsScene()
-        self.scene.setBackgroundBrush(QBrush(QColor(dayu_theme.background_color)))
-        self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.scene = QtWidgets.QGraphicsScene()
+        self.scene.setBackgroundBrush(
+            QtGui.QBrush(QtGui.QColor(dayu_theme.background_color))
+        )
+        self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.setScene(self.scene)
-        self.setRenderHints(QPainter.Antialiasing)
+        self.setRenderHints(QtGui.QPainter.Antialiasing)
         self.hor_bar = self.horizontalScrollBar()
         self.carousel_width = width
         self.carousel_height = height
 
-        pos = QPoint(0, 0)
-        pen = QPen(Qt.red)
+        pos = QtCore.QPoint(0, 0)
+        pen = QtGui.QPen(QtCore.Qt.red)
         pen.setWidth(5)
         self.page_count = len(pix_list)
         line_width = 20
         total_width = self.page_count * (line_width + 5)
         self.scene.setSceneRect(0, 0, self.page_count * width, height)
 
-        self.navigate_lay = QHBoxLayout()
+        self.navigate_lay = QtWidgets.QHBoxLayout()
         self.navigate_lay.setSpacing(5)
         target_size = min(width, height)
         for index, pix in enumerate(pix_list):
             if pix.width() > pix.height():
-                new_pix = pix.scaledToWidth(target_size, Qt.SmoothTransformation)
+                new_pix = pix.scaledToWidth(target_size, QtCore.Qt.SmoothTransformation)
             else:
-                new_pix = pix.scaledToHeight(target_size, Qt.SmoothTransformation)
-            pix_item = QGraphicsPixmapItem(new_pix)
+                new_pix = pix.scaledToHeight(
+                    target_size, QtCore.Qt.SmoothTransformation
+                )
+            pix_item = QtWidgets.QGraphicsPixmapItem(new_pix)
             pix_item.setPos(pos)
-            pix_item.setTransformationMode(Qt.SmoothTransformation)
+            pix_item.setTransformationMode(QtCore.Qt.SmoothTransformation)
             pos.setX(pos.x() + width)
             line_item = MGuidPrivate()
             line_item.sig_go_to_page.connect(functools.partial(self.go_to_page, index))
             self.navigate_lay.addWidget(line_item)
             self.scene.addItem(pix_item)
 
-        hud_widget = QWidget(self)
+        hud_widget = QtWidgets.QWidget(self)
         hud_widget.setLayout(self.navigate_lay)
         hud_widget.setStyleSheet("background:transparent")
         hud_widget.move(width / 2 - total_width / 2, height - 30)
 
         self.setFixedWidth(width + 2)
         self.setFixedHeight(height + 2)
-        self.loading_ani = QPropertyAnimation()
+        self.loading_ani = QtCore.QPropertyAnimation()
         self.loading_ani.setTargetObject(self.hor_bar)
-        self.loading_ani.setEasingCurve(QEasingCurve.InOutQuad)
+        self.loading_ani.setEasingCurve(QtCore.QEasingCurve.InOutQuad)
         self.loading_ani.setDuration(500)
         self.loading_ani.setPropertyName(b"value")
-        self.autoplay_timer = QTimer(self)
+        self.autoplay_timer = QtCore.QTimer(self)
         self.autoplay_timer.setInterval(2000)
         self.autoplay_timer.timeout.connect(self.next_page)
 

@@ -12,14 +12,15 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import *
+from dayu_widgets.qt import MPixmap
 
 
-class FieldMixinExample(QWidget, MFieldMixin):
+class FieldMixinExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(FieldMixinExample, self).__init__(parent)
         self.register_field("my_name", "xiaoming")
@@ -42,7 +43,7 @@ class FieldMixinExample(QWidget, MFieldMixin):
 
         button = MPushButton(text="Change Data").primary()
         button.clicked.connect(self.slot_change_data)
-        main_lay = QGridLayout()
+        main_lay = QtWidgets.QGridLayout()
         main_lay.addWidget(MLabel("Avatar:"), 0, 0)
         main_lay.addWidget(thumbnail_label, 0, 1)
         main_lay.addWidget(MLabel("Name:"), 1, 0)
@@ -57,7 +58,7 @@ class FieldMixinExample(QWidget, MFieldMixin):
         #     main_lay.addRow('name{}:'.format(index), self.bind('my_name', QLabel(), 'text', index=index))
         main_lay.addWidget(button, 4, 1)
 
-        temp_lay = QVBoxLayout()
+        temp_lay = QtWidgets.QVBoxLayout()
         temp_lay.addLayout(main_lay)
         temp_lay.addStretch()
         self.setLayout(temp_lay)
@@ -91,7 +92,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = FieldMixinExample()
     # Import third-party modules
     from dayu_widgets import dayu_theme

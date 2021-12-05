@@ -12,15 +12,13 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 
 
-class DividerExample(QWidget, MFieldMixin):
+class DividerExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(DividerExample, self).__init__(parent)
         self.setWindowTitle("Examples for MDivider")
@@ -38,7 +36,7 @@ class DividerExample(QWidget, MFieldMixin):
         label1 = MLabel("Maya").strong()
         label2 = MLabel("Nuke").underline()
         label3 = MLabel("Houdini").mark()
-        sub_lay = QHBoxLayout()
+        sub_lay = QtWidgets.QHBoxLayout()
         sub_lay.addWidget(label1)
         sub_lay.addWidget(div6)
         sub_lay.addWidget(label2)
@@ -49,7 +47,7 @@ class DividerExample(QWidget, MFieldMixin):
         some_text = (
             "Steven Paul Jobs was an American entrepreneur and business magnate."
         )
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MLabel(some_text))
         main_lay.addWidget(div1)
         main_lay.addWidget(MLabel(some_text))
@@ -78,9 +76,8 @@ if __name__ == "__main__":
 
     # Import third-party modules
     from dayu_widgets import dayu_theme
-    from dayu_widgets.qt import QApplication
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = DividerExample()
     dayu_theme.apply(test)
     test.show()

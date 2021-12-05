@@ -12,13 +12,14 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets.mixin import cursor_mixin
 from dayu_widgets.mixin import stacked_animation_mixin
-from dayu_widgets.qt import *
 
 
 @cursor_mixin
-class MTabBar(QTabBar):
+class MTabBar(QtWidgets.QTabBar):
     def __init__(self, parent=None):
         super(MTabBar, self).__init__(parent=parent)
         self.setDrawBase(False)
@@ -26,19 +27,19 @@ class MTabBar(QTabBar):
     def tabSizeHint(self, index):
         tab_text = self.tabText(index)
         if self.tabsClosable():
-            return QSize(
+            return QtCore.QSize(
                 self.fontMetrics().width(tab_text) + 70,
                 self.fontMetrics().height() + 20,
             )
         else:
-            return QSize(
+            return QtCore.QSize(
                 self.fontMetrics().width(tab_text) + 50,
                 self.fontMetrics().height() + 20,
             )
 
 
 @stacked_animation_mixin
-class MTabWidget(QTabWidget):
+class MTabWidget(QtWidgets.QTabWidget):
     def __init__(self, parent=None):
         super(MTabWidget, self).__init__(parent=parent)
         self.bar = MTabBar()

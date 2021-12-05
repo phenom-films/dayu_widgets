@@ -15,18 +15,16 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QThread
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 from dayu_widgets.toast import MToast
 
 
-class MWorkThread(QThread):
+class MWorkThread(QtCore.QThread):
     def __init__(self, parent=None):
         super(MWorkThread, self).__init__(parent)
 
@@ -37,7 +35,7 @@ class MWorkThread(QThread):
         time.sleep(3)
 
 
-class ToastExample(QWidget, MFieldMixin):
+class ToastExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(ToastExample, self).__init__(parent)
         self.setWindowTitle("Examples for MToast")
@@ -63,7 +61,7 @@ class ToastExample(QWidget, MFieldMixin):
             )
         )
 
-        sub_lay1 = QHBoxLayout()
+        sub_lay1 = QtWidgets.QHBoxLayout()
         sub_lay1.addWidget(button3)
         sub_lay1.addWidget(button4)
         sub_lay1.addWidget(button5)
@@ -72,7 +70,7 @@ class ToastExample(QWidget, MFieldMixin):
         loading_button = MPushButton("Loading Toast").primary()
         loading_button.clicked.connect(self.slot_show_loading)
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("different type"))
         main_lay.addLayout(sub_lay1)
         main_lay.addWidget(MLabel("不同的提示状态：成功、失败、加载中。默认2秒后消失"))
@@ -102,10 +100,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    # Import third-party modules
-    from dayu_widgets.qt import QApplication
-
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = ToastExample()
     # Import third-party modules
     from dayu_widgets import dayu_theme

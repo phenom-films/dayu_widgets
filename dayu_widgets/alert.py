@@ -17,22 +17,20 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.label import MLabel
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import MPixmap
-from dayu_widgets.qt import Property
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
 from dayu_widgets.qt import get_scale_factor
 from dayu_widgets.tool_button import MToolButton
 import six
 
 
 @property_mixin
-class MAlert(QWidget):
+class MAlert(QtWidgets.QWidget):
     """
     Alert component for feedback.
 
@@ -46,9 +44,9 @@ class MAlert(QWidget):
     WarningType = "warning"
     ErrorType = "error"
 
-    def __init__(self, text="", parent=None, flags=Qt.Widget):
+    def __init__(self, text="", parent=None, flags=QtCore.Qt.Widget):
         super(MAlert, self).__init__(parent, flags)
-        self.setAttribute(Qt.WA_StyledBackground)
+        self.setAttribute(QtCore.Qt.WA_StyledBackground)
         self._icon_label = MAvatar()
         self._icon_label.set_dayu_size(dayu_theme.tiny)
         self._content_label = MLabel().secondary()
@@ -56,7 +54,7 @@ class MAlert(QWidget):
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
         scale_x, _ = get_scale_factor()
         margin = 8 * scale_x
-        self._main_lay = QHBoxLayout()
+        self._main_lay = QtWidgets.QHBoxLayout()
         self._main_lay.setContentsMargins(margin, margin, margin, margin)
         self._main_lay.addWidget(self._icon_label)
         self._main_lay.addWidget(self._content_label)
@@ -134,8 +132,8 @@ class MAlert(QWidget):
         """
         return self._dayu_text
 
-    dayu_text = Property(six.text_type, get_dayu_text, set_dayu_text)
-    dayu_type = Property(str, get_dayu_type, set_dayu_type)
+    dayu_text = QtCore.Property(six.text_type, get_dayu_text, set_dayu_text)
+    dayu_type = QtCore.Property(str, get_dayu_type, set_dayu_type)
 
     def info(self):
         """Set MAlert to InfoType"""

@@ -12,14 +12,14 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets.qt import QDockWidget
-from dayu_widgets.qt import Qt
+from Qt import QtCore
+from Qt import QtWidgets
 
 
-class MDockWidget(QDockWidget):
+class MDockWidget(QtWidgets.QDockWidget):
     """
     Just apply the qss. No more extend.
     """
 
-    def __init__(self, title="", parent=None, flags=Qt.Widget):
+    def __init__(self, title="", parent=None, flags=QtCore.Qt.Widget):
         super(MDockWidget, self).__init__(title, parent=parent, flags=flags)

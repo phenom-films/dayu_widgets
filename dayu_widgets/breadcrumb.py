@@ -15,15 +15,12 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.label import MLabel
-from dayu_widgets.qt import QButtonGroup
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QSizePolicy
-from dayu_widgets.qt import QWidget
 from dayu_widgets.tool_button import MToolButton
 
 
-class MBreadcrumb(QWidget):
+class MBreadcrumb(QtWidgets.QWidget):
     """
     MBreadcrumb
 
@@ -34,13 +31,13 @@ class MBreadcrumb(QWidget):
     def __init__(self, separator="/", parent=None):
         super(MBreadcrumb, self).__init__(parent)
         self._separator = separator
-        self._main_layout = QHBoxLayout()
+        self._main_layout = QtWidgets.QHBoxLayout()
         self._main_layout.setContentsMargins(0, 0, 0, 0)
         self._main_layout.setSpacing(0)
         self._main_layout.addStretch()
         self.setLayout(self._main_layout)
-        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        self._button_group = QButtonGroup()
+        self.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self._button_group = QtWidgets.QButtonGroup()
         self._label_list = []
 
     def set_item_list(self, data_list):

@@ -20,6 +20,9 @@ import math
 import os
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtGui
+from Qt import QtWidgets
 import six
 
 
@@ -33,20 +36,6 @@ else:
 from dayu_widgets import CUSTOM_STATIC_FOLDERS
 from dayu_widgets import DEFAULT_STATIC_FOLDER
 from dayu_widgets.qt import MIcon
-from dayu_widgets.qt import QApplication
-from dayu_widgets.qt import QByteArray
-from dayu_widgets.qt import QColor
-from dayu_widgets.qt import QFont
-from dayu_widgets.qt import QIcon
-from dayu_widgets.qt import QModelIndex
-from dayu_widgets.qt import QPainter
-from dayu_widgets.qt import QPainterPath
-from dayu_widgets.qt import QPen
-from dayu_widgets.qt import QPixmap
-from dayu_widgets.qt import QRect
-from dayu_widgets.qt import QSettings
-from dayu_widgets.qt import QSortFilterProxyModel
-from dayu_widgets.qt import Qt
 from dayu_widgets.qt import get_scale_factor
 
 
@@ -123,7 +112,7 @@ def fade_color(color, alpha):
     :param alpha: string, percent 'number%'
     :return: qss/css color format rgba(r, g, b, a)
     """
-    q_color = QColor(color)
+    q_color = QtGui.QColor(color)
     return "rgba({}, {}, {}, {})".format(
         q_color.red(), q_color.green(), q_color.blue(), alpha
     )
@@ -182,12 +171,12 @@ def generate_color(primary_color, index):
 
     light = index <= 6
     hsv_color = (
-        QColor(primary_color)
+        QtGui.QColor(primary_color)
         if isinstance(primary_color, six.string_types)
         else primary_color
     )
     index = light_color_count + 1 - index if light else index - light_color_count - 1
-    return QColor.fromHsvF(
+    return QtGui.QColor.fromHsvF(
         _get_hue(hsv_color, index, light),
         _get_saturation(hsv_color, index, light),
         _get_value(hsv_color, index, light),
@@ -202,12 +191,12 @@ def real_model(source_model):
     return source_model
 
 
-@real_model.register(QSortFilterProxyModel)
+@real_model.register(QtCore.QSortFilterProxyModel)
 def _(proxy_model):
     return proxy_model.sourceModel()
 
 
-@real_model.register(QModelIndex)
+@real_model.register(QtCore.QModelIndex)
 def _(index):
     return real_model(index.model())
 
@@ -217,7 +206,7 @@ def real_index(index):
     Get the source index whenever user give a source index or proxy index.
     """
     model = index.model()
-    if isinstance(model, QSortFilterProxyModel):
+    if isinstance(model, QtCore.QSortFilterProxyModel):
         return model.mapToSource(index)
     return index
 
@@ -340,7 +329,7 @@ def font_formatter(setting_dict):
     :param bold: font style bold
     :return: a QFont instance with given style
     """
-    _font = QFont()
+    _font = QtGui.QFont()
     _font.setUnderline(setting_dict.get("underline") or False)
     _font.setBold(setting_dict.get("bold") or False)
     return _font
@@ -365,7 +354,7 @@ def _(input_dict):
     return icon_formatter(path)
 
 
-@icon_formatter.register(QIcon)
+@icon_formatter.register(QtGui.QIcon)
 def _(input_dict):
     return input_dict
 
@@ -453,8 +442,11 @@ def get_page_display_string(current, per, total):
 
 def add_settings(organization, app_name, event_name="closeEvent"):
     def _read_settings():
-        settings = QSettings(
-            QSettings.IniFormat, QSettings.UserScope, organization, app_name
+        settings = QtCore.QSettings(
+            QtCore.QSettings.IniFormat,
+            QtCore.QSettings.UserScope,
+            organization,
+            app_name,
         )
         result_dict = {key: settings.value(key) for key in settings.childKeys()}
         for grp_name in settings.childGroups():
@@ -469,8 +461,11 @@ def add_settings(organization, app_name, event_name="closeEvent"):
         return result_dict
 
     def _write_settings(self):
-        settings = QSettings(
-            QSettings.IniFormat, QSettings.UserScope, organization, app_name
+        settings = QtCore.QSettings(
+            QtCore.QSettings.IniFormat,
+            QtCore.QSettings.UserScope,
+            organization,
+            app_name,
         )
         for attr, widget, property in self._bind_data:
             settings.setValue(
@@ -495,9 +490,9 @@ def add_settings(organization, app_name, event_name="closeEvent"):
         if callable(formatter):  # 二次处理 value，比如存入的 bool，读取后要恢复成 bool
             value = formatter(value)
         if property == "geometry":  # 窗口大小位置需要特殊处理
-            if isinstance(value, QRect):  # setting 并没有存，使用用户default传入进来的geo
+            if isinstance(value, QtCore.QRect):  # setting 并没有存，使用用户default传入进来的geo
                 widget.setGeometry(value)
-            elif isinstance(value, QByteArray):  # settings 有保存值
+            elif isinstance(value, QtCore.QByteArray):  # settings 有保存值
                 widget.restoreGeometry(value)
         else:
             widget.setProperty(property, value)
@@ -522,52 +517,59 @@ def add_settings(organization, app_name, event_name="closeEvent"):
 
 
 def get_fit_geometry():
-    geo = next((screen.availableGeometry() for screen in QApplication.screens()), None)
-    return QRect(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
+    geo = next(
+        (screen.availableGeometry() for screen in QtWidgets.QApplication.screens()),
+        None,
+    )
+    return QtCore.QRect(
+        geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2
+    )
 
 
 def convert_to_round_pixmap(orig_pix):
     scale_x, _ = get_scale_factor()
     w = min(orig_pix.width(), orig_pix.height())
-    pix_map = QPixmap(w, w)
-    pix_map.fill(Qt.transparent)
+    pix_map = QtGui.QPixmap(w, w)
+    pix_map.fill(QtCore.Qt.transparent)
 
-    painter = QPainter(pix_map)
-    painter.setRenderHints(QPainter.Antialiasing | QPainter.SmoothPixmapTransform)
+    painter = QtGui.QPainter(pix_map)
+    painter.setRenderHints(
+        QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform
+    )
 
-    path = QPainterPath()
+    path = QtGui.QPainterPath()
     path.addEllipse(0, 0, w, w)
     painter.setClipPath(path)
     painter.drawPixmap(0, 0, w, w, orig_pix)
     return pix_map
 
 
-def generate_text_pixmap(width, height, text, alignment=Qt.AlignCenter):
+def generate_text_pixmap(width, height, text, alignment=QtCore.Qt.AlignCenter):
     # Import third-party modules
     from dayu_widgets import dayu_theme
 
     # draw a pixmap with text
-    pix_map = QPixmap(width, height)
-    pix_map.fill(QColor(dayu_theme.background_in_color))
-    painter = QPainter(pix_map)
-    painter.setRenderHints(QPainter.TextAntialiasing)
+    pix_map = QtGui.QPixmap(width, height)
+    pix_map.fill(QtGui.QColor(dayu_theme.background_in_color))
+    painter = QtGui.QPainter(pix_map)
+    painter.setRenderHints(QtGui.QPainter.TextAntialiasing)
     font = painter.font()
     font.setFamily(dayu_theme.font_family)
     painter.setFont(font)
-    painter.setPen(QPen(QColor(dayu_theme.secondary_text_color)))
+    painter.setPen(QtGui.QPen(QtGui.QColor(dayu_theme.secondary_text_color)))
 
     font_metrics = painter.fontMetrics()
     text_width = font_metrics.horizontalAdvance(text)
     text_height = font_metrics.height()
     x = width / 2 - text_width / 2
     y = height / 2 - text_height / 2
-    if alignment & Qt.AlignLeft:
+    if alignment & QtCore.Qt.AlignLeft:
         x = 0
-    elif alignment & Qt.AlignRight:
+    elif alignment & QtCore.Qt.AlignRight:
         x = width - text_width
-    elif alignment & Qt.AlignTop:
+    elif alignment & QtCore.Qt.AlignTop:
         y = 0
-    elif alignment & Qt.AlignBottom:
+    elif alignment & QtCore.Qt.AlignBottom:
         y = height - text_height
 
     painter.drawText(x, y, text)
@@ -577,12 +579,12 @@ def generate_text_pixmap(width, height, text, alignment=Qt.AlignCenter):
 
 def get_color_icon(color, size=24):
     scale_x, y = get_scale_factor()
-    pix = QPixmap(size * scale_x, size * scale_x)
+    pix = QtGui.QPixmap(size * scale_x, size * scale_x)
     q_color = color
     if isinstance(color, str):
         if color.startswith("#"):
-            q_color = QColor(str)
+            q_color = QtGui.QColor(str)
         elif color.count(",") == 2:
-            q_color = QColor(*tuple(map(int, color.split(","))))
+            q_color = QtGui.QColor(*tuple(map(int, color.split(","))))
     pix.fill(q_color)
-    return QIcon(pix)
+    return QtGui.QIcon(pix)

@@ -14,16 +14,13 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets.label import MLabel
-from dayu_widgets.qt import Property
-from dayu_widgets.qt import QFrame
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
 import six
 
 
-class MDivider(QWidget):
+class MDivider(QtWidgets.QWidget):
     """
     A divider line separates different content.
 
@@ -32,20 +29,24 @@ class MDivider(QWidget):
     """
 
     _alignment_map = {
-        Qt.AlignCenter: 50,
-        Qt.AlignLeft: 20,
-        Qt.AlignRight: 80,
+        QtCore.Qt.AlignCenter: 50,
+        QtCore.Qt.AlignLeft: 20,
+        QtCore.Qt.AlignRight: 80,
     }
 
     def __init__(
-        self, text="", orientation=Qt.Horizontal, alignment=Qt.AlignCenter, parent=None
+        self,
+        text="",
+        orientation=QtCore.Qt.Horizontal,
+        alignment=QtCore.Qt.AlignCenter,
+        parent=None,
     ):
         super(MDivider, self).__init__(parent)
         self._orient = orientation
         self._text_label = MLabel().secondary()
-        self._left_frame = QFrame()
-        self._right_frame = QFrame()
-        self._main_lay = QHBoxLayout()
+        self._left_frame = QtWidgets.QFrame()
+        self._right_frame = QtWidgets.QFrame()
+        self._main_lay = QtWidgets.QHBoxLayout()
         self._main_lay.setContentsMargins(0, 0, 0, 0)
         self._main_lay.setSpacing(0)
         self._main_lay.addWidget(self._left_frame)
@@ -53,16 +54,16 @@ class MDivider(QWidget):
         self._main_lay.addWidget(self._right_frame)
         self.setLayout(self._main_lay)
 
-        if orientation == Qt.Horizontal:
-            self._left_frame.setFrameShape(QFrame.HLine)
-            self._left_frame.setFrameShadow(QFrame.Sunken)
-            self._right_frame.setFrameShape(QFrame.HLine)
-            self._right_frame.setFrameShadow(QFrame.Sunken)
+        if orientation == QtCore.Qt.Horizontal:
+            self._left_frame.setFrameShape(QtWidgets.QFrame.HLine)
+            self._left_frame.setFrameShadow(QtWidgets.QFrame.Sunken)
+            self._right_frame.setFrameShape(QtWidgets.QFrame.HLine)
+            self._right_frame.setFrameShadow(QtWidgets.QFrame.Sunken)
         else:
             self._text_label.setVisible(False)
             self._right_frame.setVisible(False)
-            self._left_frame.setFrameShape(QFrame.VLine)
-            self._left_frame.setFrameShadow(QFrame.Plain)
+            self._left_frame.setFrameShape(QtWidgets.QFrame.VLine)
+            self._left_frame.setFrameShadow(QtWidgets.QFrame.Plain)
             self.setFixedWidth(2)
         self._main_lay.setStretchFactor(
             self._left_frame, self._alignment_map.get(alignment, 50)
@@ -83,7 +84,7 @@ class MDivider(QWidget):
         """
         self._text = value
         self._text_label.setText(value)
-        if self._orient == Qt.Horizontal:
+        if self._orient == QtCore.Qt.Horizontal:
             self._text_label.setVisible(bool(value))
             self._right_frame.setVisible(bool(value))
 
@@ -94,24 +95,24 @@ class MDivider(QWidget):
         """
         return self._text
 
-    dayu_text = Property(six.string_types[0], get_dayu_text, set_dayu_text)
+    dayu_text = QtCore.Property(six.string_types[0], get_dayu_text, set_dayu_text)
 
     @classmethod
     def left(cls, text=""):
         """Create a horizontal divider with text at left."""
-        return cls(text, alignment=Qt.AlignLeft)
+        return cls(text, alignment=QtCore.Qt.AlignLeft)
 
     @classmethod
     def right(cls, text=""):
         """Create a horizontal divider with text at right."""
-        return cls(text, alignment=Qt.AlignRight)
+        return cls(text, alignment=QtCore.Qt.AlignRight)
 
     @classmethod
     def center(cls, text=""):
         """Create a horizontal divider with text at center."""
-        return cls(text, alignment=Qt.AlignCenter)
+        return cls(text, alignment=QtCore.Qt.AlignCenter)
 
     @classmethod
     def vertical(cls):
         """Create a vertical divider"""
-        return cls(orientation=Qt.Vertical)
+        return cls(orientation=QtCore.Qt.Vertical)

@@ -14,6 +14,8 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.alert import MAlert
 from dayu_widgets.divider import MDivider
@@ -24,7 +26,6 @@ from dayu_widgets.item_view import MTableView
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.loading import MLoadingWrapper
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import *
 import examples._mock_data as mock
 
 
@@ -36,16 +37,16 @@ def h(*args):
             for attr, value in i.get("props", {}).items():
                 widget.setProperty(attr, value)
             for signal, slot in i.get("on", {}).items():
-                widget.connect(widget, SIGNAL(signal), slot)
+                getattr(widget, signal).connect(slot)
         elif isinstance(i, list):
-            lay = QHBoxLayout()
+            lay = QtWidgets.QHBoxLayout()
             for j in i:
                 lay.addWidget(j)
             widget.setLayout(lay)
     return widget
 
 
-class MFetchDataThread(QThread):
+class MFetchDataThread(QtCore.QThread):
     def __init__(self, parent=None):
         super(MFetchDataThread, self).__init__(parent)
 
@@ -56,7 +57,7 @@ class MFetchDataThread(QThread):
         time.sleep(4)
 
 
-class TableViewExample(QWidget, MFieldMixin):
+class TableViewExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(TableViewExample, self).__init__(parent)
         self._init_ui()
@@ -83,7 +84,7 @@ class TableViewExample(QWidget, MFieldMixin):
         thread.finished.connect(functools.partial(table_default.setModel, model_sort))
         button = MPushButton(text="Get Data: 4s")
         button.clicked.connect(thread.start)
-        switch_lay = QHBoxLayout()
+        switch_lay = QtWidgets.QHBoxLayout()
         switch_lay.addWidget(button)
         switch_lay.addStretch()
         table_large = MTableView(size=dayu_theme.large, show_row_count=False)
@@ -101,7 +102,7 @@ class TableViewExample(QWidget, MFieldMixin):
         line_edit = MLineEdit().search().small()
         line_edit.textChanged.connect(model_sort.set_search_pattern)
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(line_edit)
         main_lay.addWidget(MDivider("Small Size"))
         main_lay.addWidget(table_small)
@@ -121,7 +122,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = TableViewExample()
     dayu_theme.apply(test)
     test.show()

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# ctrl + C stop QApplication
 # Import future modules
 from __future__ import absolute_import
 from __future__ import division
@@ -8,29 +7,26 @@ from __future__ import print_function
 # Import built-in modules
 import signal
 
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
+
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 # Import built-in modules
+import importlib
 import os
+import sys
+
+# Import third-party modules
+import Qt
 
 
 # Qt.py global variable for preferred Qt binding
 # os.environ["QT_PREFERRED_BINDING"] = "PyQt4;PyQt5;PySide;PySide2"
 # For Houdini hython.exe
-os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = r"E:\Houdini18\bin\Qt_plugins\platforms"
-
-# Import built-in modules
-import sys
-
-
-MODULE = os.path.join(__file__, "..", "..")
-sys.path.insert(0, MODULE) if MODULE not in sys.path else None
-# Import built-in modules
-import importlib
-
-# Import third-party modules
-import Qt
+# os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = r"E:\Houdini18\bin\Qt_plugins\platforms"
 
 
 print(Qt.__binding__)
@@ -42,10 +38,6 @@ import codecs
 from dayu_widgets import dayu_theme
 from dayu_widgets.dock_widget import MDockWidget
 from dayu_widgets.item_view_set import MItemViewSet
-from dayu_widgets.qt import QMainWindow
-from dayu_widgets.qt import QStackedWidget
-from dayu_widgets.qt import QTextEdit
-from dayu_widgets.qt import Qt
 
 
 def get_test_widget():
@@ -64,15 +56,15 @@ def get_test_widget():
     return result
 
 
-class MDemo(QMainWindow):
+class MDemo(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super(MDemo, self).__init__(parent)
         self.setWindowTitle("Dayu Widgets Demo")
         self._init_ui()
 
     def _init_ui(self):
-        self.text_edit = QTextEdit()
-        self.stacked_widget = QStackedWidget()
+        self.text_edit = QtWidgets.QTextEdit()
+        self.stacked_widget = QtWidgets.QStackedWidget()
 
         list_widget = MItemViewSet(view_type=MItemViewSet.ListViewType)
         list_widget.set_header_list(
@@ -91,11 +83,11 @@ class MDemo(QMainWindow):
 
         test_widget = MDockWidget("Example List")
         test_widget.setWidget(list_widget)
-        self.addDockWidget(Qt.LeftDockWidgetArea, test_widget)
+        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, test_widget)
 
         code_widget = MDockWidget("Example Code")
         code_widget.setWidget(self.text_edit)
-        self.addDockWidget(Qt.RightDockWidgetArea, code_widget)
+        self.addDockWidget(QtCore.Qt.RightDockWidgetArea, code_widget)
         self.setCentralWidget(self.stacked_widget)
 
     def slot_change_widget(self, index):
@@ -108,10 +100,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    # Import third-party modules
-    from dayu_widgets.qt import QApplication
-
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
 
     try:
         test = MDemo()

@@ -12,13 +12,10 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets.qt import QFormLayout
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
+from Qt import QtWidgets
 
 
-class MForm(QWidget):
+class MForm(QtWidgets.QWidget):
     Horizontal = "horizontal"
     Vertical = "vertical"
     Inline = "inline"
@@ -27,11 +24,11 @@ class MForm(QWidget):
         super(MForm, self).__init__(parent)
         layout = layout or MForm.Horizontal
         if layout == MForm.Inline:
-            self._main_layout = QHBoxLayout()
+            self._main_layout = QtWidgets.QHBoxLayout()
         elif layout == MForm.Vertical:
-            self._main_layout = QVBoxLayout()
+            self._main_layout = QtWidgets.QVBoxLayout()
         else:
-            self._main_layout = QFormLayout()
+            self._main_layout = QtWidgets.QFormLayout()
         self._model = None
         self._label_list = []
 

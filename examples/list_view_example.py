@@ -11,6 +11,7 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
@@ -18,11 +19,10 @@ from dayu_widgets.item_model import MSortFilterModel
 from dayu_widgets.item_model import MTableModel
 from dayu_widgets.item_view import MListView
 from dayu_widgets.line_edit import MLineEdit
-from dayu_widgets.qt import *
 import examples._mock_data as mock
 
 
-class ListViewExample(QWidget, MFieldMixin):
+class ListViewExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(ListViewExample, self).__init__(parent)
         self._init_ui()
@@ -48,7 +48,7 @@ class ListViewExample(QWidget, MFieldMixin):
         line_edit = MLineEdit().search().small()
         line_edit.textChanged.connect(model_sort.set_search_pattern)
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(line_edit)
         main_lay.addWidget(MDivider("Small Size"))
         main_lay.addWidget(table_small)
@@ -64,7 +64,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = ListViewExample()
     dayu_theme.apply(test)
     test.show()

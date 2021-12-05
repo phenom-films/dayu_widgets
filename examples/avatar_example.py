@@ -12,6 +12,8 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.divider import MDivider
@@ -19,18 +21,13 @@ from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import MPixmap
-from dayu_widgets.qt import QFormLayout
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
 
 
-class AvatarExample(QWidget, MFieldMixin):
+class AvatarExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(AvatarExample, self).__init__(parent)
         self.setWindowTitle("Example for MAvatar")
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("different size"))
 
         size_list = [
@@ -48,11 +45,11 @@ class AvatarExample(QWidget, MFieldMixin):
             MPixmap("app-nuke.png"),
             MPixmap("app-houdini.png"),
         ]
-        form_lay = QFormLayout()
-        form_lay.setLabelAlignment(Qt.AlignRight)
+        form_lay = QtWidgets.QFormLayout()
+        form_lay.setLabelAlignment(QtCore.Qt.AlignRight)
 
         for label, cls in size_list:
-            h_lay = QHBoxLayout()
+            h_lay = QtWidgets.QHBoxLayout()
             for image in self.pix_map_list:
                 avatar_tmp = cls(image)
                 h_lay.addWidget(avatar_tmp)
@@ -83,10 +80,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    # Import third-party modules
-    from dayu_widgets.qt import QApplication
-
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = AvatarExample()
     dayu_theme.apply(test)
     test.show()
