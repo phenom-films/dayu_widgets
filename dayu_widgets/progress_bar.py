@@ -6,18 +6,28 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import QProgressBar, Qt, Property, Slot
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QProgressBar
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import Slot
 
 
 class MProgressBar(QProgressBar):
-    '''
+    """
     props:
         status: str
 
-    '''
-    ErrorStatus = 'error'
-    NormalStatus = 'primary'
-    SuccessStatus = 'success'
+    """
+
+    ErrorStatus = "error"
+    NormalStatus = "primary"
+    SuccessStatus = "success"
 
     def __init__(self, parent=None):
         super(MProgressBar, self).__init__(parent=parent)

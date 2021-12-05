@@ -13,7 +13,7 @@ Components for PySide
 提供**亮色(light)** 和 **暗色(dark)** 两种主题，每种主题可以设置主题颜色。
 以下截图以：
 
-* 亮色 #1890ff 
+* 亮色 #1890ff
 * 暗色 #fa8c16
 
 ## General
@@ -71,7 +71,7 @@ Components for PySide
 ![pageres](screenshots/slider_light.png)![pageres](screenshots/slider_dark.png)
 
 ### MSpinBox <- QSpinBox
-### MDoubleSpinBox  <- QDoubleSpinBox 
+### MDoubleSpinBox  <- QDoubleSpinBox
 ### MDateTimeEdit <- QDateTimeEdit
 ### MDateEdit <- QDateEdit
 ### MTimeEdit <- QTimeEdit

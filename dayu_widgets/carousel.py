@@ -6,11 +6,18 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import built-in modules
 import functools
 
+# Import third-party modules
 from dayu_widgets import dayu_theme
-from dayu_widgets.qt import *
 from dayu_widgets.mixin import property_mixin
+from dayu_widgets.qt import *
 
 
 class MGuidPrivate(QFrame):
@@ -23,7 +30,10 @@ class MGuidPrivate(QFrame):
 
     def set_checked(self, value):
         self.setStyleSheet(
-            'background-color:{}'.format(dayu_theme.primary_color if value else dayu_theme.background_color))
+            "background-color:{}".format(
+                dayu_theme.primary_color if value else dayu_theme.background_color
+            )
+        )
         self.setFixedSize(20 if value else 16, 4)
 
     def mousePressEvent(self, event):
@@ -82,7 +92,7 @@ class MCarousel(QGraphicsView):
         self.loading_ani.setTargetObject(self.hor_bar)
         self.loading_ani.setEasingCurve(QEasingCurve.InOutQuad)
         self.loading_ani.setDuration(500)
-        self.loading_ani.setPropertyName(b'value')
+        self.loading_ani.setPropertyName(b"value")
         self.autoplay_timer = QTimer(self)
         self.autoplay_timer.setInterval(2000)
         self.autoplay_timer.timeout.connect(self.next_page)
@@ -92,7 +102,7 @@ class MCarousel(QGraphicsView):
         self.set_autoplay(autoplay)
 
     def set_autoplay(self, value):
-        self.setProperty('autoplay', value)
+        self.setProperty("autoplay", value)
 
     def _set_autoplay(self, value):
         if value:
@@ -104,11 +114,15 @@ class MCarousel(QGraphicsView):
         self.autoplay_timer.setInterval(ms)
 
     def next_page(self):
-        index = self.current_index + 1 if self.current_index + 1 < self.page_count else 0
+        index = (
+            self.current_index + 1 if self.current_index + 1 < self.page_count else 0
+        )
         self.go_to_page(index)
 
     def pre_page(self):
-        index = self.current_index - 1 if self.current_index > 0 else self.page_count - 1
+        index = (
+            self.current_index - 1 if self.current_index > 0 else self.page_count - 1
+        )
         self.go_to_page(index)
 
     def go_to_page(self, index):

@@ -6,16 +6,25 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-import six
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import built-in modules
+from functools import partial
 import re
-from Qt import QtWidgets, QtCore, QtGui
+
+# Import third-party modules
+from Qt import QtCore
+from Qt import QtGui
+from Qt import QtWidgets
 from Qt.QtCompat import isValid
-import dayu_widgets.utils as utils
+from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.popup import MPopup
-from dayu_widgets.line_edit import MLineEdit
- 
-from functools import partial
+import dayu_widgets.utils as utils
+import six
 
 
 @property_mixin
@@ -23,12 +32,13 @@ class ScrollableMenuMixin(object):
     """
     https://www.pythonfixing.com/2021/10/fixed-how-to-have-scrollable-context.html
     """
+
     deltaY = 0
     dirty = True
     ignoreAutoScroll = False
 
     def __init__(self, *args, **kwargs):
-        super(ScrollableMenuMixin,self).__init__(*args, **kwargs)
+        super(ScrollableMenuMixin, self).__init__(*args, **kwargs)
         self._maximumHeight = self.maximumHeight()
         self._actionRects = []
 
@@ -39,8 +49,8 @@ class ScrollableMenuMixin(object):
         self.delayTimer = QtCore.QTimer(self, interval=100, singleShot=True)
 
         self.setMaxItemCount(0)
-        
-    def _set_max_scroll_count(self,value):
+
+    def _set_max_scroll_count(self, value):
         self.setMaxItemCount(value)
 
     @property
@@ -49,7 +59,7 @@ class ScrollableMenuMixin(object):
             del self._actionRects[:]
             offset = self.offset()
             for action in self.actions():
-                geo = super(ScrollableMenuMixin,self).actionGeometry(action)
+                geo = super(ScrollableMenuMixin, self).actionGeometry(action)
                 if offset:
                     geo.moveTop(geo.y() - offset)
                 self._actionRects.append(geo)
@@ -93,7 +103,7 @@ class ScrollableMenuMixin(object):
         return style.pixelMetric(style.PM_MenuScrollerHeight, None, self) * 2
 
     def isScrollable(self):
-        return self.height() < super(ScrollableMenuMixin,self).sizeHint().height()
+        return self.height() < super(ScrollableMenuMixin, self).sizeHint().height()
 
     def checkScroll(self):
         pos = self.mapFromGlobal(QtGui.QCursor.pos())
@@ -162,7 +172,7 @@ class ScrollableMenuMixin(object):
     # class methods reimplementation
 
     def sizeHint(self):
-        hint = super(ScrollableMenuMixin,self).sizeHint()
+        hint = super(ScrollableMenuMixin, self).sizeHint()
         if hint.height() > self.maximumHeight():
             hint.setHeight(self.maximumHeight())
         return hint
@@ -176,16 +186,16 @@ class ScrollableMenuMixin(object):
                 delta = rect.topLeft() - self.actionGeometry(action).topLeft()
                 source.move(source.pos() + delta)
             return False
-        return super(ScrollableMenuMixin,self).eventFilter(source, event)
+        return super(ScrollableMenuMixin, self).eventFilter(source, event)
 
     def event(self, event):
         if not self.isScrollable():
-            return super(ScrollableMenuMixin,self).event(event)
+            return super(ScrollableMenuMixin, self).event(event)
         if event.type() == event.KeyPress and event.key() in (
             QtCore.Qt.Key_Up,
             QtCore.Qt.Key_Down,
         ):
-            res = super(ScrollableMenuMixin,self).event(event)
+            res = super(ScrollableMenuMixin, self).event(event)
             action = self.activeAction()
             if action:
                 self.ensureVisible(action)
@@ -213,16 +223,16 @@ class ScrollableMenuMixin(object):
                     action.trigger()
                     self.close()
             return True
-        return super(ScrollableMenuMixin,self).event(event)
+        return super(ScrollableMenuMixin, self).event(event)
 
     def timerEvent(self, event):
         if not self.isScrollable():
             # ignore internal timer event for reopening popups
-            super(ScrollableMenuMixin,self).timerEvent(event)
+            super(ScrollableMenuMixin, self).timerEvent(event)
 
     def mouseMoveEvent(self, event):
         if not self.isScrollable():
-            super(ScrollableMenuMixin,self).mouseMoveEvent(event)
+            super(ScrollableMenuMixin, self).mouseMoveEvent(event)
             return
 
         pos = event.pos()
@@ -283,16 +293,16 @@ class ScrollableMenuMixin(object):
                 if action.menu():
                     action.menu().installEventFilter(self)
             self.ignoreAutoScroll = False
-        super(ScrollableMenuMixin,self).showEvent(event)
+        super(ScrollableMenuMixin, self).showEvent(event)
 
     def hideEvent(self, event):
         for action in self.actions():
             if action.menu():
                 action.menu().removeEventFilter(self)
-        super(ScrollableMenuMixin,self).hideEvent(event)
+        super(ScrollableMenuMixin, self).hideEvent(event)
 
     def resizeEvent(self, event):
-        super(ScrollableMenuMixin,self).resizeEvent(event)
+        super(ScrollableMenuMixin, self).resizeEvent(event)
 
         style = self.style()
         l, t, r, b = self.getContentsMargins()
@@ -317,7 +327,7 @@ class ScrollableMenuMixin(object):
 
     def paintEvent(self, event):
         if not self.isScrollable():
-            super(ScrollableMenuMixin,self).paintEvent(event)
+            super(ScrollableMenuMixin, self).paintEvent(event)
             return
 
         style = self.style()
@@ -418,18 +428,23 @@ class ScrollableMenuMixin(object):
         menuOpt.rect = menuOpt.menuRect = rect
         style.drawControl(style.CE_MenuEmptyArea, menuOpt, qp, self)
 
+
 @property_mixin
 class SearchableMenuMixin(object):
-
-    def search_key_event(self,call,event):
+    def search_key_event(self, call, event):
         key = event.key()
         # NOTES: support menu original key event on search bar
-        if key in (QtCore.Qt.Key_Up, QtCore.Qt.Key_Down,QtCore.Qt.Key_Return,QtCore.Qt.Key_Enter):
+        if key in (
+            QtCore.Qt.Key_Up,
+            QtCore.Qt.Key_Down,
+            QtCore.Qt.Key_Return,
+            QtCore.Qt.Key_Enter,
+        ):
             super(SearchableMenuMixin, self).keyPressEvent(event)
         elif key == QtCore.Qt.Key_Tab:
             self.search_bar.setFocus()
         return call(event)
-        
+
     def search(self):
         self.setStyleSheet("QMenu{menu-scrollable: 1;}")
         self.setProperty("search", True)
@@ -437,7 +452,9 @@ class SearchableMenuMixin(object):
         layout = QtWidgets.QVBoxLayout()
 
         self.search_bar = MLineEdit(self)
-        self.search_bar.keyPressEvent = partial(self.search_key_event,self.search_bar.keyPressEvent)
+        self.search_bar.keyPressEvent = partial(
+            self.search_key_event, self.search_bar.keyPressEvent
+        )
         self.search_bar.setPlaceholderText(self.tr("Search Action..."))
         self.search_bar.textChanged.connect(self.slot_search_change)
         self.search_label = QtWidgets.QLabel(self.tr("Search Action..."))
@@ -450,10 +467,10 @@ class SearchableMenuMixin(object):
 
     def _set_search(self, value):
         value and self.search()
-        
+
     def _set_search_label(self, value):
         self.property("search") and self.search_label.setText(value)
-        
+
     def _set_search_placeholder(self, value):
         self.property("search") and self.search_bar.setPlaceholderText(value)
 
@@ -489,7 +506,7 @@ class SearchableMenuMixin(object):
                 self.search_popup.show()
                 width = self.sizeHint().width()
                 width = width if width >= 50 else 50
-                offset = QtCore.QPoint(width,0)
+                offset = QtCore.QPoint(width, 0)
                 self.search_popup.move(self.pos() + offset)
             elif key == QtCore.Qt.Key_Escape:
                 self.search_bar.setText("")
@@ -501,20 +518,20 @@ class SearchableMenuMixin(object):
 class MMenu(SearchableMenuMixin, ScrollableMenuMixin, QtWidgets.QMenu):
     sig_value_changed = QtCore.Signal(object)
 
-    def __init__(self, exclusive=True, cascader=False, title='', parent=None):
+    def __init__(self, exclusive=True, cascader=False, title="", parent=None):
         super(MMenu, self).__init__(title=title, parent=parent)
-        self.setProperty('cascader', cascader)
+        self.setProperty("cascader", cascader)
         self.setCursor(QtCore.Qt.PointingHandCursor)
         self._action_group = QtWidgets.QActionGroup(self)
         self._action_group.setExclusive(exclusive)
         self._action_group.triggered.connect(self.slot_on_action_triggered)
         self._load_data_func = None
-        self.set_value('')
+        self.set_value("")
         self.set_data([])
-        self.set_separator('/')
+        self.set_separator("/")
 
     def set_separator(self, chr):
-        self.setProperty('separator', chr)
+        self.setProperty("separator", chr)
 
     def set_load_callback(self, func):
         assert callable(func)
@@ -530,15 +547,15 @@ class MMenu(SearchableMenuMixin, ScrollableMenuMixin, QtWidgets.QMenu):
         # if isinstance(data, int):
         #     action = self._action_group.actions()[data]
         #     data = action.property('value')
-        if self.property('cascader') and isinstance(data, six.string_types):
-            data = data.split(self.property('separator'))
-        self.setProperty('value', data)
+        if self.property("cascader") and isinstance(data, six.string_types):
+            data = data.split(self.property("separator"))
+        self.setProperty("value", data)
 
     def _set_value(self, value):
         data_list = value if isinstance(value, list) else [value]
         flag = False
         for act in self._action_group.actions():
-            checked = act.property('value') in data_list
+            checked = act.property("value") in data_list
             if act.isChecked() != checked:  # 更新来自代码
                 act.setChecked(checked)
                 flag = True
@@ -546,32 +563,36 @@ class MMenu(SearchableMenuMixin, ScrollableMenuMixin, QtWidgets.QMenu):
             self.sig_value_changed.emit(value)
 
     def _add_menu(self, parent_menu, data_dict):
-        if 'children' in data_dict:
-            menu = MMenu(title=data_dict.get('label'), parent=self)
-            menu.setProperty('value', data_dict.get('value'))
+        if "children" in data_dict:
+            menu = MMenu(title=data_dict.get("label"), parent=self)
+            menu.setProperty("value", data_dict.get("value"))
             parent_menu.addMenu(menu)
             if not (parent_menu is self):
                 # 用来将来获取父层级数据
-                menu.setProperty('parent_menu', parent_menu)
-            for i in data_dict.get('children'):
+                menu.setProperty("parent_menu", parent_menu)
+            for i in data_dict.get("children"):
                 self._add_menu(menu, i)
         else:
-            action = self._action_group.addAction(utils.display_formatter(data_dict.get('label')))
-            action.setProperty('value', data_dict.get('value'))
+            action = self._action_group.addAction(
+                utils.display_formatter(data_dict.get("label"))
+            )
+            action.setProperty("value", data_dict.get("value"))
             action.setCheckable(True)
             # 用来将来获取父层级数据
-            action.setProperty('parent_menu', parent_menu)
+            action.setProperty("parent_menu", parent_menu)
             parent_menu.addAction(action)
 
     def set_data(self, option_list):
         assert isinstance(option_list, list)
         if option_list:
             if all(isinstance(i, six.string_types) for i in option_list):
-                option_list = utils.from_list_to_nested_dict(option_list, sep=self.property('separator'))
+                option_list = utils.from_list_to_nested_dict(
+                    option_list, sep=self.property("separator")
+                )
             if all(isinstance(i, (int, float)) for i in option_list):
-                option_list = [{'value': i, 'label': str(i)} for i in option_list]
+                option_list = [{"value": i, "label": str(i)} for i in option_list]
         # 全部转换成 dict 类型的 list
-        self.setProperty('data', option_list)
+        self.setProperty("data", option_list)
 
     def _set_data(self, option_list):
         self.clear()
@@ -582,21 +603,25 @@ class MMenu(SearchableMenuMixin, ScrollableMenuMixin, QtWidgets.QMenu):
             self._add_menu(self, data_dict)
 
     def _get_parent(self, result, obj):
-        if obj.property('parent_menu'):
-            parent_menu = obj.property('parent_menu')
-            result.insert(0, parent_menu.property('value'))
+        if obj.property("parent_menu"):
+            parent_menu = obj.property("parent_menu")
+            result.insert(0, parent_menu.property("value"))
             self._get_parent(result, parent_menu)
 
     def slot_on_action_triggered(self, action):
-        current_data = action.property('value')
-        if self.property('cascader'):
+        current_data = action.property("value")
+        if self.property("cascader"):
             selected_data = [current_data]
             self._get_parent(selected_data, action)
         else:
             if self._action_group.isExclusive():
                 selected_data = current_data
             else:
-                selected_data = [act.property('value') for act in self._action_group.actions() if act.isChecked()]
+                selected_data = [
+                    act.property("value")
+                    for act in self._action_group.actions()
+                    if act.isChecked()
+                ]
         self.set_value(selected_data)
         self.sig_value_changed.emit(selected_data)
 

@@ -6,12 +6,28 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.item_model import MSortFilterModel, MTableModel
-from dayu_widgets.item_view import MTableView, MTreeView, MBigView, MListView
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from dayu_widgets.item_model import MSortFilterModel
+from dayu_widgets.item_model import MTableModel
+from dayu_widgets.item_view import MBigView
+from dayu_widgets.item_view import MListView
+from dayu_widgets.item_view import MTableView
+from dayu_widgets.item_view import MTreeView
 from dayu_widgets.line_edit import MLineEdit
+from dayu_widgets.qt import QApplication
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QModelIndex
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import Signal
+from dayu_widgets.qt import Slot
 from dayu_widgets.tool_button import MToolButton
-from dayu_widgets.qt import QWidget, QModelIndex, Signal, QVBoxLayout, QApplication, Qt, Slot, \
-    QHBoxLayout
 
 
 class MItemViewSet(QWidget):
@@ -38,9 +54,13 @@ class MItemViewSet(QWidget):
         self.item_view.setModel(self.sort_filter_model)
 
         self._search_line_edit = MLineEdit().search().small()
-        self._search_attr_button = MToolButton().icon_only().svg('down_fill.svg').small()
+        self._search_attr_button = (
+            MToolButton().icon_only().svg("down_fill.svg").small()
+        )
         self._search_line_edit.set_prefix_widget(self._search_attr_button)
-        self._search_line_edit.textChanged.connect(self.sort_filter_model.set_search_pattern)
+        self._search_line_edit.textChanged.connect(
+            self.sort_filter_model.set_search_pattern
+        )
         self._search_line_edit.setVisible(False)
         self._search_lay = QHBoxLayout()
         self._search_lay.setContentsMargins(0, 0, 0, 0)

@@ -6,7 +6,16 @@
 # Email : muyanru345@163.com
 ###################################################################
 
-from dayu_widgets.qt import QSizeGrip, QTextEdit, QGridLayout, Qt
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from dayu_widgets.qt import QGridLayout
+from dayu_widgets.qt import QSizeGrip
+from dayu_widgets.qt import QTextEdit
+from dayu_widgets.qt import Qt
 
 
 class MSizeGrip(QSizeGrip):
@@ -32,7 +41,7 @@ class MTextEdit(QTextEdit):
     def _autosize_text_edit(self):
         # w = self.width()
         doc = self.document()
-        print (self.width(), doc.lineCount(), doc.idealWidth())
+        print(self.width(), doc.lineCount(), doc.idealWidth())
 
     def resizeable(self):
         """Show the size grip on bottom right. User can use it to resize MTextEdit"""
