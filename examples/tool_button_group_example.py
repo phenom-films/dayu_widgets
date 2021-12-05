@@ -12,14 +12,16 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.button_group import MToolButtonGroup
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
-from dayu_widgets.qt import *
+from dayu_widgets.qt import MIcon
 
 
-class ToolButtonGroupExample(QWidget, MFieldMixin):
+class ToolButtonGroupExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(ToolButtonGroupExample, self).__init__(parent)
         self._init_ui()
@@ -27,7 +29,7 @@ class ToolButtonGroupExample(QWidget, MFieldMixin):
     def _init_ui(self):
         tool_group_h = MToolButtonGroup(size=dayu_theme.small)
         tool_group_h.set_button_list(["Apple", {"text": "Banana"}, {"text": "Pear"}])
-        tool_1_lay = QHBoxLayout()
+        tool_1_lay = QtWidgets.QHBoxLayout()
         tool_1_lay.addWidget(tool_group_h)
         tool_1_lay.addStretch()
 
@@ -38,17 +40,19 @@ class ToolButtonGroupExample(QWidget, MFieldMixin):
         ]
 
         tool_group_v = MToolButtonGroup(
-            exclusive=True, size=dayu_theme.small, orientation=Qt.Vertical
+            exclusive=True, size=dayu_theme.small, orientation=QtCore.Qt.Vertical
         )
         tool_group_v.set_button_list(app_data)
 
         tool_group_button_h = MToolButtonGroup()
         tool_group_button_h.set_button_list(app_data)
-        tool_2_lay = QHBoxLayout()
+        tool_2_lay = QtWidgets.QHBoxLayout()
         tool_2_lay.addWidget(tool_group_button_h)
         tool_2_lay.addStretch()
 
-        tool_grp_excl_true = MToolButtonGroup(orientation=Qt.Horizontal, exclusive=True)
+        tool_grp_excl_true = MToolButtonGroup(
+            orientation=QtCore.Qt.Horizontal, exclusive=True
+        )
         tool_grp_excl_true.set_button_list(
             [
                 {"svg": "table_view.svg", "checkable": True, "tooltip": "Table View"},
@@ -58,12 +62,12 @@ class ToolButtonGroupExample(QWidget, MFieldMixin):
             ]
         )
         tool_grp_excl_true.set_dayu_checked(0)
-        tool_excl_lay = QHBoxLayout()
+        tool_excl_lay = QtWidgets.QHBoxLayout()
         tool_excl_lay.addWidget(tool_grp_excl_true)
         tool_excl_lay.addStretch()
 
         tool_grp_excl_false = MToolButtonGroup(
-            orientation=Qt.Horizontal, exclusive=False
+            orientation=QtCore.Qt.Horizontal, exclusive=False
         )
         tool_grp_excl_false.set_button_list(
             [
@@ -72,11 +76,11 @@ class ToolButtonGroupExample(QWidget, MFieldMixin):
                 {"tooltip": "下划线", "svg": "underline.svg", "checkable": True},
             ]
         )
-        tool_excl_2_lay = QHBoxLayout()
+        tool_excl_2_lay = QtWidgets.QHBoxLayout()
         tool_excl_2_lay.addWidget(tool_grp_excl_false)
         tool_excl_2_lay.addStretch()
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("orientation=Qt.Horizontal "))
         main_lay.addLayout(tool_1_lay)
         main_lay.addWidget(MDivider("orientation=Qt.Vertical"))
@@ -95,7 +99,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = ToolButtonGroupExample()
     dayu_theme.apply(test)
     test.show()

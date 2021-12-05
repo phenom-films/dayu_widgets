@@ -12,6 +12,8 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets.item_model import MSortFilterModel
 from dayu_widgets.item_model import MTableModel
 from dayu_widgets.item_view import MBigView
@@ -19,20 +21,12 @@ from dayu_widgets.item_view import MListView
 from dayu_widgets.item_view import MTableView
 from dayu_widgets.item_view import MTreeView
 from dayu_widgets.line_edit import MLineEdit
-from dayu_widgets.qt import QApplication
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QModelIndex
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
-from dayu_widgets.qt import Signal
-from dayu_widgets.qt import Slot
 from dayu_widgets.tool_button import MToolButton
 
 
-class MItemViewSet(QWidget):
-    sig_double_clicked = Signal(QModelIndex)
-    sig_left_clicked = Signal(QModelIndex)
+class MItemViewSet(QtWidgets.QWidget):
+    sig_double_clicked = QtCore.Signal(QtCore.QModelIndex)
+    sig_left_clicked = QtCore.Signal(QtCore.QModelIndex)
     TableViewType = MTableView
     BigViewType = MBigView
     TreeViewType = MTreeView
@@ -40,7 +34,7 @@ class MItemViewSet(QWidget):
 
     def __init__(self, view_type=None, parent=None):
         super(MItemViewSet, self).__init__(parent)
-        self.main_lay = QVBoxLayout()
+        self.main_lay = QtWidgets.QVBoxLayout()
         self.main_lay.setSpacing(5)
         self.main_lay.setContentsMargins(0, 0, 0, 0)
 
@@ -62,7 +56,7 @@ class MItemViewSet(QWidget):
             self.sort_filter_model.set_search_pattern
         )
         self._search_line_edit.setVisible(False)
-        self._search_lay = QHBoxLayout()
+        self._search_lay = QtWidgets.QHBoxLayout()
         self._search_lay.setContentsMargins(0, 0, 0, 0)
         self._search_lay.addStretch()
         self._search_lay.addWidget(self._search_line_edit)
@@ -71,10 +65,10 @@ class MItemViewSet(QWidget):
         self.main_lay.addWidget(self.item_view)
         self.setLayout(self.main_lay)
 
-    @Slot(QModelIndex)
+    @QtCore.Slot(QtCore.QModelIndex)
     def slot_left_clicked(self, start_index):
-        button = QApplication.mouseButtons()
-        if button == Qt.LeftButton:
+        button = QtWidgets.QApplication.mouseButtons()
+        if button == QtCore.Qt.LeftButton:
             real_index = self.sort_filter_model.mapToSource(start_index)
             self.sig_left_clicked.emit(real_index)
 
@@ -84,7 +78,7 @@ class MItemViewSet(QWidget):
         self.sort_filter_model.setSourceModel(self.source_model)
         self.item_view.set_header_list(header_list)
 
-    @Slot()
+    @QtCore.Slot()
     def setup_data(self, data_list):
         self.source_model.clear()
         if data_list:

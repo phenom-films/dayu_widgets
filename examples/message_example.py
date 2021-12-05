@@ -15,18 +15,16 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.button_group import MPushButtonGroup
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.message import MMessage
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 
 
-class MessageExample(QWidget, MFieldMixin):
+class MessageExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MessageExample, self).__init__(parent)
         self.setWindowTitle("Examples for MMessage")
@@ -56,7 +54,7 @@ class MessageExample(QWidget, MFieldMixin):
             functools.partial(self.slot_show_message, MMessage.error, {"text": "失败了！"})
         )
 
-        sub_lay1 = QHBoxLayout()
+        sub_lay1 = QtWidgets.QHBoxLayout()
         sub_lay1.addWidget(button3)
         sub_lay1.addWidget(button4)
         sub_lay1.addWidget(button5)
@@ -78,7 +76,7 @@ class MessageExample(QWidget, MFieldMixin):
                 {"text": "可手动关闭提示", "closable": True},
             )
         )
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("different type"))
         main_lay.addLayout(sub_lay1)
         main_lay.addWidget(MLabel("不同的提示状态：普通、成功、警告、错误。默认2秒后消失"))
@@ -144,10 +142,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    # Import third-party modules
-    from dayu_widgets.qt import QApplication
-
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = MessageExample()
     # Import third-party modules
     from dayu_widgets import dayu_theme

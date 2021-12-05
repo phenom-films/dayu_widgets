@@ -14,20 +14,14 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtGui
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import MPixmap
-from dayu_widgets.qt import Property
-from dayu_widgets.qt import QFrame
-from dayu_widgets.qt import QGridLayout
-from dayu_widgets.qt import QPainter
-from dayu_widgets.qt import QPropertyAnimation
-from dayu_widgets.qt import QSize
-from dayu_widgets.qt import QSizePolicy
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
 
 
-class MLoading(QWidget):
+class MLoading(QtWidgets.QWidget):
     """
     Show a loading animation image.
     """
@@ -35,12 +29,12 @@ class MLoading(QWidget):
     def __init__(self, size=None, color=None, parent=None):
         super(MLoading, self).__init__(parent)
         size = size or dayu_theme.default_size
-        self.setFixedSize(QSize(size, size))
+        self.setFixedSize(QtCore.QSize(size, size))
         self.pix = MPixmap(
             "loading.svg", color or dayu_theme.primary_color
-        ).scaledToWidth(size, Qt.SmoothTransformation)
+        ).scaledToWidth(size, QtCore.Qt.SmoothTransformation)
         self._rotation = 0
-        self._loading_ani = QPropertyAnimation()
+        self._loading_ani = QtCore.QPropertyAnimation()
         self._loading_ani.setTargetObject(self)
         # self.loading_ani.setEasingCurve(QEasingCurve.InOutQuad)
         self._loading_ani.setDuration(1000)
@@ -57,12 +51,12 @@ class MLoading(QWidget):
     def _get_rotation(self):
         return self._rotation
 
-    rotation = Property(int, _get_rotation, _set_rotation)
+    rotation = QtCore.Property(int, _get_rotation, _set_rotation)
 
     def paintEvent(self, event):
         """override the paint event to paint the 1/4 circle image."""
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.SmoothPixmapTransform)
+        painter = QtGui.QPainter(self)
+        painter.setRenderHint(QtGui.QPainter.SmoothPixmapTransform)
         painter.translate(self.pix.width() / 2, self.pix.height() / 2)
         painter.rotate(self._rotation)
         painter.drawPixmap(
@@ -101,7 +95,7 @@ class MLoading(QWidget):
         return cls(dayu_theme.tiny, color)
 
 
-class MLoadingWrapper(QWidget):
+class MLoadingWrapper(QtWidgets.QWidget):
     """
     A wrapper widget to show the loading widget or hide.
     Property:
@@ -111,17 +105,21 @@ class MLoadingWrapper(QWidget):
     def __init__(self, widget, loading=True, parent=None):
         super(MLoadingWrapper, self).__init__(parent)
         self._widget = widget
-        self._mask_widget = QFrame()
+        self._mask_widget = QtWidgets.QFrame()
         self._mask_widget.setObjectName("mask")
-        self._mask_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self._mask_widget.setSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
         self._loading_widget = MLoading()
-        self._loading_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self._loading_widget.setSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
 
-        self._main_lay = QGridLayout()
+        self._main_lay = QtWidgets.QGridLayout()
         self._main_lay.setContentsMargins(0, 0, 0, 0)
         self._main_lay.addWidget(widget, 0, 0)
         self._main_lay.addWidget(self._mask_widget, 0, 0)
-        self._main_lay.addWidget(self._loading_widget, 0, 0, Qt.AlignCenter)
+        self._main_lay.addWidget(self._loading_widget, 0, 0, QtCore.Qt.AlignCenter)
         self.setLayout(self._main_lay)
         self._loading = None
         self.set_dayu_loading(loading)
@@ -146,4 +144,4 @@ class MLoadingWrapper(QWidget):
         """
         return self._loading
 
-    dayu_loading = Property(bool, get_dayu_loading, set_dayu_loading)
+    dayu_loading = QtCore.Property(bool, get_dayu_loading, set_dayu_loading)

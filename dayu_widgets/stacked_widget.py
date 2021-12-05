@@ -13,12 +13,12 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.mixin import stacked_animation_mixin
-from dayu_widgets.qt import QStackedWidget
 
 
 @stacked_animation_mixin
-class MStackedWidget(QStackedWidget):
+class MStackedWidget(QtWidgets.QStackedWidget):
     """Just active animation when current index changed."""
 
     def __init__(self, parent=None):

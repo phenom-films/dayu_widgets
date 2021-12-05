@@ -12,6 +12,7 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.badge import MBadge
@@ -22,21 +23,18 @@ from dayu_widgets.label import MLabel
 from dayu_widgets.menu import MMenu
 from dayu_widgets.qt import MIcon
 from dayu_widgets.qt import MPixmap
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 from dayu_widgets.spin_box import MSpinBox
 from dayu_widgets.tool_button import MToolButton
 
 
-class BadgeExample(QWidget, MFieldMixin):
+class BadgeExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(BadgeExample, self).__init__(parent)
         self.setWindowTitle("Examples for MBadge")
         self._init_ui()
 
     def _init_ui(self):
-        standalone_lay = QHBoxLayout()
+        standalone_lay = QtWidgets.QHBoxLayout()
         standalone_lay.addWidget(MBadge.count(0))
         standalone_lay.addWidget(MBadge.count(20))
         standalone_lay.addWidget(MBadge.count(100))
@@ -66,18 +64,18 @@ class BadgeExample(QWidget, MFieldMixin):
 
         badge_hot = MBadge.text("hot", widget=MLabel("你的理想城市  "))
 
-        sub_lay1 = QHBoxLayout()
+        sub_lay1 = QtWidgets.QHBoxLayout()
         sub_lay1.addWidget(badge_1)
         sub_lay1.addWidget(badge_2)
         sub_lay1.addWidget(badge_3)
         sub_lay1.addStretch()
 
-        sub_lay2 = QHBoxLayout()
+        sub_lay2 = QtWidgets.QHBoxLayout()
         sub_lay2.addWidget(badge_hot)
         sub_lay2.addWidget(select1)
         sub_lay2.addStretch()
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("use standalone"))
         main_lay.addLayout(standalone_lay)
         main_lay.addWidget(MDivider("different type"))
@@ -93,10 +91,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    # Import third-party modules
-    from dayu_widgets.qt import QApplication
-
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = BadgeExample()
     dayu_theme.apply(test)
     test.show()

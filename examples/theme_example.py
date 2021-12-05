@@ -15,6 +15,8 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets.button_group import MRadioButtonGroup
 from dayu_widgets.check_box import MCheckBox
 from dayu_widgets.combo_box import MComboBox
@@ -23,25 +25,20 @@ from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import MIcon
-from dayu_widgets.qt import QFormLayout
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
 from dayu_widgets.slider import MSlider
 from dayu_widgets.spin_box import MDateEdit
 from dayu_widgets.spin_box import MSpinBox
 from dayu_widgets.switch import MSwitch
 
 
-class ThemeExample(QWidget, MFieldMixin):
+class ThemeExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(ThemeExample, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
-        form_lay = QFormLayout()
-        form_lay.setLabelAlignment(Qt.AlignRight)
+        form_lay = QtWidgets.QFormLayout()
+        form_lay.setLabelAlignment(QtCore.Qt.AlignRight)
         gender_grp = MRadioButtonGroup()
         gender_grp.set_button_list(
             [
@@ -68,12 +65,12 @@ class ThemeExample(QWidget, MFieldMixin):
         slider.setValue(30)
         form_lay.addRow("Slider:", slider)
 
-        button_lay = QHBoxLayout()
+        button_lay = QtWidgets.QHBoxLayout()
         button_lay.addStretch()
         button_lay.addWidget(MPushButton(text="Submit").primary())
         button_lay.addWidget(MPushButton(text="Cancel"))
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addLayout(form_lay)
         main_lay.addWidget(MCheckBox("I accept the terms and conditions"))
         main_lay.addStretch()
@@ -86,10 +83,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    # Import third-party modules
-    from dayu_widgets.qt import QApplication
-
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = ThemeExample()
     # Import third-party modules
     from dayu_widgets import dayu_theme

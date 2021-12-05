@@ -12,14 +12,15 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.carousel import MCarousel
 from dayu_widgets.label import MLabel
-from dayu_widgets.qt import *
+from dayu_widgets.qt import MPixmap
 from dayu_widgets.slider import MSlider
 from dayu_widgets.switch import MSwitch
 
 
-class CarouselExample(QWidget):
+class CarouselExample(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(CarouselExample, self).__init__(parent)
         self.setWindowTitle("Examples for MCarousel")
@@ -30,7 +31,7 @@ class CarouselExample(QWidget):
         switch.setChecked(True)
         slider = MSlider()
         slider.setRange(1, 10)
-        switch_lay = QFormLayout()
+        switch_lay = QtWidgets.QFormLayout()
         switch_lay.addRow(MLabel("AutoPlay"), switch)
         switch_lay.addRow(MLabel("Interval"), slider)
         test = MCarousel(
@@ -43,7 +44,7 @@ class CarouselExample(QWidget):
         slider.valueChanged.connect(lambda x: test.set_interval(x * 1000))
         slider.setValue(3)
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(test)
         main_lay.addLayout(switch_lay)
         main_lay.addStretch()
@@ -57,7 +58,7 @@ if __name__ == "__main__":
     # Import third-party modules
     from dayu_widgets import dayu_theme
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = CarouselExample()
     dayu_theme.apply(test)
     test.show()

@@ -11,10 +11,10 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from Qt.QtCore import *
-from Qt.QtGui import *
+from Qt import QtCore
+from Qt import QtGui
+from Qt import QtWidgets
 from Qt.QtSvg import QSvgRenderer
-from Qt.QtWidgets import *
 import six
 
 
@@ -31,19 +31,19 @@ class MCacheDict(object):
         from dayu_widgets import dayu_theme
 
         replace_color = replace_color or dayu_theme.icon_color
-        if (self.cls is QIcon) and (replace_color is None):
-            return QIcon(svg_path)
+        if (self.cls is QtGui.QIcon) and (replace_color is None):
+            return QtGui.QIcon(svg_path)
         with open(svg_path, "r") as f:
             data_content = f.read()
             if replace_color is not None:
                 data_content = data_content.replace("#555555", replace_color)
-            self._render.load(QByteArray(six.b(data_content)))
-            pix = QPixmap(128, 128)
-            pix.fill(Qt.transparent)
-            painter = QPainter(pix)
+            self._render.load(QtCore.QByteArray(six.b(data_content)))
+            pix = QtGui.QPixmap(128, 128)
+            pix.fill(QtCore.Qt.transparent)
+            painter = QtGui.QPainter(pix)
             self._render.render(painter)
             painter.end()
-            if self.cls is QPixmap:
+            if self.cls is QtGui.QPixmap:
                 return pix
             else:
                 return self.cls(pix)
@@ -68,10 +68,10 @@ class MCacheDict(object):
 
 def get_scale_factor():
     standard_dpi = 96.0
-    scale_factor_x = QApplication.desktop().logicalDpiX() / standard_dpi
-    scale_factor_y = QApplication.desktop().logicalDpiY() / standard_dpi
+    scale_factor_x = QtWidgets.QApplication.desktop().logicalDpiX() / standard_dpi
+    scale_factor_y = QtWidgets.QApplication.desktop().logicalDpiY() / standard_dpi
     return scale_factor_x, scale_factor_y
 
 
-MPixmap = MCacheDict(QPixmap)
-MIcon = MCacheDict(QIcon)
+MPixmap = MCacheDict(QtGui.QPixmap)
+MIcon = MCacheDict(QtGui.QIcon)

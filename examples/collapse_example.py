@@ -12,12 +12,12 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.collapse import MCollapse
 from dayu_widgets.label import MLabel
-from dayu_widgets.qt import *
 
 
-class CollapseExample(QWidget):
+class CollapseExample(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(CollapseExample, self).__init__(parent)
         self.setWindowTitle("Examples for MCollapse")
@@ -50,7 +50,7 @@ class CollapseExample(QWidget):
         section_group = MCollapse()
         section_group.add_section_list(section_list)
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(section_group)
         main_lay.addStretch()
         self.setLayout(main_lay)
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = CollapseExample()
     # Import third-party modules
     from dayu_widgets import dayu_theme

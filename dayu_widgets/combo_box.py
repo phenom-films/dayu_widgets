@@ -12,7 +12,6 @@ from __future__ import print_function
 
 # Import third-party modules
 from Qt import QtCore
-from Qt import QtGui
 from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import cursor_mixin

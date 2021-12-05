@@ -13,15 +13,11 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.button_group import MButtonGroupBase
 from dayu_widgets.divider import MDivider
-from dayu_widgets.qt import Property
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
-from dayu_widgets.qt import Signal
 from dayu_widgets.stacked_widget import MStackedWidget
 from dayu_widgets.tool_button import MToolButton
 
@@ -37,7 +33,7 @@ class MUnderlineButton(MToolButton):
 class MUnderlineButtonGroup(MButtonGroupBase):
     """MUnderlineButtonGroup"""
 
-    sig_checked_changed = Signal(int)
+    sig_checked_changed = QtCore.Signal(int)
 
     def __init__(self, tab, parent=None):
         super(MUnderlineButtonGroup, self).__init__(parent=parent)
@@ -74,34 +70,34 @@ class MUnderlineButtonGroup(MButtonGroupBase):
         """Get current checked button's id"""
         return self._button_group.checkedId()
 
-    dayu_checked = Property(
+    dayu_checked = QtCore.Property(
         int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
     )
 
 
-class MLineTabWidget(QWidget):
+class MLineTabWidget(QtWidgets.QWidget):
     """MLineTabWidget"""
 
-    def __init__(self, alignment=Qt.AlignCenter, parent=None):
+    def __init__(self, alignment=QtCore.Qt.AlignCenter, parent=None):
         super(MLineTabWidget, self).__init__(parent=parent)
         self.tool_button_group = MUnderlineButtonGroup(tab=self)
-        self.bar_layout = QHBoxLayout()
+        self.bar_layout = QtWidgets.QHBoxLayout()
         self.bar_layout.setContentsMargins(0, 0, 0, 0)
-        if alignment == Qt.AlignCenter:
+        if alignment == QtCore.Qt.AlignCenter:
             self.bar_layout.addStretch()
             self.bar_layout.addWidget(self.tool_button_group)
             self.bar_layout.addStretch()
-        elif alignment == Qt.AlignLeft:
+        elif alignment == QtCore.Qt.AlignLeft:
             self.bar_layout.addWidget(self.tool_button_group)
             self.bar_layout.addStretch()
-        elif alignment == Qt.AlignRight:
+        elif alignment == QtCore.Qt.AlignRight:
             self.bar_layout.addStretch()
             self.bar_layout.addWidget(self.tool_button_group)
         self.stack_widget = MStackedWidget()
         self.tool_button_group.sig_checked_changed.connect(
             self.stack_widget.setCurrentIndex
         )
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
         main_lay.setSpacing(0)
         main_lay.addLayout(self.bar_layout)
@@ -141,4 +137,4 @@ class MLineTabWidget(QWidget):
         self.tool_button_group.update_size(self._dayu_size)
         self.style().polish(self)
 
-    dayu_size = Property(int, get_dayu_size, set_dayu_size)
+    dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)

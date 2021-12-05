@@ -12,6 +12,7 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.card import MCard
 from dayu_widgets.card import MMeta
@@ -19,18 +20,13 @@ from dayu_widgets.divider import MDivider
 from dayu_widgets.flow_layout import MFlowLayout
 from dayu_widgets.label import MLabel
 from dayu_widgets.qt import MPixmap
-from dayu_widgets.qt import QApplication
-from dayu_widgets.qt import QScrollArea
-from dayu_widgets.qt import QSplitter
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 
 
-class CardExample(QWidget):
+class CardExample(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(CardExample, self).__init__(parent)
         self.setWindowTitle("Examples for MCard")
-        geo = QApplication.desktop().screenGeometry()
+        geo = QtWidgets.QApplication.desktop().screenGeometry()
         width = float(geo.width())
         height = float(geo.height())
         x = int(width / 4)
@@ -61,8 +57,8 @@ class CardExample(QWidget):
             },
         ]:
             card_0 = MCard(**setting)
-            content_widget_0 = QWidget()
-            content_lay_0 = QVBoxLayout()
+            content_widget_0 = QtWidgets.QWidget()
+            content_lay_0 = QtWidgets.QVBoxLayout()
             content_lay_0.setContentsMargins(15, 15, 15, 15)
             content_widget_0.setLayout(content_lay_0)
             for i in range(4):
@@ -90,7 +86,7 @@ class CardExample(QWidget):
             meta_card.setup_data(setting)
             meta_card_lay.addWidget(meta_card)
 
-        task_card_lay = QVBoxLayout()
+        task_card_lay = QtWidgets.QVBoxLayout()
         # task_card_lay.setSpacing(10)
         for setting in [
             {
@@ -113,33 +109,33 @@ class CardExample(QWidget):
             meta_card.setup_data(setting)
             task_card_lay.addWidget(meta_card)
 
-        left_lay = QVBoxLayout()
+        left_lay = QtWidgets.QVBoxLayout()
         left_lay.addWidget(MDivider("Basic"))
         left_lay.addLayout(basic_card_lay)
         left_lay.addWidget(MDivider("Meta E-Commerce Example"))
         left_lay.addLayout(meta_card_lay)
         left_lay.addStretch()
-        left_widget = QWidget()
+        left_widget = QtWidgets.QWidget()
         left_widget.setLayout(left_lay)
 
-        right_lay = QVBoxLayout()
+        right_lay = QtWidgets.QVBoxLayout()
         right_lay.addWidget(MDivider("Meta Task Item Example"))
-        scroll = QScrollArea()
+        scroll = QtWidgets.QScrollArea()
         scroll.setWidgetResizable(True)
-        task_widget = QWidget()
+        task_widget = QtWidgets.QWidget()
         task_widget.setLayout(task_card_lay)
         scroll.setWidget(task_widget)
 
         right_lay.addWidget(scroll)
-        right_widget = QWidget()
+        right_widget = QtWidgets.QWidget()
         right_widget.setLayout(right_lay)
 
-        splitter = QSplitter()
+        splitter = QtWidgets.QSplitter()
         splitter.addWidget(left_widget)
         splitter.addWidget(right_widget)
         splitter.setStretchFactor(0, 80)
         splitter.setStretchFactor(1, 20)
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(splitter)
         self.setLayout(main_lay)
 
@@ -148,7 +144,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = CardExample()
 
     dayu_theme.apply(test)

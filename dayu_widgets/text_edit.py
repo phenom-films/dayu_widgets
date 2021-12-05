@@ -12,25 +12,25 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets.qt import QGridLayout
-from dayu_widgets.qt import QSizeGrip
-from dayu_widgets.qt import QTextEdit
-from dayu_widgets.qt import Qt
+from Qt import QtCore
+from Qt import QtWidgets
 
 
-class MSizeGrip(QSizeGrip):
+class MSizeGrip(QtWidgets.QSizeGrip):
     def __init__(self, parent=None):
         super(MSizeGrip, self).__init__(parent)
 
 
-class MTextEdit(QTextEdit):
+class MTextEdit(QtWidgets.QTextEdit):
     def __init__(self, parent=None):
         super(MTextEdit, self).__init__(parent)
-        self.setWindowFlags(Qt.SubWindow)
+        self.setWindowFlags(QtCore.Qt.SubWindow)
         self._size_grip = MSizeGrip(self)
-        layout = QGridLayout()
+        layout = QtWidgets.QGridLayout()
         layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(self._size_grip, 0, 0, Qt.AlignBottom | Qt.AlignRight)
+        layout.addWidget(
+            self._size_grip, 0, 0, QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight
+        )
         self.setLayout(layout)
         self._size_grip.setVisible(False)
 

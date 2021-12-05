@@ -12,28 +12,17 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.label import MLabel
 from dayu_widgets.loading import MLoading
 from dayu_widgets.qt import MPixmap
-from dayu_widgets.qt import QAbstractAnimation
-from dayu_widgets.qt import QEasingCurve
-from dayu_widgets.qt import QGraphicsDropShadowEffect
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QPainterPath
-from dayu_widgets.qt import QPoint
-from dayu_widgets.qt import QPropertyAnimation
-from dayu_widgets.qt import QRectF
-from dayu_widgets.qt import QRegion
-from dayu_widgets.qt import QTimer
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
-from dayu_widgets.qt import Signal
 from dayu_widgets.tool_button import MToolButton
 
 
-class MMessage(QWidget):
+class MMessage(QtWidgets.QWidget):
     """
     Display global messages as feedback in response to user operations.
     """
@@ -46,7 +35,7 @@ class MMessage(QWidget):
 
     default_config = {"duration": 2, "top": 24}
 
-    sig_closed = Signal()
+    sig_closed = QtCore.Signal()
 
     def __init__(
         self, text, duration=None, dayu_type=None, closable=False, parent=None
@@ -54,12 +43,12 @@ class MMessage(QWidget):
         super(MMessage, self).__init__(parent)
         self.setObjectName("message")
         self.setWindowFlags(
-            Qt.FramelessWindowHint
-            | Qt.Dialog
-            | Qt.WA_TranslucentBackground
-            | Qt.WA_DeleteOnClose
+            QtCore.Qt.FramelessWindowHint
+            | QtCore.Qt.Dialog
+            | QtCore.Qt.WA_TranslucentBackground
+            | QtCore.Qt.WA_DeleteOnClose
         )
-        self.setAttribute(Qt.WA_StyledBackground)
+        self.setAttribute(QtCore.Qt.WA_StyledBackground)
 
         if dayu_type == MMessage.LoadingType:
             _icon_label = MLoading.tiny()
@@ -83,14 +72,14 @@ class MMessage(QWidget):
         self._close_button.clicked.connect(self.close)
         self._close_button.setVisible(closable or False)
 
-        self._main_lay = QHBoxLayout()
+        self._main_lay = QtWidgets.QHBoxLayout()
         self._main_lay.addWidget(_icon_label)
         self._main_lay.addWidget(self._content_label)
         self._main_lay.addStretch()
         self._main_lay.addWidget(self._close_button)
         self.setLayout(self._main_lay)
 
-        _close_timer = QTimer(self)
+        _close_timer = QtCore.QTimer(self)
         _close_timer.setSingleShot(True)
         _close_timer.timeout.connect(self.close)
         _close_timer.timeout.connect(self.sig_closed)
@@ -98,7 +87,7 @@ class MMessage(QWidget):
             (duration or self.default_config.get("duration")) * 1000
         )
 
-        _ani_timer = QTimer(self)
+        _ani_timer = QtCore.QTimer(self)
         _ani_timer.timeout.connect(self._fade_out)
         _ani_timer.setInterval(
             (duration or self.default_config.get("duration")) * 1000 - 300
@@ -107,16 +96,16 @@ class MMessage(QWidget):
         _close_timer.start()
         _ani_timer.start()
 
-        self._pos_ani = QPropertyAnimation(self)
+        self._pos_ani = QtCore.QPropertyAnimation(self)
         self._pos_ani.setTargetObject(self)
-        self._pos_ani.setEasingCurve(QEasingCurve.OutCubic)
+        self._pos_ani.setEasingCurve(QtCore.QEasingCurve.OutCubic)
         self._pos_ani.setDuration(300)
         self._pos_ani.setPropertyName(b"pos")
 
-        self._opacity_ani = QPropertyAnimation()
+        self._opacity_ani = QtCore.QPropertyAnimation()
         self._opacity_ani.setTargetObject(self)
         self._opacity_ani.setDuration(300)
-        self._opacity_ani.setEasingCurve(QEasingCurve.OutCubic)
+        self._opacity_ani.setEasingCurve(QtCore.QEasingCurve.OutCubic)
         self._opacity_ani.setPropertyName(b"windowOpacity")
         self._opacity_ani.setStartValue(0.0)
         self._opacity_ani.setEndValue(1.0)
@@ -125,9 +114,9 @@ class MMessage(QWidget):
         self._fade_int()
 
     def _fade_out(self):
-        self._pos_ani.setDirection(QAbstractAnimation.Backward)
+        self._pos_ani.setDirection(QtCore.QAbstractAnimation.Backward)
         self._pos_ani.start()
-        self._opacity_ani.setDirection(QAbstractAnimation.Backward)
+        self._opacity_ani.setDirection(QtCore.QAbstractAnimation.Backward)
         self._opacity_ani.start()
 
     def _fade_int(self):
@@ -148,8 +137,8 @@ class MMessage(QWidget):
         base = pos.y() + MMessage.default_config.get("top")
         target_x = pos.x() + parent_geo.width() / 2 - 100
         target_y = (offset + 50) if offset else base
-        self._pos_ani.setStartValue(QPoint(target_x, target_y - 40))
-        self._pos_ani.setEndValue(QPoint(target_x, target_y))
+        self._pos_ani.setStartValue(QtCore.QPoint(target_x, target_y - 40))
+        self._pos_ani.setEndValue(QtCore.QPoint(target_x, target_y))
 
     @classmethod
     def info(cls, text, parent, duration=None, closable=None):

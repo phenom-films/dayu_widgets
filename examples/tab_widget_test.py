@@ -11,20 +11,21 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets.divider import MDivider
 from dayu_widgets.label import MLabel
 from dayu_widgets.message import MMessage
-from dayu_widgets.qt import *
 from dayu_widgets.tab_widget import MTabWidget
 
 
-class MTabWidgetTest(QWidget):
+class MTabWidgetTest(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(MTabWidgetTest, self).__init__(parent)
         self._init_ui()
 
     def _init_ui(self):
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
 
         tab_card = MTabWidget()
         tab_card.addTab(MLabel("test 1"), "Current Element")
@@ -45,7 +46,7 @@ class MTabWidgetTest(QWidget):
         main_lay.addStretch()
         self.setLayout(main_lay)
 
-    @Slot(int)
+    @QtCore.Slot(int)
     def slot_close_tab(self, index):
         if index > 0:
             text = self.tab_closable.tabText(index)
@@ -59,7 +60,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = MTabWidgetTest()
 
     # Import third-party modules

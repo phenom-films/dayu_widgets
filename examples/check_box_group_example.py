@@ -13,15 +13,17 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets.button_group import MCheckBoxGroup
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import *
+from dayu_widgets.qt import MIcon
 
 
-class CheckBoxGroupExample(QWidget, MFieldMixin):
+class CheckBoxGroupExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(CheckBoxGroupExample, self).__init__(parent)
         self._init_ui()
@@ -33,7 +35,7 @@ class CheckBoxGroupExample(QWidget, MFieldMixin):
             {"text": "Houdini", "icon": MIcon("app-houdini.png")},
         ]
         radio_group_h = MCheckBoxGroup()
-        radio_group_v = MCheckBoxGroup(orientation=Qt.Vertical)
+        radio_group_v = MCheckBoxGroup(orientation=QtCore.Qt.Vertical)
 
         radio_group_h.set_button_list(self.app_data)
         radio_group_v.set_button_list(self.app_data)
@@ -62,7 +64,7 @@ class CheckBoxGroupExample(QWidget, MFieldMixin):
             "check_grp", radio_group_tri, "dayu_checked", signal="sig_checked_changed"
         )
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("Orientation Qt.Horizontal"))
         main_lay.addWidget(radio_group_h)
         main_lay.addWidget(MDivider("Orientation Qt.Vertical"))
@@ -78,7 +80,7 @@ class CheckBoxGroupExample(QWidget, MFieldMixin):
         main_lay.addStretch()
         self.setLayout(main_lay)
 
-    @Slot()
+    @QtCore.Slot()
     def slot_button_clicked(self):
         # Import built-in modules
         import random
@@ -92,7 +94,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = CheckBoxGroupExample()
     # Import third-party modules
     from dayu_widgets import dayu_theme

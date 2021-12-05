@@ -14,16 +14,11 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets.qt import QLayout
-from dayu_widgets.qt import QPoint
-from dayu_widgets.qt import QRect
-from dayu_widgets.qt import QSize
-from dayu_widgets.qt import QSizePolicy
-from dayu_widgets.qt import QWidgetItem
-from dayu_widgets.qt import Qt
+from Qt import QtCore
+from Qt import QtWidgets
 
 
-class MFlowLayout(QLayout):
+class MFlowLayout(QtWidgets.QLayout):
     """
     FlowLayout, the code is come from PySide/examples/layouts/flowlayout.py
     I change the code style and add insertWidget method.
@@ -48,7 +43,7 @@ class MFlowLayout(QLayout):
         self.addChildWidget(widget)
         if index < 0:
             index = self.count()
-        item = QWidgetItem(widget)
+        item = QtWidgets.QWidgetItem(widget)
         self.item_list.insert(index, item)
         self.update()
 
@@ -71,13 +66,13 @@ class MFlowLayout(QLayout):
         return None
 
     def expandingDirections(self):
-        return Qt.Orientations(Qt.Orientation(0))
+        return QtCore.Qt.Orientations(QtCore.Qt.Orientation(0))
 
     def hasHeightForWidth(self):
         return True
 
     def heightForWidth(self, width):
-        height = self.do_layout(QRect(0, 0, width, 0), True)
+        height = self.do_layout(QtCore.QRect(0, 0, width, 0), True)
         return height
 
     def setGeometry(self, rect):
@@ -88,12 +83,12 @@ class MFlowLayout(QLayout):
         return self.minimumSize()
 
     def minimumSize(self):
-        size = QSize()
+        size = QtCore.QSize()
 
         for item in self.item_list:
             size = size.expandedTo(item.minimumSize())
 
-        size += QSize(
+        size += QtCore.QSize(
             2 * self.contentsMargins().top(), 2 * self.contentsMargins().top()
         )
         return size
@@ -106,10 +101,14 @@ class MFlowLayout(QLayout):
         for item in self.item_list:
             wid = item.widget()
             space_x = self.spacing() + wid.style().layoutSpacing(
-                QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Horizontal
+                QtWidgets.QSizePolicy.PushButton,
+                QtWidgets.QSizePolicy.PushButton,
+                QtCore.Qt.Horizontal,
             )
             space_y = self.spacing() + wid.style().layoutSpacing(
-                QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Vertical
+                QtWidgets.QSizePolicy.PushButton,
+                QtWidgets.QSizePolicy.PushButton,
+                QtCore.Qt.Vertical,
             )
             next_x = x + item.sizeHint().width() + space_x
             if next_x - space_x > rect.right() and line_height > 0:
@@ -119,7 +118,7 @@ class MFlowLayout(QLayout):
                 line_height = 0
 
             if not test_only:
-                item.setGeometry(QRect(QPoint(x, y), item.sizeHint()))
+                item.setGeometry(QtCore.QRect(QtCore.QPoint(x, y), item.sizeHint()))
 
             x = next_x
             line_height = max(line_height, item.sizeHint().height())

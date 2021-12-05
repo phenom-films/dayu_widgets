@@ -15,28 +15,26 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets import utils
 from dayu_widgets.combo_box import MComboBox
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.menu import MMenu
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
-from dayu_widgets.qt import Signal
 from dayu_widgets.spin_box import MSpinBox
 from dayu_widgets.tool_button import MToolButton
 
 
-class MPage(QWidget, MFieldMixin):
+class MPage(QtWidgets.QWidget, MFieldMixin):
     """
     MPage
     A long list can be divided into several pages by MPage,
     and only one page will be loaded at a time.
     """
 
-    sig_page_changed = Signal(int, int)
+    sig_page_changed = QtCore.Signal(int, int)
 
     def __init__(self, parent=None):
         super(MPage, self).__init__(parent)
@@ -73,7 +71,7 @@ class MPage(QWidget, MFieldMixin):
         )
         page_setting_menu = MMenu(parent=self)
         self._display_label = MLabel()
-        self._display_label.setAlignment(Qt.AlignCenter)
+        self._display_label.setAlignment(QtCore.Qt.AlignCenter)
         self._change_page_size_button = MComboBox().small()
         self._change_page_size_button.set_menu(page_setting_menu)
         self._change_page_size_button.set_formatter(lambda x: "{} per page".format(x))
@@ -112,7 +110,7 @@ class MPage(QWidget, MFieldMixin):
         self.bind("can_pre", self._pre_button, "enabled")
         self.bind("can_next", self._next_button, "enabled")
 
-        main_lay = QHBoxLayout()
+        main_lay = QtWidgets.QHBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
         main_lay.setSpacing(2)
         main_lay.addStretch()

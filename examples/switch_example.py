@@ -12,17 +12,14 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
-from dayu_widgets.qt import QFormLayout
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 from dayu_widgets.switch import MSwitch
 
 
-class SwitchExample(QWidget, MFieldMixin):
+class SwitchExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(SwitchExample, self).__init__(parent)
         self.setWindowTitle("Examples for MSwitch")
@@ -34,19 +31,19 @@ class SwitchExample(QWidget, MFieldMixin):
         check_box_2 = MSwitch()
         check_box_3 = MSwitch()
         check_box_3.setEnabled(False)
-        lay = QHBoxLayout()
+        lay = QtWidgets.QHBoxLayout()
         lay.addWidget(check_box_1)
         lay.addWidget(check_box_2)
         lay.addWidget(check_box_3)
 
-        size_lay = QFormLayout()
+        size_lay = QtWidgets.QFormLayout()
         size_lay.addRow("Huge", MSwitch().huge())
         size_lay.addRow("Large", MSwitch().large())
         size_lay.addRow("Medium", MSwitch().medium())
         size_lay.addRow("Small", MSwitch().small())
         size_lay.addRow("Tiny", MSwitch().tiny())
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("Basic"))
         main_lay.addLayout(lay)
         main_lay.addWidget(MDivider("different size"))
@@ -59,10 +56,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    # Import third-party modules
-    from dayu_widgets.qt import QApplication
-
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = SwitchExample()
     dayu_theme.apply(test)
     test.show()

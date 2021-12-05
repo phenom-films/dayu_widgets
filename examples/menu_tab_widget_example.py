@@ -14,18 +14,17 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.badge import MBadge
 from dayu_widgets.label import MLabel
 from dayu_widgets.menu_tab_widget import MMenuTabWidget
 from dayu_widgets.message import MMessage
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
 from dayu_widgets.tool_button import MToolButton
 
 
-class MenuTabWidgetExample(QWidget):
+class MenuTabWidgetExample(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(MenuTabWidgetExample, self).__init__(parent)
         self.setWindowTitle("Examples for MMenuTabWidget")
@@ -52,7 +51,7 @@ class MenuTabWidgetExample(QWidget):
         tool_bar = MMenuTabWidget()
         tool_bar_huge = MMenuTabWidget()
         tool_bar_huge.set_dayu_size(dayu_theme.huge)
-        tool_bar_huge_v = MMenuTabWidget(orientation=Qt.Vertical)
+        tool_bar_huge_v = MMenuTabWidget(orientation=QtCore.Qt.Vertical)
         tool_bar_huge_v.set_dayu_size(dayu_theme.huge)
         tool_bar.tool_bar_insert_widget(MLabel("DaYu").h4().secondary().strong())
         tool_bar_huge.tool_bar_insert_widget(MLabel("DaYu").h4().secondary().strong())
@@ -73,7 +72,7 @@ class MenuTabWidgetExample(QWidget):
         tool_bar_huge.tool_button_group.set_dayu_checked(0)
         tool_bar_huge_v.tool_button_group.set_dayu_checked(0)
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
 
         main_lay.addWidget(MLabel("Menu Tab Widget (Large)"))
@@ -92,10 +91,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    # Import third-party modules
-    from dayu_widgets.qt import QApplication
-
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = MenuTabWidgetExample()
     dayu_theme.apply(test)
 

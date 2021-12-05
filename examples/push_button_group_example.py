@@ -12,16 +12,18 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.button_group import MPushButtonGroup
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import *
+from dayu_widgets.qt import MIcon
 
 
-class PushButtonGroupExample(QWidget, MFieldMixin):
+class PushButtonGroupExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(PushButtonGroupExample, self).__init__(parent)
         self._init_ui()
@@ -47,17 +49,17 @@ class PushButtonGroupExample(QWidget, MFieldMixin):
         button_group_h = MPushButtonGroup()
         button_group_h.set_dayu_size(dayu_theme.large)
         button_group_h.set_button_list(button_config_list)
-        h_lay = QHBoxLayout()
+        h_lay = QtWidgets.QHBoxLayout()
         h_lay.addWidget(button_group_h)
         h_lay.addStretch()
 
-        button_group_v = MPushButtonGroup(orientation=Qt.Vertical)
+        button_group_v = MPushButtonGroup(orientation=QtCore.Qt.Vertical)
         button_group_v.set_button_list(button_config_list)
-        h_lay_2 = QHBoxLayout()
+        h_lay_2 = QtWidgets.QHBoxLayout()
         h_lay_2.addWidget(button_group_v)
         h_lay_2.addStretch()
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(
             MLabel(
                 "MPushButtonGroup is MPushButton collection. they are not exclusive."
@@ -75,7 +77,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = PushButtonGroupExample()
     # Import third-party modules
     from dayu_widgets import dayu_theme

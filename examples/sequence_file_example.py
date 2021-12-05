@@ -12,13 +12,14 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets.browser import MDragFileButton
 from dayu_widgets.divider import MDivider
-from dayu_widgets.qt import *
 from dayu_widgets.sequence_file import MSequenceFile
 
 
-class SequenceFileExample(QWidget):
+class SequenceFileExample(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(SequenceFileExample, self).__init__(parent)
         self._init_ui()
@@ -29,14 +30,14 @@ class SequenceFileExample(QWidget):
         browser.sig_file_changed.connect(self.slot_add_file)
         self.sequence_file_1 = MSequenceFile()
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("different size"))
         main_lay.addWidget(browser)
         main_lay.addWidget(self.sequence_file_1)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
-    @Slot(str)
+    @QtCore.Slot(str)
     def slot_add_file(self, f):
         self.sequence_file_1.set_path(f)
 
@@ -45,7 +46,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = SequenceFileExample()
     # Import third-party modules
     from dayu_widgets import dayu_theme

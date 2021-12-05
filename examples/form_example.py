@@ -12,8 +12,8 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.form import MForm
-from dayu_widgets.qt import *
 
 
 # from schematics.models import Model
@@ -25,10 +25,11 @@ from dayu_widgets.qt import *
 #
 #     class Options()
 #
-#
-# class MFormTest(QWidget):
-#     def __init__(self, parent=None):
-#         super(MFormTest, self).__init__(parent)
+
+
+class MFormTest(QtWidgets.QWidget):
+    def __init__(self, parent=None):
+        super(MFormTest, self).__init__(parent)
 
 
 if __name__ == "__main__":
@@ -38,7 +39,7 @@ if __name__ == "__main__":
     # Import third-party modules
     from dayu_widgets import dayu_theme
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = MFormTest()
     dayu_theme.apply(test)
     test.show()

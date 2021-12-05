@@ -14,25 +14,16 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.label import MLabel
 from dayu_widgets.loading import MLoading
 from dayu_widgets.qt import MPixmap
-from dayu_widgets.qt import QAbstractAnimation
-from dayu_widgets.qt import QEasingCurve
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QPoint
-from dayu_widgets.qt import QPropertyAnimation
-from dayu_widgets.qt import QSize
-from dayu_widgets.qt import QTimer
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
-from dayu_widgets.qt import Signal
 
 
-class MToast(QWidget):
+class MToast(QtWidgets.QWidget):
     """
     MToast
     A Phone style message.
@@ -48,19 +39,19 @@ class MToast(QWidget):
         "duration": 2,
     }
 
-    sig_closed = Signal()
+    sig_closed = QtCore.Signal()
 
     def __init__(self, text, duration=None, dayu_type=None, parent=None):
         super(MToast, self).__init__(parent)
         self.setWindowFlags(
-            Qt.FramelessWindowHint
-            | Qt.Dialog
-            | Qt.WA_TranslucentBackground
-            | Qt.WA_DeleteOnClose
+            QtCore.Qt.FramelessWindowHint
+            | QtCore.Qt.Dialog
+            | QtCore.Qt.WA_TranslucentBackground
+            | QtCore.Qt.WA_DeleteOnClose
         )
-        self.setAttribute(Qt.WA_StyledBackground)
+        self.setAttribute(QtCore.Qt.WA_StyledBackground)
 
-        _icon_lay = QHBoxLayout()
+        _icon_lay = QtWidgets.QHBoxLayout()
         _icon_lay.addStretch()
 
         if dayu_type == MToast.LoadingType:
@@ -81,9 +72,9 @@ class MToast(QWidget):
 
         _content_label = MLabel()
         _content_label.setText(text)
-        _content_label.setAlignment(Qt.AlignCenter)
+        _content_label.setAlignment(QtCore.Qt.AlignCenter)
 
-        _main_lay = QVBoxLayout()
+        _main_lay = QtWidgets.QVBoxLayout()
         _main_lay.setContentsMargins(0, 0, 0, 0)
         _main_lay.addStretch()
         _main_lay.addLayout(_icon_lay)
@@ -91,9 +82,9 @@ class MToast(QWidget):
         _main_lay.addWidget(_content_label)
         _main_lay.addStretch()
         self.setLayout(_main_lay)
-        self.setFixedSize(QSize(dayu_theme.toast_size, dayu_theme.toast_size))
+        self.setFixedSize(QtCore.QSize(dayu_theme.toast_size, dayu_theme.toast_size))
 
-        _close_timer = QTimer(self)
+        _close_timer = QtCore.QTimer(self)
         _close_timer.setSingleShot(True)
         _close_timer.timeout.connect(self.close)
         _close_timer.timeout.connect(self.sig_closed)
@@ -105,10 +96,10 @@ class MToast(QWidget):
         if dayu_type != MToast.LoadingType:
             _close_timer.start()
 
-        self._opacity_ani = QPropertyAnimation()
+        self._opacity_ani = QtCore.QPropertyAnimation()
         self._opacity_ani.setTargetObject(self)
         self._opacity_ani.setDuration(300)
-        self._opacity_ani.setEasingCurve(QEasingCurve.OutCubic)
+        self._opacity_ani.setEasingCurve(QtCore.QEasingCurve.OutCubic)
         self._opacity_ani.setPropertyName(b"windowOpacity")
         self._opacity_ani.setStartValue(0.0)
         self._opacity_ani.setEndValue(0.9)
@@ -125,7 +116,7 @@ class MToast(QWidget):
 
     def _fade_out(self):
         self.has_played = True
-        self._opacity_ani.setDirection(QAbstractAnimation.Backward)
+        self._opacity_ani.setDirection(QtCore.QAbstractAnimation.Backward)
         self._opacity_ani.finished.connect(self.close)
         self._opacity_ani.start()
 
@@ -145,7 +136,7 @@ class MToast(QWidget):
                 offset = max(offset, child.y())
         target_x = pos.x() + parent_geo.width() / 2 - self.width() / 2
         target_y = pos.y() + parent_geo.height() / 2 - self.height() / 2
-        self.setProperty("pos", QPoint(target_x, target_y))
+        self.setProperty("pos", QtCore.QPoint(target_x, target_y))
 
     @classmethod
     def info(cls, text, parent, duration=None):

@@ -12,25 +12,23 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.loading import MLoading
 from dayu_widgets.loading import MLoadingWrapper
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 
 
-class LoadingExample(QWidget, MFieldMixin):
+class LoadingExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(LoadingExample, self).__init__(parent)
         self.setWindowTitle("Examples for MLoading")
         self._init_ui()
 
     def _init_ui(self):
-        size_lay = QHBoxLayout()
+        size_lay = QtWidgets.QHBoxLayout()
         size_list = [
             ("Huge", MLoading.huge),
             ("Large", MLoading.large),
@@ -43,7 +41,7 @@ class LoadingExample(QWidget, MFieldMixin):
             size_lay.addWidget(cls())
             size_lay.addSpacing(10)
 
-        color_lay = QHBoxLayout()
+        color_lay = QtWidgets.QHBoxLayout()
         color_list = [
             ("cyan", "#13c2c2"),
             ("green", "#52c41a"),
@@ -57,7 +55,7 @@ class LoadingExample(QWidget, MFieldMixin):
             color_lay.addWidget(MLoading.tiny(color=color))
             color_lay.addSpacing(10)
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("different size"))
         main_lay.addLayout(size_lay)
         main_lay.addWidget(MDivider("different color"))
@@ -73,10 +71,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    # Import third-party modules
-    from dayu_widgets.qt import QApplication
-
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = LoadingExample()
     dayu_theme.apply(test)
     test.show()

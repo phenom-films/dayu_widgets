@@ -12,23 +12,21 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
-from dayu_widgets.qt import QHBoxLayout
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 from dayu_widgets.tool_button import MToolButton
 
 
-class ToolButtonExample(QWidget, MFieldMixin):
+class ToolButtonExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(ToolButtonExample, self).__init__(parent)
         self.setWindowTitle("Examples for MToolButton")
         self._init_ui()
 
     def _init_ui(self):
-        size_lay = QVBoxLayout()
-        sub_lay1 = QHBoxLayout()
+        size_lay = QtWidgets.QVBoxLayout()
+        sub_lay1 = QtWidgets.QHBoxLayout()
         sub_lay1.addWidget(MToolButton().svg("left_line.svg").icon_only().huge())
         sub_lay1.addWidget(MToolButton().svg("right_line.svg").icon_only().large())
         sub_lay1.addWidget(MToolButton().svg("up_line.svg").icon_only())
@@ -41,7 +39,7 @@ class ToolButtonExample(QWidget, MFieldMixin):
         button2.setEnabled(False)
         button7 = MToolButton().svg("trash_line.svg").icon_only()
         button7.setCheckable(True)
-        state_lay = QHBoxLayout()
+        state_lay = QtWidgets.QHBoxLayout()
         state_lay.addWidget(button2)
         state_lay.addWidget(button7)
         state_lay.addStretch()
@@ -51,15 +49,15 @@ class ToolButtonExample(QWidget, MFieldMixin):
         button_login = MToolButton().svg("user_line.svg").text_beside_icon()
         button_login.setText("Login")
 
-        button_lay = QHBoxLayout()
+        button_lay = QtWidgets.QHBoxLayout()
         button_lay.addWidget(button_trash)
         button_lay.addWidget(button_login)
 
-        sub_lay2 = QHBoxLayout()
+        sub_lay2 = QtWidgets.QHBoxLayout()
         sub_lay2.addWidget(button2)
         sub_lay2.addWidget(button7)
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("different button_size"))
         main_lay.addLayout(size_lay)
         main_lay.addWidget(MDivider("disabled & checkable"))
@@ -76,9 +74,8 @@ if __name__ == "__main__":
 
     # Import third-party modules
     from dayu_widgets import dayu_theme
-    from dayu_widgets.qt import QApplication
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = ToolButtonExample()
 
     dayu_theme.apply(test)

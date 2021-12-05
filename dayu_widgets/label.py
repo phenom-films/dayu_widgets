@@ -12,16 +12,12 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
-from dayu_widgets.qt import Property
-from dayu_widgets.qt import QEvent
-from dayu_widgets.qt import QLabel
-from dayu_widgets.qt import QSize
-from dayu_widgets.qt import QSizePolicy
-from dayu_widgets.qt import Qt
 
 
-class MLabel(QLabel):
+class MLabel(QtWidgets.QLabel):
     """
     Display title in different level.
     Property:
@@ -37,12 +33,14 @@ class MLabel(QLabel):
     H3Level = 3
     H4Level = 4
 
-    def __init__(self, text="", parent=None, flags=Qt.Widget):
+    def __init__(self, text="", parent=None, flags=QtCore.Qt.Widget):
         super(MLabel, self).__init__(text, parent, flags)
         self.setTextInteractionFlags(
-            Qt.TextBrowserInteraction | Qt.LinksAccessibleByMouse
+            QtCore.Qt.TextBrowserInteraction | QtCore.Qt.LinksAccessibleByMouse
         )
-        self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        self.setSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+        )
         self._dayu_type = ""
         self._dayu_underline = False
         self._dayu_mark = False
@@ -50,7 +48,7 @@ class MLabel(QLabel):
         self._dayu_strong = False
         self._dayu_code = False
         self._dayu_level = 0
-        self._elide_mode = Qt.ElideNone
+        self._elide_mode = QtCore.Qt.ElideNone
         self.setProperty("dayu_text", text)
 
     def get_dayu_level(self):
@@ -118,17 +116,19 @@ class MLabel(QLabel):
         self._dayu_type = value
         self.style().polish(self)
 
-    dayu_level = Property(int, get_dayu_level, set_dayu_level)
-    dayu_type = Property(str, get_dayu_type, set_dayu_type)
-    dayu_underline = Property(bool, get_dayu_underline, set_dayu_underline)
-    dayu_delete = Property(bool, get_dayu_delete, set_dayu_delete)
-    dayu_strong = Property(bool, get_dayu_strong, set_dayu_strong)
-    dayu_mark = Property(bool, get_dayu_mark, set_dayu_mark)
-    dayu_code = Property(bool, get_dayu_code, set_dayu_code)
-    dayu_elide_mod = Property(Qt.TextElideMode, get_dayu_code, set_dayu_code)
+    dayu_level = QtCore.Property(int, get_dayu_level, set_dayu_level)
+    dayu_type = QtCore.Property(str, get_dayu_type, set_dayu_type)
+    dayu_underline = QtCore.Property(bool, get_dayu_underline, set_dayu_underline)
+    dayu_delete = QtCore.Property(bool, get_dayu_delete, set_dayu_delete)
+    dayu_strong = QtCore.Property(bool, get_dayu_strong, set_dayu_strong)
+    dayu_mark = QtCore.Property(bool, get_dayu_mark, set_dayu_mark)
+    dayu_code = QtCore.Property(bool, get_dayu_code, set_dayu_code)
+    dayu_elide_mod = QtCore.Property(
+        QtCore.Qt.TextElideMode, get_dayu_code, set_dayu_code
+    )
 
     def minimumSizeHint(self):
-        return QSize(1, self.fontMetrics().height())
+        return QtCore.QSize(1, self.fontMetrics().height())
 
     def text(self):
         """
@@ -245,7 +245,7 @@ class MLabel(QLabel):
 
     def event(self, event):
         if (
-            event.type() == QEvent.DynamicPropertyChange
+            event.type() == QtCore.QEvent.DynamicPropertyChange
             and event.propertyName() == "dayu_text"
         ):
             self.setText(self.property("dayu_text"))

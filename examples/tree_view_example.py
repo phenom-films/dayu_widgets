@@ -12,6 +12,7 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.item_model import MSortFilterModel
@@ -19,11 +20,10 @@ from dayu_widgets.item_model import MTableModel
 from dayu_widgets.item_view import MTreeView
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import *
 import examples._mock_data as mock
 
 
-class TreeViewExample(QWidget, MFieldMixin):
+class TreeViewExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(TreeViewExample, self).__init__(parent)
         self._init_ui()
@@ -48,13 +48,13 @@ class TreeViewExample(QWidget, MFieldMixin):
         expand_all_button.clicked.connect(tree_view.expandAll)
         collapse_all_button = MPushButton("Collapse All").small()
         collapse_all_button.clicked.connect(tree_view.collapseAll)
-        button_lay = QHBoxLayout()
+        button_lay = QtWidgets.QHBoxLayout()
         button_lay.addWidget(expand_all_button)
         button_lay.addWidget(collapse_all_button)
         button_lay.addWidget(line_edit)
         button_lay.addStretch()
 
-        main_lay = QVBoxLayout()
+        main_lay = QtWidgets.QVBoxLayout()
         main_lay.addLayout(button_lay)
         main_lay.addWidget(tree_view)
         main_lay.addStretch()
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     test = TreeViewExample()
     dayu_theme.apply(test)
     test.show()
