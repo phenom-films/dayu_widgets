@@ -23,6 +23,11 @@ repos:
       - id: black
         language: python
         types: [python]
+  - repo: https://github.com/hadialqattan/pycln
+    rev: v1.1.0
+    hooks:
+    - id: pycln
+      args: [--config=pyproject.toml]
   - repo: https://github.com/pycqa/isort
     rev: 5.10.1
     hooks:

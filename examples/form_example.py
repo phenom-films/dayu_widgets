@@ -13,7 +13,6 @@ from __future__ import print_function
 
 # Import third-party modules
 from Qt import QtWidgets
-from dayu_widgets.form import MForm
 
 
 # from schematics.models import Model

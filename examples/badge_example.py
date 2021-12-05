@@ -21,7 +21,6 @@ from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.menu import MMenu
-from dayu_widgets.qt import MIcon
 from dayu_widgets.qt import MPixmap
 from dayu_widgets.spin_box import MSpinBox
 from dayu_widgets.tool_button import MToolButton
