@@ -17,7 +17,6 @@ from __future__ import print_function
 from Qt import QtCore
 from Qt import QtWidgets
 from dayu_widgets import utils
-import six
 
 
 class MBadge(QtWidgets.QWidget):

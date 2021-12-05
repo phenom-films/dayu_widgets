@@ -10,20 +10,12 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-# Import built-in modules
-import functools
-
 # Import third-party modules
 from Qt import QtWidgets
 from dayu_widgets import dayu_theme
-from dayu_widgets.alert import MAlert
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
-from dayu_widgets.item_model import MSortFilterModel
-from dayu_widgets.item_model import MTableModel
 from dayu_widgets.item_view_set import MItemViewSet
-from dayu_widgets.line_edit import MLineEdit
-from dayu_widgets.loading import MLoadingWrapper
 from dayu_widgets.push_button import MPushButton
 import examples._mock_data as mock
 

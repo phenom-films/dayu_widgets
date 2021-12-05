@@ -21,7 +21,6 @@ from dayu_widgets.item_view import MBigView
 from dayu_widgets.item_view import MTableView
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.page import MPage
-from dayu_widgets.qt import MIcon
 from dayu_widgets.tool_button import MToolButton
 
 

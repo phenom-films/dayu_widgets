@@ -4,7 +4,6 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets import dayu_theme
 from dayu_widgets import mixin
 from dayu_widgets.qt import QApplication
 from dayu_widgets.qt import QGraphicsDropShadowEffect

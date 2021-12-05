@@ -119,3 +119,10 @@ commands = python scripts/deploy.py
 
 [tool.flake8]
 max-line-length = 88
+
+[tool.pycln]
+all = true
+
+# [tool.pylint.messages_control]
+# disable= "all"
+# enable= "E0611"

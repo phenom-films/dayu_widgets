@@ -18,7 +18,6 @@ from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
 from dayu_widgets.loading import MLoading
-from dayu_widgets.loading import MLoadingWrapper
 
 
 class LoadingExample(QtWidgets.QWidget, MFieldMixin):
