@@ -7,9 +7,21 @@
 ###################################################################
 """MToolButton"""
 
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.mixin import cursor_mixin
-from dayu_widgets.qt import QToolButton, QSizePolicy, Qt, Slot, Property, MIcon, QSize
+from dayu_widgets.qt import MIcon
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QSize
+from dayu_widgets.qt import QSizePolicy
+from dayu_widgets.qt import QToolButton
+from dayu_widgets.qt import Qt
+from dayu_widgets.qt import Slot
 
 
 @cursor_mixin

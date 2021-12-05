@@ -6,17 +6,26 @@
 # Email : muyanru345@163.com
 ###################################################################
 
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
+from dayu_widgets import dayu_theme
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.qt import QFormLayout
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QVBoxLayout
+from dayu_widgets.qt import QWidget
 from dayu_widgets.switch import MSwitch
-from dayu_widgets import dayu_theme
-from dayu_widgets.qt import QWidget, QHBoxLayout, QVBoxLayout, QFormLayout
 
 
 class SwitchExample(QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(SwitchExample, self).__init__(parent)
-        self.setWindowTitle('Examples for MSwitch')
+        self.setWindowTitle("Examples for MSwitch")
         self._init_ui()
 
     def _init_ui(self):
@@ -31,23 +40,26 @@ class SwitchExample(QWidget, MFieldMixin):
         lay.addWidget(check_box_3)
 
         size_lay = QFormLayout()
-        size_lay.addRow('Huge', MSwitch().huge())
-        size_lay.addRow('Large', MSwitch().large())
-        size_lay.addRow('Medium', MSwitch().medium())
-        size_lay.addRow('Small', MSwitch().small())
-        size_lay.addRow('Tiny', MSwitch().tiny())
+        size_lay.addRow("Huge", MSwitch().huge())
+        size_lay.addRow("Large", MSwitch().large())
+        size_lay.addRow("Medium", MSwitch().medium())
+        size_lay.addRow("Small", MSwitch().small())
+        size_lay.addRow("Tiny", MSwitch().tiny())
 
         main_lay = QVBoxLayout()
-        main_lay.addWidget(MDivider('Basic'))
+        main_lay.addWidget(MDivider("Basic"))
         main_lay.addLayout(lay)
-        main_lay.addWidget(MDivider('different size'))
+        main_lay.addWidget(MDivider("different size"))
         main_lay.addLayout(size_lay)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Import built-in modules
     import sys
+
+    # Import third-party modules
     from dayu_widgets.qt import QApplication
 
     app = QApplication(sys.argv)

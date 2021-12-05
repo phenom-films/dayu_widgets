@@ -57,7 +57,7 @@ add_imports = [
 ]
 atomic = true
 filter_files = true
-float_to_top = true
+float_to_top = false
 include_trailing_comma = true
 known_first_party = "src"
 lines_after_imports = 2

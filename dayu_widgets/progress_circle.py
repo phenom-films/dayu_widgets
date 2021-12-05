@@ -6,10 +6,23 @@
 # Email : muyanru345@163.com
 ###################################################################
 """MProgressCircle"""
+# Import future modules
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+# Import third-party modules
 from dayu_widgets import dayu_theme
 from dayu_widgets import utils
 from dayu_widgets.label import MLabel
-from dayu_widgets.qt import QHBoxLayout, Qt, QSize, QPen, QPainter, Property, QProgressBar,QColor
+from dayu_widgets.qt import Property
+from dayu_widgets.qt import QColor
+from dayu_widgets.qt import QHBoxLayout
+from dayu_widgets.qt import QPainter
+from dayu_widgets.qt import QPen
+from dayu_widgets.qt import QProgressBar
+from dayu_widgets.qt import QSize
+from dayu_widgets.qt import Qt
 
 
 class MProgressCircle(QProgressBar):
@@ -70,8 +83,9 @@ class MProgressCircle(QProgressBar):
         :return: None
         """
         self._width = value
-        self.setFixedSize(QSize(self._width * self._width_factor,
-                                self._width * self._height_factor))
+        self.setFixedSize(
+            QSize(self._width * self._width_factor, self._width * self._height_factor)
+        )
 
     def get_dayu_color(self):
         """
@@ -113,12 +127,14 @@ class MProgressCircle(QProgressBar):
         pen_background.setColor(QColor(dayu_theme.background_selected_color))
         pen_background.setCapStyle(Qt.RoundCap)
         painter.setPen(pen_background)
-        painter.drawArc(pen_width / 2.0 + 1,
-                        pen_width / 2.0 + 1,
-                        radius,
-                        radius,
-                        self._start_angle,
-                        -self._max_delta_angle)
+        painter.drawArc(
+            pen_width / 2.0 + 1,
+            pen_width / 2.0 + 1,
+            radius,
+            radius,
+            self._start_angle,
+            -self._max_delta_angle,
+        )
 
         # draw foreground circle
         pen_foreground = QPen()
@@ -126,12 +142,14 @@ class MProgressCircle(QProgressBar):
         pen_foreground.setColor(QColor(self._color))
         pen_foreground.setCapStyle(Qt.RoundCap)
         painter.setPen(pen_foreground)
-        painter.drawArc(pen_width / 2.0 + 1,
-                        pen_width / 2.0 + 1,
-                        radius,
-                        radius,
-                        self._start_angle,
-                        -percent * 0.01 * self._max_delta_angle)
+        painter.drawArc(
+            pen_width / 2.0 + 1,
+            pen_width / 2.0 + 1,
+            radius,
+            radius,
+            self._start_angle,
+            -percent * 0.01 * self._max_delta_angle,
+        )
         painter.end()
 
     @classmethod

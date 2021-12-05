@@ -2,7 +2,7 @@
 
 # DaYu Widgets <small>0.0.1</small>
 
-> Web 风格的 PySide 组件库 
+> Web 风格的 PySide 组件库
 
 * 基于 PySide
 * 易用
