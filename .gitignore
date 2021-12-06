@@ -105,3 +105,4 @@ venv.bak/
 .idea/
 
 scripts/deploy.json
+.vscode
