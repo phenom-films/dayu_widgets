@@ -18,6 +18,8 @@ import functools
 from Qt import QtCore
 from Qt import QtGui
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.menu import MMenu
 import dayu_widgets.utils as utils
 

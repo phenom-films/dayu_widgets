@@ -19,6 +19,9 @@ import functools
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+import six
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.label import MLabel
@@ -26,7 +29,6 @@ from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import MPixmap
 from dayu_widgets.qt import get_scale_factor
 from dayu_widgets.tool_button import MToolButton
-import six
 
 
 @property_mixin

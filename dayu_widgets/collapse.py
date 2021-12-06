@@ -17,6 +17,8 @@ import functools
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.label import MLabel
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.qt import MPixmap

@@ -14,6 +14,8 @@ from __future__ import print_function
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.item_model import MSortFilterModel
 from dayu_widgets.item_model import MTableModel
 from dayu_widgets.item_view import MBigView

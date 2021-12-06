@@ -14,6 +14,8 @@ from __future__ import print_function
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.divider import MDivider
 from dayu_widgets.label import MLabel
 from dayu_widgets.qt import get_scale_factor

@@ -32,7 +32,7 @@ if hasattr(functools, "singledispatch"):
 else:
     from singledispatch import singledispatch
 
-# Import third-party modules
+# Import local modules
 from dayu_widgets import CUSTOM_STATIC_FOLDERS
 from dayu_widgets import DEFAULT_STATIC_FOLDER
 from dayu_widgets.qt import MIcon
@@ -543,7 +543,7 @@ def convert_to_round_pixmap(orig_pix):
 
 
 def generate_text_pixmap(width, height, text, alignment=QtCore.Qt.AlignCenter):
-    # Import third-party modules
+    # Import local modules
     from dayu_widgets import dayu_theme
 
     # draw a pixmap with text

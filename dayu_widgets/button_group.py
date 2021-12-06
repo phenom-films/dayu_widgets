@@ -17,6 +17,9 @@ import functools
 from Qt import QtCore
 from Qt import QtGui
 from Qt import QtWidgets
+import six
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.check_box import MCheckBox
 from dayu_widgets.menu import MMenu
@@ -24,7 +27,6 @@ from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import get_scale_factor
 from dayu_widgets.radio_button import MRadioButton
 from dayu_widgets.tool_button import MToolButton
-import six
 
 
 class MButtonGroupBase(QtWidgets.QWidget):
