@@ -131,3 +131,29 @@ Components for PySide
 
 ### MDivider <- QWidget
 ![pageres](screenshots/divider_light.png)![pageres](screenshots/divider_dark.png)
+
+
+# 如何贡献代码
+
+## 安装poetry
+``shell
+pip install poetry
+``
+## 安装依赖
+```shell
+poetry install
+```
+
+## 运行单元测试
+```shell
+poetry run pytest
+```
+
+## 运行 black检查
+```shell
+poetry run black dayu_widgets
+```
+## 运行isort
+```shell
+poetry run isort dayu_widgets
+```
