@@ -157,3 +157,8 @@ poetry run black dayu_widgets
 ```shell
 poetry run isort dayu_widgets
 ```
+
+## 提交代码
+```shell
+poetry run cz commit
+```
