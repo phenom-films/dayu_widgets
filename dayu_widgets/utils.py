@@ -440,26 +440,24 @@ def get_page_display_string(current, per, total):
     )
 
 
-def add_settings(organization, app_name, event_name="closeEvent"):
-    def _read_settings():
-        settings = QtCore.QSettings(
-            QtCore.QSettings.IniFormat,
-            QtCore.QSettings.UserScope,
-            organization,
-            app_name,
+def read_settings(organization, app_name):
+    settings = QtCore.QSettings(
+        QtCore.QSettings.IniFormat,
+        QtCore.QSettings.UserScope,
+        organization,
+        app_name,
+    )
+    result_dict = {key: settings.value(key) for key in settings.childKeys()}
+    for grp_name in settings.childGroups():
+        settings.beginGroup(grp_name)
+        result_dict.update(
+            {grp_name + "/" + key: settings.value(key) for key in settings.childKeys()}
         )
-        result_dict = {key: settings.value(key) for key in settings.childKeys()}
-        for grp_name in settings.childGroups():
-            settings.beginGroup(grp_name)
-            result_dict.update(
-                {
-                    grp_name + "/" + key: settings.value(key)
-                    for key in settings.childKeys()
-                }
-            )
-            settings.endGroup()
-        return result_dict
+        settings.endGroup()
+    return result_dict
 
+
+def add_settings(organization, app_name, event_name="closeEvent"):
     def _write_settings(self):
         settings = QtCore.QSettings(
             QtCore.QSettings.IniFormat,
@@ -480,12 +478,12 @@ def add_settings(organization, app_name, event_name="closeEvent"):
         # 当窗口作为子组件，比如 tab 的一页时、关闭最顶层窗口时，都不会触发 closeEvent，
         # 此时请使用 hideEvent
         # 如果是作为一个独立的窗口，请使用 closeEvent
-        self._write_settings()
+        self.write_settings()
         old_event = getattr(self, "old_trigger_event")
         return old_event(event)
 
     def bind(self, attr, widget, property, default=None, formatter=None):
-        old_setting_dict = _read_settings()
+        old_setting_dict = read_settings(organization, app_name)
         value = old_setting_dict.get(attr, default)
         if callable(formatter):  # 二次处理 value，比如存入的 bool，读取后要恢复成 bool
             value = formatter(value)
@@ -499,13 +497,13 @@ def add_settings(organization, app_name, event_name="closeEvent"):
         self._bind_data.append((attr, widget, property))
 
     def unbind(self, attr, widget, property):
-        self._write_settings()
+        self.write_settings()
         self._bind_data.remove((attr, widget, property))
 
     def wrapper(cls):
         cls.bind = bind
         cls.unbind = unbind
-        cls._write_settings = _write_settings
+        cls.write_settings = _write_settings
         cls._bind_data = []
         if hasattr(cls, event_name):
             old_event = getattr(cls, event_name)
