@@ -26,15 +26,19 @@ packages = [
 generate-setup-file = false
 
 [tool.poetry.dependencies]
-python = ">=2.7,<2.8 || >=3.6.0,<3.11"
+python = ">=2.7,<2.8 || >=3.6.0,<3.10"
 six = "^1.16.0"
-importlib-metadata = {version = "^4.8.2", python = ">=3.6.0,<3.11"}
-dayu-path = "^0.5.2"
 singledispatch = {version = "^3.7.0", python = "2.7"}
 "Qt.py" = "^1.3.6"
+dayu-path = "^0.5.2"
 
 [tool.poetry.dev-dependencies]
 pytest = {version = "^6.2.5", python = ">=3.6.0,<3.11"}
+PySide2 = "^5.15.2"
+pytest-qt = {version = "^4.0.2", python = ">=3.6.0,<3.10"}
+black = {version = "^21.12b0", python = ">=3.6.2,<3.10"}
+isort = {version = "^5.10.1", python = ">=3.6.1,<3.10"}
+commitizen = {version = "^2.20.0", python = ">=3.6.1,<3.10"}
 
 [tool.commitizen]
 name = "cz_conventional_commits"
@@ -80,9 +84,8 @@ include_trailing_comma = true
 lines_after_imports = 2
 lines_between_types = 1
 use_parentheses = true
-src_paths = ["dayu_widgets"]
 filter_files = true
-known_first_party = "dayu_widgets"
+known_first_party = ["dayu_widgets"]
 
 # Enforce import section headers.
 import_heading_future = "Import future modules"
