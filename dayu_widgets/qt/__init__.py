@@ -11,11 +11,13 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+import six
+
+# Import local modules
 from Qt import QtCore
 from Qt import QtGui
 from Qt import QtWidgets
 from Qt.QtSvg import QSvgRenderer
-import six
 
 
 class MCacheDict(object):
@@ -27,7 +29,7 @@ class MCacheDict(object):
         self._cache_pix_dict = {}
 
     def _render_svg(self, svg_path, replace_color=None):
-        # Import third-party modules
+        # Import local modules
         from dayu_widgets import dayu_theme
 
         replace_color = replace_color or dayu_theme.icon_color
@@ -49,7 +51,7 @@ class MCacheDict(object):
                 return self.cls(pix)
 
     def __call__(self, path, color=None):
-        # Import third-party modules
+        # Import local modules
         from dayu_widgets import utils
 
         full_path = utils.get_static_file(path)
@@ -67,6 +69,8 @@ class MCacheDict(object):
 
 
 def get_scale_factor():
+    if not QtWidgets.QApplication.instance():
+        app = QtWidgets.QApplication([])
     standard_dpi = 96.0
     scale_factor_x = QtWidgets.QApplication.desktop().logicalDpiX() / standard_dpi
     scale_factor_y = QtWidgets.QApplication.desktop().logicalDpiY() / standard_dpi

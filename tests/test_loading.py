@@ -7,12 +7,14 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+import pytest
+
+# Import local modules
+from Qt import QtCore
+from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.loading import MLoading
 from dayu_widgets.loading import MLoadingWrapper
-from dayu_widgets.qt import QLabel
-from dayu_widgets.qt import QSize
-import pytest
 
 
 @pytest.mark.parametrize(
@@ -45,8 +47,8 @@ def test_loading_class_method(qtbot, cls, size, color):
 
 def test_loading_wrapper(qtbot):
     """Test for MLoadingWrapper class methods"""
-    label = QLabel("test")
-    label.setFixedSize(QSize(100, 100))
+    label = QtWidgets.QLabel("test")
+    label.setFixedSize(QtCore.QSize(100, 100))
     widget = MLoadingWrapper(label, loading=False)
     widget.show()
     qtbot.addWidget(widget)

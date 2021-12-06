@@ -4,26 +4,17 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets import mixin
-from dayu_widgets.qt import QApplication
-from dayu_widgets.qt import QGraphicsDropShadowEffect
-from dayu_widgets.qt import QGraphicsOpacityEffect
-from dayu_widgets.qt import QLabel
-from dayu_widgets.qt import QPropertyAnimation
-from dayu_widgets.qt import QPushButton
-from dayu_widgets.qt import QStackedLayout
-from dayu_widgets.qt import QStackedWidget
-from dayu_widgets.qt import QTabBar
-from dayu_widgets.qt import QTabWidget
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
 import pytest
+
+# Import local modules
+from Qt import QtCore
+from Qt import QtWidgets
+from dayu_widgets import mixin
 
 
 def test_property_mixin(qtbot):
     @mixin.property_mixin
-    class _TestClass(QWidget):
+    class _TestClass(QtWidgets.QWidget):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
             self._test_attr = None
@@ -44,18 +35,18 @@ def test_property_mixin(qtbot):
 
 def test_cursor_mixin(qtbot):
     @mixin.cursor_mixin
-    class _TestClass(QPushButton):
+    class _TestClass(QtWidgets.QPushButton):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
-            geo = QApplication.desktop().screenGeometry()
+            geo = QtWidgets.QApplication.desktop().screenGeometry()
             self.setGeometry(
                 geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2
             )
 
-    main_widget = QWidget()
+    main_widget = QtWidgets.QWidget()
     button_test = _TestClass()
-    button_normal = QPushButton()
-    test_lay = QVBoxLayout()
+    button_normal = QtWidgets.QPushButton()
+    test_lay = QtWidgets.QVBoxLayout()
     test_lay.addWidget(button_test)
     test_lay.addWidget(button_normal)
     main_widget.setLayout(test_lay)
@@ -63,20 +54,24 @@ def test_cursor_mixin(qtbot):
     qtbot.addWidget(main_widget)
     main_widget.show()
     button_test.setEnabled(False)
-    assert QApplication.overrideCursor() is None  # Not override cursor
+    assert QtWidgets.QApplication.overrideCursor() is None  # Not override cursor
 
     qtbot.mouseMove(button_test)  # mouse enter
 
     def check_cursor():
-        assert QApplication.overrideCursor() is not None
-        assert QApplication.overrideCursor().shape() == Qt.ForbiddenCursor
+        assert QtWidgets.QApplication.overrideCursor() is not None
+        assert (
+            QtWidgets.QApplication.overrideCursor().shape() == QtCore.Qt.ForbiddenCursor
+        )
 
     qtbot.waitUntil(check_cursor)
 
     qtbot.mouseMove(button_normal)  # mouse leave
 
     def check_cursor():
-        assert QApplication.overrideCursor() is None  # Restore override cursor
+        assert (
+            QtWidgets.QApplication.overrideCursor() is None
+        )  # Restore override cursor
 
     qtbot.waitUntil(check_cursor)
 
@@ -84,34 +79,39 @@ def test_cursor_mixin(qtbot):
     qtbot.mouseMove(button_test)  # mouse enter
 
     def check_cursor():
-        assert QApplication.overrideCursor() is not None
-        assert QApplication.overrideCursor().shape() == Qt.PointingHandCursor
+        assert QtWidgets.QApplication.overrideCursor() is not None
+        assert (
+            QtWidgets.QApplication.overrideCursor().shape()
+            == QtCore.Qt.PointingHandCursor
+        )
 
     qtbot.waitUntil(check_cursor)
 
     qtbot.mouseMove(button_normal)  # mouse leave
 
     def check_cursor():
-        assert QApplication.overrideCursor() is None  # Restore override cursor
+        assert (
+            QtWidgets.QApplication.overrideCursor() is None
+        )  # Restore override cursor
 
     qtbot.waitUntil(check_cursor)
 
 
 def test_focus_shadow_mixin(qtbot):
     @mixin.focus_shadow_mixin
-    class _TestClass(QPushButton):
+    class _TestClass(QtWidgets.QPushButton):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
-            geo = QApplication.desktop().screenGeometry()
+            geo = QtWidgets.QApplication.desktop().screenGeometry()
             self.setGeometry(
                 geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2
             )
 
-    main_widget = QWidget()
+    main_widget = QtWidgets.QWidget()
     button_test = _TestClass()
 
-    button_normal = QPushButton()
-    test_lay = QVBoxLayout()
+    button_normal = QtWidgets.QPushButton()
+    test_lay = QtWidgets.QVBoxLayout()
     test_lay.addWidget(button_test)
     test_lay.addWidget(button_normal)
     main_widget.setLayout(test_lay)
@@ -121,14 +121,15 @@ def test_focus_shadow_mixin(qtbot):
     assert button_test.graphicsEffect() is None
 
     main_widget.show()
+    main_widget.setFocus()
     # focus in
 
     graphics_effect = button_test.graphicsEffect()
     assert graphics_effect is not None
     assert graphics_effect.isEnabled()
-    assert isinstance(graphics_effect, QGraphicsDropShadowEffect)
+    assert isinstance(graphics_effect, QtWidgets.QGraphicsDropShadowEffect)
 
-    qtbot.mouseClick(button_normal, Qt.LeftButton)  # focus out
+    qtbot.mouseClick(button_normal, QtCore.Qt.LeftButton)  # focus out
 
     def check_effect():
         assert button_test.graphicsEffect() is not None
@@ -136,7 +137,7 @@ def test_focus_shadow_mixin(qtbot):
 
     qtbot.waitUntil(check_effect)
 
-    qtbot.mouseClick(button_test, Qt.LeftButton)  # focus in
+    qtbot.mouseClick(button_test, QtCore.Qt.LeftButton)  # focus in
 
     def check_effect():
         assert button_test.graphicsEffect() is not None
@@ -147,18 +148,18 @@ def test_focus_shadow_mixin(qtbot):
 
 def test_hover_shadow_mixin(qtbot):
     @mixin.hover_shadow_mixin
-    class _TestClass(QPushButton):
+    class _TestClass(QtWidgets.QPushButton):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
-            geo = QApplication.desktop().screenGeometry()
+            geo = QtWidgets.QApplication.desktop().screenGeometry()
             self.setGeometry(
                 geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2
             )
 
-    main_widget = QWidget()
+    main_widget = QtWidgets.QWidget()
     button_test = _TestClass()
-    button_normal = QPushButton()
-    test_lay = QVBoxLayout()
+    button_normal = QtWidgets.QPushButton()
+    test_lay = QtWidgets.QVBoxLayout()
     test_lay.addWidget(button_test)
     test_lay.addWidget(button_normal)
     main_widget.setLayout(test_lay)
@@ -175,7 +176,7 @@ def test_hover_shadow_mixin(qtbot):
         graphics_effect = button_test.graphicsEffect()
         assert graphics_effect is not None
         assert graphics_effect.isEnabled()
-        assert isinstance(graphics_effect, QGraphicsDropShadowEffect)
+        assert isinstance(graphics_effect, QtWidgets.QGraphicsDropShadowEffect)
 
     qtbot.waitUntil(check_effect)
 
@@ -199,12 +200,12 @@ def test_hover_shadow_mixin(qtbot):
 @pytest.mark.parametrize(
     "input_widget, result",
     (
-        (QLabel, False),
-        (QWidget, False),
-        (QStackedWidget, True),
-        (QStackedLayout, False),
-        (QTabWidget, True),
-        (QTabBar, False),
+        (QtWidgets.QLabel, False),
+        (QtWidgets.QWidget, False),
+        (QtWidgets.QStackedWidget, True),
+        (QtWidgets.QStackedLayout, False),
+        (QtWidgets.QTabWidget, True),
+        (QtWidgets.QTabBar, False),
     ),
 )
 def test_stackable(input_widget, result):
@@ -213,25 +214,25 @@ def test_stackable(input_widget, result):
 
 def test_stacked_animation_mixin_normal(qtbot):
     @mixin.stacked_animation_mixin
-    class _TestClass(QStackedWidget):
+    class _TestClass(QtWidgets.QStackedWidget):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
 
     main_widget = _TestClass()
     qtbot.addWidget(main_widget)
     assert hasattr(main_widget, "_to_show_pos_ani")
-    assert isinstance(main_widget._to_show_pos_ani, QPropertyAnimation)
+    assert isinstance(main_widget._to_show_pos_ani, QtCore.QPropertyAnimation)
     assert hasattr(main_widget, "_to_hide_pos_ani")
-    assert isinstance(main_widget._to_hide_pos_ani, QPropertyAnimation)
+    assert isinstance(main_widget._to_hide_pos_ani, QtCore.QPropertyAnimation)
     assert hasattr(main_widget, "_opacity_eff")
-    assert isinstance(main_widget._opacity_eff, QGraphicsOpacityEffect)
+    assert isinstance(main_widget._opacity_eff, QtWidgets.QGraphicsOpacityEffect)
     assert hasattr(main_widget, "_opacity_ani")
-    assert isinstance(main_widget._opacity_ani, QPropertyAnimation)
+    assert isinstance(main_widget._opacity_ani, QtCore.QPropertyAnimation)
     assert hasattr(main_widget, "_play_anim")
     assert hasattr(main_widget, "_disable_opacity")
 
     assert main_widget._previous_index == 0
-    label_1 = QLabel("test")
+    label_1 = QtWidgets.QLabel("test")
     index_1 = main_widget.addWidget(label_1)
 
     def check_index():
@@ -240,7 +241,7 @@ def test_stacked_animation_mixin_normal(qtbot):
 
     qtbot.waitUntil(check_index)
 
-    label_2 = QLabel("test2")
+    label_2 = QtWidgets.QLabel("test2")
     index_2 = main_widget.addWidget(label_2)
     main_widget.setCurrentIndex(index_1)
 
@@ -260,7 +261,7 @@ def test_stacked_animation_mixin_normal(qtbot):
 
 def test_stacked_animation_mixin_error(qtbot):
     @mixin.stacked_animation_mixin
-    class _TestClass(QPushButton):
+    class _TestClass(QtWidgets.QPushButton):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
 

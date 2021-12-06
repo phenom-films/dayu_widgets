@@ -10,11 +10,12 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets.label import MLabel
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
 import pytest
+
+# Import local modules
+from Qt import QtCore
+from Qt import QtWidgets
+from dayu_widgets.label import MLabel
 
 
 @pytest.mark.parametrize(
@@ -74,19 +75,19 @@ def test_label_dayu_style(qtbot, func, text, attr):
 @pytest.mark.parametrize("text, elide", (("test" * 30, True), ("test", False)))
 def test_label_elide_mode(qtbot, text, elide):
     """Test MLabel elide mode"""
-    main_widget = QWidget()
+    main_widget = QtWidgets.QWidget()
     main_widget.setGeometry(0, 0, 30, 200)
-    main_lay = QVBoxLayout()
+    main_lay = QtWidgets.QVBoxLayout()
     main_widget.setLayout(main_lay)
 
     label_left = MLabel()
-    label_left.set_elide_mode(Qt.ElideLeft)
+    label_left.set_elide_mode(QtCore.Qt.ElideLeft)
     label_left.setText(text)
     label_right = MLabel()
-    label_right.set_elide_mode(Qt.ElideRight)
+    label_right.set_elide_mode(QtCore.Qt.ElideRight)
     label_right.setText(text)
     label_center = MLabel(text)
-    label_center.set_elide_mode(Qt.ElideMiddle)
+    label_center.set_elide_mode(QtCore.Qt.ElideMiddle)
     label_center.setText(text)
 
     main_lay.addWidget(label_left)
@@ -106,6 +107,6 @@ def test_label_elide_mode(qtbot, text, elide):
         assert label_left.property("text") == label_left.text()
         assert label_right.property("text") == label_right.text()
         assert label_center.property("text") == label_center.text()
-    assert label_left.get_elide_mode() == Qt.ElideLeft
-    assert label_right.get_elide_mode() == Qt.ElideRight
-    assert label_center.get_elide_mode() == Qt.ElideMiddle
+    assert label_left.get_elide_mode() == QtCore.Qt.ElideLeft
+    assert label_right.get_elide_mode() == QtCore.Qt.ElideRight
+    assert label_center.get_elide_mode() == QtCore.Qt.ElideMiddle

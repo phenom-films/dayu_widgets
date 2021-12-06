@@ -7,9 +7,11 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets import utils
-from dayu_widgets.qt import QColor
 import pytest
+
+# Import local modules
+from Qt import QtGui
+from dayu_widgets import utils
 
 
 @pytest.mark.parametrize(
@@ -68,8 +70,8 @@ def compile_color(color1, color2):
     There is some bias when calculate with float. Set margin of error to 0.01
     """
     delta = 0.01
-    q_color_1 = QColor(color1)
-    q_color_2 = QColor(color2)
+    q_color_1 = QtGui.QColor(color1)
+    q_color_2 = QtGui.QColor(color2)
 
     return (
         (abs(q_color_1.redF() - q_color_2.redF()) < delta)
