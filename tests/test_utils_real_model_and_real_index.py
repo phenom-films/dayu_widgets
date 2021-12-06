@@ -7,19 +7,18 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-# Import third-party modules
+# Import local modules
+from Qt import QtCore
+from Qt import QtGui
 from dayu_widgets import utils
-from dayu_widgets.qt import QSortFilterProxyModel
-from dayu_widgets.qt import QStandardItemModel
-from dayu_widgets.qt import QStringListModel
 
 
 def test_with_string_list_model():
     """Test when source model is QStringListModel"""
-    source_model = QStringListModel(["apple", "pear", "orange"])
-    sort_filter_model_1 = QSortFilterProxyModel()
+    source_model = QtCore.QStringListModel(["apple", "pear", "orange"])
+    sort_filter_model_1 = QtCore.QSortFilterProxyModel()
     sort_filter_model_1.setSourceModel(source_model)
-    sort_filter_model_2 = QSortFilterProxyModel()
+    sort_filter_model_2 = QtCore.QSortFilterProxyModel()
     sort_filter_model_2.setSourceModel(source_model)
     index_1 = source_model.index(0, 0)
     index_2 = source_model.index(1, 0)
@@ -40,10 +39,10 @@ def test_with_string_list_model():
 
 def test_with_standard_item_model():
     """Test when source model is QStandardItemModel"""
-    source_model = QStandardItemModel(2, 2)
-    sort_filter_model_1 = QSortFilterProxyModel()
+    source_model = QtGui.QStandardItemModel(2, 2)
+    sort_filter_model_1 = QtCore.QSortFilterProxyModel()
     sort_filter_model_1.setSourceModel(source_model)
-    sort_filter_model_2 = QSortFilterProxyModel()
+    sort_filter_model_2 = QtCore.QSortFilterProxyModel()
     sort_filter_model_2.setSourceModel(source_model)
     index_1 = source_model.index(0, 0)
     index_2 = source_model.index(1, 1)
@@ -64,10 +63,10 @@ def test_with_standard_item_model():
 
 def test_real_index():
     """Test real_index function."""
-    source_model = QStandardItemModel(2, 2)
-    sort_filter_model_1 = QSortFilterProxyModel()
+    source_model = QtGui.QStandardItemModel(2, 2)
+    sort_filter_model_1 = QtCore.QSortFilterProxyModel()
     sort_filter_model_1.setSourceModel(source_model)
-    sort_filter_model_2 = QSortFilterProxyModel()
+    sort_filter_model_2 = QtCore.QSortFilterProxyModel()
     sort_filter_model_2.setSourceModel(source_model)
 
     index_1_source = source_model.index(0, 0)

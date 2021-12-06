@@ -7,11 +7,11 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets.badge import MBadge
-from dayu_widgets.qt import QLabel
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
 import pytest
+
+# Import local modules
+from Qt import QtWidgets
+from dayu_widgets.badge import MBadge
 
 
 @pytest.mark.parametrize(
@@ -23,11 +23,11 @@ import pytest
 )
 def test_badge_dot(qtbot, show, visible):
     """Test MBadge init."""
-    label = QLabel("test")
+    label = QtWidgets.QLabel("test")
     badge_1 = MBadge.dot(show=show, widget=label)
     badge_2 = MBadge.dot(show)
-    main_widget = QWidget()
-    main_lay = QVBoxLayout()
+    main_widget = QtWidgets.QWidget()
+    main_lay = QtWidgets.QVBoxLayout()
     main_widget.setLayout(main_lay)
     main_lay.addWidget(badge_1)
     main_lay.addWidget(badge_2)
@@ -55,11 +55,11 @@ def test_badge_dot(qtbot, show, visible):
 )
 def test_badge_count(qtbot, num, text, visible):
     """Test MBadge init."""
-    label = QLabel("test")
+    label = QtWidgets.QLabel("test")
     badge_1 = MBadge.count(count=num, widget=label)
     badge_2 = MBadge.count(num)
-    main_widget = QWidget()
-    main_lay = QVBoxLayout()
+    main_widget = QtWidgets.QWidget()
+    main_lay = QtWidgets.QVBoxLayout()
     main_widget.setLayout(main_lay)
     main_lay.addWidget(badge_1)
     main_lay.addWidget(badge_2)
@@ -93,8 +93,8 @@ def test_badge_overflow(qtbot, num, text, overflow):
     """Test MBadge init."""
     badge = MBadge.count(num)
     badge.set_dayu_overflow(overflow)
-    main_widget = QWidget()
-    main_lay = QVBoxLayout()
+    main_widget = QtWidgets.QWidget()
+    main_lay = QtWidgets.QVBoxLayout()
     main_widget.setLayout(main_lay)
     main_lay.addWidget(badge)
     qtbot.addWidget(main_widget)
@@ -116,11 +116,11 @@ def test_badge_overflow(qtbot, num, text, overflow):
 )
 def test_badge_text(qtbot, content, text, visible):
     """Test MBadge init."""
-    label = QLabel("test")
+    label = QtWidgets.QLabel("test")
     badge_1 = MBadge.text(text=content, widget=label)
     badge_2 = MBadge.text(text=content)
-    main_widget = QWidget()
-    main_lay = QVBoxLayout()
+    main_widget = QtWidgets.QWidget()
+    main_lay = QtWidgets.QVBoxLayout()
     main_widget.setLayout(main_lay)
     main_lay.addWidget(badge_1)
     main_lay.addWidget(badge_2)

@@ -4,9 +4,11 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets.progress_circle import MProgressCircle
-from dayu_widgets.qt import QLabel
 import pytest
+
+# Import local modules
+from Qt import QtWidgets
+from dayu_widgets.progress_circle import MProgressCircle
 
 
 def test_progress_circle_init(qtbot):
@@ -54,7 +56,7 @@ def test_progress_circle_color(qtbot, color, result):
 
 
 def test_progress_circle_widget(qtbot):
-    label = QLabel("text")
+    label = QtWidgets.QLabel("text")
     circle = MProgressCircle()
     circle.set_widget(label)
     qtbot.addWidget(circle)

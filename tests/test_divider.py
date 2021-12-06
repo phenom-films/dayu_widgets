@@ -7,21 +7,24 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets.divider import MDivider
-from dayu_widgets.qt import QVBoxLayout
-from dayu_widgets.qt import QWidget
-from dayu_widgets.qt import Qt
 import pytest
+
+# Import local modules
+from Qt import QtCore
+from Qt import QtWidgets
+from dayu_widgets.divider import MDivider
 
 
 @pytest.mark.parametrize("text, visible_text", (("", False), ("test", True)))
 @pytest.mark.parametrize(
     "orient, visible_orient",
-    ((Qt.Horizontal, True), (Qt.Vertical, False)),
+    ((QtCore.Qt.Horizontal, True), (QtCore.Qt.Vertical, False)),
     ids=("h", "v"),
 )
 @pytest.mark.parametrize(
-    "align", (Qt.AlignLeft, Qt.AlignRight, Qt.AlignCenter), ids=("l", "r", "c")
+    "align",
+    (QtCore.Qt.AlignLeft, QtCore.Qt.AlignRight, QtCore.Qt.AlignCenter),
+    ids=("l", "r", "c"),
 )
 def test_divider_init(qtbot, text, visible_text, orient, visible_orient, align):
     """Test MDivider init."""
@@ -39,8 +42,8 @@ def test_divider_init(qtbot, text, visible_text, orient, visible_orient, align):
 @pytest.mark.parametrize("text, visible_text", (("", False), ("test", True)))
 def test_divider_class_method(qtbot, text, visible_text):
     """Test MDivider class methods."""
-    main_widget = QWidget()
-    main_lay = QVBoxLayout()
+    main_widget = QtWidgets.QWidget()
+    main_lay = QtWidgets.QVBoxLayout()
     main_widget.setLayout(main_lay)
 
     divider_left = MDivider.left(text)
@@ -54,10 +57,10 @@ def test_divider_class_method(qtbot, text, visible_text):
     qtbot.addWidget(main_widget)
     main_widget.show()
 
-    _asset_divider_perform(divider_left, True and visible_text, Qt.AlignLeft)
-    _asset_divider_perform(divider_right, True and visible_text, Qt.AlignRight)
-    _asset_divider_perform(divider_center, True and visible_text, Qt.AlignCenter)
-    _asset_divider_perform(divider_ver, False, Qt.AlignCenter)
+    _asset_divider_perform(divider_left, True and visible_text, QtCore.Qt.AlignLeft)
+    _asset_divider_perform(divider_right, True and visible_text, QtCore.Qt.AlignRight)
+    _asset_divider_perform(divider_center, True and visible_text, QtCore.Qt.AlignCenter)
+    _asset_divider_perform(divider_ver, False, QtCore.Qt.AlignCenter)
 
     assert divider_left.get_dayu_text() == text
     assert divider_right.get_dayu_text() == text
