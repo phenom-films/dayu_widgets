@@ -20,11 +20,13 @@ from Qt import QtCore
 from Qt import QtGui
 from Qt import QtWidgets
 from Qt.QtCompat import isValid
+import six
+
+# Import local modules
 from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.popup import MPopup
 import dayu_widgets.utils as utils
-import six
 
 
 @property_mixin

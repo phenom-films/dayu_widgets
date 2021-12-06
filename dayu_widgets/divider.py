@@ -16,8 +16,10 @@ from __future__ import print_function
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
-from dayu_widgets.label import MLabel
 import six
+
+# Import local modules
+from dayu_widgets.label import MLabel
 
 
 class MDivider(QtWidgets.QWidget):

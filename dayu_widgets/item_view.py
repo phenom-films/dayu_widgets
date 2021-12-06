@@ -13,6 +13,9 @@ from __future__ import print_function
 from Qt import QtCore
 from Qt import QtGui
 from Qt import QtWidgets
+import six
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets import utils
 from dayu_widgets.header_view import MHeaderView
@@ -20,11 +23,10 @@ from dayu_widgets.item_model import MTableModel
 from dayu_widgets.menu import MMenu
 from dayu_widgets.qt import MPixmap
 from dayu_widgets.qt import get_scale_factor
-import six
 
 
 def draw_empty_content(view, text=None, pix_map=None):
-    # Import third-party modules
+    # Import local modules
     from dayu_widgets import dayu_theme
 
     pix_map = pix_map or MPixmap("empty.svg")

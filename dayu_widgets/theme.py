@@ -13,7 +13,7 @@ from __future__ import print_function
 # Import built-in modules
 import string
 
-# Import third-party modules
+# Import local modules
 from dayu_widgets import DEFAULT_STATIC_FOLDER
 from dayu_widgets import utils
 from dayu_widgets.qt import get_scale_factor

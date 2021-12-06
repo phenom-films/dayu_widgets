@@ -14,6 +14,8 @@ from __future__ import print_function
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.mixin import cursor_mixin
 from dayu_widgets.mixin import stacked_animation_mixin
 

@@ -14,6 +14,8 @@ from __future__ import print_function
 from Qt import QtCore
 from Qt import QtGui
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.mixin import hover_shadow_mixin
 from dayu_widgets.mixin import property_mixin
 

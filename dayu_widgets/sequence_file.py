@@ -18,6 +18,8 @@ import functools
 from Qt import QtCore
 from Qt import QtWidgets
 from dayu_path import DayuPath
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.check_box import MCheckBox
 from dayu_widgets.field_mixin import MFieldMixin

@@ -17,6 +17,8 @@ import functools
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets import utils
 from dayu_widgets.combo_box import MComboBox

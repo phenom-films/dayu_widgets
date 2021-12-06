@@ -11,13 +11,11 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-import six
-
-# Import local modules
 from Qt import QtCore
 from Qt import QtGui
 from Qt import QtWidgets
 from Qt.QtSvg import QSvgRenderer
+import six
 
 
 class MCacheDict(object):
