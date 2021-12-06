@@ -17,6 +17,8 @@ from __future__ import print_function
 from Qt import QtCore
 from Qt import QtGui
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import MPixmap
 

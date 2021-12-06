@@ -14,13 +14,15 @@ from __future__ import print_function
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtGui
+import six
+
+# Import local modules
 from dayu_widgets.utils import apply_formatter
 from dayu_widgets.utils import display_formatter
 from dayu_widgets.utils import font_formatter
 from dayu_widgets.utils import get_obj_value
 from dayu_widgets.utils import icon_formatter
 from dayu_widgets.utils import set_obj_value
-import six
 
 
 SETTING_MAP = {

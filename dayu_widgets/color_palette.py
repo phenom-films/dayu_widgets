@@ -18,6 +18,8 @@ import functools
 from Qt import QtCore
 from Qt import QtGui
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.divider import MDivider
 from dayu_widgets.label import MLabel
 from dayu_widgets.message import MMessage
@@ -119,7 +121,7 @@ if __name__ == "__main__":
     # Import built-in modules
     import sys
 
-    # Import third-party modules
+    # Import local modules
     from dayu_widgets import dayu_theme
 
     app = QtWidgets.QApplication(sys.argv)

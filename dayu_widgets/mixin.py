@@ -87,7 +87,7 @@ def focus_shadow_mixin(cls):
     def _new_focus_in_event(self, *args, **kwargs):
         old_focus_in_event(self, *args, **kwargs)
         if not self.graphicsEffect():
-            # Import third-party modules
+            # Import local modules
             from dayu_widgets import dayu_theme
 
             shadow_effect = QtWidgets.QGraphicsDropShadowEffect(self)
@@ -123,7 +123,7 @@ def hover_shadow_mixin(cls):
     def _new_enter_event(self, *args, **kwargs):
         old_enter_event(self, *args, **kwargs)
         if not self.graphicsEffect():
-            # Import third-party modules
+            # Import local modules
             from dayu_widgets import dayu_theme
 
             shadow_effect = QtWidgets.QGraphicsDropShadowEffect(self)

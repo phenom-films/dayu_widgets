@@ -19,6 +19,9 @@ import functools
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+import six
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.browser import MClickBrowserFileToolButton
 from dayu_widgets.browser import MClickBrowserFolderToolButton
@@ -26,7 +29,6 @@ from dayu_widgets.browser import MClickSaveFileToolButton
 from dayu_widgets.mixin import focus_shadow_mixin
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.tool_button import MToolButton
-import six
 
 
 @focus_shadow_mixin
