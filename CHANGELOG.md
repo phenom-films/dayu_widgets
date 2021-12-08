@@ -1,3 +1,9 @@
+## v0.9.0 (2021-12-08)
+
+### Feat
+
+- add MCompleter and MSplitter widget
+
 ## v0.8.0 (2021-12-06)
 
 ### Fix
