@@ -1,5 +1,21 @@
 # dayu_widgets
 
+<p align="center">
+<a href="https://img.shields.io/pypi/pyversions/dayu_widgets">
+<img src="https://img.shields.io/pypi/pyversions/dayu_widgets" alt="python version"></a>
+<a href="https://badge.fury.io/py/dayu_widgets">
+<img src="https://img.shields.io/pypi/v/dayu_widgets?color=green" alt="PyPI version"></a>
+<img src="https://img.shields.io/pypi/dw/dayu_widgets" alt="Downloads Status">
+<img src="https://img.shields.io/pypi/l/dayu_widgets" alt="License">
+<img src="https://img.shields.io/pypi/format/dayu_widgets" alt="pypi format">
+<img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" alt="Maintenance"></a>
+
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END --> 
+</p>
+
+
 Components for PySide
 
 主要参考了 [AntDesign](https://ant.design/) 组件库，其他参考了 [iView](https://www.iviewui.com/) 组件库，微信基础组件。
@@ -162,3 +178,23 @@ poetry run isort dayu_widgets
 ```shell
 poetry run cz commit
 ```
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/muyr"><img src="https://avatars.githubusercontent.com/u/1860334?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yanru Mu</b></sub></a><br /><a href="https://github.com/phenom-films/dayu_widgets/commits?q=author%3Yanru Mu" itle="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/loonghao"><img src="https://avatars1.githubusercontent.com/u/13111745?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Hal</b></sub></a><br /><a href="https://github.com/phenom-films/dayu_widgets/commits?author=loonghao" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/FXTD-ODYSSEY"><img src="https://avatars.githubusercontent.com/u/40897360?v=4?s=100" width="100px;" alt=""/><br /><sub><b>FXTD-ODYSSEY</b></sub></a><br /><a href="https://github.com/phenom-films/dayu_widgets/commits?author=FXTD-ODYSSEY" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->

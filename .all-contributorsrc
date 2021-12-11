@@ -1,0 +1,43 @@
+{
+  "projectName": "dayu_widgets",
+  "projectOwner": "loonghao",
+  "repoType": "github",
+  "commitConvention": "angular",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "loonghao",
+      "name": "Hal",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13111745?v=4",
+      "profile": "https://github.com/loonghao",
+      "contributions": [
+        "ci"
+      ]
+    },
+    {
+      "login": "Yanru Mu",
+      "name": "Yanru Mu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1860334?v=4",
+      "profile": "https://github.com/muyr",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "FXTD-ODYSSEY",
+      "name": "FXTD-ODYSSEY",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40897360?v=4",
+      "profile": "https://github.com/FXTD-ODYSSEY",
+      "contributions": [
+        "code"
+      ]
+    },
+  ],
+  "skipCi": true
+}
