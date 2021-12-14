@@ -40,7 +40,6 @@ class MPopup(QtWidgets.QFrame):
         self._size_anim = QtCore.QPropertyAnimation(self, b"size")
         self.setProperty("anim_size_duration", 300)
         self.setProperty("anim_size_curve", "OutCubic")
-
         self.setProperty("border_radius", 15)
 
     def post_init(self):
@@ -55,11 +54,16 @@ class MPopup(QtWidgets.QFrame):
     def update_mask(self):
         rectPath = QtGui.QPainterPath()
         end_size = self.property("anim_size_end")
-        point = QtCore.QPoint(0, 0)
-        rect = QtCore.QRectF(point, end_size)
+        rect = QtCore.QRectF(0, 0, end_size.width(), end_size.height())
         radius = self.property("border_radius")
         rectPath.addRoundedRect(rect, radius, radius)
-        self.setMask(rectPath.toFillPolygon().toPolygon())
+        self.setMask(QtGui.QRegion(rectPath.toFillPolygon().toPolygon()))
+
+    def _get_curve(self, value):
+        curve = getattr(QtCore.QEasingCurve, value, None)
+        if not curve:
+            raise TypeError("Invalid QEasingCurve")
+        return curve
 
     def _set_border_radius(self, value):
         QtCore.QTimer.singleShot(0, self.update_mask)
@@ -68,9 +72,7 @@ class MPopup(QtWidgets.QFrame):
         self._opacity_anim.setDuration(value)
 
     def _set_anim_opacity_curve(self, value):
-        curve = getattr(QtCore.QEasingCurve, value, None)
-        assert curve, "invali QEasingCurve"
-        self._opacity_anim.setEasingCurve(curve)
+        self._opacity_anim.setEasingCurve(self._get_curve(value))
 
     def _set_anim_opacity_start(self, value):
         self._opacity_anim.setStartValue(value)
@@ -82,9 +84,7 @@ class MPopup(QtWidgets.QFrame):
         self._size_anim.setDuration(value)
 
     def _set_anim_size_curve(self, value):
-        curve = getattr(QtCore.QEasingCurve, value, None)
-        assert curve, "invali QEasingCurve"
-        self._size_anim.setEasingCurve(curve)
+        self._size_anim.setEasingCurve(self._get_curve(value))
 
     def _set_anim_size_start(self, value):
         self._size_anim.setStartValue(value)
