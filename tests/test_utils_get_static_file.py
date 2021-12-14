@@ -12,10 +12,13 @@ from __future__ import print_function
 import os
 
 # Import third-party modules
+import pytest
+import six
+
+# Import local modules
 from dayu_widgets import CUSTOM_STATIC_FOLDERS
 from dayu_widgets import DEFAULT_STATIC_FOLDER
 from dayu_widgets import utils
-import pytest
 
 
 @pytest.fixture(scope="module", name="custom_folder")
@@ -89,7 +92,10 @@ def test_with_wrong_type(input_file, error_type):
         utils.get_static_file(input_file)
 
     exception_msg = exc_info.value.args[0]
+    print(exception_msg)
     assert (
-        exception_msg == "Input argument 'path' should be basestring type, "
-        "but get {}".format(error_type)
+        exception_msg
+        == "Input argument 'path' should be six.string_types type, but get {}".format(
+            error_type
+        )
     )

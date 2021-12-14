@@ -4,10 +4,10 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtWidgets
 import pytest
 
 # Import local modules
-from Qt import QtWidgets
 from dayu_widgets.progress_circle import MProgressCircle
 
 
@@ -62,9 +62,13 @@ def test_progress_circle_widget(qtbot):
     qtbot.addWidget(circle)
     circle.show()
     circle.repaint()
-    assert not circle.isTextVisible()
-    assert not circle._default_label.isVisible()
-    assert label.isVisible()
+
+    def check():
+        assert not circle.isTextVisible()
+        assert not circle._default_label.isVisible()
+        assert label.isVisible()
+
+    qtbot.waitUntil(check)
 
 
 def test_progress_circle_class_method(qtbot):

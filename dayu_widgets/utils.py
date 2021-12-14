@@ -275,7 +275,7 @@ def _(input_dict):
 def _(input_list):
     result = []
     for i in input_list:
-        result.append(display_formatter(i))
+        result.append(str(display_formatter(i)))
     return ",".join(result)
 
 

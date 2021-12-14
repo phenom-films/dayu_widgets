@@ -4,11 +4,11 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
+from Qt import QtCore
+from Qt import QtWidgets
 import pytest
 
 # Import local modules
-from Qt import QtCore
-from Qt import QtWidgets
 from dayu_widgets import mixin
 
 
@@ -124,10 +124,15 @@ def test_focus_shadow_mixin(qtbot):
     main_widget.setFocus()
     # focus in
 
-    graphics_effect = button_test.graphicsEffect()
-    assert graphics_effect is not None
-    assert graphics_effect.isEnabled()
-    assert isinstance(graphics_effect, QtWidgets.QGraphicsDropShadowEffect)
+    qtbot.mouseClick(button_test, QtCore.Qt.LeftButton)
+
+    def check_focus_in():
+        graphics_effect = button_test.graphicsEffect()
+        assert graphics_effect is not None
+        assert graphics_effect.isEnabled()
+        assert isinstance(graphics_effect, QtWidgets.QGraphicsDropShadowEffect)
+
+    qtbot.waitUntil(check_focus_in)
 
     qtbot.mouseClick(button_normal, QtCore.Qt.LeftButton)  # focus out
 
