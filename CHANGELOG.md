@@ -1,3 +1,9 @@
+## v0.10.0 (2021-12-14)
+
+### Feat
+
+- **MSplitter**: add animatable feature
+
 ## v0.9.1 (2021-12-14)
 
 ### Fix
