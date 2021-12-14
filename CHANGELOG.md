@@ -1,3 +1,9 @@
+## v0.9.1 (2021-12-14)
+
+### Fix
+
+- **MPopup**: fix PyQt5 setMask bug & clean code
+
 ## v0.9.0 (2021-12-08)
 
 ### Feat
