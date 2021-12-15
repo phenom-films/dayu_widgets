@@ -13,6 +13,8 @@ from __future__ import print_function
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.divider import MDivider
 from dayu_widgets.label import MLabel
 from dayu_widgets.message import MMessage
@@ -23,6 +25,7 @@ class MTabWidgetTest(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(MTabWidgetTest, self).__init__(parent)
         self._init_ui()
+        self.resize(500, 500)
 
     def _init_ui(self):
         main_lay = QtWidgets.QVBoxLayout()
@@ -38,12 +41,11 @@ class MTabWidgetTest(QtWidgets.QWidget):
         self.tab_closable.addTab(MLabel("test 1"), "标签一")
         self.tab_closable.addTab(MLabel("test 2"), "标签二")
         self.tab_closable.addTab(MLabel("test 3"), "标签三")
-        self.tab_closable.tabCloseRequested.connect(self.slot_close_tab)
+        # self.tab_closable.tabCloseRequested.connect(self.slot_close_tab)
         main_lay.addWidget(MDivider("Normal"))
         main_lay.addWidget(tab_card)
         main_lay.addWidget(MDivider("Closable"))
         main_lay.addWidget(self.tab_closable)
-        main_lay.addStretch()
         self.setLayout(main_lay)
 
     @QtCore.Slot(int)
@@ -57,15 +59,11 @@ class MTabWidgetTest(QtWidgets.QWidget):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    test = MTabWidgetTest()
-
-    # Import third-party modules
+    # Import local modules
     from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
-    dayu_theme.apply(test)
-    test.show()
-    sys.exit(app.exec_())
+    with application() as app:
+        test = MTabWidgetTest()
+        dayu_theme.apply(test)
+        test.show()

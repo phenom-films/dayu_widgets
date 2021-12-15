@@ -14,6 +14,8 @@ from __future__ import print_function
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.browser import MDragFileButton
 from dayu_widgets.divider import MDivider
 from dayu_widgets.sequence_file import MSequenceFile
@@ -43,14 +45,11 @@ class SequenceFileExample(QtWidgets.QWidget):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    test = SequenceFileExample()
-    # Import third-party modules
+    # Import local modules
     from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
-    dayu_theme.apply(test)
-    test.show()
-    sys.exit(app.exec_())
+    with application() as app:
+        test = SequenceFileExample()
+        dayu_theme.apply(test)
+        test.show()

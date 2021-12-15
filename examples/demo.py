@@ -17,7 +17,6 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 # Import built-in modules
 import importlib
 import os
-import sys
 
 # Import third-party modules
 import Qt
@@ -34,7 +33,7 @@ print(Qt.__binding__)
 # Import built-in modules
 import codecs
 
-# Import third-party modules
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.dock_widget import MDockWidget
 from dayu_widgets.item_view_set import MItemViewSet
@@ -97,19 +96,11 @@ class MDemo(QtWidgets.QMainWindow):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import sys
+    # Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
-    app = QtWidgets.QApplication(sys.argv)
-
-    try:
+    with application() as app:
         test = MDemo()
         dayu_theme.apply(test)
         test.show()
-    except:
-        # Import built-in modules
-        import traceback
-
-        traceback.print_exc()
-
-    sys.exit(app.exec_())

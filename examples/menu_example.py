@@ -10,9 +10,12 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
+from __future__ import unicode_literals
 
 # Import third-party modules
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
@@ -81,48 +84,6 @@ class MenuExample(QtWidgets.QWidget, MFieldMixin):
         self.bind("button4_selected", menu4, "value", signal="sig_value_changed")
         self.bind("button4_selected_text", label4, "text")
 
-        a = [
-            {
-                "children": [
-                    {"value": "\u6545\u5bab", "label": "\u6545\u5bab"},
-                    {"value": "\u5929\u575b", "label": "\u5929\u575b"},
-                    {"value": "\u738b\u5e9c\u4e95", "label": "\u738b\u5e9c\u4e95"},
-                ],
-                "value": "\u5317\u4eac",
-                "label": "\u5317\u4eac",
-            },
-            {
-                "children": [
-                    {
-                        "children": [
-                            {
-                                "value": "\u592b\u5b50\u5e99",
-                                "label": "\u592b\u5b50\u5e99",
-                            }
-                        ],
-                        "value": "\u5357\u4eac",
-                        "label": "\u5357\u4eac",
-                    },
-                    {
-                        "children": [
-                            {
-                                "value": "\u62d9\u653f\u56ed",
-                                "label": "\u62d9\u653f\u56ed",
-                            },
-                            {
-                                "value": "\u72ee\u5b50\u6797",
-                                "label": "\u72ee\u5b50\u6797",
-                            },
-                        ],
-                        "value": "\u82cf\u5dde",
-                        "label": "\u82cf\u5dde",
-                    },
-                ],
-                "value": "\u6c5f\u82cf",
-                "label": "\u6c5f\u82cf",
-            },
-        ]
-
         sub_lay1 = QtWidgets.QHBoxLayout()
         sub_lay1.addWidget(button1)
         sub_lay1.addWidget(label1)
@@ -141,8 +102,9 @@ class MenuExample(QtWidgets.QWidget, MFieldMixin):
         menu = MMenu(parent=self)
         items = ["北京", "上海", "广州", "深圳", "北戴河", "BBC/data", "BBC/hello", "American"]
         menu.set_data(items)
-        menu.search()
-        menu.setProperty("max_scroll_count", 5)
+        menu.setProperty("max_scroll_count", 3)
+        menu.setProperty("scrollable", True)
+        menu.setProperty("searchable", True)
         button.setMenu(menu)
         sub_lay5.addWidget(button)
 
@@ -158,10 +120,10 @@ class MenuExample(QtWidgets.QWidget, MFieldMixin):
             _menu.addAction("tencent")
             _menu.addAction("baidu")
             _menu.addAction("google")
-            _menu.search()
+            _menu.setProperty("searchable", True)
             sub_menu.addMenu(_menu)
         menu.addMenu(sub_menu)
-        menu.search()
+        menu.setProperty("searchable", True)
         button.setMenu(menu)
         sub_lay6.addWidget(button)
 
@@ -179,16 +141,11 @@ class MenuExample(QtWidgets.QWidget, MFieldMixin):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import signal
-    import sys
-
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
-    app = QtWidgets.QApplication(sys.argv)
-    test = MenuExample()
-    # Import third-party modules
+    # Import local modules
     from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
-    dayu_theme.apply(test)
-    test.show()
-    sys.exit(app.exec_())
+    with application() as app:
+        test = MenuExample()
+        dayu_theme.apply(test)
+        test.show()

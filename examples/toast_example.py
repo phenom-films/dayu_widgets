@@ -17,6 +17,8 @@ import functools
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.divider import MDivider
 from dayu_widgets.field_mixin import MFieldMixin
 from dayu_widgets.label import MLabel
@@ -97,14 +99,11 @@ class ToastExample(QtWidgets.QWidget, MFieldMixin):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    test = ToastExample()
-    # Import third-party modules
+    # Import local modules
     from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
-    dayu_theme.apply(test)
-    test.show()
-    sys.exit(app.exec_())
+    with application() as app:
+        test = ToastExample()
+        dayu_theme.apply(test)
+        test.show()

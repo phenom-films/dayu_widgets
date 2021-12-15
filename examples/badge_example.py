@@ -13,6 +13,8 @@ from __future__ import print_function
 
 # Import third-party modules
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.badge import MBadge
@@ -55,7 +57,7 @@ class BadgeExample(QtWidgets.QWidget, MFieldMixin):
         spin_box.setValue(1)
 
         self.register_field("button1_selected", "北京")
-        menu1 = MMenu()
+        menu1 = MMenu(parent=self)
         menu1.set_data(["北京", "上海", "广州", "深圳"])
         select1 = MComboBox()
         select1.set_menu(menu1)
@@ -87,11 +89,11 @@ class BadgeExample(QtWidgets.QWidget, MFieldMixin):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import sys
+    # Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
-    app = QtWidgets.QApplication(sys.argv)
-    test = BadgeExample()
-    dayu_theme.apply(test)
-    test.show()
-    sys.exit(app.exec_())
+    with application() as app:
+        test = BadgeExample()
+        dayu_theme.apply(test)
+        test.show()

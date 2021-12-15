@@ -14,6 +14,8 @@ from __future__ import print_function
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.browser import MClickBrowserFilePushButton
 from dayu_widgets.browser import MClickBrowserFileToolButton
 from dayu_widgets.browser import MClickBrowserFolderPushButton
@@ -105,15 +107,11 @@ class BrowserExample(QtWidgets.QWidget, MFieldMixin):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import sys
-
-    # Import third-party modules
+    # Import local modules
     from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
-    app = QtWidgets.QApplication(sys.argv)
-    test = BrowserExample()
-
-    dayu_theme.apply(test)
-    test.show()
-    sys.exit(app.exec_())
+    with application() as app:
+        test = BrowserExample()
+        dayu_theme.apply(test)
+        test.show()

@@ -14,6 +14,8 @@ from __future__ import print_function
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.button_group import MRadioButtonGroup
 from dayu_widgets.check_box import MCheckBox
 from dayu_widgets.combo_box import MComboBox
@@ -77,14 +79,11 @@ class ThemeExample(QtWidgets.QWidget, MFieldMixin):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    test = ThemeExample()
-    # Import third-party modules
+    # Import local modules
     from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
-    dayu_theme.apply(test)
-    test.show()
-    sys.exit(app.exec_())
+    with application() as app:
+        test = ThemeExample()
+        dayu_theme.apply(test)
+        test.show()

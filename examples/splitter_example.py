@@ -58,11 +58,10 @@ class SplitterExample(QtWidgets.QWidget):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import sys
+    # Import local modules
+    from dayu_widgets.qt import application
 
-    app = QtWidgets.QApplication(sys.argv)
-    test = SplitterExample()
-    dayu_theme.apply(test)
-    test.show()
-    sys.exit(app.exec_())
+    with application() as app:
+        test = SplitterExample()
+        dayu_theme.apply(test)
+        test.show()

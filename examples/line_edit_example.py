@@ -103,15 +103,10 @@ class LineEditExample(QtWidgets.QWidget):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import sys
-
-    # Import third-party modules
     from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
-    app = QtWidgets.QApplication(sys.argv)
-    test = LineEditExample()
-
-    dayu_theme.apply(test)
-    test.show()
-    sys.exit(app.exec_())
+    with application() as app:
+        test = LineEditExample()
+        dayu_theme.apply(test)
+        test.show()

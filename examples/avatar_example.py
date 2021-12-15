@@ -14,6 +14,8 @@ from __future__ import print_function
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.avatar import MAvatar
 from dayu_widgets.divider import MDivider
@@ -77,11 +79,11 @@ class AvatarExample(QtWidgets.QWidget, MFieldMixin):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import sys
+    # Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
-    app = QtWidgets.QApplication(sys.argv)
-    test = AvatarExample()
-    dayu_theme.apply(test)
-    test.show()
-    sys.exit(app.exec_())
+    with application() as app:
+        test = AvatarExample()
+        dayu_theme.apply(test)
+        test.show()

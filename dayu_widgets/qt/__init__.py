@@ -10,6 +10,11 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+# Import built-in modules
+import contextlib
+import signal
+import sys
+
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtGui
@@ -73,6 +78,19 @@ def get_scale_factor():
     scale_factor_x = QtWidgets.QApplication.desktop().logicalDpiX() / standard_dpi
     scale_factor_y = QtWidgets.QApplication.desktop().logicalDpiY() / standard_dpi
     return scale_factor_x, scale_factor_y
+
+
+@contextlib.contextmanager
+def application(*args):
+    app = QtWidgets.QApplication.instance()
+
+    if not app:
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
+        app = QtWidgets.QApplication(sys.argv)
+        yield app
+        app.exec_()
+    else:
+        yield app
 
 
 MPixmap = MCacheDict(QtGui.QPixmap)

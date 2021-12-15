@@ -10,12 +10,16 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
+from __future__ import unicode_literals
 
 # Import built-in modules
+import itertools
 import random
 
 # Import third-party modules
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.combo_box import MComboBox
 from dayu_widgets.divider import MDivider
@@ -30,9 +34,10 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
         self._init_ui()
 
     def _init_ui(self):
+        cities = ["北京", "上海", "广州", "深圳"]
         self.register_field("button1_selected", "北京")
         menu1 = MMenu(parent=self)
-        menu1.set_data(["北京", "上海", "广州", "深圳"])
+        menu1.set_data(cities)
         size_list = [
             ("Large", dayu_theme.large),
             ("Medium", dayu_theme.medium),
@@ -50,13 +55,13 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
 
         self.register_field("button2_selected", ["北京"])
         menu2 = MMenu(exclusive=False, parent=self)
-        menu2.set_data(["北京", "上海", "广州", "深圳"])
+        menu2.set_data(cities)
         select2 = MComboBox()
         select2.set_menu(menu2)
         self.bind("button2_selected", select2, "value", signal="sig_value_changed")
 
         def dynamic_get_city():
-            data = ["北京", "上海", "广州", "深圳", "郑州", "石家庄"]
+            data = cities + ["郑州", "石家庄"]
             start = random.randint(0, len(data))
             end = random.randint(start, len(data))
             return data[start:end]
@@ -120,7 +125,7 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
 
         self.register_field("button5_selected", "")
         menu5 = MMenu(exclusive=False, parent=self)
-        menu5.set_data(["北京", "上海", "广州", "深圳"])
+        menu5.set_data(cities)
         select5 = MComboBox()
         select5.set_menu(menu5)
         select5.set_formatter(lambda x: " & ".join(x))
@@ -149,8 +154,11 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
 
         sub_lay6 = QtWidgets.QHBoxLayout()
         combo = MComboBox()
-        combo.addItems(["北京", "上海", "广州", "深圳", "北戴河"])
-        combo.setProperty("search", True)
+        items = cities + ["北戴河"]
+
+        items += ["a" * i for i in range(20)]
+        combo.addItems(items)
+        combo.setProperty("searchable", True)
         sub_lay6.addWidget(MLabel("搜索补全"))
         sub_lay6.addWidget(combo)
 
@@ -169,17 +177,11 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import signal
-    import sys
-
-    # Import third-party modules
+    # Import local modules
     from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
-    app = QtWidgets.QApplication(sys.argv)
-    test = ComboBoxExample()
-
-    dayu_theme.apply(test)
-    test.show()
-    sys.exit(app.exec_())
+    with application() as app:
+        test = ComboBoxExample()
+        dayu_theme.apply(test)
+        test.show()

@@ -16,6 +16,8 @@ import functools
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.badge import MBadge
 from dayu_widgets.label import MLabel
@@ -88,12 +90,11 @@ class MenuTabWidgetExample(QtWidgets.QWidget):
 
 
 if __name__ == "__main__":
-    # Import built-in modules
-    import sys
+    # Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
-    app = QtWidgets.QApplication(sys.argv)
-    test = MenuTabWidgetExample()
-    dayu_theme.apply(test)
-
-    test.show()
-    sys.exit(app.exec_())
+    with application() as app:
+        test = MenuTabWidgetExample()
+        dayu_theme.apply(test)
+        test.show()
