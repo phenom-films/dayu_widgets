@@ -1,3 +1,9 @@
+## v0.10.1 (2021-12-15)
+
+### Refactor
+
+- **examples**: use application function to launch example
+
 ## v0.10.0 (2021-12-14)
 
 ### Feat
