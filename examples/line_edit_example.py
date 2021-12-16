@@ -14,6 +14,8 @@ from __future__ import print_function
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
+
+# Import local modules
 from dayu_widgets.combo_box import MComboBox
 from dayu_widgets.divider import MDivider
 from dayu_widgets.label import MLabel
@@ -103,6 +105,7 @@ class LineEditExample(QtWidgets.QWidget):
 
 
 if __name__ == "__main__":
+    # Import local modules
     from dayu_widgets import dayu_theme
     from dayu_widgets.qt import application
 
