@@ -16,6 +16,7 @@ from Qt import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
+from dayu_widgets.completer import MCompleter
 from dayu_widgets.mixin import cursor_mixin
 from dayu_widgets.mixin import focus_shadow_mixin
 from dayu_widgets.mixin import property_mixin
@@ -29,7 +30,7 @@ class MComboBoxSearchMixin(object):
         self.filter_model = QtCore.QSortFilterProxyModel(self)
         self.filter_model.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
         self.filter_model.setSourceModel(self.model())
-        self.completer = QtWidgets.QCompleter(self)
+        self.completer = MCompleter(self)
         self.completer.setCompletionMode(QtWidgets.QCompleter.UnfilteredPopupCompletion)
         self.completer.setModel(self.filter_model)
 
@@ -37,8 +38,6 @@ class MComboBoxSearchMixin(object):
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setEditable(True)
 
-        popup = self.completer.popup()
-        dayu_theme.apply(popup)
         self.setCompleter(self.completer)
 
         edit = self.lineEdit()
@@ -49,7 +48,7 @@ class MComboBoxSearchMixin(object):
             lambda t: t and self.setCurrentIndex(self.findText(t))
         )
 
-    def _set_search(self, value):
+    def _set_searchable(self, value):
         """search property to True then trigger search"""
         value and self.search()
 
