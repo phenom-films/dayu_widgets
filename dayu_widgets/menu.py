@@ -30,7 +30,7 @@ import dayu_widgets.utils as utils
 
 
 @property_mixin
-class ScrollableMenuMixin(object):
+class ScrollableMenuBase(QtWidgets.QMenu):
     """
     https://www.pythonfixing.com/2021/10/fixed-how-to-have-scrollable-context.html
     """
@@ -40,7 +40,7 @@ class ScrollableMenuMixin(object):
     ignoreAutoScroll = False
 
     def __init__(self, *args, **kwargs):
-        super(ScrollableMenuMixin, self).__init__(*args, **kwargs)
+        super(ScrollableMenuBase, self).__init__(*args, **kwargs)
         self._maximumHeight = self.maximumHeight()
         self._actionRects = []
 
@@ -53,7 +53,7 @@ class ScrollableMenuMixin(object):
         self.setMaxItemCount(0)
 
     def _set_max_scroll_count(self, value):
-        self.setMaxItemCount(value)
+        self.setMaxItemCount(value * 2.2)
 
     @property
     def actionRects(self):
@@ -61,7 +61,7 @@ class ScrollableMenuMixin(object):
             del self._actionRects[:]
             offset = self.offset()
             for action in self.actions():
-                geo = super(ScrollableMenuMixin, self).actionGeometry(action)
+                geo = super(ScrollableMenuBase, self).actionGeometry(action)
                 if offset:
                     geo.moveTop(geo.y() - offset)
                 self._actionRects.append(geo)
@@ -105,7 +105,10 @@ class ScrollableMenuMixin(object):
         return style.pixelMetric(style.PM_MenuScrollerHeight, None, self) * 2
 
     def isScrollable(self):
-        return self.height() < super(ScrollableMenuMixin, self).sizeHint().height()
+        return (
+            self.property("scrollable")
+            and self.height() < super(ScrollableMenuBase, self).sizeHint().height()
+        )
 
     def checkScroll(self):
         pos = self.mapFromGlobal(QtGui.QCursor.pos())
@@ -174,7 +177,7 @@ class ScrollableMenuMixin(object):
     # class methods reimplementation
 
     def sizeHint(self):
-        hint = super(ScrollableMenuMixin, self).sizeHint()
+        hint = super(ScrollableMenuBase, self).sizeHint()
         if hint.height() > self.maximumHeight():
             hint.setHeight(self.maximumHeight())
         return hint
@@ -188,16 +191,16 @@ class ScrollableMenuMixin(object):
                 delta = rect.topLeft() - self.actionGeometry(action).topLeft()
                 source.move(source.pos() + delta)
             return False
-        return super(ScrollableMenuMixin, self).eventFilter(source, event)
+        return super(ScrollableMenuBase, self).eventFilter(source, event)
 
     def event(self, event):
         if not self.isScrollable():
-            return super(ScrollableMenuMixin, self).event(event)
+            return super(ScrollableMenuBase, self).event(event)
         if event.type() == event.KeyPress and event.key() in (
             QtCore.Qt.Key_Up,
             QtCore.Qt.Key_Down,
         ):
-            res = super(ScrollableMenuMixin, self).event(event)
+            res = super(ScrollableMenuBase, self).event(event)
             action = self.activeAction()
             if action:
                 self.ensureVisible(action)
@@ -225,16 +228,16 @@ class ScrollableMenuMixin(object):
                     action.trigger()
                     self.close()
             return True
-        return super(ScrollableMenuMixin, self).event(event)
+        return super(ScrollableMenuBase, self).event(event)
 
     def timerEvent(self, event):
         if not self.isScrollable():
             # ignore internal timer event for reopening popups
-            super(ScrollableMenuMixin, self).timerEvent(event)
+            super(ScrollableMenuBase, self).timerEvent(event)
 
     def mouseMoveEvent(self, event):
         if not self.isScrollable():
-            super(ScrollableMenuMixin, self).mouseMoveEvent(event)
+            super(ScrollableMenuBase, self).mouseMoveEvent(event)
             return
 
         pos = event.pos()
@@ -295,16 +298,16 @@ class ScrollableMenuMixin(object):
                 if action.menu():
                     action.menu().installEventFilter(self)
             self.ignoreAutoScroll = False
-        super(ScrollableMenuMixin, self).showEvent(event)
+        super(ScrollableMenuBase, self).showEvent(event)
 
     def hideEvent(self, event):
         for action in self.actions():
             if action.menu():
                 action.menu().removeEventFilter(self)
-        super(ScrollableMenuMixin, self).hideEvent(event)
+        super(ScrollableMenuBase, self).hideEvent(event)
 
     def resizeEvent(self, event):
-        super(ScrollableMenuMixin, self).resizeEvent(event)
+        super(ScrollableMenuBase, self).resizeEvent(event)
 
         style = self.style()
         l, t, r, b = self.getContentsMargins()
@@ -329,7 +332,7 @@ class ScrollableMenuMixin(object):
 
     def paintEvent(self, event):
         if not self.isScrollable():
-            super(ScrollableMenuMixin, self).paintEvent(event)
+            super(ScrollableMenuBase, self).paintEvent(event)
             return
 
         style = self.style()
@@ -345,7 +348,6 @@ class ScrollableMenuMixin(object):
         style.drawPrimitive(style.PE_PanelMenu, menuOpt, qp, self)
 
         fw = style.pixelMetric(style.PM_MenuPanelWidth, None, self)
-
         topEdge = self.scrollUpRect.bottom()
         bottomEdge = self.scrollDownRect.top()
         offset = self.offset()
@@ -432,7 +434,31 @@ class ScrollableMenuMixin(object):
 
 
 @property_mixin
-class SearchableMenuMixin(object):
+class SearchableMenuBase(ScrollableMenuBase):
+    def __init__(self, *args, **kwargs):
+        super(SearchableMenuBase, self).__init__(*args, **kwargs)
+        self.search_popup = MPopup(self)
+        self.search_popup.setVisible(False)
+        self.search_bar = MLineEdit(self)
+        self.search_label = QtWidgets.QLabel()
+
+        self.search_bar.textChanged.connect(self.slot_search_change)
+        self.search_bar.keyPressEvent = partial(
+            self.search_key_event, self.search_bar.keyPressEvent
+        )
+        self.aboutToHide.connect(lambda: self.search_bar.setText(""))
+
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(self.search_label)
+        layout.addWidget(self.search_bar)
+        self.search_popup.setLayout(layout)
+
+        self.setProperty("search_placeholder", self.tr("Search Action..."))
+        self.setProperty("search_label", self.tr("Search Action..."))
+
+        self.setProperty("searchable", True)
+        self.setProperty("search_re", "I")
+
     def search_key_event(self, call, event):
         key = event.key()
         # NOTES: support menu original key event on search bar
@@ -442,42 +468,26 @@ class SearchableMenuMixin(object):
             QtCore.Qt.Key_Return,
             QtCore.Qt.Key_Enter,
         ):
-            super(SearchableMenuMixin, self).keyPressEvent(event)
+            super(SearchableMenuBase, self).keyPressEvent(event)
         elif key == QtCore.Qt.Key_Tab:
             self.search_bar.setFocus()
         return call(event)
 
-    def search(self):
-        self.setStyleSheet("QMenu{menu-scrollable: 1;}")
-        self.setProperty("search", True)
-        self.search_popup = MPopup(self)
-        layout = QtWidgets.QVBoxLayout()
-
-        self.search_bar = MLineEdit(self)
-        self.search_bar.keyPressEvent = partial(
-            self.search_key_event, self.search_bar.keyPressEvent
-        )
-        self.search_bar.setPlaceholderText(self.tr("Search Action..."))
-        self.search_bar.textChanged.connect(self.slot_search_change)
-        self.search_label = QtWidgets.QLabel(self.tr("Search Action..."))
-        self.search_label.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
-        layout.addWidget(self.search_label)
-        layout.addWidget(self.search_bar)
-        self.search_popup.setLayout(layout)
-
-        self.aboutToHide.connect(lambda: self.search_bar.setText(""))
-
-    def _set_search(self, value):
-        value and self.search()
-
     def _set_search_label(self, value):
-        self.property("search") and self.search_label.setText(value)
+        self.search_label.setText(value)
 
     def _set_search_placeholder(self, value):
-        self.property("search") and self.search_bar.setPlaceholderText(value)
+        self.search_bar.setPlaceholderText(value)
+
+    def _set_search_re(self, value):
+        if not isinstance(value, six.text_type):
+            raise TypeError("`search_re` property should be a string type")
 
     def slot_search_change(self, text):
-        search_reg = re.compile(r".*%s.*" % text)
+        flags = 0
+        for m in self.property("search_re") or "":
+            flags |= getattr(re, m.upper(), 0)
+        search_reg = re.compile(r".*%s.*" % text, flags)
         self._update_search(search_reg)
 
     def _update_search(self, search_reg, parent_menu=None):
@@ -498,26 +508,26 @@ class SearchableMenuMixin(object):
 
     def keyPressEvent(self, event):
         key = event.key()
-        if self.property("search"):
+        if self.property("searchable"):
             # NOTES(timmyliang): 26 character trigger search bar
             if 65 <= key <= 90:
                 char = chr(key)
                 self.search_bar.setText(char)
                 self.search_bar.setFocus()
                 self.search_bar.selectAll()
-                self.search_popup.show()
                 width = self.sizeHint().width()
                 width = width if width >= 50 else 50
                 offset = QtCore.QPoint(width, 0)
                 self.search_popup.move(self.pos() + offset)
+                self.search_popup.show()
             elif key == QtCore.Qt.Key_Escape:
                 self.search_bar.setText("")
-                self.search_bar.hide()
-        return super(SearchableMenuMixin, self).keyPressEvent(event)
+                self.search_popup.hide()
+        return super(SearchableMenuBase, self).keyPressEvent(event)
 
 
 @property_mixin
-class MMenu(SearchableMenuMixin, ScrollableMenuMixin, QtWidgets.QMenu):
+class MMenu(SearchableMenuBase):
     sig_value_changed = QtCore.Signal(object)
 
     def __init__(self, exclusive=True, cascader=False, title="", parent=None):
