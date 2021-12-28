@@ -1,3 +1,14 @@
+## v0.11.0 (2021-12-28)
+
+### Feat
+
+- **MComboBox**: using MCompleter
+
+### Refactor
+
+- **MMenu**: clean up menu code
+- fix example application
+
 ## v0.10.1 (2021-12-15)
 
 ### Refactor
