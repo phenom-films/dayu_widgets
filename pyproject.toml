@@ -33,7 +33,7 @@ singledispatch = {version = "^3.7.0", python = "2.7"}
 dayu-path = "^0.5.2"
 
 [tool.poetry.dev-dependencies]
-pytest = {version = "^6.2.5", python = ">=3.6.0,<3.11"}
+pytest = {version = "^7.0.0", python = ">=3.6.0,<3.11"}
 PySide2 = "^5.15.2"
 pytest-qt = {version = "^4.0.2", python = ">=3.6.0,<3.10"}
 black = {version = "^21.12b0", python = ">=3.6.2,<3.10"}
