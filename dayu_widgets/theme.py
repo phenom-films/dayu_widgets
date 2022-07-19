@@ -313,7 +313,9 @@ class MTheme(object):
 
         def my__init__(instance, *args, **kwargs):
             original_init__(instance, *args, **kwargs)
-            instance.setStyleSheet(self.default_qss.substitute(vars(self)))
+            size_dict = get_theme_size()
+            size_dict.update(vars(self))
+            instance.setStyleSheet(self.default_qss.substitute(size_dict))
 
         def polish(instance):
             instance.style().polish(instance)
