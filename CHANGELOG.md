@@ -1,3 +1,9 @@
+## v0.11.2 (2022-07-19)
+
+### Fix
+
+- **MPage**: fix MPage sig_page_changed bug
+
 ## v0.11.1 (2022-07-19)
 
 ### Fix
