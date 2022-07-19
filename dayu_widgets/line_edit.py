@@ -54,7 +54,7 @@ class MLineEdit(QtWidgets.QLineEdit):
         self._delay_timer.setInterval(500)
         self._delay_timer.setSingleShot(True)
         self._delay_timer.timeout.connect(self._slot_delay_text_changed)
-
+        self.textChanged.connect(self._slot_begin_to_start_delay)
         self._dayu_size = dayu_theme.default_size
 
     def get_dayu_size(self):
@@ -86,6 +86,12 @@ class MLineEdit(QtWidgets.QLineEdit):
     @QtCore.Slot()
     def _slot_delay_text_changed(self):
         self.sig_delay_text_changed.emit(self.text())
+
+    @QtCore.Slot(six.text_type)
+    def _slot_begin_to_start_delay(self, _):
+        if self._delay_timer.isActive():
+            self._delay_timer.stop()
+        self._delay_timer.start()
 
     def get_prefix_widget(self):
         """Get the prefix widget for user to edit"""
@@ -143,14 +149,6 @@ class MLineEdit(QtWidgets.QLineEdit):
         """Override clear to clear history"""
         self.setProperty("history", "")
         return super(MLineEdit, self).clear()
-
-    def keyPressEvent(self, event):
-        """Override keyPressEvent to start delay timer"""
-        if event.key() not in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Tab]:
-            if self._delay_timer.isActive():
-                self._delay_timer.stop()
-            self._delay_timer.start()
-        super(MLineEdit, self).keyPressEvent(event)
 
     def search(self):
         """Add a search icon button for MLineEdit."""
