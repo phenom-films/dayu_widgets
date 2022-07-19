@@ -1,3 +1,9 @@
+## v0.11.1 (2022-07-19)
+
+### Fix
+
+- fix MLineEdit delay signal not work when user use Chinese input method
+
 ## v0.11.0 (2021-12-28)
 
 ### Feat
