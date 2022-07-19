@@ -11,6 +11,9 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+# Import built-in modules
+import functools
+
 # Import third-party modules
 from Qt import QtCore
 from Qt import QtWidgets
@@ -73,6 +76,14 @@ class LineEditExample(QtWidgets.QWidget):
         combobox.setFixedWidth(100)
         line_edit_options.set_prefix_widget(combobox)
 
+        delay_line_editor = MLineEdit()
+        delay_display_label = MLabel()
+        delay_button = MPushButton("Click to Edit Text")
+        delay_line_editor.sig_delay_text_changed.connect(delay_display_label.setText)
+        delay_button.clicked.connect(
+            functools.partial(delay_line_editor.setText, "Edited from code")
+        )
+
         main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("different size"))
         main_lay.addLayout(size_lay)
@@ -96,6 +107,10 @@ class LineEditExample(QtWidgets.QWidget):
         main_lay.addWidget(MLineEdit().folder().small())
         main_lay.addWidget(MLabel("MLineEdit.options()"))
         main_lay.addWidget(line_edit_options)
+        main_lay.addWidget(MDivider("Test delay Signal"))
+        main_lay.addWidget(delay_line_editor)
+        main_lay.addWidget(delay_display_label)
+        main_lay.addWidget(delay_button)
         main_lay.addStretch()
         self.setLayout(main_lay)
 
