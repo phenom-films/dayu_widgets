@@ -28,6 +28,7 @@ class PageExample(QtWidgets.QWidget):
     def _init_ui(self):
         page_1 = MPage()
         page_1.set_total(255)
+        page_1.sig_page_changed.connect(print)
 
         page_2 = MPage()
         page_2.set_total(100)

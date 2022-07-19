@@ -77,7 +77,6 @@ class MPage(QtWidgets.QWidget, MFieldMixin):
         self._change_page_size_button = MComboBox().small()
         self._change_page_size_button.set_menu(page_setting_menu)
         self._change_page_size_button.set_formatter(lambda x: "{} per page".format(x))
-        self._change_page_size_button.sig_value_changed.connect(self._emit_page_changed)
 
         self._pre_button = MToolButton().icon_only().svg("left_fill.svg").small()
         self._pre_button.clicked.connect(
@@ -111,6 +110,8 @@ class MPage(QtWidgets.QWidget, MFieldMixin):
         self.bind("display_text", self._display_label, "dayu_text")
         self.bind("can_pre", self._pre_button, "enabled")
         self.bind("can_next", self._next_button, "enabled")
+
+        self._change_page_size_button.sig_value_changed.connect(self._emit_page_changed)
 
         main_lay = QtWidgets.QHBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
