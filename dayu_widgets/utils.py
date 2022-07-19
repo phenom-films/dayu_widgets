@@ -466,12 +466,12 @@ def add_settings(organization, app_name, event_name="closeEvent"):
             app_name,
         )
         for attr, widget, property in self._bind_data:
-            settings.setValue(
-                attr,
-                widget.saveGeometry()
-                if property == "geometry"
-                else widget.property(property),
-            )
+            if property == "geometry":
+                settings.setValue(attr, widget.saveGeometry())
+            elif property == "state":
+                settings.setValue(attr, widget.saveState())
+            else:
+                settings.setValue(attr, widget.property(property))
 
     def trigger_event(self, event):
         # 一般是 closeEvent 或者 hideEvent
@@ -492,6 +492,11 @@ def add_settings(organization, app_name, event_name="closeEvent"):
                 widget.setGeometry(value)
             elif isinstance(value, QtCore.QByteArray):  # settings 有保存值
                 widget.restoreGeometry(value)
+        elif property == "state":  # 类似 QMainWindow/QSplitter等的布局参数需要特殊处理
+            # 由于每种类型组件的state 都不同，所以无法让用户手动传入默认参数，只能读取保存的
+            # 用户可以使用组件自己的方法去初始化布局
+            if isinstance(value, QtCore.QByteArray):  # settings 有保存值
+                widget.restoreState(value)
         else:
             widget.setProperty(property, value)
         self._bind_data.append((attr, widget, property))
