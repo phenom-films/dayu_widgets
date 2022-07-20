@@ -1,3 +1,9 @@
+## v0.11.3 (2022-07-20)
+
+### Fix
+
+- **MTheme**: fix MTheme.deco function
+
 ## v0.11.2 (2022-07-19)
 
 ### Fix
