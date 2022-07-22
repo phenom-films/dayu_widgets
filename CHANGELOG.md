@@ -1,3 +1,9 @@
+## v0.11.5 (2022-07-22)
+
+### Fix
+
+- **MItemView**: fix header view order(sort) setting
+
 ## v0.11.4 (2022-07-22)
 
 ### Fix
