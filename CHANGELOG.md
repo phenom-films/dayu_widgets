@@ -1,3 +1,9 @@
+## v0.11.4 (2022-07-22)
+
+### Fix
+
+- **MItemViewSet-MItemViewFullSet**: fix headerView state restore
+
 ## v0.11.3 (2022-07-20)
 
 ### Fix
