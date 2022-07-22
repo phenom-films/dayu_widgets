@@ -141,6 +141,7 @@ class MItemViewFullSet(QtWidgets.QWidget):
         self.source_model.set_header_list(header_list)
         self.sort_filter_model.set_header_list(header_list)
         self.sort_filter_model.setSourceModel(self.source_model)
+        self.source_model.clear()
         for index in range(self.stack_widget.count()):
             view = self.stack_widget.widget(index)
             view.set_header_list(header_list)
@@ -157,9 +158,6 @@ class MItemViewFullSet(QtWidgets.QWidget):
         if data_list:
             self.source_model.set_data_list(data_list)
         self.set_record_count(len(data_list))
-        for index in range(self.stack_widget.count()):
-            view = self.stack_widget.widget(index)
-            view.set_header_list(self.source_model.header_list)
 
     @QtCore.Slot(int)
     def set_record_count(self, total):
