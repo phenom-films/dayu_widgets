@@ -25,6 +25,9 @@ from dayu_widgets.qt import MPixmap
 from dayu_widgets.qt import get_scale_factor
 
 
+HEADER_SORT_MAP = {"asc": QtCore.Qt.AscendingOrder, "desc": QtCore.Qt.DescendingOrder}
+
+
 def draw_empty_content(view, text=None, pix_map=None):
     # Import local modules
     from dayu_widgets import dayu_theme
@@ -135,12 +138,15 @@ def set_header_list(self, header_list):
     scale_x, _ = get_scale_factor()
     self.header_list = header_list
     if self.header_view:
-        self.header_view.setSortIndicator(-1, QtCore.Qt.AscendingOrder)
         for index, i in enumerate(header_list):
             self.header_view.setSectionHidden(index, i.get("hide", False))
             self.header_view.resizeSection(index, i.get("width", 100) * scale_x)
-            if i.get("order", None) is not None:
-                self.header_view.setSortIndicator(index, i.get("order"))
+            if "order" in i:
+                order = i.get("order")
+                if order in HEADER_SORT_MAP.values():
+                    self.header_view.setSortIndicator(index, order)
+                elif order in HEADER_SORT_MAP:
+                    self.header_view.setSortIndicator(index, HEADER_SORT_MAP[order])
             if i.get("selectable", False):
                 delegate = MOptionDelegate(parent=self)
                 delegate.set_exclusive(i.get("exclusive", True))

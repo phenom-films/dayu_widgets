@@ -68,6 +68,7 @@ header_list = [
         "key": "score",
         "searchable": True,
         "editable": True,
+        "order": "desc",
         "bg_color": score_color,
         "color": "#fff",
     },
