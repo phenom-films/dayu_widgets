@@ -439,7 +439,7 @@ class SearchableMenuBase(ScrollableMenuBase):
         super(SearchableMenuBase, self).__init__(*args, **kwargs)
         self.search_popup = MPopup(self)
         self.search_popup.setVisible(False)
-        self.search_bar = MLineEdit(self)
+        self.search_bar = MLineEdit(parent=self)
         self.search_label = QtWidgets.QLabel()
 
         self.search_bar.textChanged.connect(self.slot_search_change)
