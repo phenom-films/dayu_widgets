@@ -89,6 +89,9 @@ def get_theme_size():
         "progress_bar_radius": int(12 * scale_factor_x) / 2.0,
         "toast_size": int(120 * scale_factor_x),
         "toast_icon_size": int(60 * scale_factor_x),
+        "big_view_default_size": int(120 * scale_factor_x),
+        "big_view_max_size": int(400 * scale_factor_x),
+        "big_view_min_size": int(24 * scale_factor_x),
     }
 
 

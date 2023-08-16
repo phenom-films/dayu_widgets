@@ -361,7 +361,19 @@ class MBigView(QtWidgets.QListView):
         self.setResizeMode(QtWidgets.QListView.Adjust)
         self.setMovement(QtWidgets.QListView.Static)
         self.setSpacing(10)
-        self.setIconSize(QtCore.QSize(128, 128))
+        default_size = dayu_theme.big_view_default_size
+        self.setIconSize(QtCore.QSize(default_size, default_size))
+
+    def scale_size(self, factor):
+        """Scale the icon size."""
+        new_size = self.iconSize() * factor
+        max_size = dayu_theme.big_view_max_size
+        min_size = dayu_theme.big_view_min_size
+        if new_size.width() > max_size:
+            new_size = QtCore.QSize(max_size, max_size)
+        elif new_size.width() < min_size:
+            new_size = QtCore.QSize(min_size, min_size)
+        self.setIconSize(new_size)
 
     def wheelEvent(self, event):
         """Override wheelEvent while user press ctrl, zoom the list view icon size."""
@@ -369,12 +381,7 @@ class MBigView(QtWidgets.QListView):
             num_degrees = event.delta() / 8.0
             num_steps = num_degrees / 15.0
             factor = pow(1.125, num_steps)
-            new_size = self.iconSize() * factor
-            if new_size.width() > 200:
-                new_size = QtCore.QSize(200, 200)
-            elif new_size.width() < 24:
-                new_size = QtCore.QSize(24, 24)
-            self.setIconSize(new_size)
+            self.scale_size(factor)
         else:
             super(MBigView, self).wheelEvent(event)
 

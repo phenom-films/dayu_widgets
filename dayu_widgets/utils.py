@@ -547,13 +547,16 @@ def convert_to_round_pixmap(orig_pix):
     return pix_map
 
 
-def generate_text_pixmap(width, height, text, alignment=QtCore.Qt.AlignCenter):
+def generate_text_pixmap(
+    width, height, text, alignment=QtCore.Qt.AlignCenter, bg_color=None
+):
     # Import local modules
     from dayu_widgets import dayu_theme
 
+    bg_color = bg_color or dayu_theme.background_in_color
     # draw a pixmap with text
     pix_map = QtGui.QPixmap(width, height)
-    pix_map.fill(QtGui.QColor(dayu_theme.background_in_color))
+    pix_map.fill(QtGui.QColor(bg_color))
     painter = QtGui.QPainter(pix_map)
     painter.setRenderHints(QtGui.QPainter.TextAntialiasing)
     font = painter.font()
