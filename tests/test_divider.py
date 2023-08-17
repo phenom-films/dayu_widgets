@@ -10,9 +10,9 @@ from __future__ import print_function
 import pytest
 
 # Import local modules
-from Qt import QtCore
-from Qt import QtWidgets
-from dayu_widgets.divider import MDivider
+from qtpy import QtCore
+from qtpy import QtWidgets
+from dayu_widgets3.divider import MDivider
 
 
 @pytest.mark.parametrize("text, visible_text", (("", False), ("test", True)))

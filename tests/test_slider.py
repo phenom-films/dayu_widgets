@@ -8,8 +8,8 @@ from __future__ import print_function
 import pytest
 
 # Import local modules
-from Qt import QtCore
-from dayu_widgets.slider import MSlider
+from qtpy import QtCore
+from dayu_widgets3.slider import MSlider
 
 
 @pytest.mark.parametrize("orient", (QtCore.Qt.Horizontal, QtCore.Qt.Vertical))

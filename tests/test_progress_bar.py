@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets.progress_bar import MProgressBar
+from dayu_widgets3.progress_bar import MProgressBar
 
 
 def test_progress_bar_init(qtbot):

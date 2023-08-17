@@ -4,11 +4,11 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from Qt import QtWidgets
+from qtpy import QtWidgets
 import pytest
 
 # Import local modules
-from dayu_widgets.progress_circle import MProgressCircle
+from dayu_widgets3.progress_circle import MProgressCircle
 
 
 def test_progress_circle_init(qtbot):

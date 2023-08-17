@@ -7,9 +7,9 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets import dayu_theme
-from dayu_widgets.avatar import MAvatar
-from dayu_widgets.qt import MPixmap
+from dayu_widgets3 import dayu_theme
+from dayu_widgets3.avatar import MAvatar
+from dayu_widgets3.qt import MPixmap
 import pytest
 
 

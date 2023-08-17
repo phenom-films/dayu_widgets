@@ -12,11 +12,11 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from Qt import QtWidgets
+from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets.collapse import MCollapse
-from dayu_widgets.label import MLabel
+from dayu_widgets3.collapse import MCollapse
+from dayu_widgets3.label import MLabel
 
 
 class CollapseExample(QtWidgets.QWidget):
@@ -60,8 +60,8 @@ class CollapseExample(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets import dayu_theme
-    from dayu_widgets.qt import application
+    from dayu_widgets3 import dayu_theme
+    from dayu_widgets3.qt import application
 
     with application() as app:
         test = CollapseExample()

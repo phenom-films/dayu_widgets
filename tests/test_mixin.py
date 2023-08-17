@@ -4,12 +4,12 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 import pytest
 
 # Import local modules
-from dayu_widgets import mixin
+from dayu_widgets3 import mixin
 
 
 def test_property_mixin(qtbot):

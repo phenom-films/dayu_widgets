@@ -5,8 +5,8 @@ from __future__ import division
 from __future__ import print_function
 
 # Import local modules
-from Qt import QtWidgets
-from dayu_widgets.stacked_widget import MStackedWidget
+from qtpy import QtWidgets
+from dayu_widgets3.stacked_widget import MStackedWidget
 
 
 def test_stacked_widget_init(qtbot):

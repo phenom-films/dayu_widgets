@@ -10,11 +10,11 @@ from __future__ import print_function
 import pytest
 
 # Import local modules
-from Qt import QtCore
-from Qt import QtWidgets
-from dayu_widgets import dayu_theme
-from dayu_widgets.loading import MLoading
-from dayu_widgets.loading import MLoadingWrapper
+from qtpy import QtCore
+from qtpy import QtWidgets
+from dayu_widgets3 import dayu_theme
+from dayu_widgets3.loading import MLoading
+from dayu_widgets3.loading import MLoadingWrapper
 
 
 @pytest.mark.parametrize(

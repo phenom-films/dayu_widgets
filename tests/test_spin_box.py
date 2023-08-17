@@ -8,8 +8,8 @@ from __future__ import print_function
 import datetime
 
 # Import third-party modules
-from dayu_widgets import dayu_theme
-from dayu_widgets import spin_box
+from dayu_widgets3 import dayu_theme
+from dayu_widgets3 import spin_box
 import pytest
 
 
