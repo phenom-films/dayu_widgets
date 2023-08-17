@@ -1,44 +1,37 @@
 [tool.poetry]
-name = "dayu_widgets"
-version = "0.12.1"
-description = "Components for PySide/PyQt."
-homepage = "https://github.com/phenom-films/dayu_widgets"
-repository = "https://github.com/phenom-films/dayu_widgets"
-documentation = "https://phenom-films.github.io/dayu_widgets/#/"
-keywords = ["PySide", "PyQt", "UI", "PySide2", "PyQt5"]
-authors = ["muyr <muyr@phenom-films.com>", "timmyliang <820472580@qq.com>"]
+name = "dayu_widgets3"
+version = "0.0.0"
+description = "Components for PySide2/PySide6."
+homepage = "https://github.com/muyr/dayu_widgets3"
+repository = "https://github.com/muyr/dayu_widgets3"
+documentation = "https://muyr.github.io/dayu_widgets3/#/"
+keywords = ["UI", "PySide2", "PyQt5", "PySide6"]
+authors = ["muyanru <muyanru@163.com>"]
 license = "MIT"
 readme = "README.md"
 classifiers = [
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 2.7",
-    "Programming Language :: Python :: 3.5",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
 ]
 
 packages = [
-    { include = "dayu_widgets" },
+    { include = "dayu_widgets3" },
 ]
-[tool.poetry.build]
-generate-setup-file = false
 
 [tool.poetry.dependencies]
-python = ">=2.7,<2.8 || >=3.6.0,<3.10"
-six = "^1.16.0"
-singledispatch = {version = "^3.7.0", python = "2.7"}
-"Qt.py" = "^1.3.6"
-dayu-path = "^0.5.2"
+python = "^3.7,<3.11,"
+qtpy = "^2.3.1"
 
-[tool.poetry.dev-dependencies]
-pytest = {version = "^7.0.0", python = ">=3.6.0,<3.11"}
-PySide2 = "^5.15.2"
-pytest-qt = {version = "^4.0.2", python = ">=3.6.0,<3.10"}
-black = {version = "^21.12b0", python = ">=3.6.2,<3.10"}
-isort = {version = "^5.10.1", python = ">=3.6.1,<3.10"}
-commitizen = {version = "^2.20.0", python = ">=3.6.1,<3.10"}
+
+[tool.poetry.group.dev.dependencies]
+pyside2 = "^5.15.2.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
@@ -46,16 +39,13 @@ version = "0.12.1"
 tag_format = "v$version"
 version_files = [
     "pyproject.toml:version",
-    "dayu_widgets/__version__.py"
+    "dayu_widgets3/__version__.py"
 ]
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
 
 [tool.black]
-line-length = 88
-target_version = ['py36']
+line-length = 120
+target_version = ['py310']
 include = '\.pyi?$'
 exclude = '''
 
@@ -85,7 +75,7 @@ lines_after_imports = 2
 lines_between_types = 1
 use_parentheses = true
 filter_files = true
-known_first_party = ["dayu_widgets"]
+known_first_party = ["dayu_widgets3"]
 
 # Enforce import section headers.
 import_heading_future = "Import future modules"
