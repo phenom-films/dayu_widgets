@@ -1,3 +1,9 @@
+## v0.12.1 (2023-08-17)
+
+### Fix
+
+- flow layout delete item; add clear method
+
 ## v0.12.0 (2023-08-17)
 
 ### Feat
