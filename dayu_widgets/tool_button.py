@@ -59,14 +59,14 @@ class MToolButton(QtWidgets.QToolButton):
 
     def get_dayu_size(self):
         """
-        Get the push button height
+        Get the tool button height
         :return: integer
         """
         return self._dayu_size
 
     def set_dayu_size(self, value):
         """
-        Set the avatar size.
+        Set the tool button size.
         :param value: integer
         :return: None
         """
@@ -74,6 +74,7 @@ class MToolButton(QtWidgets.QToolButton):
         self.style().polish(self)
         if self.toolButtonStyle() == QtCore.Qt.ToolButtonIconOnly:
             self.setFixedSize(QtCore.QSize(self._dayu_size, self._dayu_size))
+            self.setIconSize(QtCore.QSize(self._dayu_size, self._dayu_size))
 
     def get_dayu_svg(self):
         """Get current svg path"""
@@ -87,27 +88,27 @@ class MToolButton(QtWidgets.QToolButton):
     dayu_size = QtCore.Property(int, get_dayu_size, set_dayu_size)
 
     def huge(self):
-        """Set MPushButton to PrimaryType"""
+        """Set MToolButton to huge size"""
         self.set_dayu_size(dayu_theme.huge)
         return self
 
     def large(self):
-        """Set MPushButton to SuccessType"""
+        """Set MToolButton to large size"""
         self.set_dayu_size(dayu_theme.large)
         return self
 
     def medium(self):
-        """Set MPushButton to  WarningType"""
+        """Set MToolButton to  medium size"""
         self.set_dayu_size(dayu_theme.medium)
         return self
 
     def small(self):
-        """Set MPushButton to DangerType"""
+        """Set MToolButton to small size"""
         self.set_dayu_size(dayu_theme.small)
         return self
 
     def tiny(self):
-        """Set MPushButton to DangerType"""
+        """Set MToolButton to tiny size"""
         self.set_dayu_size(dayu_theme.tiny)
         return self
 
