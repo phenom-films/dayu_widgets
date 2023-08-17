@@ -34,12 +34,17 @@ class ToolButtonExample(QtWidgets.QWidget, MFieldMixin):
         sub_lay1.addWidget(MToolButton().svg("up_line.svg").icon_only())
         sub_lay1.addWidget(MToolButton().svg("up_line.svg").icon_only().small())
         sub_lay1.addWidget(MToolButton().svg("down_line.svg").icon_only().tiny())
+        custom_size = MToolButton().svg("left_line.svg").icon_only()
+        custom_size.set_dayu_size(200)
+        custom_size.setToolTip("Custom Size 200")
+
         sub_lay1.addStretch()
         size_lay.addLayout(sub_lay1)
+        size_lay.addWidget(custom_size)
 
         button2 = MToolButton().svg("detail_line.svg").icon_only()
         button2.setEnabled(False)
-        button7 = MToolButton().svg("trash_line.svg").icon_only()
+        button7 = MToolButton().svg("bold.svg").icon_only()
         button7.setCheckable(True)
         state_lay = QtWidgets.QHBoxLayout()
         state_lay.addWidget(button2)
@@ -54,10 +59,6 @@ class ToolButtonExample(QtWidgets.QWidget, MFieldMixin):
         button_lay = QtWidgets.QHBoxLayout()
         button_lay.addWidget(button_trash)
         button_lay.addWidget(button_login)
-
-        sub_lay2 = QtWidgets.QHBoxLayout()
-        sub_lay2.addWidget(button2)
-        sub_lay2.addWidget(button7)
 
         main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("different button_size"))
