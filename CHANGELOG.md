@@ -1,3 +1,9 @@
+## v0.12.2 (2023-08-17)
+
+### Fix
+
+- #67 fix MToolButon set_dayu_size use a custom value, not work
+
 ## v0.12.1 (2023-08-17)
 
 ### Fix
