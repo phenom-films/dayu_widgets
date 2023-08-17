@@ -10,8 +10,8 @@ from __future__ import print_function
 import pytest
 
 # Import local modules
-from Qt import QtGui
-from dayu_widgets import utils
+from qtpy import QtGui
+from dayu_widgets3 import utils
 
 
 @pytest.mark.parametrize(

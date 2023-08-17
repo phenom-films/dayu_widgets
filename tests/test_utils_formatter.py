@@ -13,8 +13,8 @@ import datetime
 import pytest
 
 # Import local modules
-from dayu_widgets import utils
-from dayu_widgets.qt import MCacheDict
+from dayu_widgets3 import utils
+from dayu_widgets3.qt import MCacheDict
 
 
 class _HasNameObject(object):

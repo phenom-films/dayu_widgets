@@ -5,7 +5,7 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets.alert import MAlert
+from dayu_widgets3.alert import MAlert
 import pytest
 
 

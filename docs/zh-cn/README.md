@@ -11,7 +11,6 @@
 * 亮色 #1890ff
 * 暗色 #fa8c16
 
-
 ```python
-import dayu_widgets
+import dayu_widgets3
 ```

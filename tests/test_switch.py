@@ -5,8 +5,8 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets import dayu_theme
-from dayu_widgets.switch import MSwitch
+from dayu_widgets3 import dayu_theme
+from dayu_widgets3.switch import MSwitch
 import pytest
 
 

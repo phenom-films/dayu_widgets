@@ -5,7 +5,7 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets.dock_widget import MDockWidget
+from dayu_widgets3.dock_widget import MDockWidget
 import pytest
 
 

@@ -167,11 +167,11 @@ poetry run pytest
 
 ## 运行 black检查
 ```shell
-poetry run black dayu_widgets
+poetry run black dayu_widgets3
 ```
 ## 运行isort
 ```shell
-poetry run isort dayu_widgets
+poetry run isort dayu_widgets3
 ```
 
 ## 提交代码

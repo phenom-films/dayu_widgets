@@ -14,15 +14,15 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from Qt import QtWidgets
+from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets.divider import MDivider
-from dayu_widgets.spin_box import MDateEdit
-from dayu_widgets.spin_box import MDateTimeEdit
-from dayu_widgets.spin_box import MDoubleSpinBox
-from dayu_widgets.spin_box import MSpinBox
-from dayu_widgets.spin_box import MTimeEdit
+from dayu_widgets3.divider import MDivider
+from dayu_widgets3.spin_box import MDateEdit
+from dayu_widgets3.spin_box import MDateTimeEdit
+from dayu_widgets3.spin_box import MDoubleSpinBox
+from dayu_widgets3.spin_box import MSpinBox
+from dayu_widgets3.spin_box import MTimeEdit
 
 
 class SpinBoxExample(QtWidgets.QWidget):
@@ -59,8 +59,8 @@ class SpinBoxExample(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets import dayu_theme
-    from dayu_widgets.qt import application
+    from dayu_widgets3 import dayu_theme
+    from dayu_widgets3.qt import application
 
     with application() as app:
         test = SpinBoxExample()
