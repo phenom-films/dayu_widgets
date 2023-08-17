@@ -1,3 +1,9 @@
+## v0.12.0 (2023-08-17)
+
+### Feat
+
+- add theme var for big view scale #65
+
 ## v0.11.6 (2023-03-07)
 
 ### Fix
