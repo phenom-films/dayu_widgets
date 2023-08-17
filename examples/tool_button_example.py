@@ -12,12 +12,12 @@ from __future__ import division
 from __future__ import print_function
 
 # Import third-party modules
-from Qt import QtWidgets
+from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets.divider import MDivider
-from dayu_widgets.field_mixin import MFieldMixin
-from dayu_widgets.tool_button import MToolButton
+from dayu_widgets3.divider import MDivider
+from dayu_widgets3.field_mixin import MFieldMixin
+from dayu_widgets3.tool_button import MToolButton
 
 
 class ToolButtonExample(QtWidgets.QWidget, MFieldMixin):
@@ -73,8 +73,8 @@ class ToolButtonExample(QtWidgets.QWidget, MFieldMixin):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets import dayu_theme
-    from dayu_widgets.qt import application
+    from dayu_widgets3 import dayu_theme
+    from dayu_widgets3.qt import application
 
     with application() as app:
         test = ToolButtonExample()

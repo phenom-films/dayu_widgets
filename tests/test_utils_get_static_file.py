@@ -16,9 +16,9 @@ import pytest
 import six
 
 # Import local modules
-from dayu_widgets import CUSTOM_STATIC_FOLDERS
-from dayu_widgets import DEFAULT_STATIC_FOLDER
-from dayu_widgets import utils
+from dayu_widgets3 import CUSTOM_STATIC_FOLDERS
+from dayu_widgets3 import DEFAULT_STATIC_FOLDER
+from dayu_widgets3 import utils
 
 
 @pytest.fixture(scope="module", name="custom_folder")

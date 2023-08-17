@@ -14,16 +14,16 @@ from __future__ import print_function
 import functools
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets import dayu_theme
-from dayu_widgets.badge import MBadge
-from dayu_widgets.label import MLabel
-from dayu_widgets.menu_tab_widget import MMenuTabWidget
-from dayu_widgets.message import MMessage
-from dayu_widgets.tool_button import MToolButton
+from dayu_widgets3 import dayu_theme
+from dayu_widgets3.badge import MBadge
+from dayu_widgets3.label import MLabel
+from dayu_widgets3.menu_tab_widget import MMenuTabWidget
+from dayu_widgets3.message import MMessage
+from dayu_widgets3.tool_button import MToolButton
 
 
 class MenuTabWidgetExample(QtWidgets.QWidget):
@@ -91,8 +91,8 @@ class MenuTabWidgetExample(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets import dayu_theme
-    from dayu_widgets.qt import application
+    from dayu_widgets3 import dayu_theme
+    from dayu_widgets3.qt import application
 
     with application() as app:
         test = MenuTabWidgetExample()

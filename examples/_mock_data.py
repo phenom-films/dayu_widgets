@@ -11,7 +11,7 @@ from __future__ import division
 from __future__ import print_function
 
 # Import local modules
-from dayu_widgets import dayu_theme
+from dayu_widgets3 import dayu_theme
 
 
 def score_color(score, y):

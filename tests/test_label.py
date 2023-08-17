@@ -13,9 +13,9 @@ from __future__ import print_function
 import pytest
 
 # Import local modules
-from Qt import QtCore
-from Qt import QtWidgets
-from dayu_widgets.label import MLabel
+from qtpy import QtCore
+from qtpy import QtWidgets
+from dayu_widgets3.label import MLabel
 
 
 @pytest.mark.parametrize(

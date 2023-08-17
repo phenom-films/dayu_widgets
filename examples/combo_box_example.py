@@ -17,15 +17,15 @@ import itertools
 import random
 
 # Import third-party modules
-from Qt import QtWidgets
+from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets import dayu_theme
-from dayu_widgets.combo_box import MComboBox
-from dayu_widgets.divider import MDivider
-from dayu_widgets.field_mixin import MFieldMixin
-from dayu_widgets.label import MLabel
-from dayu_widgets.menu import MMenu
+from dayu_widgets3 import dayu_theme
+from dayu_widgets3.combo_box import MComboBox
+from dayu_widgets3.divider import MDivider
+from dayu_widgets3.field_mixin import MFieldMixin
+from dayu_widgets3.label import MLabel
+from dayu_widgets3.menu import MMenu
 
 
 class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
@@ -186,8 +186,8 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets import dayu_theme
-    from dayu_widgets.qt import application
+    from dayu_widgets3 import dayu_theme
+    from dayu_widgets3.qt import application
 
     with application() as app:
         test = ComboBoxExample()

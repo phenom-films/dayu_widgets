@@ -8,9 +8,9 @@ from __future__ import division
 from __future__ import print_function
 
 # Import local modules
-from Qt import QtCore
-from Qt import QtGui
-from dayu_widgets import utils
+from qtpy import QtCore
+from qtpy import QtGui
+from dayu_widgets3 import utils
 
 
 def test_with_string_list_model():
