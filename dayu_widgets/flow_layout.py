@@ -61,9 +61,15 @@ class MFlowLayout(QtWidgets.QLayout):
 
     def takeAt(self, index):
         if 0 <= index < len(self.item_list):
-            return self.item_list.pop(index)
+            return self.item_list.pop(index).widget()
 
         return None
+
+    def clear(self):
+        while self.item_list:
+            widget = self.takeAt(0)
+            if widget:
+                widget.deleteLater()
 
     def expandingDirections(self):
         return QtCore.Qt.Orientations(QtCore.Qt.Orientation(0))
