@@ -221,6 +221,7 @@ class MRadioButtonGroup(MButtonGroupBase):
     Property:
         dayu_checked
     """
+
     sig_checked_changed = QtCore.Signal(int)
 
     def __init__(self, orientation=QtCore.Qt.Horizontal, parent=None):

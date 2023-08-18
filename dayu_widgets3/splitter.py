@@ -3,7 +3,6 @@ from functools import partial
 
 # Import third-party modules
 from qtpy import QtCore
-from qtpy import QtGui
 from qtpy import QtWidgets
 
 # Import local modules

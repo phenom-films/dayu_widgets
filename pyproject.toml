@@ -98,5 +98,5 @@ default_section = "THIRDPARTY"
 skip_gitignore = true
 
 [tool.autoflake]
-remove_all_unused_imports = true
-ignore_init_module_imports = true
+remove-all-unused-imports = true
+#ignore_init_module_imports = true
