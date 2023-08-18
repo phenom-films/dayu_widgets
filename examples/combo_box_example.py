@@ -1,5 +1,4 @@
 # Import built-in modules
-import itertools
 import random
 
 # Import third-party modules
@@ -162,7 +161,6 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets3 import dayu_theme
     from dayu_widgets3.qt import application
 
     with application() as app:

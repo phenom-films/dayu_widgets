@@ -9,7 +9,6 @@ import os
 
 # Import third-party modules
 import pytest
-import six
 
 # Import local modules
 from dayu_widgets3 import CUSTOM_STATIC_FOLDERS

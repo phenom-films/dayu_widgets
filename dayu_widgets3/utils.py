@@ -5,7 +5,6 @@ Some helper functions for handling color and formatter.
 # Import built-in modules
 import collections
 import datetime as dt
-import functools
 from functools import singledispatch
 import math
 import os
