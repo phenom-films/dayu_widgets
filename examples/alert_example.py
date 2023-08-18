@@ -1,4 +1,3 @@
-
 # Import built-in modules
 import functools
 
@@ -44,21 +43,15 @@ class AlertExample(QtWidgets.QWidget, MFieldMixin):
             [
                 {
                     "text": "error",
-                    "clicked": functools.partial(
-                        self.slot_change_alert, "password is wrong", MAlert.ErrorType
-                    ),
+                    "clicked": functools.partial(self.slot_change_alert, "password is wrong", MAlert.ErrorType),
                 },
                 {
                     "text": "success",
-                    "clicked": functools.partial(
-                        self.slot_change_alert, "login success", MAlert.SuccessType
-                    ),
+                    "clicked": functools.partial(self.slot_change_alert, "login success", MAlert.SuccessType),
                 },
                 {
                     "text": "no more error",
-                    "clicked": functools.partial(
-                        self.slot_change_alert, "", MAlert.InfoType
-                    ),
+                    "clicked": functools.partial(self.slot_change_alert, "", MAlert.InfoType),
                 },
             ]
         )

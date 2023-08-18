@@ -35,20 +35,10 @@ class ToastExample(QtWidgets.QWidget, MFieldMixin):
         button4 = MPushButton(text="Success Message").success()
         button5 = MPushButton(text="Warning Message").warning()
         button6 = MPushButton(text="Error Message").danger()
-        button3.clicked.connect(
-            functools.partial(self.slot_show_message, MToast.info, {"text": "好像没啥用"})
-        )
-        button4.clicked.connect(
-            functools.partial(self.slot_show_message, MToast.success, {"text": "领取成功"})
-        )
-        button5.clicked.connect(
-            functools.partial(self.slot_show_message, MToast.warning, {"text": "暂不支持"})
-        )
-        button6.clicked.connect(
-            functools.partial(
-                self.slot_show_message, MToast.error, {"text": "支付失败，请重试"}
-            )
-        )
+        button3.clicked.connect(functools.partial(self.slot_show_message, MToast.info, {"text": "好像没啥用"}))
+        button4.clicked.connect(functools.partial(self.slot_show_message, MToast.success, {"text": "领取成功"}))
+        button5.clicked.connect(functools.partial(self.slot_show_message, MToast.warning, {"text": "暂不支持"}))
+        button6.clicked.connect(functools.partial(self.slot_show_message, MToast.error, {"text": "支付失败，请重试"}))
 
         sub_lay1 = QtWidgets.QHBoxLayout()
         sub_lay1.addWidget(button3)

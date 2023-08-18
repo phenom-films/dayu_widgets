@@ -65,12 +65,8 @@ class TableViewExample(QtWidgets.QWidget, MFieldMixin):
         thread = MFetchDataThread(self)
 
         self.loading_wrapper = MLoadingWrapper(widget=table_default, loading=False)
-        thread.started.connect(
-            functools.partial(self.loading_wrapper.set_dayu_loading, True)
-        )
-        thread.finished.connect(
-            functools.partial(self.loading_wrapper.set_dayu_loading, False)
-        )
+        thread.started.connect(functools.partial(self.loading_wrapper.set_dayu_loading, True))
+        thread.finished.connect(functools.partial(self.loading_wrapper.set_dayu_loading, False))
         thread.finished.connect(functools.partial(table_default.setModel, model_sort))
         button = MPushButton(text="Get Data: 4s")
         button.clicked.connect(thread.start)

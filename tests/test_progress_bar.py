@@ -1,9 +1,4 @@
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
-# Import third-party modules
+# Import local modules
 from dayu_widgets3.progress_bar import MProgressBar
 
 

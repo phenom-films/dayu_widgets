@@ -1,15 +1,11 @@
 """Test MPushButton"""
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
+import pytest
+
+# Import local modules
 from dayu_widgets3 import dayu_theme
 from dayu_widgets3.push_button import MPushButton
 from dayu_widgets3.qt import MIcon
-import pytest
 
 
 MPUSHBUTTON_TYPE_LIST = (
@@ -69,7 +65,4 @@ def test_with_wrong_type(qtbot, input_type):
         qtbot.addWidget(widget)
 
     exception_msg = exc_info.value.args[0]
-    assert (
-        exception_msg == "Input argument 'value' should be one of "
-        "default/primary/success/warning/danger string."
-    )
+    assert exception_msg == "Input argument 'value' should be one of " "default/primary/success/warning/danger string."

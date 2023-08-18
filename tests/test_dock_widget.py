@@ -1,12 +1,10 @@
 """Test MDockWidget class"""
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets3.dock_widget import MDockWidget
 import pytest
+
+# Import local modules
+from dayu_widgets3.dock_widget import MDockWidget
 
 
 @pytest.mark.parametrize("title", ("", "test"))

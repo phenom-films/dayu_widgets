@@ -34,13 +34,9 @@ class ItemViewBigTypeExample(QtWidgets.QWidget, MFieldMixin):
             ]
         )
         add_button = MToolButton().svg("add_line.svg")
-        add_button.clicked.connect(
-            functools.partial(item_view_set_thumbnail.item_view.scale_size, 1.1)
-        )
+        add_button.clicked.connect(functools.partial(item_view_set_thumbnail.item_view.scale_size, 1.1))
         minus_button = MToolButton().svg("minus_line.svg")
-        minus_button.clicked.connect(
-            functools.partial(item_view_set_thumbnail.item_view.scale_size, 0.8)
-        )
+        minus_button.clicked.connect(functools.partial(item_view_set_thumbnail.item_view.scale_size, 0.8))
         button_lay = QtWidgets.QHBoxLayout()
         button_lay.addWidget(minus_button)
         button_lay.addWidget(add_button)

@@ -49,11 +49,7 @@ class PushButtonGroupExample(QtWidgets.QWidget, MFieldMixin):
         h_lay_2.addStretch()
 
         main_lay = QtWidgets.QVBoxLayout()
-        main_lay.addWidget(
-            MLabel(
-                "MPushButtonGroup is MPushButton collection. they are not exclusive."
-            )
-        )
+        main_lay.addWidget(MLabel("MPushButtonGroup is MPushButton collection. they are not exclusive."))
         main_lay.addWidget(MDivider("MPushButton group: Horizontal & Small Size"))
         main_lay.addLayout(h_lay)
         main_lay.addWidget(MDivider("MPushButton group: Vertical & Default Size"))

@@ -44,17 +44,11 @@ class RadioButtonGroupExample(QtWidgets.QWidget, MFieldMixin):
         radio_group_button_v.set_button_list(app_data)
 
         self.register_field("value1", -1)
-        self.register_field(
-            "value1_text", functools.partial(self.value_to_text, "value1", app_data)
-        )
+        self.register_field("value1_text", functools.partial(self.value_to_text, "value1", app_data))
         self.register_field("value2", 0)
-        self.register_field(
-            "value2_text", functools.partial(self.value_to_text, "value2", app_data)
-        )
+        self.register_field("value2_text", functools.partial(self.value_to_text, "value2", app_data))
         self.register_field("value3", -1)
-        self.register_field(
-            "value3_text", functools.partial(self.value_to_text, "value3", app_data)
-        )
+        self.register_field("value3_text", functools.partial(self.value_to_text, "value3", app_data))
 
         button1 = MPushButton(text="Group 1")
         button2 = MPushButton(text="Group 2")
@@ -64,12 +58,8 @@ class RadioButtonGroupExample(QtWidgets.QWidget, MFieldMixin):
         button3.clicked.connect(functools.partial(self.slot_change_value, "value3"))
 
         self.bind("value1", radio_group_v, "dayu_checked", signal="sig_checked_changed")
-        self.bind(
-            "value2", radio_group_button_h, "dayu_checked", signal="sig_checked_changed"
-        )
-        self.bind(
-            "value3", radio_group_button_v, "dayu_checked", signal="sig_checked_changed"
-        )
+        self.bind("value2", radio_group_button_h, "dayu_checked", signal="sig_checked_changed")
+        self.bind("value3", radio_group_button_v, "dayu_checked", signal="sig_checked_changed")
         self.bind("value1_text", button1, "text")
         self.bind("value2_text", button2, "text")
         self.bind("value3_text", button3, "text")
@@ -80,14 +70,10 @@ class RadioButtonGroupExample(QtWidgets.QWidget, MFieldMixin):
         main_lay.addWidget(MDivider("MRadioButtonGroup: orientation=Qt.Vertical"))
         main_lay.addWidget(radio_group_v)
         main_lay.addWidget(button1)
-        main_lay.addWidget(
-            MDivider("MRadioButtonGroup: orientation=Qt.Horizontal type=button")
-        )
+        main_lay.addWidget(MDivider("MRadioButtonGroup: orientation=Qt.Horizontal type=button"))
         main_lay.addLayout(radio_grp_h_lay)
         main_lay.addWidget(button2)
-        main_lay.addWidget(
-            MDivider("MRadioButtonGroup: orientation=Qt.Vertical, type=button")
-        )
+        main_lay.addWidget(MDivider("MRadioButtonGroup: orientation=Qt.Vertical, type=button"))
         main_lay.addWidget(radio_group_button_v)
         main_lay.addWidget(button3)
         main_lay.addStretch()

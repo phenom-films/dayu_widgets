@@ -2,14 +2,12 @@
 """
 Test the function from_list_to_nested_dict.
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets3 import utils
 import pytest
+
+# Import local modules
+from dayu_widgets3 import utils
 
 
 TEST_DATA = (
@@ -147,10 +145,7 @@ def test_with_input_wrong_type(input_arg, error_type):
         utils.from_list_to_nested_dict(input_arg)
 
     exception_msg = exc_info.value.args[0]
-    assert (
-        exception_msg == "Input argument 'input' should be list or tuple or set, "
-        "but get {}".format(error_type)
-    )
+    assert exception_msg == "Input argument 'input' should be list or tuple or set, " "but get {}".format(error_type)
 
 
 @pytest.mark.parametrize(
@@ -170,7 +165,4 @@ def test_with_sep_wrong_type(input_sep, error_type):
         utils.from_list_to_nested_dict(["a@b@c", "a@b@d"], input_sep)
 
     exception_msg = exc_info.value.args[0]
-    assert (
-        exception_msg == "Input argument 'sep' should be six.string_types, "
-        "but get {}".format(error_type)
-    )
+    assert exception_msg == "Input argument 'sep' should be str, " "but get {}".format(error_type)

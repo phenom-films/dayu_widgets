@@ -24,24 +24,10 @@ class MessageExample(QtWidgets.QWidget, MFieldMixin):
         button4 = MPushButton(text="Success Message").success()
         button5 = MPushButton(text="Warning Message").warning()
         button6 = MPushButton(text="Error Message").danger()
-        button3.clicked.connect(
-            functools.partial(
-                self.slot_show_message, MMessage.info, {"text": "这是一条普通提示"}
-            )
-        )
-        button4.clicked.connect(
-            functools.partial(
-                self.slot_show_message, MMessage.success, {"text": "恭喜你，成功啦！"}
-            )
-        )
-        button5.clicked.connect(
-            functools.partial(
-                self.slot_show_message, MMessage.warning, {"text": "我警告你哦！"}
-            )
-        )
-        button6.clicked.connect(
-            functools.partial(self.slot_show_message, MMessage.error, {"text": "失败了！"})
-        )
+        button3.clicked.connect(functools.partial(self.slot_show_message, MMessage.info, {"text": "这是一条普通提示"}))
+        button4.clicked.connect(functools.partial(self.slot_show_message, MMessage.success, {"text": "恭喜你，成功啦！"}))
+        button5.clicked.connect(functools.partial(self.slot_show_message, MMessage.warning, {"text": "我警告你哦！"}))
+        button6.clicked.connect(functools.partial(self.slot_show_message, MMessage.error, {"text": "失败了！"}))
 
         sub_lay1 = QtWidgets.QHBoxLayout()
         sub_lay1.addWidget(button3)
@@ -82,27 +68,19 @@ class MessageExample(QtWidgets.QWidget, MFieldMixin):
             [
                 {
                     "text": "set duration to 1s",
-                    "clicked": functools.partial(
-                        self.slot_set_config, MMessage.config, {"duration": 1}
-                    ),
+                    "clicked": functools.partial(self.slot_set_config, MMessage.config, {"duration": 1}),
                 },
                 {
                     "text": "set duration to 10s",
-                    "clicked": functools.partial(
-                        self.slot_set_config, MMessage.config, {"duration": 10}
-                    ),
+                    "clicked": functools.partial(self.slot_set_config, MMessage.config, {"duration": 10}),
                 },
                 {
                     "text": "set top to 5",
-                    "clicked": functools.partial(
-                        self.slot_set_config, MMessage.config, {"top": 5}
-                    ),
+                    "clicked": functools.partial(self.slot_set_config, MMessage.config, {"top": 5}),
                 },
                 {
                     "text": "set top to 50",
-                    "clicked": functools.partial(
-                        self.slot_set_config, MMessage.config, {"top": 50}
-                    ),
+                    "clicked": functools.partial(self.slot_set_config, MMessage.config, {"top": 50}),
                 },
             ]
         )

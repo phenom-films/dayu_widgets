@@ -15,7 +15,7 @@ class MDivider(QtWidgets.QWidget):
     A divider line separates different content.
 
     Property:
-        dayu_text: six.string_types
+        dayu_text: str
     """
 
     _alignment_map = {
@@ -65,7 +65,7 @@ class MDivider(QtWidgets.QWidget):
         Set the divider's text.
         When text is empty, hide the text_label and right_frame to ensure the divider not has a gap.
 
-        :param value: six.string_types
+        :param value: str
         :return: None
         """
         self._text = value
@@ -77,7 +77,7 @@ class MDivider(QtWidgets.QWidget):
     def get_dayu_text(self):
         """
         Get current text
-        :return: six.string_types
+        :return: str
         """
         return self._text
 
