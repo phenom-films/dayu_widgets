@@ -1,32 +1,18 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 from functools import partial
 import re
 
 # Import third-party modules
-from Qt import QtCompat
-from Qt import QtCore
-from Qt import QtGui
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtGui
+from qtpy import QtWidgets
 import six
 
 # Import local modules
-from dayu_widgets.line_edit import MLineEdit
-from dayu_widgets.mixin import property_mixin
-from dayu_widgets.popup import MPopup
-import dayu_widgets.utils as utils
+from dayu_widgets3.line_edit import MLineEdit
+from dayu_widgets3.mixin import property_mixin
+from dayu_widgets3.popup import MPopup
+import dayu_widgets3.utils as utils
 
 
 @property_mixin
@@ -82,7 +68,7 @@ class ScrollableMenuBase(QtWidgets.QMenu):
         qfm = opt.fontMetrics
         size.setWidth(fm.boundingRect(QtCore.QRect(), QtCore.Qt.TextSingleLine, a.text()).width())
         size.setHeight(max(fm.height(), qfm.height()))
-        self.defaultItemHeight = style.sizeFromContents(style.CT_MenuItem, opt, size, self).height()
+        self.defaultItemHeight = style.sizeFromContents(QtWidgets.QStyle.CT_MenuItem, opt, size, self).height()
 
         if not count:
             self.setMaximumHeight(self._maximumHeight)
@@ -244,7 +230,7 @@ class ScrollableMenuBase(QtWidgets.QMenu):
                 action = None
 
         self.setActiveAction(action)
-        if action and QtCompat.isValid(action) and not action.isSeparator():
+        if action and not action.isSeparator():
 
             def ensureVisible():
                 self.delayTimer.timeout.disconnect()
@@ -544,19 +530,14 @@ class MMenu(SearchableMenuBase):
         data_list = value if isinstance(value, list) else [value]
         flag = False
         for act in self._action_group.actions():
-            if act.property("long_path"):
-                # Ensure all values is string type.
-                selected = "/".join(map(str, data_list))
-                checked = act.property("long_path") == selected
-            else:
-                checked = act.property("value") in data_list
+            checked = act.property("value") in data_list
             if act.isChecked() != checked:  # 更新来自代码
                 act.setChecked(checked)
                 flag = True
         if flag:
             self.sig_value_changed.emit(value)
 
-    def _add_menu(self, parent_menu, data_dict, long_path=None):
+    def _add_menu(self, parent_menu, data_dict):
         if "children" in data_dict:
             menu = MMenu(title=data_dict.get("label"), parent=self)
             menu.setProperty("value", data_dict.get("value"))
@@ -565,18 +546,12 @@ class MMenu(SearchableMenuBase):
                 # 用来将来获取父层级数据
                 menu.setProperty("parent_menu", parent_menu)
             for i in data_dict.get("children"):
-                long_path = long_path or data_dict.get("label")
-                assemble_long_path = "{root}/{label}".format(root=long_path, label=i.get("label"))
-                if assemble_long_path:
-                    self._add_menu(menu, i, assemble_long_path)
-                else:
-                    self._add_menu(menu, i)
+                self._add_menu(menu, i)
         else:
             action = self._action_group.addAction(utils.display_formatter(data_dict.get("label")))
             action.setProperty("value", data_dict.get("value"))
             action.setCheckable(True)
             # 用来将来获取父层级数据
-            action.setProperty("long_path", long_path)
             action.setProperty("parent_menu", parent_menu)
             parent_menu.addAction(action)
 

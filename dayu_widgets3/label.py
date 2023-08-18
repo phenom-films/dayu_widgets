@@ -1,19 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
-# Import built-in modules
-import re
-
 # Import third-party modules
 from qtpy import QtCore
 from qtpy import QtWidgets
@@ -135,7 +119,7 @@ class MLabel(QtWidgets.QLabel):
 
         :returns:   The original unmodified text
         """
-        return self.property("dayu_text")
+        return self.property("text")
 
     def setText(self, text):
         """
@@ -143,7 +127,7 @@ class MLabel(QtWidgets.QLabel):
 
         :param text:    The text to set on the label
         """
-        self.setProperty("dayu_text", text)
+        self.setProperty("text", text)
         self._update_elided_text()
         self.setToolTip(text)
 
@@ -163,18 +147,10 @@ class MLabel(QtWidgets.QLabel):
         Update the elided text on the label
         """
         _font_metrics = self.fontMetrics()
-        text = self.property("dayu_text")
+        text = self.property("text")
         text = text if text else ""
-        # 检查文本是否包含 HTML 标签
-        is_html = bool(re.search(r"<[^>]+>", text))
-
-        if is_html:
-            # 如果文本包含 HTML 标签，直接设置富文本
-            super(MLabel, self).setText(text)
-        else:
-            # 否则，使用省略模式设置文本
-            _elided_text = _font_metrics.elidedText(text, self._elide_mode, self.width() - 2 * 2)
-            super(MLabel, self).setText(_elided_text)
+        _elided_text = _font_metrics.elidedText(text, self._elide_mode, self.width() - 2 * 2)
+        super(MLabel, self).setText(_elided_text)
 
     def resizeEvent(self, event):
         """

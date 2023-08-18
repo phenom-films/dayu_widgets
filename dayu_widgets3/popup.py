@@ -1,15 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: timmyliang
-# Date  : 2021.12
-# Email : 820472580@qq.com
-###################################################################
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
 from qtpy import QtCore
 from qtpy import QtGui

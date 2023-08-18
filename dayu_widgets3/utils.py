@@ -1,16 +1,6 @@
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2018.5
-# Email : muyanru345@163.com
-###################################################################
 """
 Some helper functions for handling color and formatter.
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import built-in modules
 import collections
@@ -20,23 +10,18 @@ import math
 import os
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtGui
-from Qt import QtWidgets
-import six
+from qtpy import QtCore
+from qtpy import QtGui
+from qtpy import QtWidgets
 
 
-if hasattr(functools, "singledispatch"):
-    # Import built-in modules
-    from functools import singledispatch
-else:
-    from singledispatch import singledispatch
+from functools import singledispatch
 
 # Import local modules
-from dayu_widgets import CUSTOM_STATIC_FOLDERS
-from dayu_widgets import DEFAULT_STATIC_FOLDER
-from dayu_widgets.qt import MIcon
-from dayu_widgets.qt import get_scale_factor
+from dayu_widgets3 import CUSTOM_STATIC_FOLDERS
+from dayu_widgets3 import DEFAULT_STATIC_FOLDER
+from dayu_widgets3.qt import MIcon
+from dayu_widgets3.qt import get_scale_factor
 
 
 ItemViewMenuEvent = collections.namedtuple("ItemViewMenuEvent", ["view", "selection", "extra"])
@@ -44,13 +29,13 @@ ItemViewMenuEvent = collections.namedtuple("ItemViewMenuEvent", ["view", "select
 
 def get_static_file(path):
     """
-    A convenient function to get the file in dayu_widgets/static,
+    A convenient function to get the file in dayu_widgets3/static,
     User just give the name of the file.
     eg. get_static_file('add_line.svg')
     :param path: file name
     :return: if input file found, return the full path, else return None
     """
-    if not isinstance(path, six.string_types):
+    if not isinstance(path, str):
         raise TypeError("Input argument 'path' should be six.string_types type, " "but get {}".format(type(path)))
     full_path = next(
         (
@@ -74,7 +59,7 @@ def from_list_to_nested_dict(input_arg, sep="/"):
     """
     if not isinstance(input_arg, (list, tuple, set)):
         raise TypeError("Input argument 'input' should be list or tuple or set, " "but get {}".format(type(input_arg)))
-    if not isinstance(sep, six.string_types):
+    if not isinstance(sep, str):
         raise TypeError("Input argument 'sep' should be six.string_types, " "but get {}".format(type(sep)))
 
     result = []
@@ -157,7 +142,7 @@ def generate_color(primary_color, index):
         return max((v_comp * 100 - brightness_step2 * i) / 100, 0.0)
 
     light = index <= 6
-    hsv_color = QtGui.QColor(primary_color) if isinstance(primary_color, six.string_types) else primary_color
+    hsv_color = QtGui.QColor(primary_color) if isinstance(primary_color, str) else primary_color
     index = light_color_count + 1 - index if light else index - light_color_count - 1
     return QtGui.QColor.fromHsvF(
         _get_hue(hsv_color, index, light),
@@ -269,7 +254,7 @@ def _(input_str):
     # return obj.decode()
 
 
-@display_formatter.register(six.text_type)
+@display_formatter.register(str)
 def _(input_unicode):
     return input_unicode
 
@@ -521,7 +506,7 @@ def convert_to_round_pixmap(orig_pix):
 
 def generate_text_pixmap(width, height, text, alignment=QtCore.Qt.AlignCenter, bg_color=None):
     # Import local modules
-    from dayu_widgets import dayu_theme
+    from dayu_widgets3 import dayu_theme
 
     bg_color = bg_color or dayu_theme.background_in_color
     # draw a pixmap with text

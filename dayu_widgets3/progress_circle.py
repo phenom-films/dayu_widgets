@@ -1,15 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
 """MProgressCircle"""
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
 from qtpy import QtCore
@@ -80,7 +69,7 @@ class MProgressCircle(QtWidgets.QProgressBar):
         :return: None
         """
         self._width = value
-        self.setFixedSize(QtCore.QSize(int(self._width * self._width_factor), int(self._width * self._height_factor)))
+        self.setFixedSize(QtCore.QSize(self._width * self._width_factor, self._width * self._height_factor))
 
     def get_dayu_color(self):
         """

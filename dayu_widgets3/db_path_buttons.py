@@ -1,19 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2018.5
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 from functools import partial
-from itertools import izip_longest
+from itertools import zip_longest
 
 # Import third-party modules
 from qt import *
@@ -178,7 +165,7 @@ class MDBPathButtons(QFrame):
 
     @Slot(object)
     def slot_go_to(self, obj_list):
-        for index, (his_obj, our_obj) in enumerate(izip_longest(obj_list, self.get_obj_list())):
+        for index, (his_obj, our_obj) in enumerate(zip_longest(obj_list, self.get_obj_list())):
             if his_obj is None:
                 # 如果传来的 obj_list 最后一个是 None，则我方的 obj 多，直接清理掉多余的
                 self.clear_downstream(index)

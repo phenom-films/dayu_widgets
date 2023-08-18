@@ -1,15 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: TimmyLiang
-# Date  : 2021.12
-# Email : 820472580@qq.com
-###################################################################
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 from functools import partial
 
@@ -46,7 +34,6 @@ class MSplitter(QtWidgets.QSplitter):
             size_list[index] = default_size
             size_list[prev] -= default_size
         else:
-
             if first:
                 size_list[index] += prev_size
                 size_list[prev] = 0
