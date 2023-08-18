@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "dayu_widgets"
-version = "0.15.0"
-description = "Components for PySide/PyQt."
-homepage = "https://github.com/phenom-films/dayu_widgets"
-repository = "https://github.com/phenom-films/dayu_widgets"
-documentation = "https://phenom-films.github.io/dayu_widgets/#/"
-keywords = ["PySide", "PyQt", "UI", "PySide2", "PyQt5"]
-authors = ["muyanru <muyanru345@163.com>", "timmyliang <820472580@qq.com>"]
+name = "dayu_widgets3"
+version = "0.0.0"
+description = "Components for PySide2/PySide6."
+homepage = "https://github.com/muyr/dayu_widgets3"
+repository = "https://github.com/muyr/dayu_widgets3"
+documentation = "https://muyr.github.io/dayu_widgets3/#/"
+keywords = ["UI", "PySide2", "PyQt5", "PySide6"]
+authors = ["muyanru <muyanru@163.com>"]
 license = "MIT"
 readme = "README.md"
 classifiers = [
