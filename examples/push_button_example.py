@@ -23,18 +23,10 @@ class PushButtonExample(QtWidgets.QWidget, MFieldMixin):
 
         sub_lay2 = QtWidgets.QHBoxLayout()
         sub_lay2.addWidget(MPushButton("Upload", MIcon("cloud_line.svg")))
-        sub_lay2.addWidget(
-            MPushButton("Submit", MIcon("folder_line.svg", "#ddd")).primary()
-        )
-        sub_lay2.addWidget(
-            MPushButton("Submit", MIcon("success_line.svg", "#ddd")).success()
-        )
-        sub_lay2.addWidget(
-            MPushButton("Edit", MIcon("edit_line.svg", "#ddd")).warning()
-        )
-        sub_lay2.addWidget(
-            MPushButton("Delete", MIcon("trash_line.svg", "#ddd")).danger()
-        )
+        sub_lay2.addWidget(MPushButton("Submit", MIcon("folder_line.svg", "#ddd")).primary())
+        sub_lay2.addWidget(MPushButton("Submit", MIcon("success_line.svg", "#ddd")).success())
+        sub_lay2.addWidget(MPushButton("Edit", MIcon("edit_line.svg", "#ddd")).warning())
+        sub_lay2.addWidget(MPushButton("Delete", MIcon("trash_line.svg", "#ddd")).danger())
 
         sub_lay3 = QtWidgets.QHBoxLayout()
         sub_lay3.addWidget(MPushButton("Large").large().primary())

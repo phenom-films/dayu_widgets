@@ -23,7 +23,7 @@ from dayu_widgets3.tool_button import MToolButton
 class MLineEdit(QtWidgets.QLineEdit):
     """MLineEdit"""
 
-    sig_delay_text_changed = QtCore.Signal(six.string_types[0])
+    sig_delay_text_changed = QtCore.Signal(str)
 
     def __init__(self, text="", parent=None):
         super(MLineEdit, self).__init__(text, parent)

@@ -26,7 +26,6 @@ class CardExample(QtWidgets.QWidget):
         self._init_ui()
 
     def _init_ui(self):
-
         basic_card_lay = MFlowLayout()
         basic_card_lay.setSpacing(20)
         for setting in [

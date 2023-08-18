@@ -49,9 +49,7 @@ class MenuTabWidgetExample(QtWidgets.QWidget):
         dayu_icon.setContentsMargins(10, 10, 10, 10)
         tool_bar_huge_v.tool_bar_insert_widget(dayu_icon)
         tool_bar.tool_bar_append_widget(
-            MBadge.dot(
-                show=True, widget=MToolButton().icon_only().svg("user_fill.svg").large()
-            )
+            MBadge.dot(show=True, widget=MToolButton().icon_only().svg("user_fill.svg").large())
         )
         for index, data_dict in enumerate(item_list):
             tool_bar.add_menu(data_dict, index)

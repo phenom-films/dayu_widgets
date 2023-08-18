@@ -23,9 +23,7 @@ class DrawerExample(QtWidgets.QWidget):
     def _init_ui(self):
         scale_x, _ = get_scale_factor()
         self.button_grp = MRadioButtonGroup()
-        self.button_grp.set_button_list(
-            ["top", {"text": "right", "checked": True}, "bottom", "left"]
-        )
+        self.button_grp.set_button_list(["top", {"text": "right", "checked": True}, "bottom", "left"])
 
         open_button_2 = MPushButton("Open").primary()
         open_button_2.clicked.connect(self.slot_open_button_2)
@@ -35,9 +33,7 @@ class DrawerExample(QtWidgets.QWidget):
         placement_lay.addWidget(open_button_2)
         placement_lay.addStretch()
 
-        new_account_button = MPushButton(
-            text="New account", icon=MIcon("add_line.svg", "#fff")
-        ).primary()
+        new_account_button = MPushButton(text="New account", icon=MIcon("add_line.svg", "#fff")).primary()
         new_account_button.clicked.connect(self.slot_new_account)
         new_account_lay = QtWidgets.QHBoxLayout()
         new_account_lay.addWidget(MLabel("Submit form in drawer"))
@@ -76,9 +72,7 @@ class DrawerExample(QtWidgets.QWidget):
         custom_widget.setLayout(custom_lay)
 
         drawer = MDrawer("Basic Drawer", parent=self)
-        drawer.set_dayu_position(
-            self.button_grp.get_button_group().checkedButton().text()
-        )
+        drawer.set_dayu_position(self.button_grp.get_button_group().checkedButton().text())
 
         scale_x, _ = get_scale_factor()
         drawer.setFixedWidth(300 * scale_x)

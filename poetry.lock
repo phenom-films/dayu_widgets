@@ -129,14 +129,20 @@ testing = ["flufl.flake8", "importlib-resources (>=1.3)", "packaging", "pep517",
 
 [[package]]
 name = "isort"
-version = "4.3.0"
+version = "5.11.5"
 description = "A Python utility / library to sort Python imports."
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+python-versions = ">=3.7.0"
 files = [
-    {file = "isort-4.3.0-py3-none-any.whl", hash = "sha256:385910ab5c46e364f496672634076ac612eeffd60f1007ebb050701c722ec870"},
-    {file = "isort-4.3.0.tar.gz", hash = "sha256:beff82862fc587bef031c8b60485e41e1362d1f1cf1904be2aefb9f0027884c7"},
+    {file = "isort-5.11.5-py3-none-any.whl", hash = "sha256:ba1d72fb2595a01c7895a5128f9585a5cc4b6d395f1c8d514989b9a7eb2a8746"},
+    {file = "isort-5.11.5.tar.gz", hash = "sha256:6be1f76a507cb2ecf16c7cf14a37e41609ca082330be4e3436a18ef74add55db"},
 ]
+
+[package.extras]
+colors = ["colorama (>=0.4.3,<0.5.0)"]
+pipfile-deprecated-finder = ["pip-shims (>=0.5.2)", "pipreqs", "requirementslib"]
+plugins = ["setuptools"]
+requirements-deprecated-finder = ["pip-api", "pipreqs"]
 
 [[package]]
 name = "mccabe"
@@ -362,4 +368,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7,<3.11,"
-content-hash = "5c86ea7f5d3838f9b49138d028f33b36b96830a1888803d953af0e90e420cf75"
+content-hash = "24a11717dada4017b1b6b1b1af8e4cb111756287bfbea975c957b1616182c214"

@@ -1,15 +1,11 @@
-# Import third-party modules
-from qtpy import QtCore
-from qtpy import QtWidgets
-
-
 # Import built-in modules
+import codecs
 import importlib
 import os
 
-
-# Import built-in modules
-import codecs
+# Import third-party modules
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets3 import dayu_theme
@@ -44,9 +40,7 @@ class MDemo(QtWidgets.QMainWindow):
         self.stacked_widget = QtWidgets.QStackedWidget()
 
         list_widget = MItemViewSet(view_type=MItemViewSet.ListViewType)
-        list_widget.set_header_list(
-            [{"key": "name", "label": "Name", "icon": "list_view.svg"}]
-        )
+        list_widget.set_header_list([{"key": "name", "label": "Name", "icon": "list_view.svg"}])
         list_widget.sig_left_clicked.connect(self.slot_change_widget)
         data_list = []
         for index, (name, cls, code) in enumerate(get_test_widget()):

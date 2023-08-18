@@ -47,13 +47,9 @@ class CheckBoxExample(QtWidgets.QWidget, MFieldMixin):
         check_box_bind = MCheckBox("Data Bind")
         label = MLabel()
         button = MPushButton(text="Change State")
-        button.clicked.connect(
-            lambda: self.set_field("checked", not self.field("checked"))
-        )
+        button.clicked.connect(lambda: self.set_field("checked", not self.field("checked")))
         self.register_field("checked", True)
-        self.register_field(
-            "checked_text", lambda: "Yes!" if self.field("checked") else "No!!"
-        )
+        self.register_field("checked_text", lambda: "Yes!" if self.field("checked") else "No!!")
         self.bind("checked", check_box_bind, "checked", signal="stateChanged")
         self.bind("checked_text", label, "text")
 

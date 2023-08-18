@@ -22,14 +22,10 @@ class BrowserExample(QtWidgets.QWidget, MFieldMixin):
         self._init_ui()
 
     def _init_ui(self):
-        browser_1 = MClickBrowserFilePushButton(
-            text="Browser File PushButton"
-        ).primary()
+        browser_1 = MClickBrowserFilePushButton(text="Browser File PushButton").primary()
         browser_2 = MClickBrowserFolderPushButton(text="Browser Folder PushButton")
         browser_2.setIcon(MIcon("upload_line.svg"))
-        browser_3 = MClickBrowserFilePushButton(
-            text="Browser Multi Files", multiple=True
-        ).primary()
+        browser_3 = MClickBrowserFilePushButton(text="Browser Multi Files", multiple=True).primary()
         lay_1 = QtWidgets.QHBoxLayout()
         lay_1.addWidget(browser_1)
         lay_1.addWidget(browser_2)
@@ -68,9 +64,7 @@ class BrowserExample(QtWidgets.QWidget, MFieldMixin):
         lay_3.addWidget(label_6, 3, 0)
         lay_3.addWidget(label_7, 3, 1)
 
-        browser_8 = MDragFileButton(
-            text="Click or drag media file here", multiple=False
-        )
+        browser_8 = MDragFileButton(text="Click or drag media file here", multiple=False)
         browser_8.set_dayu_svg("media_line.svg")
         browser_8.set_dayu_filters([".mov", ".mp4"])
         browser_8_label = MLabel()

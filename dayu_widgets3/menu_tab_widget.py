@@ -1,10 +1,5 @@
 """A Navigation menu"""
 
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
 from qtpy import QtCore
 from qtpy import QtWidgets

@@ -33,9 +33,7 @@ class DividerExample(QtWidgets.QWidget, MFieldMixin):
         sub_lay.addWidget(label3)
         sub_lay.addStretch()
 
-        some_text = (
-            "Steven Paul Jobs was an American entrepreneur and business magnate."
-        )
+        some_text = "Steven Paul Jobs was an American entrepreneur and business magnate."
         main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MLabel(some_text))
         main_lay.addWidget(div1)

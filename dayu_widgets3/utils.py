@@ -6,6 +6,7 @@ Some helper functions for handling color and formatter.
 import collections
 import datetime as dt
 import functools
+from functools import singledispatch
 import math
 import os
 
@@ -13,9 +14,6 @@ import os
 from qtpy import QtCore
 from qtpy import QtGui
 from qtpy import QtWidgets
-
-
-from functools import singledispatch
 
 # Import local modules
 from dayu_widgets3 import CUSTOM_STATIC_FOLDERS
@@ -36,7 +34,7 @@ def get_static_file(path):
     :return: if input file found, return the full path, else return None
     """
     if not isinstance(path, str):
-        raise TypeError("Input argument 'path' should be six.string_types type, " "but get {}".format(type(path)))
+        raise TypeError("Input argument 'path' should be str type, " "but get {}".format(type(path)))
     full_path = next(
         (
             os.path.join(prefix, path)
@@ -60,7 +58,7 @@ def from_list_to_nested_dict(input_arg, sep="/"):
     if not isinstance(input_arg, (list, tuple, set)):
         raise TypeError("Input argument 'input' should be list or tuple or set, " "but get {}".format(type(input_arg)))
     if not isinstance(sep, str):
-        raise TypeError("Input argument 'sep' should be six.string_types, " "but get {}".format(type(sep)))
+        raise TypeError("Input argument 'sep' should be str, " "but get {}".format(type(sep)))
 
     result = []
     for item in input_arg:
@@ -225,7 +223,7 @@ def display_formatter(input_other_type):
     Used for QAbstractItemModel data method for Qt.DisplayRole
     Format any input value to a string.
     :param input_other_type: any type value
-    :return: six.string_types
+    :return: str
     """
     return str(input_other_type)  # this function never reached
 

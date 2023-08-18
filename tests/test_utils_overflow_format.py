@@ -1,14 +1,11 @@
 """
 Test overflow_format.
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
-from dayu_widgets3 import utils
 import pytest
+
+# Import local modules
+from dayu_widgets3 import utils
 
 
 @pytest.mark.parametrize(
@@ -37,10 +34,7 @@ def test_with_wrong_num_type(num, overflow, error_type):
         utils.overflow_format(num, overflow)
 
     exception_msg = exc_info.value.args[0]
-    assert (
-        exception_msg == "Input argument 'num' should be int type, "
-        "but get {}".format(error_type)
-    )
+    assert exception_msg == "Input argument 'num' should be int type, " "but get {}".format(error_type)
 
 
 @pytest.mark.parametrize(
@@ -57,7 +51,4 @@ def test_with_wrong_overflow_type(num, overflow, error_type):
         utils.overflow_format(num, overflow)
 
     exception_msg = exc_info.value.args[0]
-    assert (
-        exception_msg == "Input argument 'overflow' should be int type, "
-        "but get {}".format(error_type)
-    )
+    assert exception_msg == "Input argument 'overflow' should be int type, " "but get {}".format(error_type)

@@ -2,14 +2,11 @@
 Test helper functions about Qt MVC: real_model, real_index
 """
 
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
-# Import local modules
+# Import third-party modules
 from qtpy import QtCore
 from qtpy import QtGui
+
+# Import local modules
 from dayu_widgets3 import utils
 
 

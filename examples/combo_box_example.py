@@ -35,9 +35,7 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
             combo_box.set_dayu_size(size)
             combo_box.set_menu(menu1)
             size_lay.addWidget(combo_box)
-            self.bind(
-                "button1_selected", combo_box, "value", signal="sig_value_changed"
-            )
+            self.bind("button1_selected", combo_box, "value", signal="sig_value_changed")
 
         self.register_field("button2_selected", ["北京"])
         menu2 = MMenu(exclusive=False, parent=self)

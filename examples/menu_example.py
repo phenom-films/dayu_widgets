@@ -16,9 +16,7 @@ class MenuExample(QtWidgets.QWidget, MFieldMixin):
 
     def _init_ui(self):
         self.register_field("button1_selected", "北京")
-        self.register_field(
-            "button1_selected_text", lambda: self.field("button1_selected")
-        )
+        self.register_field("button1_selected_text", lambda: self.field("button1_selected"))
         button1 = MPushButton(text="Normal Menu")
         menu1 = MMenu(parent=self)
         menu1.set_data(["北京", "上海", "广州", "深圳"])
@@ -30,9 +28,7 @@ class MenuExample(QtWidgets.QWidget, MFieldMixin):
         self.bind("button1_selected_text", label1, "text")
 
         self.register_field("button2_selected", ["北京"])
-        self.register_field(
-            "button2_selected_text", lambda: ", ".join(self.field("button2_selected"))
-        )
+        self.register_field("button2_selected_text", lambda: ", ".join(self.field("button2_selected")))
         button2 = MPushButton(text="Multi Select Menu")
         menu2 = MMenu(exclusive=False, parent=self)
         menu2.set_data(["北京", "上海", "广州", "深圳"])
@@ -43,9 +39,7 @@ class MenuExample(QtWidgets.QWidget, MFieldMixin):
         self.bind("button2_selected_text", label2, "text")
 
         self.register_field("button3_selected", "")
-        self.register_field(
-            "button3_selected_text", lambda: self.field("button3_selected")
-        )
+        self.register_field("button3_selected_text", lambda: self.field("button3_selected"))
         button3 = MPushButton(text="回调函数获取选项")
         menu3 = MMenu(parent=self)
         menu3.set_load_callback(lambda: ["北京", "上海", "广州", "深圳"])
@@ -56,14 +50,10 @@ class MenuExample(QtWidgets.QWidget, MFieldMixin):
         self.bind("button3_selected_text", label3, "text")
 
         self.register_field("button4_selected", "")
-        self.register_field(
-            "button4_selected_text", lambda: " / ".join(self.field("button4_selected"))
-        )
+        self.register_field("button4_selected_text", lambda: " / ".join(self.field("button4_selected")))
         button4 = MPushButton(text="级联选择")
         menu4 = MMenu(cascader=True, parent=self)
-        menu4.set_data(
-            ["北京/故宫", "北京/天坛", "北京/王府井", "江苏/南京/夫子庙", "江苏/苏州/拙政园", "江苏/苏州/狮子林"]
-        )
+        menu4.set_data(["北京/故宫", "北京/天坛", "北京/王府井", "江苏/南京/夫子庙", "江苏/苏州/拙政园", "江苏/苏州/狮子林"])
         button4.setMenu(menu4)
         button4.clicked.connect(button4.showMenu)
         label4 = MLabel()

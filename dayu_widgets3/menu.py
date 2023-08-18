@@ -518,11 +518,11 @@ class MMenu(SearchableMenuBase):
         self.set_data(data_list)
 
     def set_value(self, data):
-        assert isinstance(data, (list, six.string_types, six.integer_types, float))
+        assert isinstance(data, (list, str, int, float))
         # if isinstance(data, int):
         #     action = self._action_group.actions()[data]
         #     data = action.property('value')
-        if self.property("cascader") and isinstance(data, six.string_types):
+        if self.property("cascader") and isinstance(data, str):
             data = data.split(self.property("separator"))
         self.setProperty("value", data)
 
@@ -558,7 +558,7 @@ class MMenu(SearchableMenuBase):
     def set_data(self, option_list):
         assert isinstance(option_list, list)
         if option_list:
-            if all(isinstance(i, six.string_types) for i in option_list):
+            if all(isinstance(i, str) for i in option_list):
                 option_list = utils.from_list_to_nested_dict(option_list, sep=self.property("separator"))
             if all(isinstance(i, (int, float)) for i in option_list):
                 option_list = [{"value": i, "label": str(i)} for i in option_list]

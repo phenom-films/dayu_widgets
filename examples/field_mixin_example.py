@@ -36,9 +36,7 @@ class FieldMixinExample(QtWidgets.QWidget, MFieldMixin):
         main_lay.addWidget(MLabel("Avatar:"), 0, 0)
         main_lay.addWidget(thumbnail_label, 0, 1)
         main_lay.addWidget(MLabel("Name:"), 1, 0)
-        main_lay.addWidget(
-            self.bind("my_name", MLineEdit(), "text", signal="textEdited"), 1, 1
-        )
+        main_lay.addWidget(self.bind("my_name", MLineEdit(), "text", signal="textEdited"), 1, 1)
         main_lay.addWidget(MLabel("Email:"), 2, 0)
         main_lay.addWidget(email_label, 2, 1)
         main_lay.addWidget(MLabel("Enabled:"), 3, 0)

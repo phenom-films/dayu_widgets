@@ -3,10 +3,6 @@
 """
 Test get_static_file function.
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import built-in modules
 import os
@@ -93,9 +89,4 @@ def test_with_wrong_type(input_file, error_type):
 
     exception_msg = exc_info.value.args[0]
     print(exception_msg)
-    assert (
-        exception_msg
-        == "Input argument 'path' should be six.string_types type, but get {}".format(
-            error_type
-        )
-    )
+    assert exception_msg == "Input argument 'path' should be str type, but get {}".format(error_type)

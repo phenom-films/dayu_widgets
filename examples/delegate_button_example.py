@@ -33,9 +33,7 @@ class MPushButtonDelegate(QtWidgets.QStyledItemDelegate):
         button.text = "Click Me (" + str(index.data(QtCore.Qt.DisplayRole)) + ")"
         button.state = QtWidgets.QStyle.State_Enabled
 
-        QtWidgets.QApplication.style().drawControl(
-            QtWidgets.QStyle.CE_PushButton, button, painter
-        )
+        QtWidgets.QApplication.style().drawControl(QtWidgets.QStyle.CE_PushButton, button, painter)
 
 
 header_list = [

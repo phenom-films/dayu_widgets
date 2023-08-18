@@ -1,16 +1,14 @@
 """
 Test MAvatar class
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
+import pytest
+
+# Import local modules
 from dayu_widgets3 import dayu_theme
 from dayu_widgets3.avatar import MAvatar
 from dayu_widgets3.qt import MPixmap
-import pytest
 
 
 @pytest.mark.parametrize("image", ("check.svg", None))
@@ -102,7 +100,4 @@ def test_mavatar_with_wrong_image(qtbot, input_file, error_type):
         qtbot.addWidget(widget)
 
     exception_msg = exc_info.value.args[0]
-    assert (
-        exception_msg == "Input argument 'value' should be QPixmap or None,"
-        " but get {}".format(error_type)
-    )
+    assert exception_msg == "Input argument 'value' should be QPixmap or None," " but get {}".format(error_type)

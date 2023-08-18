@@ -1,17 +1,13 @@
 """
 Test class MDivider.
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
 import pytest
-
-# Import local modules
 from qtpy import QtCore
 from qtpy import QtWidgets
+
+# Import local modules
 from dayu_widgets3.divider import MDivider
 
 

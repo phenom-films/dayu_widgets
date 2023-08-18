@@ -1,12 +1,7 @@
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
+import pytest
 from qtpy import QtCore
 from qtpy import QtWidgets
-import pytest
 
 # Import local modules
 from dayu_widgets3 import mixin
@@ -39,9 +34,7 @@ def test_cursor_mixin(qtbot):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
             geo = QtWidgets.QApplication.desktop().screenGeometry()
-            self.setGeometry(
-                geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2
-            )
+            self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
 
     main_widget = QtWidgets.QWidget()
     button_test = _TestClass()
@@ -60,18 +53,14 @@ def test_cursor_mixin(qtbot):
 
     def check_cursor():
         assert QtWidgets.QApplication.overrideCursor() is not None
-        assert (
-            QtWidgets.QApplication.overrideCursor().shape() == QtCore.Qt.ForbiddenCursor
-        )
+        assert QtWidgets.QApplication.overrideCursor().shape() == QtCore.Qt.ForbiddenCursor
 
     qtbot.waitUntil(check_cursor)
 
     qtbot.mouseMove(button_normal)  # mouse leave
 
     def check_cursor():
-        assert (
-            QtWidgets.QApplication.overrideCursor() is None
-        )  # Restore override cursor
+        assert QtWidgets.QApplication.overrideCursor() is None  # Restore override cursor
 
     qtbot.waitUntil(check_cursor)
 
@@ -80,19 +69,14 @@ def test_cursor_mixin(qtbot):
 
     def check_cursor():
         assert QtWidgets.QApplication.overrideCursor() is not None
-        assert (
-            QtWidgets.QApplication.overrideCursor().shape()
-            == QtCore.Qt.PointingHandCursor
-        )
+        assert QtWidgets.QApplication.overrideCursor().shape() == QtCore.Qt.PointingHandCursor
 
     qtbot.waitUntil(check_cursor)
 
     qtbot.mouseMove(button_normal)  # mouse leave
 
     def check_cursor():
-        assert (
-            QtWidgets.QApplication.overrideCursor() is None
-        )  # Restore override cursor
+        assert QtWidgets.QApplication.overrideCursor() is None  # Restore override cursor
 
     qtbot.waitUntil(check_cursor)
 
@@ -103,9 +87,7 @@ def test_focus_shadow_mixin(qtbot):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
             geo = QtWidgets.QApplication.desktop().screenGeometry()
-            self.setGeometry(
-                geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2
-            )
+            self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
 
     main_widget = QtWidgets.QWidget()
     button_test = _TestClass()
@@ -157,9 +139,7 @@ def test_hover_shadow_mixin(qtbot):
         def __init__(self, parent=None):
             super(_TestClass, self).__init__(parent)
             geo = QtWidgets.QApplication.desktop().screenGeometry()
-            self.setGeometry(
-                geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2
-            )
+            self.setGeometry(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
 
     main_widget = QtWidgets.QWidget()
     button_test = _TestClass()

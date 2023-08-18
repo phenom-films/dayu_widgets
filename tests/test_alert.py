@@ -1,12 +1,10 @@
 """Test MAlert class"""
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets3.alert import MAlert
 import pytest
+
+# Import local modules
+from dayu_widgets3.alert import MAlert
 
 
 TYPE_LIST = (
@@ -30,9 +28,7 @@ for text in (None, "", "test"):
         TEST_OUTPUT.append(result_dict)
 
 
-@pytest.mark.parametrize(
-    "kwargs,result", [(i, r) for i, r in zip(TEST_INPUT, TEST_OUTPUT)]
-)
+@pytest.mark.parametrize("kwargs,result", [(i, r) for i, r in zip(TEST_INPUT, TEST_OUTPUT)])
 def test_malert_init(qtbot, kwargs, result):
     """Test MAlert with different arguments."""
     widget = MAlert()
@@ -56,10 +52,7 @@ def test_malert_with_wrong_type(qtbot, input_type):
         qtbot.addWidget(widget)
 
     exception_msg = exc_info.value.args[0]
-    assert (
-        exception_msg == "Input argument 'value' should be "
-        "one of info/success/warning/error string."
-    )
+    assert exception_msg == "Input argument 'value' should be " "one of info/success/warning/error string."
 
 
 @pytest.mark.parametrize(
@@ -81,7 +74,4 @@ def test_malert_with_wrong_text(qtbot, input_text, error_type):
         qtbot.addWidget(widget)
 
     exception_msg = exc_info.value.args[0]
-    assert (
-        exception_msg == "Input argument 'value' should be string type, "
-        "but get {}".format(error_type)
-    )
+    assert exception_msg == "Input argument 'value' should be string type, " "but get {}".format(error_type)
