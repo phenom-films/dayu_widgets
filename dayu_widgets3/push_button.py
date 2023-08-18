@@ -1,17 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
 """
 MPushButton.
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
 from qtpy import QtCore
@@ -86,8 +75,7 @@ class MPushButton(QtWidgets.QPushButton):
             self._dayu_type = value
         else:
             raise ValueError(
-                "Input argument 'value' should be one of "
-                "default/primary/success/warning/danger string."
+                "Input argument 'value' should be one of " "default/primary/success/warning/danger string."
             )
         self.style().polish(self)
 

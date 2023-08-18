@@ -121,7 +121,6 @@ __all__ = [
     "MProgressCircle",
     "MPushButton",
     "MRadioButton",
-    "MSequenceFile",
     "MSlider",
     "MDateEdit",
     "MDateTimeEdit",

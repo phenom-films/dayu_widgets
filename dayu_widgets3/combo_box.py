@@ -1,15 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
 from qtpy import QtCore
 from qtpy import QtWidgets
@@ -44,9 +32,7 @@ class MComboBoxSearchMixin(object):
         edit.setReadOnly(False)
         edit.returnPressed.disconnect()
         edit.textEdited.connect(self.filter_model.setFilterFixedString)
-        self.completer.activated.connect(
-            lambda t: t and self.setCurrentIndex(self.findText(t))
-        )
+        self.completer.activated.connect(lambda t: t and self.setCurrentIndex(self.findText(t)))
 
     def _set_searchable(self, value):
         """search property to True then trigger search"""
@@ -84,9 +70,7 @@ class MComboBox(MComboBoxSearchMixin, QtWidgets.QComboBox):
         self._has_custom_view = False
         self.set_value("")
         self.set_placeholder(self.tr("Please Select"))
-        self.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
-        )
+        self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self._dayu_size = dayu_theme.default_size
         dayu_theme.apply(self)
 

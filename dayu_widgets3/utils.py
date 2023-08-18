@@ -1,16 +1,6 @@
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2018.5
-# Email : muyanru345@163.com
-###################################################################
 """
 Some helper functions for handling color and formatter.
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import built-in modules
 import collections
@@ -34,9 +24,7 @@ from dayu_widgets3.qt import MIcon
 from dayu_widgets3.qt import get_scale_factor
 
 
-ItemViewMenuEvent = collections.namedtuple(
-    "ItemViewMenuEvent", ["view", "selection", "extra"]
-)
+ItemViewMenuEvent = collections.namedtuple("ItemViewMenuEvent", ["view", "selection", "extra"])
 
 
 def get_static_file(path):
@@ -48,10 +36,7 @@ def get_static_file(path):
     :return: if input file found, return the full path, else return None
     """
     if not isinstance(path, str):
-        raise TypeError(
-            "Input argument 'path' should be six.string_types type, "
-            "but get {}".format(type(path))
-        )
+        raise TypeError("Input argument 'path' should be six.string_types type, " "but get {}".format(type(path)))
     full_path = next(
         (
             os.path.join(prefix, path)
@@ -73,15 +58,9 @@ def from_list_to_nested_dict(input_arg, sep="/"):
     :return: a list of nested dict
     """
     if not isinstance(input_arg, (list, tuple, set)):
-        raise TypeError(
-            "Input argument 'input' should be list or tuple or set, "
-            "but get {}".format(type(input_arg))
-        )
+        raise TypeError("Input argument 'input' should be list or tuple or set, " "but get {}".format(type(input_arg)))
     if not isinstance(sep, str):
-        raise TypeError(
-            "Input argument 'sep' should be six.string_types, "
-            "but get {}".format(type(sep))
-        )
+        raise TypeError("Input argument 'sep' should be six.string_types, " "but get {}".format(type(sep)))
 
     result = []
     for item in input_arg:
@@ -108,9 +87,7 @@ def fade_color(color, alpha):
     :return: qss/css color format rgba(r, g, b, a)
     """
     q_color = QtGui.QColor(color)
-    return "rgba({}, {}, {}, {})".format(
-        q_color.red(), q_color.green(), q_color.blue(), alpha
-    )
+    return "rgba({}, {}, {}, {})".format(q_color.red(), q_color.green(), q_color.blue(), alpha)
 
 
 def generate_color(primary_color, index):
@@ -165,11 +142,7 @@ def generate_color(primary_color, index):
         return max((v_comp * 100 - brightness_step2 * i) / 100, 0.0)
 
     light = index <= 6
-    hsv_color = (
-        QtGui.QColor(primary_color)
-        if isinstance(primary_color, str)
-        else primary_color
-    )
+    hsv_color = QtGui.QColor(primary_color) if isinstance(primary_color, str) else primary_color
     index = light_color_count + 1 - index if light else index - light_color_count - 1
     return QtGui.QColor.fromHsvF(
         _get_hue(hsv_color, index, light),
@@ -382,14 +355,9 @@ def overflow_format(num, overflow):
     When this integer is large than given overflow, return "overflow+"
     """
     if not isinstance(num, int):
-        raise ValueError(
-            "Input argument 'num' should be int type, " "but get {}".format(type(num))
-        )
+        raise ValueError("Input argument 'num' should be int type, " "but get {}".format(type(num)))
     if not isinstance(overflow, int):
-        raise ValueError(
-            "Input argument 'overflow' should be int type, "
-            "but get {}".format(type(overflow))
-        )
+        raise ValueError("Input argument 'overflow' should be int type, " "but get {}".format(type(overflow)))
     return str(num) if num <= overflow else "{}+".format(overflow)
 
 
@@ -445,9 +413,7 @@ def read_settings(organization, app_name):
     result_dict = {key: settings.value(key) for key in settings.childKeys()}
     for grp_name in settings.childGroups():
         settings.beginGroup(grp_name)
-        result_dict.update(
-            {grp_name + "/" + key: settings.value(key) for key in settings.childKeys()}
-        )
+        result_dict.update({grp_name + "/" + key: settings.value(key) for key in settings.childKeys()})
         settings.endGroup()
     return result_dict
 
@@ -519,9 +485,7 @@ def get_fit_geometry():
         (screen.availableGeometry() for screen in QtWidgets.QApplication.screens()),
         None,
     )
-    return QtCore.QRect(
-        geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2
-    )
+    return QtCore.QRect(geo.width() / 4, geo.height() / 4, geo.width() / 2, geo.height() / 2)
 
 
 def convert_to_round_pixmap(orig_pix):
@@ -531,9 +495,7 @@ def convert_to_round_pixmap(orig_pix):
     pix_map.fill(QtCore.Qt.transparent)
 
     painter = QtGui.QPainter(pix_map)
-    painter.setRenderHints(
-        QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform
-    )
+    painter.setRenderHints(QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform)
 
     path = QtGui.QPainterPath()
     path.addEllipse(0, 0, w, w)
@@ -542,9 +504,7 @@ def convert_to_round_pixmap(orig_pix):
     return pix_map
 
 
-def generate_text_pixmap(
-    width, height, text, alignment=QtCore.Qt.AlignCenter, bg_color=None
-):
+def generate_text_pixmap(width, height, text, alignment=QtCore.Qt.AlignCenter, bg_color=None):
     # Import local modules
     from dayu_widgets3 import dayu_theme
 

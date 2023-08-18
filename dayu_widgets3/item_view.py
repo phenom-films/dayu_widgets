@@ -1,14 +1,3 @@
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
 from qtpy import QtCore
 from qtpy import QtGui
@@ -38,13 +27,9 @@ def draw_empty_content(view, text=None, pix_map=None):
     painter.setPen(QtGui.QPen(QtGui.QColor(dayu_theme.secondary_text_color)))
     content_height = pix_map.height() + font_metrics.height()
     padding = 10
-    proper_min_size = min(
-        view.height() - padding * 2, view.width() - padding * 2, content_height
-    )
+    proper_min_size = min(view.height() - padding * 2, view.width() - padding * 2, content_height)
     if proper_min_size < content_height:
-        pix_map = pix_map.scaledToHeight(
-            proper_min_size - font_metrics.height(), QtCore.Qt.SmoothTransformation
-        )
+        pix_map = pix_map.scaledToHeight(proper_min_size - font_metrics.height(), QtCore.Qt.SmoothTransformation)
         content_height = proper_min_size
     painter.drawText(
         view.width() / 2 - font_metrics.width(text) / 2,
@@ -93,9 +78,7 @@ class MOptionDelegate(QtWidgets.QStyledItemDelegate):
 
     def updateEditorGeometry(self, editor, option, index):
         editor.move(
-            self.parent_widget.mapToGlobal(
-                QtCore.QPoint(option.rect.x(), option.rect.y() + option.rect.height())
-            )
+            self.parent_widget.mapToGlobal(QtCore.QPoint(option.rect.x(), option.rect.y() + option.rect.height()))
         )
 
     def paint(self, painter, option, index):
@@ -113,9 +96,7 @@ class MOptionDelegate(QtWidgets.QStyledItemDelegate):
         pix = MPixmap("down_fill.svg", icon_color)
         h = option.rect.height()
         pix = pix.scaledToWidth(h * 0.5, QtCore.Qt.SmoothTransformation)
-        painter.drawPixmap(
-            option.rect.x() + option.rect.width() - h, option.rect.y() + h / 4, pix
-        )
+        painter.drawPixmap(option.rect.x() + option.rect.width() - h, option.rect.y() + h / 4, pix)
         painter.restore()
         super(MOptionDelegate, self).paint(painter, option, index)
 
@@ -168,15 +149,8 @@ def slot_context_menu(self, point):
     if proxy_index.isValid():
         need_map = isinstance(self.model(), QtCore.QSortFilterProxyModel)
         selection = []
-        for index in (
-            self.selectionModel().selectedRows()
-            or self.selectionModel().selectedIndexes()
-        ):
-            data_obj = (
-                self.model().mapToSource(index).internalPointer()
-                if need_map
-                else index.internalPointer()
-            )
+        for index in self.selectionModel().selectedRows() or self.selectionModel().selectedIndexes():
+            data_obj = self.model().mapToSource(index).internalPointer() if need_map else index.internalPointer()
             selection.append(data_obj)
         event = utils.ItemViewMenuEvent(view=self, selection=selection, extra={})
         self.sig_context_menu.emit(event)
@@ -287,9 +261,7 @@ class MTableView(QtWidgets.QTableView):
             draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                draw_empty_content(
-                    self.viewport(), self._no_data_text, self._no_data_image
-                )
+                draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         return super(MTableView, self).paintEvent(event)
 
     def save_state(self, name):
@@ -335,9 +307,7 @@ class MTreeView(QtWidgets.QTreeView):
             draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                draw_empty_content(
-                    self.viewport(), self._no_data_text, self._no_data_image
-                )
+                draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         return super(MTreeView, self).paintEvent(event)
 
     def set_no_data_text(self, text):
@@ -391,9 +361,7 @@ class MBigView(QtWidgets.QListView):
             draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                draw_empty_content(
-                    self.viewport(), self._no_data_text, self._no_data_image
-                )
+                draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         return super(MBigView, self).paintEvent(event)
 
     def set_no_data_text(self, text):
@@ -431,9 +399,7 @@ class MListView(QtWidgets.QListView):
             draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         elif isinstance(model, MTableModel):
             if not model.get_data_list():
-                draw_empty_content(
-                    self.viewport(), self._no_data_text, self._no_data_image
-                )
+                draw_empty_content(self.viewport(), self._no_data_text, self._no_data_image)
         return super(MListView, self).paintEvent(event)
 
     def set_no_data_text(self, text):

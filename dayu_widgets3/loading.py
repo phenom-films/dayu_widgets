@@ -1,17 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.4
-# Email : muyanru345@163.com
-###################################################################
 """
 MLoading
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
 from qtpy import QtCore
@@ -32,9 +21,9 @@ class MLoading(QtWidgets.QWidget):
         super(MLoading, self).__init__(parent)
         size = size or dayu_theme.default_size
         self.setFixedSize(QtCore.QSize(size, size))
-        self.pix = MPixmap(
-            "loading.svg", color or dayu_theme.primary_color
-        ).scaledToWidth(size, QtCore.Qt.SmoothTransformation)
+        self.pix = MPixmap("loading.svg", color or dayu_theme.primary_color).scaledToWidth(
+            size, QtCore.Qt.SmoothTransformation
+        )
         self._rotation = 0
         self._loading_ani = QtCore.QPropertyAnimation()
         self._loading_ani.setTargetObject(self)
@@ -109,13 +98,9 @@ class MLoadingWrapper(QtWidgets.QWidget):
         self._widget = widget
         self._mask_widget = QtWidgets.QFrame()
         self._mask_widget.setObjectName("mask")
-        self._mask_widget.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
-        )
+        self._mask_widget.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         self._loading_widget = MLoading()
-        self._loading_widget.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
-        )
+        self._loading_widget.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
 
         self._main_lay = QtWidgets.QGridLayout()
         self._main_lay.setContentsMargins(0, 0, 0, 0)

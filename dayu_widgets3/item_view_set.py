@@ -1,16 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2018.5
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
 from qtpy import QtCore
 from qtpy import QtWidgets
@@ -50,13 +37,9 @@ class MItemViewSet(QtWidgets.QWidget):
         self.item_view.setModel(self.sort_filter_model)
 
         self._search_line_edit = MLineEdit().search().small()
-        self._search_attr_button = (
-            MToolButton().icon_only().svg("down_fill.svg").small()
-        )
+        self._search_attr_button = MToolButton().icon_only().svg("down_fill.svg").small()
         self._search_line_edit.set_prefix_widget(self._search_attr_button)
-        self._search_line_edit.textChanged.connect(
-            self.sort_filter_model.set_search_pattern
-        )
+        self._search_line_edit.textChanged.connect(self.sort_filter_model.set_search_pattern)
         self._search_line_edit.setVisible(False)
         self._search_lay = QtWidgets.QHBoxLayout()
         self._search_lay.setContentsMargins(0, 0, 0, 0)

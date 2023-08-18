@@ -1,15 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.6
-# Email : muyanru345@163.com
-###################################################################
 """MDrawer"""
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
 from qtpy import QtCore
@@ -46,9 +35,7 @@ class MDrawer(QtWidgets.QWidget):
         # self._title_label.set_elide_mode(Qt.ElideRight)
         self._title_label.setText(title)
 
-        self._close_button = (
-            MToolButton(parent=self).icon_only().svg("close_line.svg").small()
-        )
+        self._close_button = MToolButton(parent=self).icon_only().svg("close_line.svg").small()
         self._close_button.clicked.connect(self.close)
         self._close_button.setVisible(closable or False)
 
@@ -117,56 +104,32 @@ class MDrawer(QtWidgets.QWidget):
         parent = self.parent()
         parent_geo = parent.geometry()
         if self._position == MDrawer.LeftPos:
-            pos = (
-                parent_geo.topLeft()
-                if parent.parent() is None
-                else parent.mapToGlobal(parent_geo.topLeft())
-            )
+            pos = parent_geo.topLeft() if parent.parent() is None else parent.mapToGlobal(parent_geo.topLeft())
             target_x = pos.x()
             target_y = pos.y()
             self.setFixedHeight(parent_geo.height())
-            self._pos_ani.setStartValue(
-                QtCore.QPoint(target_x - self.width(), target_y)
-            )
+            self._pos_ani.setStartValue(QtCore.QPoint(target_x - self.width(), target_y))
             self._pos_ani.setEndValue(QtCore.QPoint(target_x, target_y))
         if self._position == MDrawer.RightPos:
-            pos = (
-                parent_geo.topRight()
-                if parent.parent() is None
-                else parent.mapToGlobal(parent_geo.topRight())
-            )
+            pos = parent_geo.topRight() if parent.parent() is None else parent.mapToGlobal(parent_geo.topRight())
             self.setFixedHeight(parent_geo.height())
             target_x = pos.x() - self.width()
             target_y = pos.y()
-            self._pos_ani.setStartValue(
-                QtCore.QPoint(target_x + self.width(), target_y)
-            )
+            self._pos_ani.setStartValue(QtCore.QPoint(target_x + self.width(), target_y))
             self._pos_ani.setEndValue(QtCore.QPoint(target_x, target_y))
         if self._position == MDrawer.TopPos:
-            pos = (
-                parent_geo.topLeft()
-                if parent.parent() is None
-                else parent.mapToGlobal(parent_geo.topLeft())
-            )
+            pos = parent_geo.topLeft() if parent.parent() is None else parent.mapToGlobal(parent_geo.topLeft())
             self.setFixedWidth(parent_geo.width())
             target_x = pos.x()
             target_y = pos.y()
-            self._pos_ani.setStartValue(
-                QtCore.QPoint(target_x, target_y - self.height())
-            )
+            self._pos_ani.setStartValue(QtCore.QPoint(target_x, target_y - self.height()))
             self._pos_ani.setEndValue(QtCore.QPoint(target_x, target_y))
         if self._position == MDrawer.BottomPos:
-            pos = (
-                parent_geo.bottomLeft()
-                if parent.parent() is None
-                else parent.mapToGlobal(parent_geo.bottomLeft())
-            )
+            pos = parent_geo.bottomLeft() if parent.parent() is None else parent.mapToGlobal(parent_geo.bottomLeft())
             self.setFixedWidth(parent_geo.width())
             target_x = pos.x()
             target_y = pos.y() - self.height()
-            self._pos_ani.setStartValue(
-                QtCore.QPoint(target_x, target_y + self.height())
-            )
+            self._pos_ani.setStartValue(QtCore.QPoint(target_x, target_y + self.height()))
             self._pos_ani.setEndValue(QtCore.QPoint(target_x, target_y))
 
     def set_dayu_position(self, value):

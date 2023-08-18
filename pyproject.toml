@@ -28,6 +28,10 @@ qtpy = "^2.3.1"
 
 [tool.poetry.group.dev.dependencies]
 pyside2 = "^5.15.2.1"
+isort = "4.3"
+black = "23.3"
+flake8 = "5"
+autoflake = "1.7"
 
 [build-system]
 requires = ["poetry-core"]
@@ -35,7 +39,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.12.1"
+version = "0.1.0"
 tag_format = "v$version"
 version_files = [
     "pyproject.toml:version",
@@ -88,4 +92,8 @@ force_single_line = true
 
 # All project unrelated unknown imports belong to third-party.
 default_section = "THIRDPARTY"
-skip_glob = "*/docs/conf.py"
+skip_glob = ["*/docs/conf.py", "./dayu_widgets3/__pycache__/*"]
+
+[tool.autoflake]
+remove_all_unused_imports = true
+ignore_init_module_imports = true

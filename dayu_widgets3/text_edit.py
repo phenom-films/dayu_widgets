@@ -1,16 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.6
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
 from qtpy import QtCore
 from qtpy import QtWidgets
@@ -28,9 +15,7 @@ class MTextEdit(QtWidgets.QTextEdit):
         self._size_grip = MSizeGrip(self)
         layout = QtWidgets.QGridLayout()
         layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(
-            self._size_grip, 0, 0, QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight
-        )
+        layout.addWidget(self._size_grip, 0, 0, QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
         self.setLayout(layout)
         self._size_grip.setVisible(False)
 
