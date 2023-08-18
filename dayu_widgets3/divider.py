@@ -1,17 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
 """
 MDivider
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
 from qtpy import QtCore
@@ -66,12 +55,8 @@ class MDivider(QtWidgets.QWidget):
             self._left_frame.setFrameShape(QtWidgets.QFrame.VLine)
             self._left_frame.setFrameShadow(QtWidgets.QFrame.Plain)
             self.setFixedWidth(2)
-        self._main_lay.setStretchFactor(
-            self._left_frame, self._alignment_map.get(alignment, 50)
-        )
-        self._main_lay.setStretchFactor(
-            self._right_frame, 100 - self._alignment_map.get(alignment, 50)
-        )
+        self._main_lay.setStretchFactor(self._left_frame, self._alignment_map.get(alignment, 50))
+        self._main_lay.setStretchFactor(self._right_frame, 100 - self._alignment_map.get(alignment, 50))
         self._text = None
         self.set_dayu_text(text)
 

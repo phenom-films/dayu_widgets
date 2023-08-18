@@ -1,15 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2018.5
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 import re
 
 # Import third-party modules
@@ -217,12 +205,8 @@ class MTableModel(QtCore.QAbstractItemModel):
                 # 如果header中没有配置该role，而且也不是 DisplayRole/EditRole，直接返回None
                 return None
             else:
-                value = apply_formatter(
-                    formatter_from_config, get_obj_value(data_obj, attr), data_obj
-                )
-            formatter_from_model = SETTING_MAP[role].get(
-                "formatter", None
-            )  # role 配置的转换函数
+                value = apply_formatter(formatter_from_config, get_obj_value(data_obj, attr), data_obj)
+            formatter_from_model = SETTING_MAP[role].get("formatter", None)  # role 配置的转换函数
             result = apply_formatter(formatter_from_model, value)
             return result
 
@@ -254,9 +238,7 @@ class MTableModel(QtCore.QAbstractItemModel):
                     parent_obj = parent_index.internalPointer()
                     new_parent_value = value
                     old_parent_value = get_obj_value(parent_obj, key)
-                    for sibling_obj in get_obj_value(
-                        get_obj_value(data_obj, "_parent"), "children", []
-                    ):
+                    for sibling_obj in get_obj_value(get_obj_value(data_obj, "_parent"), "children", []):
                         if value != get_obj_value(sibling_obj, key):
                             new_parent_value = 1
                             break
@@ -295,9 +277,7 @@ class MSortFilterModel(QtCore.QSortFilterProxyModel):
         if self.search_reg:
             for index, data_dict in enumerate(self.header_list):
                 if data_dict.get("searchable", False):
-                    model_index = self.sourceModel().index(
-                        source_row, index, source_parent
-                    )
+                    model_index = self.sourceModel().index(source_row, index, source_parent)
                     value = self.sourceModel().data(model_index)
                     if self.search_reg.match(str) != -1:
                         # 搜索匹配上了

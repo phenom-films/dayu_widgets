@@ -1,18 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
 """MLineEdit
 Get the user input is a text field
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
@@ -166,9 +154,7 @@ class MLineEdit(QtWidgets.QLineEdit):
             dialog = QtWidgets.QTextEdit(self)
             dialog.setReadOnly(True)
             geo = QtWidgets.QApplication.desktop().screenGeometry()
-            dialog.setGeometry(
-                geo.width() / 2, geo.height() / 2, geo.width() / 4, geo.height() / 4
-            )
+            dialog.setGeometry(geo.width() / 2, geo.height() / 2, geo.width() / 4, geo.height() / 4)
             dialog.setWindowTitle(self.tr("Error Detail Information"))
             dialog.setText(self.property("history"))
             dialog.setWindowFlags(QtCore.Qt.Dialog)

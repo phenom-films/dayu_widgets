@@ -1,10 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
 """A Navigation menu"""
 
 # Import future modules
@@ -71,9 +64,7 @@ class MBlockButtonGroup(MButtonGroupBase):
         """Get current checked button's id"""
         return self._button_group.checkedId()
 
-    dayu_checked = QtCore.Property(
-        int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
-    )
+    dayu_checked = QtCore.Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
 
 
 class MMenuTabWidget(QtWidgets.QWidget):

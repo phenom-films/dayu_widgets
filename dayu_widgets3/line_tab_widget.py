@@ -1,17 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
 """MLineTabWidget"""
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
 from qtpy import QtCore
 from qtpy import QtWidgets
@@ -72,9 +59,7 @@ class MUnderlineButtonGroup(MButtonGroupBase):
         """Get current checked button's id"""
         return self._button_group.checkedId()
 
-    dayu_checked = QtCore.Property(
-        int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
-    )
+    dayu_checked = QtCore.Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
 
 
 class MLineTabWidget(QtWidgets.QWidget):
@@ -96,9 +81,7 @@ class MLineTabWidget(QtWidgets.QWidget):
             self.bar_layout.addStretch()
             self.bar_layout.addWidget(self.tool_button_group)
         self.stack_widget = MStackedWidget()
-        self.tool_button_group.sig_checked_changed.connect(
-            self.stack_widget.setCurrentIndex
-        )
+        self.tool_button_group.sig_checked_changed.connect(self.stack_widget.setCurrentIndex)
         main_lay = QtWidgets.QVBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
         main_lay.setSpacing(0)

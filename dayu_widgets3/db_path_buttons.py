@@ -1,16 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2018.5
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 from functools import partial
 from itertools import zip_longest
@@ -26,9 +13,7 @@ def parse_db_orm(orm):
         "name": "ROOT" if hasattr(orm, "parent") and orm.parent is None else orm.name,
         "icon": utils.icon_formatter(orm),
         "get_children": lambda x: [
-            parse_db_orm(orm)
-            for orm in getattr(x, orm_map.get(x.__tablename__, None))
-            if orm.active
+            parse_db_orm(orm) for orm in getattr(x, orm_map.get(x.__tablename__, None)) if orm.active
         ],
         "has_children": lambda x: hasattr(x, orm_map.get(x.__tablename__, None)),
         "data": orm,
@@ -46,9 +31,7 @@ def parse_path(path):
         "name": os.path.basename(path) or path,
         "icon": utils.icon_formatter(request_file("icon-browser.png")),
         "get_children": lambda x: [
-            parse_path(os.path.join(path, i))
-            for i in os.listdir(path)
-            if os.path.isdir(os.path.join(path, i))
+            parse_path(os.path.join(path, i)) for i in os.listdir(path) if os.path.isdir(os.path.join(path, i))
         ],
         "has_children": lambda x: next(
             (True for i in os.listdir(path) if os.path.isdir(os.path.join(path, i))),
@@ -77,9 +60,7 @@ class MBaseButton(QWidget):
         self.menu_button.setPopupMode(QToolButton.InstantPopup)
         self.menu_button.setIconSize(QSize(10, 10))
         self.menu_button.clicked.connect(self.slot_show_menu)
-        self.menu_button.setVisible(
-            data_dict.get("has_children")(data_dict.get("data"))
-        )
+        self.menu_button.setVisible(data_dict.get("has_children")(data_dict.get("data")))
         main_lay = QHBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
         main_lay.setSpacing(0)
@@ -167,9 +148,7 @@ class MDBPathButtons(QFrame):
         index = data_dict.get("index")
         for sub_obj in data_list:
             action = menu.addAction(sub_obj.get("icon"), sub_obj.get("name"))
-            action.triggered.connect(
-                partial(self.slot_menu_button_clicked, index, sub_obj)
-            )
+            action.triggered.connect(partial(self.slot_menu_button_clicked, index, sub_obj))
         menu_button.setMenu(menu)
         menu_button.showMenu()
 
@@ -186,9 +165,7 @@ class MDBPathButtons(QFrame):
 
     @Slot(object)
     def slot_go_to(self, obj_list):
-        for index, (his_obj, our_obj) in enumerate(
-            zip_longest(obj_list, self.get_obj_list())
-        ):
+        for index, (his_obj, our_obj) in enumerate(zip_longest(obj_list, self.get_obj_list())):
             if his_obj is None:
                 # 如果传来的 obj_list 最后一个是 None，则我方的 obj 多，直接清理掉多余的
                 self.clear_downstream(index)

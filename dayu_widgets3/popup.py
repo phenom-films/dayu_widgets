@@ -1,15 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: timmyliang
-# Date  : 2021.12
-# Email : 820472580@qq.com
-###################################################################
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
 from qtpy import QtCore
 from qtpy import QtGui
@@ -107,11 +95,7 @@ class MPopup(QtWidgets.QFrame):
         return super(MPopup, self).mouseReleaseEvent(event)
 
     def mouseMoveEvent(self, event):
-        if (
-            event.buttons() == QtCore.Qt.LeftButton
-            and self.mouse_pos
-            and self.property("movable")
-        ):
+        if event.buttons() == QtCore.Qt.LeftButton and self.mouse_pos and self.property("movable"):
             self.move(self.mapToGlobal(event.pos() - self.mouse_pos))
         return super(MPopup, self).mouseMoveEvent(event)
 

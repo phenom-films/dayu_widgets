@@ -1,16 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
@@ -52,41 +39,27 @@ class MHeaderView(QtWidgets.QHeaderView):
         context_menu = MMenu(parent=self)
         logical_column = self.logicalIndexAt(point)
         model = utils.real_model(self.model())
-        if logical_column >= 0 and model.header_list[logical_column].get(
-            "checkable", False
-        ):
+        if logical_column >= 0 and model.header_list[logical_column].get("checkable", False):
             action_select_all = context_menu.addAction(self.tr("Select All"))
             action_select_none = context_menu.addAction(self.tr("Select None"))
             action_select_invert = context_menu.addAction(self.tr("Select Invert"))
             action_select_all.triggered.connect(
-                functools.partial(
-                    self._slot_set_select, logical_column, QtCore.Qt.Checked
-                )
+                functools.partial(self._slot_set_select, logical_column, QtCore.Qt.Checked)
             )
             action_select_none.triggered.connect(
-                functools.partial(
-                    self._slot_set_select, logical_column, QtCore.Qt.Unchecked
-                )
+                functools.partial(self._slot_set_select, logical_column, QtCore.Qt.Unchecked)
             )
-            action_select_invert.triggered.connect(
-                functools.partial(self._slot_set_select, logical_column, None)
-            )
+            action_select_invert.triggered.connect(functools.partial(self._slot_set_select, logical_column, None))
             context_menu.addSeparator()
 
         fit_action = context_menu.addAction(self.tr("Fit Size"))
-        fit_action.triggered.connect(
-            functools.partial(self._slot_set_resize_mode, True)
-        )
+        fit_action.triggered.connect(functools.partial(self._slot_set_resize_mode, True))
         context_menu.addSeparator()
         for column in range(self.count()):
-            action = context_menu.addAction(
-                model.headerData(column, QtCore.Qt.Horizontal, QtCore.Qt.DisplayRole)
-            )
+            action = context_menu.addAction(model.headerData(column, QtCore.Qt.Horizontal, QtCore.Qt.DisplayRole))
             action.setCheckable(True)
             action.setChecked(not self.isSectionHidden(column))
-            action.toggled.connect(
-                functools.partial(self._slot_set_section_visible, column)
-            )
+            action.toggled.connect(functools.partial(self._slot_set_section_visible, column))
         context_menu.exec_(QtGui.QCursor.pos() + QtCore.QPoint(10, 10))
 
     @QtCore.Slot(int, int)
@@ -103,9 +76,7 @@ class MHeaderView(QtWidgets.QHeaderView):
                 utils.set_obj_value(
                     data_obj,
                     attr,
-                    Qt.UnchQtCore.Qtked
-                    if old_state == QtCore.Qt.Checked
-                    else QtCore.Qt.Checked,
+                    Qt.UnchQtCore.Qtked if old_state == QtCore.Qt.Checked else QtCore.Qt.Checked,
                 )
             else:
                 utils.set_obj_value(data_obj, attr, state)

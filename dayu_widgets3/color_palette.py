@@ -1,16 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
@@ -50,9 +37,7 @@ class MColorChart(QtWidgets.QWidget):
             button.setProperty("color", target)
             button.setStyleSheet(
                 "QPushButton{{background-color:{};color:{};border: 0 solid black}}"
-                "QPushButton:hover{{font-weight:bold;}}".format(
-                    target, "#000" if index < 5 else "#fff"
-                )
+                "QPushButton:hover{{font-weight:bold;}}".format(target, "#000" if index < 5 else "#fff")
             )
 
     def slot_copy_color(self, button):
@@ -112,9 +97,7 @@ class MColorPaletteDialog(QtWidgets.QDialog):
             "background-color:{};".format(self.primary_color.name())
         )
         self.color_label.setText(self.primary_color.name())
-        self.color_chart.set_colors(
-            [utils.generate_color(self.primary_color, index + 1) for index in range(10)]
-        )
+        self.color_chart.set_colors([utils.generate_color(self.primary_color, index + 1) for index in range(10)])
 
 
 if __name__ == "__main__":

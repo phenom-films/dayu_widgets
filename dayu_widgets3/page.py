@@ -1,16 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
 """MPage"""
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
@@ -54,9 +42,7 @@ class MPage(QtWidgets.QWidget, MFieldMixin):
         self.register_field("current_page", 0)
         self.register_field(
             "total_page",
-            lambda: utils.get_total_page(
-                self.field("total"), self.field("page_size_selected")
-            ),
+            lambda: utils.get_total_page(self.field("total"), self.field("page_size_selected")),
         )
         self.register_field("total_page_text", lambda: str(self.field("total_page")))
         self.register_field(
@@ -68,9 +54,7 @@ class MPage(QtWidgets.QWidget, MFieldMixin):
             ),
         )
         self.register_field("can_pre", lambda: self.field("current_page") > 1)
-        self.register_field(
-            "can_next", lambda: self.field("current_page") < self.field("total_page")
-        )
+        self.register_field("can_next", lambda: self.field("current_page") < self.field("total_page"))
         page_setting_menu = MMenu(parent=self)
         self._display_label = MLabel()
         self._display_label.setAlignment(QtCore.Qt.AlignCenter)
@@ -79,13 +63,9 @@ class MPage(QtWidgets.QWidget, MFieldMixin):
         self._change_page_size_button.set_formatter(lambda x: "{} per page".format(x))
 
         self._pre_button = MToolButton().icon_only().svg("left_fill.svg").small()
-        self._pre_button.clicked.connect(
-            functools.partial(self._slot_change_current_page, -1)
-        )
+        self._pre_button.clicked.connect(functools.partial(self._slot_change_current_page, -1))
         self._next_button = MToolButton().small().icon_only().svg("right_fill.svg")
-        self._next_button.clicked.connect(
-            functools.partial(self._slot_change_current_page, 1)
-        )
+        self._next_button.clicked.connect(functools.partial(self._slot_change_current_page, 1))
         self._current_page_spin_box = MSpinBox()
         self._current_page_spin_box.setMinimum(1)
         self._current_page_spin_box.set_dayu_size(dayu_theme.small)
@@ -93,18 +73,14 @@ class MPage(QtWidgets.QWidget, MFieldMixin):
         self._total_page_label = MLabel()
 
         self.bind("page_size_list", page_setting_menu, "data")
-        self.bind(
-            "page_size_selected", page_setting_menu, "value", signal="sig_value_changed"
-        )
+        self.bind("page_size_selected", page_setting_menu, "value", signal="sig_value_changed")
         self.bind(
             "page_size_selected",
             self._change_page_size_button,
             "value",
             signal="sig_value_changed",
         )
-        self.bind(
-            "current_page", self._current_page_spin_box, "value", signal="valueChanged"
-        )
+        self.bind("current_page", self._current_page_spin_box, "value", signal="valueChanged")
         self.bind("total_page", self._current_page_spin_box, "maximum")
         self.bind("total_page_text", self._total_page_label, "dayu_text")
         self.bind("display_text", self._display_label, "dayu_text")
@@ -143,13 +119,8 @@ class MPage(QtWidgets.QWidget, MFieldMixin):
         """Set page component per page settings."""
         self.set_field(
             "page_size_list",
-            [
-                {"label": str(data), "value": data} if isinstance(data, int) else data
-                for data in data_list
-            ],
+            [{"label": str(data), "value": data} if isinstance(data, int) else data for data in data_list],
         )
 
     def _emit_page_changed(self):
-        self.sig_page_changed.emit(
-            self.field("page_size_selected"), self.field("current_page")
-        )
+        self.sig_page_changed.emit(self.field("page_size_selected"), self.field("current_page"))

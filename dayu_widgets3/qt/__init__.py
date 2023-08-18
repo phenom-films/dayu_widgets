@@ -75,7 +75,7 @@ def get_scale_factor():
     if not QtWidgets.QApplication.instance():
         app = QtWidgets.QApplication([])
     standard_dpi = 96.0
-    if hasattr(QtWidgets.QApplication, 'desktop'):
+    if hasattr(QtWidgets.QApplication, "desktop"):
         scale_factor_x = QtWidgets.QApplication.desktop().logicalDpiX() / standard_dpi
         scale_factor_y = QtWidgets.QApplication.desktop().logicalDpiY() / standard_dpi
         return scale_factor_x, scale_factor_y

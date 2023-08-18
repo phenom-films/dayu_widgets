@@ -1,16 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 from functools import partial
 import re
@@ -43,9 +30,7 @@ class ScrollableMenuBase(QtWidgets.QMenu):
         self._maximumHeight = self.maximumHeight()
         self._actionRects = []
 
-        self.scrollTimer = QtCore.QTimer(
-            self, interval=50, singleShot=True, timeout=self.checkScroll
-        )
+        self.scrollTimer = QtCore.QTimer(self, interval=50, singleShot=True, timeout=self.checkScroll)
         self.scrollTimer.setProperty("defaultInterval", 50)
         self.delayTimer = QtCore.QTimer(self, interval=100, singleShot=True)
 
@@ -81,13 +66,9 @@ class ScrollableMenuBase(QtWidgets.QMenu):
         size = QtCore.QSize()
         fm = self.fontMetrics()
         qfm = opt.fontMetrics
-        size.setWidth(
-            fm.boundingRect(QtCore.QRect(), QtCore.Qt.TextSingleLine, a.text()).width()
-        )
+        size.setWidth(fm.boundingRect(QtCore.QRect(), QtCore.Qt.TextSingleLine, a.text()).width())
         size.setHeight(max(fm.height(), qfm.height()))
-        self.defaultItemHeight = style.sizeFromContents(
-            QtWidgets.QStyle.CT_MenuItem, opt, size, self
-        ).height()
+        self.defaultItemHeight = style.sizeFromContents(QtWidgets.QStyle.CT_MenuItem, opt, size, self).height()
 
         if not count:
             self.setMaximumHeight(self._maximumHeight)
@@ -95,19 +76,14 @@ class ScrollableMenuBase(QtWidgets.QMenu):
             fw = style.pixelMetric(style.PM_MenuPanelWidth, None, self)
             vmargin = style.pixelMetric(style.PM_MenuHMargin, opt, self)
             scrollHeight = self.scrollHeight(style)
-            self.setMaximumHeight(
-                self.defaultItemHeight * count + (fw + vmargin + scrollHeight) * 2
-            )
+            self.setMaximumHeight(self.defaultItemHeight * count + (fw + vmargin + scrollHeight) * 2)
         self.dirty = True
 
     def scrollHeight(self, style):
         return style.pixelMetric(style.PM_MenuScrollerHeight, None, self) * 2
 
     def isScrollable(self):
-        return (
-            self.property("scrollable")
-            and self.height() < super(ScrollableMenuBase, self).sizeHint().height()
-        )
+        return self.property("scrollable") and self.height() < super(ScrollableMenuBase, self).sizeHint().height()
 
     def checkScroll(self):
         pos = self.mapFromGlobal(QtGui.QCursor.pos())
@@ -155,9 +131,7 @@ class ScrollableMenuBase(QtWidgets.QMenu):
             for lastAction in reversed(self.actions()):
                 if lastAction.isVisible():
                     break
-            lastBottom = (
-                self.actionGeometry(lastAction).bottom() - newDelta + scrollHeight
-            )
+            lastBottom = self.actionGeometry(lastAction).bottom() - newDelta + scrollHeight
             if lastBottom < bottom:
                 newDelta -= bottom - lastBottom
             if newDelta == self.deltaY:
@@ -219,9 +193,7 @@ class ScrollableMenuBase(QtWidgets.QMenu):
         elif event.type() == event.MouseButtonRelease:
             pos = event.pos()
             self.scrollTimer.stop()
-            if not (
-                self.scrollUpRect.contains(pos) or self.scrollDownRect.contains(pos)
-            ):
+            if not (self.scrollUpRect.contains(pos) or self.scrollDownRect.contains(pos)):
                 action = self.actionAt(pos)
                 if action:
                     action.trigger()
@@ -319,9 +291,7 @@ class ScrollableMenuBase(QtWidgets.QMenu):
         contentWidth = self.width() - (fw + hmargin) * 2 - l - r
 
         scrollHeight = self.scrollHeight(style)
-        self.scrollUpRect = QtCore.QRect(
-            leftMargin, topMargin, contentWidth, scrollHeight
-        )
+        self.scrollUpRect = QtCore.QRect(leftMargin, topMargin, contentWidth, scrollHeight)
         self.scrollDownRect = QtCore.QRect(
             leftMargin,
             self.height() - scrollHeight - bottomMargin,
@@ -407,13 +377,9 @@ class ScrollableMenuBase(QtWidgets.QMenu):
         if fw:
             borderReg = QtGui.QRegion()
             borderReg |= QtGui.QRegion(QtCore.QRect(0, 0, fw, self.height()))
-            borderReg |= QtGui.QRegion(
-                QtCore.QRect(self.width() - fw, 0, fw, self.height())
-            )
+            borderReg |= QtGui.QRegion(QtCore.QRect(self.width() - fw, 0, fw, self.height()))
             borderReg |= QtGui.QRegion(QtCore.QRect(0, 0, self.width(), fw))
-            borderReg |= QtGui.QRegion(
-                QtCore.QRect(0, self.height() - fw, self.width(), fw)
-            )
+            borderReg |= QtGui.QRegion(QtCore.QRect(0, self.height() - fw, self.width(), fw))
             qp.setClipRegion(borderReg)
             emptyArea -= borderReg
             frame = QtWidgets.QStyleOptionFrame()
@@ -442,9 +408,7 @@ class SearchableMenuBase(ScrollableMenuBase):
         self.search_label = QtWidgets.QLabel()
 
         self.search_bar.textChanged.connect(self.slot_search_change)
-        self.search_bar.keyPressEvent = partial(
-            self.search_key_event, self.search_bar.keyPressEvent
-        )
+        self.search_bar.keyPressEvent = partial(self.search_key_event, self.search_bar.keyPressEvent)
         self.aboutToHide.connect(lambda: self.search_bar.setText(""))
 
         layout = QtWidgets.QVBoxLayout()
@@ -584,9 +548,7 @@ class MMenu(SearchableMenuBase):
             for i in data_dict.get("children"):
                 self._add_menu(menu, i)
         else:
-            action = self._action_group.addAction(
-                utils.display_formatter(data_dict.get("label"))
-            )
+            action = self._action_group.addAction(utils.display_formatter(data_dict.get("label")))
             action.setProperty("value", data_dict.get("value"))
             action.setCheckable(True)
             # 用来将来获取父层级数据
@@ -597,9 +559,7 @@ class MMenu(SearchableMenuBase):
         assert isinstance(option_list, list)
         if option_list:
             if all(isinstance(i, six.string_types) for i in option_list):
-                option_list = utils.from_list_to_nested_dict(
-                    option_list, sep=self.property("separator")
-                )
+                option_list = utils.from_list_to_nested_dict(option_list, sep=self.property("separator"))
             if all(isinstance(i, (int, float)) for i in option_list):
                 option_list = [{"value": i, "label": str(i)} for i in option_list]
         # 全部转换成 dict 类型的 list
@@ -628,11 +588,7 @@ class MMenu(SearchableMenuBase):
             if self._action_group.isExclusive():
                 selected_data = current_data
             else:
-                selected_data = [
-                    act.property("value")
-                    for act in self._action_group.actions()
-                    if act.isChecked()
-                ]
+                selected_data = [act.property("value") for act in self._action_group.actions() if act.isChecked()]
         self.set_value(selected_data)
         self.sig_value_changed.emit(selected_data)
 
