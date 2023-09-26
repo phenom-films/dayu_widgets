@@ -1,3 +1,9 @@
+## v0.13.1 (2023-09-26)
+
+### Fix
+
+- fix header view context menu Select Invert
+
 ## v0.13.0 (2023-09-25)
 
 ### Feat
