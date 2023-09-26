@@ -103,7 +103,7 @@ class MHeaderView(QtWidgets.QHeaderView):
                 utils.set_obj_value(
                     data_obj,
                     attr,
-                    Qt.UnchQtCore.Qtked
+                    QtCore.Qt.Unchecked
                     if old_state == QtCore.Qt.Checked
                     else QtCore.Qt.Checked,
                 )
