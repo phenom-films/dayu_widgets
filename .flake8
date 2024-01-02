@@ -1,3 +1,0 @@
-[flake8]
-ignore = BLK100
-max-line-length = 88
