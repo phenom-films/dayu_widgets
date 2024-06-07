@@ -6,9 +6,10 @@ from __future__ import print_function
 
 # Import built-in modules
 import os
+import sys
 
 
-DEFAULT_STATIC_FOLDER = os.path.join(__path__[0], "static")
+DEFAULT_STATIC_FOLDER = os.path.join(sys.modules[__name__].__path__[0], "static")
 CUSTOM_STATIC_FOLDERS = []
 # Import local modules
 from dayu_widgets.theme import MTheme
