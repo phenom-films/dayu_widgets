@@ -85,6 +85,13 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
             },
             {
                 "children": [
+                    {"value": "\u6545\u5bab", "label": "\u6545\u5bab"},
+                ],
+                "value": "\u4e1c\u4eac",
+                "label": "\u4e1c\u4eac",
+            },
+            {
+                "children": [
                     {
                         "children": [
                             {
@@ -122,6 +129,7 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
         select4.set_menu(menu4)
         select4.set_formatter(lambda x: " / ".join(x))
         self.bind("button4_selected", select4, "value", signal="sig_value_changed")
+        select4.set_value("北京/故宫")
 
         self.register_field("button5_selected", "")
         menu5 = MMenu(exclusive=False, parent=self)
