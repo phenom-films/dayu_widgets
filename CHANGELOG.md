@@ -1,3 +1,9 @@
+## v0.13.2 (2024-06-12)
+
+### Fix
+
+- MMenu multi select no a correct action
+
 ## v0.13.1 (2023-09-26)
 
 ### Fix
