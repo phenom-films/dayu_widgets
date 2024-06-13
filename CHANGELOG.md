@@ -1,3 +1,9 @@
+## v0.13.4 (2024-06-13)
+
+### Fix
+
+- update ci publish pypi config to use trusted publisher
+
 ## v0.13.3 (2024-06-12)
 
 ### Fix
