@@ -16,10 +16,10 @@ from functools import partial
 import re
 
 # Import third-party modules
+from Qt import QtCompat
 from Qt import QtCore
 from Qt import QtGui
 from Qt import QtWidgets
-from Qt.QtCompat import isValid
 import six
 
 # Import local modules
@@ -259,7 +259,7 @@ class ScrollableMenuBase(QtWidgets.QMenu):
                 action = None
 
         self.setActiveAction(action)
-        if action and isValid(action) and not action.isSeparator():
+        if action and QtCompat.isValid(action) and not action.isSeparator():
 
             def ensureVisible():
                 self.delayTimer.timeout.disconnect()
