@@ -566,16 +566,20 @@ class MMenu(SearchableMenuBase):
     def _set_value(self, value):
         data_list = value if isinstance(value, list) else [value]
         flag = False
-        selected = "/".join(data_list)
         for act in self._action_group.actions():
-            checked = act.property("long_path") == selected
+            if act.property("long_path"):
+                # Ensure all values is string type.
+                selected = "/".join(map(str, data_list))
+                checked = act.property("long_path") == selected
+            else:
+                checked = act.property("value") in data_list
             if act.isChecked() != checked:  # 更新来自代码
                 act.setChecked(checked)
                 flag = True
         if flag:
             self.sig_value_changed.emit(value)
 
-    def _add_menu(self, parent_menu, data_dict, long_path=""):
+    def _add_menu(self, parent_menu, data_dict, long_path=None):
         if "children" in data_dict:
             menu = MMenu(title=data_dict.get("label"), parent=self)
             menu.setProperty("value", data_dict.get("value"))
@@ -584,10 +588,12 @@ class MMenu(SearchableMenuBase):
                 # 用来将来获取父层级数据
                 menu.setProperty("parent_menu", parent_menu)
             for i in data_dict.get("children"):
-                long_path = "{root}/{label}".format(
-                    root=long_path or data_dict.get("label"), label=i.get("label")
-                )
-                self._add_menu(menu, i, long_path=long_path)
+                long_path = long_path or data_dict.get("label")
+                assemble_long_path = "{root}/{label}".format(root=long_path, label=i.get("label"))
+                if assemble_long_path:
+                    self._add_menu(menu, i, assemble_long_path)
+                else:
+                    self._add_menu(menu, i)
         else:
             action = self._action_group.addAction(
                 utils.display_formatter(data_dict.get("label"))
