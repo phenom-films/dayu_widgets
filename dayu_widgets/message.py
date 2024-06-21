@@ -119,7 +119,14 @@ class MMessage(QtWidgets.QWidget):
 
     def _set_proper_position(self, parent):
         parent_geo = parent.geometry()
-        pos = parent_geo.topLeft() if parent.parent() is None else parent.mapToGlobal(parent_geo.topLeft())
+        if parent.isWindowType():
+            # 其parent没有parent了，就是个完全独立的窗口
+            pos = parent_geo.topLeft()
+        elif parent in QtWidgets.QApplication.topLevelWidgets():
+            # 其parent虽然是独立窗口，但却还有parent，常见情况，DCC中比如Maya我们开发的工具窗口，会将maya主窗口作为工具节目的parent
+            pos = parent_geo.topLeft()
+        else:
+            pos = parent.mapToGlobal(parent_geo.topLeft())
         offset = 0
         for child in parent.children():
             if isinstance(child, MMessage) and child.isVisible():

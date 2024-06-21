@@ -26,6 +26,21 @@ from dayu_widgets.message import MMessage
 from dayu_widgets.push_button import MPushButton
 
 
+class MDialogExample(QtWidgets.QDialog):
+    def __init__(self, parent=None):
+        super(MDialogExample, self).__init__(parent=parent)
+        main_lay = QtWidgets.QVBoxLayout()
+        button = MPushButton("Show Message")
+        button.clicked.connect(self.slot_show_message)
+
+        main_lay.addWidget(MLabel("This is a dialog in DCC. Click the button to show a message."))
+        main_lay.addWidget(button)
+        self.setLayout(main_lay)
+
+    def slot_show_message(self):
+        MMessage.info(parent=self, text="This is a message")
+
+
 class MessageExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(MessageExample, self).__init__(parent)
@@ -126,6 +141,12 @@ class MessageExample(QtWidgets.QWidget, MFieldMixin):
         main_lay.addWidget(MLabel("全局设置默认duration（默认2秒）；top（离parent顶端的距离，默认24px）"))
         main_lay.addWidget(loading_button)
 
+        main_lay.addWidget(MDivider("Open Dialog"))
+        button_open_dialog = MPushButton("Open Dialog")
+        button_open_dialog.clicked.connect(self.slot_open_dialog)
+        main_lay.addWidget(button_open_dialog)
+        main_lay.addWidget(MLabel("模拟在DCC 里面弹出我们开发的工具窗口"))
+
         main_lay.addStretch()
         self.setLayout(main_lay)
 
@@ -139,6 +160,9 @@ class MessageExample(QtWidgets.QWidget, MFieldMixin):
         msg = MMessage.loading("正在加载中", parent=self)
         msg.sig_closed.connect(functools.partial(MMessage.success, "加载成功啦！！哈哈哈哈", self))
 
+    def slot_open_dialog(self):
+        dialog = MDialogExample(self)
+        dialog.exec_()
 
 if __name__ == "__main__":
     # Import local modules
