@@ -1,3 +1,9 @@
+## v0.13.12 (2024-06-21)
+
+### Fix
+
+- MToast show wrong position when its parent window in DCC
+
 ## v0.13.11 (2024-06-21)
 
 ### Fix
