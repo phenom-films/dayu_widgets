@@ -37,6 +37,21 @@ class MWorkThread(QtCore.QThread):
         time.sleep(3)
 
 
+class MDialogExample(QtWidgets.QDialog):
+    def __init__(self, parent=None):
+        super(MDialogExample, self).__init__(parent=parent)
+        main_lay = QtWidgets.QVBoxLayout()
+        button = MPushButton("Show Message")
+        button.clicked.connect(self.slot_show_message)
+
+        main_lay.addWidget(MLabel("This is a dialog in DCC. Click the button to show a message."))
+        main_lay.addWidget(button)
+        self.setLayout(main_lay)
+
+    def slot_show_message(self):
+        MToast.info(parent=self, text="This is a message")
+
+
 class ToastExample(QtWidgets.QWidget, MFieldMixin):
     def __init__(self, parent=None):
         super(ToastExample, self).__init__(parent)
@@ -78,6 +93,12 @@ class ToastExample(QtWidgets.QWidget, MFieldMixin):
         main_lay.addWidget(MLabel("不同的提示状态：成功、失败、加载中。默认2秒后消失"))
         main_lay.addWidget(loading_button)
 
+        main_lay.addWidget(MDivider("Open Dialog"))
+        button_open_dialog = MPushButton("Open Dialog")
+        button_open_dialog.clicked.connect(self.slot_open_dialog)
+        main_lay.addWidget(button_open_dialog)
+        main_lay.addWidget(MLabel("模拟在DCC 里面弹出我们开发的工具窗口"))
+
         main_lay.addStretch()
         self.setLayout(main_lay)
 
@@ -97,6 +118,9 @@ class ToastExample(QtWidgets.QWidget, MFieldMixin):
         self.msg.close()
         MToast.success("加载成功", self)
 
+    def slot_open_dialog(self):
+        dialog = MDialogExample(self)
+        dialog.exec_()
 
 if __name__ == "__main__":
     # Import local modules
