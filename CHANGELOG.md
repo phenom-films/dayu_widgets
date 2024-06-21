@@ -1,3 +1,9 @@
+## v0.13.7 (2024-06-21)
+
+### Fix
+
+- Fix compatible menu multi-select and single value
+
 ## v0.13.6 (2024-06-21)
 
 ### Fix
