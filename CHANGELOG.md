@@ -1,3 +1,9 @@
+## v0.13.13 (2024-06-21)
+
+### Fix
+
+- change size in qss to theme variable
+
 ## v0.13.12 (2024-06-21)
 
 ### Fix
