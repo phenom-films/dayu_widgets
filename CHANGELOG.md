@@ -1,3 +1,9 @@
+## v0.13.6 (2024-06-21)
+
+### Fix
+
+- tab widget example showed in demo
+
 ## v0.13.5 (2024-06-14)
 
 ### Fix
