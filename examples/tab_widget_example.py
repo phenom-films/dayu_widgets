@@ -21,9 +21,9 @@ from dayu_widgets.message import MMessage
 from dayu_widgets.tab_widget import MTabWidget
 
 
-class MTabWidgetTest(QtWidgets.QWidget):
+class TabWidgetExample(QtWidgets.QWidget):
     def __init__(self, parent=None):
-        super(MTabWidgetTest, self).__init__(parent)
+        super(TabWidgetExample, self).__init__(parent)
         self._init_ui()
         self.resize(500, 500)
 
@@ -41,7 +41,7 @@ class MTabWidgetTest(QtWidgets.QWidget):
         self.tab_closable.addTab(MLabel("test 1"), "标签一")
         self.tab_closable.addTab(MLabel("test 2"), "标签二")
         self.tab_closable.addTab(MLabel("test 3"), "标签三")
-        # self.tab_closable.tabCloseRequested.connect(self.slot_close_tab)
+        self.tab_closable.tabCloseRequested.connect(self.slot_close_tab)
         main_lay.addWidget(MDivider("Normal"))
         main_lay.addWidget(tab_card)
         main_lay.addWidget(MDivider("Closable"))
@@ -64,6 +64,6 @@ if __name__ == "__main__":
     from dayu_widgets.qt import application
 
     with application() as app:
-        test = MTabWidgetTest()
+        test = TabWidgetExample()
         dayu_theme.apply(test)
         test.show()
