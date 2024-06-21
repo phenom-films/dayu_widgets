@@ -44,32 +44,40 @@ def cursor_mixin(cls):
 
     old_enter_event = cls.enterEvent
     old_leave_event = cls.leaveEvent
+    old_hide_event = cls.hideEvent
+    old_focus_out_event = cls.focusOutEvent
+
+    def _revert_cursor(self):
+        if self.__dict__.get("__dayu_enter", False):
+            while self.__dict__.get("__dayu_enter_count", 0) > 0:
+                QtWidgets.QApplication.restoreOverrideCursor()
+                self.__dict__.update({"__dayu_enter_count": self.__dict__.get("__dayu_enter_count", 0) - 1})
+            self.__dict__.update({"__dayu_enter": False})
 
     def _new_enter_event(self, *args, **kwargs):
-        old_enter_event(self, *args, **kwargs)
         self.__dict__.update({"__dayu_enter": True})
+        self.__dict__.update({"__dayu_enter_count": self.__dict__.get("__dayu_enter_count", 0) + 1})
         QtWidgets.QApplication.setOverrideCursor(
             QtCore.Qt.PointingHandCursor if self.isEnabled() else QtCore.Qt.ForbiddenCursor
         )
-        return super(cls, self).enterEvent(*args, **kwargs)
+        return old_enter_event(self, *args, **kwargs)
 
     def _new_leave_event(self, *args, **kwargs):
-        old_leave_event(self, *args, **kwargs)
-        if self.__dict__.get("__dayu_enter", False):
-            QtWidgets.QApplication.restoreOverrideCursor()
-            self.__dict__.update({"__dayu_enter": False})
-        return super(cls, self).leaveEvent(*args, **kwargs)
+        _revert_cursor(self)
+        return old_leave_event(self, *args, **kwargs)
 
     def _new_hide_event(self, *args, **kwargs):
-        old_leave_event(self, *args, **kwargs)
-        if self.__dict__.get("__dayu_enter", False):
-            QtWidgets.QApplication.restoreOverrideCursor()
-            self.__dict__.update({"__dayu_enter": False})
-        return super(cls, self).hideEvent(*args, **kwargs)
+        _revert_cursor(self)
+        return old_hide_event(self, *args, **kwargs)
 
-    setattr(cls, "enterEvent", _new_enter_event)
-    setattr(cls, "leaveEvent", _new_leave_event)
-    setattr(cls, "hideEvent", _new_hide_event)
+    def _new_focus_out_event(self, *args, **kwargs):
+        _revert_cursor(self)
+        return old_focus_out_event(self, *args, **kwargs)
+
+    cls.enterEvent = _new_enter_event
+    cls.leaveEvent = _new_leave_event
+    cls.hideEvent = _new_hide_event
+    cls.focusOutEvent = _new_focus_out_event
     return cls
 
 
