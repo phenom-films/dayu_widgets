@@ -861,7 +861,6 @@ MTabWidget::pane { /* The tab widget frame */
     background-color: @background_color;
 }
 MTabWidget::tab-bar {
-    padding: 5px;
 }
  /* Style the tab using the tab sub-control. Note that
      it reads QTabBar _not_ QTabWidget */
@@ -874,7 +873,6 @@ MTabBar::tab {
 }
 
 QTabBar::tab:selected{
-    background: #323232;
     border-bottom: none;
     color: @primary_color;
     background-color: @background_color;
@@ -986,8 +984,6 @@ MColumnView,
 MTableView{
     background-color: @background_in_color;
     alternate-background-color: @background_color;
-    selection-background-color: rgba(45, 140, 240, 50);
-    selection-color:#1e1e1e;
     border: 1px solid @border_color;
     padding: 0;
     gridline-color: @border_color;
@@ -1008,6 +1004,7 @@ MTreeView::item:selected,
 MColumnView::item:selected,
 MTableView::item:selected{
     background-color: @primary_color;
+    color: @text_color_inverse;
 }
 
 MTableView QTableCornerButton::section {
