@@ -1,3 +1,9 @@
+## v0.13.10 (2024-06-21)
+
+### Fix
+
+- QSize need int, convert float to int (#94)
+
 ## v0.13.9 (2024-06-21)
 
 ### Fix
