@@ -74,10 +74,10 @@ def cursor_mixin(cls):
         _revert_cursor(self)
         return old_focus_out_event(self, *args, **kwargs)
 
-    setattr(cls, "enterEvent", _new_enter_event)
-    setattr(cls, "leaveEvent", _new_leave_event)
-    setattr(cls, "hideEvent", _new_hide_event)
-    setattr(cls, "focusOutEvent", _new_focus_out_event)
+    cls.enterEvent = _new_enter_event
+    cls.leaveEvent = _new_leave_event
+    cls.hideEvent = _new_hide_event
+    cls.focusOutEvent = _new_focus_out_event
     return cls
 
 
