@@ -541,18 +541,34 @@ class MMenu(SearchableMenuBase):
         self.setProperty("value", data)
 
     def _set_value(self, value):
-        data_list = value if isinstance(value, list) else [value]
+        """
+        mode 1: Cascader
+        mode 2: Exclusive
+        mode 3: Single
+        """
+        if self.property("cascader"):
+            selected_data = ['/'.join(map(str, value))]
+        else:
+            if self._action_group.isExclusive():
+                selected_data = [value]
+            else:
+                selected_data = value
+
         flag = False
         for act in self._action_group.actions():
-            if act.property("long_path"):
-                # Ensure all values is string type.
-                selected = "/".join(map(str, data_list))
-                checked = act.property("long_path") == selected
+            if self.property("cascader"):
+                act_value = self.property("cascader") and act.property("long_path") or act.property("value")
             else:
-                checked = act.property("value") in data_list
+                if self._action_group.isExclusive():
+                    act_value = act.property("value")
+                else:
+                    act_value = act.property("value")
+
+            checked = act_value in selected_data
             if act.isChecked() != checked:  # 更新来自代码
                 act.setChecked(checked)
                 flag = True
+
         if flag:
             self.sig_value_changed.emit(value)
 
