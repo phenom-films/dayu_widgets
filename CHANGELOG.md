@@ -1,3 +1,9 @@
+## v0.13.9 (2024-06-21)
+
+### Fix
+
+- cursor mixin when lose focus, restore to arrow cursor #81 (#93)
+
 ## v0.13.8 (2024-06-21)
 
 ### Fix
