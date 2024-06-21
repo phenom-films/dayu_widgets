@@ -217,6 +217,7 @@ class MTableView(QtWidgets.QTableView):
         size = size or dayu_theme.default_size
         ver_header_view = MHeaderView(QtCore.Qt.Vertical, parent=self)
         ver_header_view.setDefaultSectionSize(size)
+        ver_header_view.setSortIndicatorShown(False)
         self.setVerticalHeader(ver_header_view)
         self.header_list = []
         self.header_view = MHeaderView(QtCore.Qt.Horizontal, parent=self)

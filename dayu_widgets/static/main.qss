@@ -147,8 +147,7 @@ QToolButton#qt_calendar_yearbutton {
 QToolButton#qt_calendar_monthbutton::menu-indicator {
     subcontrol-origin: padding;
     subcontrol-position: center right;
-    right: 0;
-    width: @drop_down_small@unit;
+    right: @indicator_padding@unit;
 }
 
 QCalendarWidget QWidget {
@@ -360,7 +359,7 @@ MTaobaoButton:checked{
 
 MBlockButton{
     border-radius: 0;
-    padding: 2px 10px;
+    padding: 1% 10%;
     border:none;
 }
 MBlockButton:hover{
@@ -374,7 +373,7 @@ MBlockButton:checked{
 
 MUnderlineButton{
     border-radius: 0;
-    padding: 6px 10px;
+    padding: 1% 10%;
     border-color: transparent;
 }
 MUnderlineButton:hover{
@@ -418,10 +417,8 @@ MToolButton[dayu_size="@tiny"], MPushButton[dayu_size="@tiny"]{
 MToolButton::menu-indicator {
     subcontrol-origin: border;
     subcontrol-position: bottom right;
-    right: 5px;
-    bottom: 5px;
-    height: 10px;
-    width: 10px;
+    right: @indicator_padding@unit;
+    bottom: @indicator_padding@unit;
     image: url(@icon_down);
 }
 
@@ -636,10 +633,8 @@ MPushButton:disabled{
 MPushButton::menu-indicator {
     subcontrol-origin: border;
     subcontrol-position: bottom right;
-    right: 5px;
-    bottom: 5px;
-    height: 10px;
-    width: 10px;
+    right: @indicator_padding@unit;
+    bottom: @indicator_padding@unit;
     image: url(@icon_down);
 }
 
@@ -681,9 +676,6 @@ MRadioButton::indicator:checked:disabled{
 
 
 /*MSwitch*/
-MSwitch{
-    spacing: -20px;
-}
 MSwitch::indicator{
     subcontrol-origin: border;
     subcontrol-position: center left;
@@ -867,8 +859,8 @@ MTabWidget::tab-bar {
 MTabBar::tab {
     border: 1px solid @border_color;
     border-bottom: none;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
     background-color: @background_in_color;
 }
 
@@ -888,7 +880,7 @@ MTabBar::tab:hover {
 MTabBar::close-button {
     subcontrol-origin: content;
     subcontrol-position: right center;
-    margin-right: 5px;
+    right: @indicator_padding@unit;
     image: url(@icon_close);
 }
 MTabBar::close-button:hover {
@@ -920,7 +912,7 @@ MHeaderView {
 MHeaderView::section{
     background-color: @background_out_color;
     border: 0 solid @border_color;
-    padding: 1px 6px;
+    padding: 1px @indicator_padding@unit;
 }
 
 
@@ -944,20 +936,16 @@ MHeaderView::section:hover {
 }
 
 MHeaderView::up-arrow {
-    width: 8px;
-    height: 8px;
-    position: relative;
-    top: -10px;
-    right: 50%;
+    subcontrol-origin: padding;
+    subcontrol-position: center right;
+    right: @indicator_padding@unit;
     image: url(@icon_up);
 }
 
 MHeaderView::down-arrow {
-    width: 8px;
-    height: 8px;
-    position: relative;
-    top: -10px;
-    right: 50%;
+    subcontrol-origin: padding;
+    subcontrol-position: center right;
+    right: @indicator_padding@unit;
     image: url(@icon_down);
 }
 MListView[dayu_size="@huge"]::item{
@@ -1012,47 +1000,44 @@ MTableView QTableCornerButton::section {
     border: 0px solid @border_color;
     border-right: 1px solid @border_color;
     border-bottom: 1px solid @border_color;
-    padding: 1px 6px;
 }
 
 QScrollBar:horizontal {
     border: 0 solid @border_color;
-    height: 9px;
-    margin: 0 32px 0 0;
+    height: @indicator_size@unit;
+    margin: 0 @scroll_bar_margin@unit 0 0;
     background-color: @border_color;
 }
 
 QScrollBar::handle:horizontal {
     background-color: @background_selected_color;
-    min-width: 10px;
+    border-radius: @scroll_bar_radius@unit;
 }
 
 QScrollBar::add-line:horizontal {
     subcontrol-origin: margin;
     subcontrol-position: right center;
     background: @border_color;
-    width: 15px;
+    width: @scroll_bar_size@unit;
 }
 
 QScrollBar::sub-line:horizontal {
     subcontrol-origin: margin;
     subcontrol-position: right center;
     background: @border_color;
-    width: 15px;
-    right: 16px;
+    width: @scroll_bar_size@unit;
+    right: @scroll_bar_size@unit;
 }
 
 QScrollBar::left-arrow:horizontal {
-    width: 9px;
-    height: 9px;
-    position: relative;
+    subcontrol-origin: margin;
+    subcontrol-position: center center;
     image: url(@icon_left);
 }
 
 QScrollBar::right-arrow:horizontal {
-    width: 9px;
-    height: 9px;
-    position: relative;
+    subcontrol-origin: margin;
+    subcontrol-position: center center;
     image: url(@icon_right);
 }
 
@@ -1062,41 +1047,36 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
 
 QScrollBar:vertical {
     border: 0 solid @border_color;
-    width: 9px;
-    margin: 0 0 32px 0 ;
+    width: @indicator_size@unit;
+    margin: 0 0 @scroll_bar_margin@unit 0 ;
     background-color: @border_color;
 }
 
 QScrollBar::handle:vertical {
     background-color: @background_selected_color;
-    min-height: 10px;
 }
 
 QScrollBar::add-line:vertical {
     subcontrol-origin: margin;
     subcontrol-position: center bottom;
     background: @border_color;
-    height: 15px;
+    height: @scroll_bar_size@unit;
 }
 
 QScrollBar::sub-line:vertical {
     subcontrol-origin: margin;
     subcontrol-position: center bottom;
     background: @border_color;
-    height: 15px;
-    bottom: 16px;
+    height: @scroll_bar_size@unit;
+    bottom: @scroll_bar_size@unit;
 }
 
 QScrollBar::up-arrow:vertical {
-    width: 9px;
-    height: 9px;
     position: relative;
     image: url(@icon_up)
 }
 
 QScrollBar::down-arrow:vertical {
-    width: 9px;
-    height: 9px;
     position: relative;
     image: url(@icon_down)
 }
@@ -1184,19 +1164,19 @@ MDockWidget {
 MDockWidget::title {
     background: @background_selected_color;
     text-align: left;
-    padding-left: 10px;
+    padding-left: @indicator_padding@unit;
 }
 
 MDockWidget::close-button {
     subcontrol-origin: margin;
     subcontrol-position: right center;
-    right: 8px;
+    right: @indicator_padding@unit;
 }
 
 MDockWidget::float-button {
     subcontrol-origin: margin;
     subcontrol-position: right center;
-    right: 30px;
+    right: @scroll_bar_margin@unit;
 }
 MDockWidget::close-button:hover, MDockWidget::float-button:hover {
     border: 1px solid @primary_color;
@@ -1241,7 +1221,7 @@ MMenu::item {
     padding: 2px 2px;
 }
 MMenu::item {
-    padding: 8px auto;
+    padding: @indicator_padding@unit auto;
 }
 MMenu::item:checked  {
     color: @primary_color;
@@ -1252,7 +1232,7 @@ MMenu::item:selected  {
 }
 
 MMenu::indicator {
-    left: 6px;
+    left: @indicator_padding@unit;
 }
 
 QToolTip {
