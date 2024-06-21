@@ -41,9 +41,7 @@ class MButtonGroupBase(QtWidgets.QWidget):
         self.setLayout(self._main_layout)
         self.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         self._button_group = QtWidgets.QButtonGroup()
-        self._orientation = (
-            "horizontal" if orientation == QtCore.Qt.Horizontal else "vertical"
-        )
+        self._orientation = "horizontal" if orientation == QtCore.Qt.Horizontal else "vertical"
 
     def set_spacing(self, value):
         self._main_layout.setSpacing(value)
@@ -156,15 +154,9 @@ class MCheckBoxGroup(MButtonGroupBase):
         action_select_all = context_menu.addAction("Select All")
         action_select_none = context_menu.addAction("Select None")
         action_select_invert = context_menu.addAction("Select Invert")
-        action_select_all.triggered.connect(
-            functools.partial(self._slot_set_select, True)
-        )
-        action_select_none.triggered.connect(
-            functools.partial(self._slot_set_select, False)
-        )
-        action_select_invert.triggered.connect(
-            functools.partial(self._slot_set_select, None)
-        )
+        action_select_all.triggered.connect(functools.partial(self._slot_set_select, True))
+        action_select_none.triggered.connect(functools.partial(self._slot_set_select, False))
+        action_select_invert.triggered.connect(functools.partial(self._slot_set_select, None))
         context_menu.exec_(QtGui.QCursor.pos() + QtCore.QPoint(10, 10))
 
     @QtCore.Slot(bool)
@@ -180,11 +172,7 @@ class MCheckBoxGroup(MButtonGroupBase):
     @QtCore.Slot(int)
     def _slot_map_signal(self, state=None):
         self.sig_checked_changed.emit(
-            [
-                check_box.text()
-                for check_box in self._button_group.buttons()
-                if check_box.isChecked()
-            ]
+            [check_box.text() for check_box in self._button_group.buttons() if check_box.isChecked()]
         )
 
     def set_dayu_checked(self, value):
@@ -195,23 +183,15 @@ class MCheckBoxGroup(MButtonGroupBase):
 
         self._dayu_checked = value
         for check_box in self._button_group.buttons():
-            flag = (
-                QtCore.Qt.Checked if check_box.text() in value else QtCore.Qt.Unchecked
-            )
+            flag = QtCore.Qt.Checked if check_box.text() in value else QtCore.Qt.Unchecked
             if flag != check_box.checkState():
                 check_box.setCheckState(flag)
         self.sig_checked_changed.emit(value)
 
     def get_dayu_checked(self):
-        return [
-            check_box.text()
-            for check_box in self._button_group.buttons()
-            if check_box.isChecked()
-        ]
+        return [check_box.text() for check_box in self._button_group.buttons() if check_box.isChecked()]
 
-    dayu_checked = QtCore.Property(
-        "QVariantList", get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
-    )
+    dayu_checked = QtCore.Property("QVariantList", get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
 
 
 class MRadioButtonGroup(MButtonGroupBase):
@@ -245,9 +225,7 @@ class MRadioButtonGroup(MButtonGroupBase):
     def get_dayu_checked(self):
         return self._button_group.checkedId()
 
-    dayu_checked = QtCore.Property(
-        int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
-    )
+    dayu_checked = QtCore.Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
 
 
 class MToolButtonGroup(MButtonGroupBase):
@@ -294,6 +272,4 @@ class MToolButtonGroup(MButtonGroupBase):
     def get_dayu_checked(self):
         return self._button_group.checkedId()
 
-    dayu_checked = QtCore.Property(
-        int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
-    )
+    dayu_checked = QtCore.Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)

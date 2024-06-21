@@ -29,17 +29,13 @@ from dayu_widgets.tool_button import MToolButton
 class MSectionItem(QtWidgets.QWidget):
     sig_context_menu = QtCore.Signal(object)
 
-    def __init__(
-        self, title="", expand=False, widget=None, closable=False, parent=None
-    ):
+    def __init__(self, title="", expand=False, widget=None, closable=False, parent=None):
         super(MSectionItem, self).__init__(parent)
         self._central_widget = None
         self.setAttribute(QtCore.Qt.WA_StyledBackground)
         self.title_label = MLabel(parent=self)
         self.expand_icon = MLabel(parent=self)
-        self.expand_icon.setSizePolicy(
-            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum
-        )
+        self.expand_icon.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         self._close_button = MToolButton().icon_only().tiny().svg("close_line.svg")
         self._close_button.clicked.connect(self.close)
 
@@ -52,9 +48,7 @@ class MSectionItem(QtWidgets.QWidget):
         self.header_widget.setAttribute(QtCore.Qt.WA_StyledBackground)
         self.header_widget.setObjectName("title")
         self.header_widget.setLayout(header_lay)
-        self.header_widget.setSizePolicy(
-            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum
-        )
+        self.header_widget.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         self.header_widget.setCursor(QtCore.Qt.PointingHandCursor)
         self.title_label.setCursor(QtCore.Qt.PointingHandCursor)
         self.header_widget.installEventFilter(self)
@@ -70,9 +64,7 @@ class MSectionItem(QtWidgets.QWidget):
         self.main_lay.addWidget(self.header_widget)
         self.main_lay.addWidget(self.content_widget)
         self.setLayout(self.main_lay)
-        self.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
-        )
+        self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.setMouseTracking(True)
         self.set_title(title)
         self.set_closable(closable)
@@ -102,9 +94,7 @@ class MSectionItem(QtWidgets.QWidget):
 
     def _set_expand(self, value):
         self.content_widget.setVisible(value)
-        self.expand_icon.setPixmap(
-            MPixmap("down_line.svg" if value else "right_line.svg").scaledToHeight(12)
-        )
+        self.expand_icon.setPixmap(MPixmap("down_line.svg" if value else "right_line.svg").scaledToHeight(12))
 
     def set_title(self, value):
         self.setProperty("title", value)
@@ -142,9 +132,7 @@ class MCollapse(QtWidgets.QWidget):
     def add_section_list(self, section_list):
         for section_data in section_list:
             section_widget = self.add_section(section_data)
-            section_widget._close_button.clicked.connect(
-                functools.partial(self.remove_section, section_widget)
-            )
+            section_widget._close_button.clicked.connect(functools.partial(self.remove_section, section_widget))
             self._section_list.append(section_widget)
 
     def remove_section(self, widget):

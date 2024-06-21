@@ -28,9 +28,7 @@ from dayu_widgets.tool_button import MToolButton
 @hover_shadow_mixin
 @cursor_mixin
 class MCard(QtWidgets.QWidget):
-    def __init__(
-        self, title=None, image=None, size=None, extra=None, type=None, parent=None
-    ):
+    def __init__(self, title=None, image=None, size=None, extra=None, type=None, parent=None):
         super(MCard, self).__init__(parent=parent)
         self.setAttribute(QtCore.Qt.WA_StyledBackground)
         self.setProperty("border", False)
@@ -150,9 +148,7 @@ class MMeta(QtWidgets.QWidget):
         if data_dict.get("cover"):
             fixed_height = self._cover_label.width()
             self._cover_label.setPixmap(
-                data_dict.get("cover").scaledToWidth(
-                    fixed_height, QtCore.Qt.SmoothTransformation
-                )
+                data_dict.get("cover").scaledToWidth(fixed_height, QtCore.Qt.SmoothTransformation)
             )
             self._cover_label.setVisible(True)
         else:

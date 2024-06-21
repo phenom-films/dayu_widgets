@@ -43,16 +43,12 @@ def _slot_browser_file(self):
         else "Any File(*)"
     )
     if self.get_dayu_multiple():
-        r_files, _ = QtWidgets.QFileDialog.getOpenFileNames(
-            self, "Browser File", self.get_dayu_path(), filter_list
-        )
+        r_files, _ = QtWidgets.QFileDialog.getOpenFileNames(self, "Browser File", self.get_dayu_path(), filter_list)
         if r_files:
             self.sig_files_changed.emit(r_files)
             self.set_dayu_path(r_files[0])
     else:
-        r_file, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, "Browser File", self.get_dayu_path(), filter_list
-        )
+        r_file, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Browser File", self.get_dayu_path(), filter_list)
         if r_file:
             self.sig_file_changed.emit(r_file)
             self.set_dayu_path(r_file)
@@ -60,9 +56,7 @@ def _slot_browser_file(self):
 
 # @Slot()
 def _slot_browser_folder(self):
-    r_folder = QtWidgets.QFileDialog.getExistingDirectory(
-        self, "Browser Folder", self.get_dayu_path()
-    )
+    r_folder = QtWidgets.QFileDialog.getExistingDirectory(self, "Browser Folder", self.get_dayu_path())
     if r_folder:
         if self.get_dayu_multiple():
             self.sig_folders_changed.emit([r_folder])
@@ -78,9 +72,7 @@ def _slot_save_file(self):
         if self.get_dayu_filters()
         else "Any File(*)"
     )
-    r_file, _ = QtWidgets.QFileDialog.getSaveFileName(
-        self, "Save File", self.get_dayu_path(), filter_list
-    )
+    r_file, _ = QtWidgets.QFileDialog.getSaveFileName(self, "Save File", self.get_dayu_path(), filter_list)
     if r_file:
         self.sig_file_changed.emit(r_file)
         self.set_dayu_path(r_file)
@@ -291,9 +283,7 @@ class MDragFileButton(MToolButton):
         self.set_dayu_svg("cloud_line.svg")
 
         self.clicked.connect(self.slot_browser_file)
-        self.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
-        )
+        self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         self.setToolTip(self.tr("Click to browser file"))
 
         self._path = None
@@ -378,9 +368,7 @@ class MDragFileButton(MToolButton):
             file_name = url.toLocalFile()
             if sys.platform == "darwin":
                 sub_process = subprocess.Popen(
-                    "osascript -e 'get posix path of posix file \"file://{}\" -- kthxbai'".format(
-                        file_name
-                    ),
+                    "osascript -e 'get posix path of posix file \"file://{}\" -- kthxbai'".format(file_name),
                     stdout=subprocess.PIPE,
                     shell=True,
                 )
@@ -521,9 +509,7 @@ class MDragFolderButton(MToolButton):
         self.setIconSize(QtCore.QSize(size, size))
         self.setText(self.tr("Click or drag folder here"))
         self.clicked.connect(self.slot_browser_folder)
-        self.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
-        )
+        self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         self.setToolTip(self.tr("Click to browser folder or drag folder here"))
 
         self._path = None
@@ -565,11 +551,7 @@ class MDragFolderButton(MToolButton):
     def dragEnterEvent(self, event):
         """Override dragEnterEvent. Validate dragged folders"""
         if event.mimeData().hasFormat("text/uri-list"):
-            folder_list = [
-                url.toLocalFile()
-                for url in event.mimeData().urls()
-                if os.path.isdir(url.toLocalFile())
-            ]
+            folder_list = [url.toLocalFile() for url in event.mimeData().urls() if os.path.isdir(url.toLocalFile())]
             count = len(folder_list)
             if count == 1 or (count > 1 and self.get_dayu_multiple()):
                 event.acceptProposedAction()
@@ -577,11 +559,7 @@ class MDragFolderButton(MToolButton):
 
     def dropEvent(self, event):
         """Override dropEvent to accept the dropped folders"""
-        folder_list = [
-            url.toLocalFile()
-            for url in event.mimeData().urls()
-            if os.path.isdir(url.toLocalFile())
-        ]
+        folder_list = [url.toLocalFile() for url in event.mimeData().urls() if os.path.isdir(url.toLocalFile())]
         if self.get_dayu_multiple():
             self.sig_folders_changed.emit(folder_list)
         else:

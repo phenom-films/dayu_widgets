@@ -57,9 +57,7 @@ class MToast(QtWidgets.QWidget):
         _icon_lay.addStretch()
 
         if dayu_type == MToast.LoadingType:
-            _icon_lay.addWidget(
-                MLoading(size=dayu_theme.huge, color=dayu_theme.text_color_inverse)
-            )
+            _icon_lay.addWidget(MLoading(size=dayu_theme.huge, color=dayu_theme.text_color_inverse))
         else:
             _icon_label = MAvatar()
             _icon_label.set_dayu_size(dayu_theme.toast_icon_size)
@@ -90,9 +88,7 @@ class MToast(QtWidgets.QWidget):
         _close_timer.setSingleShot(True)
         _close_timer.timeout.connect(self.close)
         _close_timer.timeout.connect(self.sig_closed)
-        _close_timer.setInterval(
-            (duration or self.default_config.get("duration")) * 1000
-        )
+        _close_timer.setInterval((duration or self.default_config.get("duration")) * 1000)
         self.has_played = False
 
         if dayu_type != MToast.LoadingType:
@@ -127,11 +123,7 @@ class MToast(QtWidgets.QWidget):
 
     def _get_center_position(self, parent):
         parent_geo = parent.geometry()
-        pos = (
-            parent_geo.topLeft()
-            if parent.parent() is None
-            else parent.mapToGlobal(parent_geo.topLeft())
-        )
+        pos = parent_geo.topLeft() if parent.parent() is None else parent.mapToGlobal(parent_geo.topLeft())
         offset = 0
         for child in parent.children():
             if isinstance(child, MToast) and child.isVisible():

@@ -80,11 +80,7 @@ class MProgressCircle(QtWidgets.QProgressBar):
         :return: None
         """
         self._width = value
-        self.setFixedSize(
-            QtCore.QSize(
-                self._width * self._width_factor, self._width * self._height_factor
-            )
-        )
+        self.setFixedSize(QtCore.QSize(self._width * self._width_factor, self._width * self._height_factor))
 
     def get_dayu_color(self):
         """

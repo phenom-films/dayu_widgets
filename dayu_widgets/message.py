@@ -39,9 +39,7 @@ class MMessage(QtWidgets.QWidget):
 
     sig_closed = QtCore.Signal()
 
-    def __init__(
-        self, text, duration=None, dayu_type=None, closable=False, parent=None
-    ):
+    def __init__(self, text, duration=None, dayu_type=None, closable=False, parent=None):
         super(MMessage, self).__init__(parent)
         self.setObjectName("message")
         self.setWindowFlags(
@@ -68,9 +66,7 @@ class MMessage(QtWidgets.QWidget):
         # self._content_label.set_elide_mode(Qt.ElideMiddle)
         self._content_label.setText(text)
 
-        self._close_button = (
-            MToolButton(parent=self).icon_only().svg("close_line.svg").tiny()
-        )
+        self._close_button = MToolButton(parent=self).icon_only().svg("close_line.svg").tiny()
         self._close_button.clicked.connect(self.close)
         self._close_button.setVisible(closable or False)
 
@@ -85,15 +81,11 @@ class MMessage(QtWidgets.QWidget):
         _close_timer.setSingleShot(True)
         _close_timer.timeout.connect(self.close)
         _close_timer.timeout.connect(self.sig_closed)
-        _close_timer.setInterval(
-            (duration or self.default_config.get("duration")) * 1000
-        )
+        _close_timer.setInterval((duration or self.default_config.get("duration")) * 1000)
 
         _ani_timer = QtCore.QTimer(self)
         _ani_timer.timeout.connect(self._fade_out)
-        _ani_timer.setInterval(
-            (duration or self.default_config.get("duration")) * 1000 - 300
-        )
+        _ani_timer.setInterval((duration or self.default_config.get("duration")) * 1000 - 300)
 
         _close_timer.start()
         _ani_timer.start()
@@ -127,11 +119,7 @@ class MMessage(QtWidgets.QWidget):
 
     def _set_proper_position(self, parent):
         parent_geo = parent.geometry()
-        pos = (
-            parent_geo.topLeft()
-            if parent.parent() is None
-            else parent.mapToGlobal(parent_geo.topLeft())
-        )
+        pos = parent_geo.topLeft() if parent.parent() is None else parent.mapToGlobal(parent_geo.topLeft())
         offset = 0
         for child in parent.children():
             if isinstance(child, MMessage) and child.isVisible():

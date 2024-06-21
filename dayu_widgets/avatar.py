@@ -53,9 +53,7 @@ class MAvatar(QtWidgets.QLabel):
         self._set_dayu_image()
 
     def _set_dayu_image(self):
-        self.setPixmap(
-            self._pixmap.scaledToWidth(self.height(), QtCore.Qt.SmoothTransformation)
-        )
+        self.setPixmap(self._pixmap.scaledToWidth(self.height(), QtCore.Qt.SmoothTransformation))
 
     def set_dayu_image(self, value):
         """
@@ -68,10 +66,7 @@ class MAvatar(QtWidgets.QLabel):
         elif isinstance(value, QtGui.QPixmap):
             self._pixmap = self._default_pix if value.isNull() else value
         else:
-            raise TypeError(
-                "Input argument 'value' should be QPixmap or None, "
-                "but get {}".format(type(value))
-            )
+            raise TypeError("Input argument 'value' should be QPixmap or None, " "but get {}".format(type(value)))
         self._set_dayu_image()
 
     def get_dayu_image(self):

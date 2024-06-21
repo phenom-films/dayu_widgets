@@ -166,9 +166,7 @@ class MLineEdit(QtWidgets.QLineEdit):
             dialog = QtWidgets.QTextEdit(self)
             dialog.setReadOnly(True)
             geo = QtWidgets.QApplication.desktop().screenGeometry()
-            dialog.setGeometry(
-                geo.width() / 2, geo.height() / 2, geo.width() / 4, geo.height() / 4
-            )
+            dialog.setGeometry(geo.width() / 2, geo.height() / 2, geo.width() / 4, geo.height() / 4)
             dialog.setWindowTitle(self.tr("Error Detail Information"))
             dialog.setText(self.property("history"))
             dialog.setWindowFlags(QtCore.Qt.Dialog)

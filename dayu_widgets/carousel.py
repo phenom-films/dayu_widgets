@@ -34,9 +34,7 @@ class MGuidPrivate(QtWidgets.QFrame):
 
     def set_checked(self, value):
         self.setStyleSheet(
-            "background-color:{}".format(
-                dayu_theme.primary_color if value else dayu_theme.background_color
-            )
+            "background-color:{}".format(dayu_theme.primary_color if value else dayu_theme.background_color)
         )
         self.setFixedSize(20 if value else 16, 4)
 
@@ -51,9 +49,7 @@ class MCarousel(QtWidgets.QGraphicsView):
     def __init__(self, pix_list, autoplay=True, width=500, height=500, parent=None):
         super(MCarousel, self).__init__(parent)
         self.scene = QtWidgets.QGraphicsScene()
-        self.scene.setBackgroundBrush(
-            QtGui.QBrush(QtGui.QColor(dayu_theme.background_color))
-        )
+        self.scene.setBackgroundBrush(QtGui.QBrush(QtGui.QColor(dayu_theme.background_color)))
         self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.setScene(self.scene)
@@ -77,9 +73,7 @@ class MCarousel(QtWidgets.QGraphicsView):
             if pix.width() > pix.height():
                 new_pix = pix.scaledToWidth(target_size, QtCore.Qt.SmoothTransformation)
             else:
-                new_pix = pix.scaledToHeight(
-                    target_size, QtCore.Qt.SmoothTransformation
-                )
+                new_pix = pix.scaledToHeight(target_size, QtCore.Qt.SmoothTransformation)
             pix_item = QtWidgets.QGraphicsPixmapItem(new_pix)
             pix_item.setPos(pos)
             pix_item.setTransformationMode(QtCore.Qt.SmoothTransformation)
@@ -122,15 +116,11 @@ class MCarousel(QtWidgets.QGraphicsView):
         self.autoplay_timer.setInterval(ms)
 
     def next_page(self):
-        index = (
-            self.current_index + 1 if self.current_index + 1 < self.page_count else 0
-        )
+        index = self.current_index + 1 if self.current_index + 1 < self.page_count else 0
         self.go_to_page(index)
 
     def pre_page(self):
-        index = (
-            self.current_index - 1 if self.current_index > 0 else self.page_count - 1
-        )
+        index = self.current_index - 1 if self.current_index > 0 else self.page_count - 1
         self.go_to_page(index)
 
     def go_to_page(self, index):

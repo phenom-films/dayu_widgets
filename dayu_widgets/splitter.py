@@ -78,9 +78,7 @@ class MSplitter(QtWidgets.QSplitter):
         handle = QtWidgets.QSplitterHandle(orient, self)
 
         # NOTES: double click average size
-        handle.mouseDoubleClickEvent = lambda e: self.setSizes(
-            [1 for i in range(self.count())]
-        )
+        handle.mouseDoubleClickEvent = lambda e: self.setSizes([1 for i in range(self.count())])
 
         layout = QtWidgets.QVBoxLayout() if is_horizontal else QtWidgets.QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)

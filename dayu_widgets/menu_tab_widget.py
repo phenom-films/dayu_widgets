@@ -71,9 +71,7 @@ class MBlockButtonGroup(MButtonGroupBase):
         """Get current checked button's id"""
         return self._button_group.checkedId()
 
-    dayu_checked = QtCore.Property(
-        int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed
-    )
+    dayu_checked = QtCore.Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
 
 
 class MMenuTabWidget(QtWidgets.QWidget):

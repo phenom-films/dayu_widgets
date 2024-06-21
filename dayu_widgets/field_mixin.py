@@ -36,9 +36,7 @@ class MFieldMixin(object):
             self.props_dict[name] = {"value": getter, "require": required, "bind": []}
         return
 
-    def bind(
-        self, data_name, widget, qt_property, index=None, signal=None, callback=None
-    ):
+    def bind(self, data_name, widget, qt_property, index=None, signal=None, callback=None):
         data_dict = {
             "data_name": data_name,
             "widget": widget,
@@ -51,9 +49,7 @@ class MFieldMixin(object):
         else:
             self.props_dict[data_name]["bind"].append(data_dict)
         if signal:  # 用户操作绑定数据
-            getattr(widget, signal).connect(
-                functools.partial(self._slot_changed_from_user, data_dict)
-            )
+            getattr(widget, signal).connect(functools.partial(self._slot_changed_from_user, data_dict))
         self._data_update_ui(data_dict)
         return widget
 
@@ -90,14 +86,8 @@ class MFieldMixin(object):
         elif isinstance(self.field(data_name), dict):
             value = self.field(data_name).get(index)
         elif isinstance(self.field(data_name), list):
-            value = (
-                self.field(data_name)[index]
-                if index < len(self.field(data_name))
-                else None
-            )
-        if widget.metaObject().indexOfProperty(
-            widget_property
-        ) > -1 or widget_property in list(
+            value = self.field(data_name)[index] if index < len(self.field(data_name)) else None
+        if widget.metaObject().indexOfProperty(widget_property) > -1 or widget_property in list(
             map(str, [b.data().decode() for b in widget.dynamicPropertyNames()])
         ):
             widget.setProperty(widget_property, value)

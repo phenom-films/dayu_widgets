@@ -48,17 +48,13 @@ class MBadge(QtWidgets.QWidget):
         self._count = None
 
         self._badge_button = QtWidgets.QPushButton()
-        self._badge_button.setSizePolicy(
-            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum
-        )
+        self._badge_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
 
         self._main_lay = QtWidgets.QGridLayout()
         self._main_lay.setContentsMargins(0, 0, 0, 0)
         if widget is not None:
             self._main_lay.addWidget(widget, 0, 0)
-        self._main_lay.addWidget(
-            self._badge_button, 0, 0, QtCore.Qt.AlignTop | QtCore.Qt.AlignRight
-        )
+        self._main_lay.addWidget(self._badge_button, 0, 0, QtCore.Qt.AlignTop | QtCore.Qt.AlignRight)
         self.setLayout(self._main_lay)
 
     def get_dayu_overflow(self):
@@ -113,9 +109,7 @@ class MBadge(QtWidgets.QWidget):
         self._update_number()
 
     def _update_number(self):
-        self._badge_button.setText(
-            utils.overflow_format(self._count, self._overflow_count)
-        )
+        self._badge_button.setText(utils.overflow_format(self._count, self._overflow_count))
         self._badge_button.setVisible(self._count > 0)
         self._dot = False
         self.style().polish(self)

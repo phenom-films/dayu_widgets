@@ -47,9 +47,7 @@ class MSequenceFile(QtWidgets.QWidget, MFieldMixin):
         self._file_label.set_dayu_size(size)
         self._file_label.setReadOnly(True)
         self._is_sequence_check_box = MCheckBox(self.tr("Sequence"))
-        self._is_sequence_check_box.toggled.connect(
-            functools.partial(self.setProperty, "sequence")
-        )
+        self._is_sequence_check_box.toggled.connect(functools.partial(self.setProperty, "sequence"))
         self._is_sequence_check_box.toggled.connect(self.sig_is_sequence_changed)
 
         self._info_label = MLabel().secondary()
@@ -105,19 +103,11 @@ class MSequenceFile(QtWidgets.QWidget, MFieldMixin):
                 "Range: {start}-{end}".format(
                     ext=self.sequence_obj.ext,
                     count=len(self.sequence_obj.frames),
-                    start=self.sequence_obj.frames[0]
-                    if self.sequence_obj.frames
-                    else "/",
-                    end=self.sequence_obj.frames[-1]
-                    if self.sequence_obj.frames
-                    else "/",
+                    start=self.sequence_obj.frames[0] if self.sequence_obj.frames else "/",
+                    end=self.sequence_obj.frames[-1] if self.sequence_obj.frames else "/",
                 )
             )
-            error_info = (
-                "Missing: {}".format(self.sequence_obj.missing)
-                if self.sequence_obj.missing
-                else ""
-            )
+            error_info = "Missing: {}".format(self.sequence_obj.missing) if self.sequence_obj.missing else ""
             self._error_label.setText(error_info)
             self._error_label.setToolTip(error_info)
         self._info_label.setVisible(self.property("sequence"))

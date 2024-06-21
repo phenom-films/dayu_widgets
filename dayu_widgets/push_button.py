@@ -86,8 +86,7 @@ class MPushButton(QtWidgets.QPushButton):
             self._dayu_type = value
         else:
             raise ValueError(
-                "Input argument 'value' should be one of "
-                "default/primary/success/warning/danger string."
+                "Input argument 'value' should be one of " "default/primary/success/warning/danger string."
             )
         self.style().polish(self)
 

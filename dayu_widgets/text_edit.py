@@ -28,9 +28,7 @@ class MTextEdit(QtWidgets.QTextEdit):
         self._size_grip = MSizeGrip(self)
         layout = QtWidgets.QGridLayout()
         layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(
-            self._size_grip, 0, 0, QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight
-        )
+        layout.addWidget(self._size_grip, 0, 0, QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
         self.setLayout(layout)
         self._size_grip.setVisible(False)
 
