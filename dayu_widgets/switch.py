@@ -42,7 +42,7 @@ class MSwitch(QtWidgets.QRadioButton):
         :return:
         """
         height = self._dayu_size * 1.2
-        return QtCore.QSize(height, height / 2)
+        return QtCore.QSize(int(height), int(height / 2))
 
     def get_dayu_size(self):
         """
