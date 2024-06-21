@@ -107,11 +107,7 @@ class MPopup(QtWidgets.QFrame):
         return super(MPopup, self).mouseReleaseEvent(event)
 
     def mouseMoveEvent(self, event):
-        if (
-            event.buttons() == QtCore.Qt.LeftButton
-            and self.mouse_pos
-            and self.property("movable")
-        ):
+        if event.buttons() == QtCore.Qt.LeftButton and self.mouse_pos and self.property("movable"):
             self.move(self.mapToGlobal(event.pos() - self.mouse_pos))
         return super(MPopup, self).mouseMoveEvent(event)
 

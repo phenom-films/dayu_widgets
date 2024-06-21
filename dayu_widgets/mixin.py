@@ -49,9 +49,7 @@ def cursor_mixin(cls):
         old_enter_event(self, *args, **kwargs)
         self.__dict__.update({"__dayu_enter": True})
         QtWidgets.QApplication.setOverrideCursor(
-            QtCore.Qt.PointingHandCursor
-            if self.isEnabled()
-            else QtCore.Qt.ForbiddenCursor
+            QtCore.Qt.PointingHandCursor if self.isEnabled() else QtCore.Qt.ForbiddenCursor
         )
         return super(cls, self).enterEvent(*args, **kwargs)
 
@@ -151,11 +149,7 @@ def _stackable(widget):
     """Used for stacked_animation_mixin to only add mixin for widget who can stacked."""
     # We use widget() to get currentWidget, use currentChanged to play the animation.
     # For now just QTabWidget and QStackedWidget can use this decorator.
-    return (
-        issubclass(widget, QtWidgets.QWidget)
-        and hasattr(widget, "widget")
-        and hasattr(widget, "currentChanged")
-    )
+    return issubclass(widget, QtWidgets.QWidget) and hasattr(widget, "widget") and hasattr(widget, "currentChanged")
 
 
 def stacked_animation_mixin(cls):

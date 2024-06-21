@@ -89,10 +89,7 @@ class MAlert(QtWidgets.QWidget):
         if isinstance(value, six.string_types):
             self._dayu_text = value
         else:
-            raise TypeError(
-                "Input argument 'value' should be string type, "
-                "but get {}".format(type(value))
-            )
+            raise TypeError("Input argument 'value' should be string type, " "but get {}".format(type(value)))
         self._set_dayu_text()
 
     def _set_dayu_type(self):
@@ -114,10 +111,7 @@ class MAlert(QtWidgets.QWidget):
         ]:
             self._dayu_type = value
         else:
-            raise ValueError(
-                "Input argument 'value' should be one of "
-                "info/success/warning/error string."
-            )
+            raise ValueError("Input argument 'value' should be one of " "info/success/warning/error string.")
         self._set_dayu_type()
 
     def get_dayu_type(self):

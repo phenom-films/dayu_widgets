@@ -37,12 +37,8 @@ class MLabel(QtWidgets.QLabel):
 
     def __init__(self, text="", parent=None, flags=QtCore.Qt.Widget):
         super(MLabel, self).__init__(text, parent, flags)
-        self.setTextInteractionFlags(
-            QtCore.Qt.TextBrowserInteraction | QtCore.Qt.LinksAccessibleByMouse
-        )
-        self.setSizePolicy(
-            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
-        )
+        self.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction | QtCore.Qt.LinksAccessibleByMouse)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         self._dayu_type = ""
         self._dayu_underline = False
         self._dayu_mark = False
@@ -125,9 +121,7 @@ class MLabel(QtWidgets.QLabel):
     dayu_strong = QtCore.Property(bool, get_dayu_strong, set_dayu_strong)
     dayu_mark = QtCore.Property(bool, get_dayu_mark, set_dayu_mark)
     dayu_code = QtCore.Property(bool, get_dayu_code, set_dayu_code)
-    dayu_elide_mod = QtCore.Property(
-        QtCore.Qt.TextElideMode, get_dayu_code, set_dayu_code
-    )
+    dayu_elide_mod = QtCore.Property(QtCore.Qt.TextElideMode, get_dayu_code, set_dayu_code)
 
     def minimumSizeHint(self):
         return QtCore.QSize(1, self.fontMetrics().height())
@@ -158,11 +152,7 @@ class MLabel(QtWidgets.QLabel):
         """
         # 这里富文本的超链接必须使用 html 的样式，使用 qss 不起作用
         link_style = dayu_theme.hyperlink_style
-        self.setText(
-            '{style}<a href="{href}">{text}</a>'.format(
-                style=link_style, href=href, text=text or href
-            )
-        )
+        self.setText('{style}<a href="{href}">{text}</a>'.format(style=link_style, href=href, text=text or href))
         self.setOpenExternalLinks(True)
 
     def _update_elided_text(self):
@@ -172,9 +162,7 @@ class MLabel(QtWidgets.QLabel):
         _font_metrics = self.fontMetrics()
         text = self.property("text")
         text = text if text else ""
-        _elided_text = _font_metrics.elidedText(
-            text, self._elide_mode, self.width() - 2 * 2
-        )
+        _elided_text = _font_metrics.elidedText(text, self._elide_mode, self.width() - 2 * 2)
         super(MLabel, self).setText(_elided_text)
 
     def resizeEvent(self, event):
@@ -246,9 +234,6 @@ class MLabel(QtWidgets.QLabel):
         return self
 
     def event(self, event):
-        if (
-            event.type() == QtCore.QEvent.DynamicPropertyChange
-            and event.propertyName() == "dayu_text"
-        ):
+        if event.type() == QtCore.QEvent.DynamicPropertyChange and event.propertyName() == "dayu_text":
             self.setText(self.property("dayu_text"))
         return super(MLabel, self).event(event)

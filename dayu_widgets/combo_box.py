@@ -44,9 +44,7 @@ class MComboBoxSearchMixin(object):
         edit.setReadOnly(False)
         edit.returnPressed.disconnect()
         edit.textEdited.connect(self.filter_model.setFilterFixedString)
-        self.completer.activated.connect(
-            lambda t: t and self.setCurrentIndex(self.findText(t))
-        )
+        self.completer.activated.connect(lambda t: t and self.setCurrentIndex(self.findText(t)))
 
     def _set_searchable(self, value):
         """search property to True then trigger search"""
@@ -84,9 +82,7 @@ class MComboBox(MComboBoxSearchMixin, QtWidgets.QComboBox):
         self._has_custom_view = False
         self.set_value("")
         self.set_placeholder(self.tr("Please Select"))
-        self.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
-        )
+        self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self._dayu_size = dayu_theme.default_size
         dayu_theme.apply(self)
 
