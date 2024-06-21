@@ -1,3 +1,9 @@
+## v0.13.8 (2024-06-21)
+
+### Fix
+
+- remove fixed color and useless code in qss file
+
 ## v0.13.7 (2024-06-21)
 
 ### Fix
