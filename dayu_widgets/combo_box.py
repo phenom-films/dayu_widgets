@@ -142,7 +142,7 @@ class MComboBox(MComboBoxSearchMixin, QtWidgets.QComboBox):
     #     raise NotImplementedError
 
     def eventFilter(self, widget, event):
-        if widget is self.lineEdit() and widget.isReadOnly():
+        if widget is self.lineEdit() and widget.isReadOnly() and self.isEnabled():
             if event.type() == QtCore.QEvent.MouseButtonPress:
                 self.showPopup()
         return super(MComboBox, self).eventFilter(widget, event)
