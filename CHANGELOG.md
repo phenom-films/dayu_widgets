@@ -1,3 +1,9 @@
+## v0.13.15 (2024-10-28)
+
+### Fix
+
+- set min-height qss for vertical handle(when to show thousands data, handle too small)
+
 ## v0.13.14 (2024-08-03)
 
 ### Fix
