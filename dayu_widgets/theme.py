@@ -95,6 +95,7 @@ def get_theme_size():
         "indicator_padding": int(4 * scale_factor_x),
         "indicator_size": int(8 * scale_factor_x),
         "scroll_bar_size": int(12 * scale_factor_x),
+        "scroll_bar_min_length": int(20 * scale_factor_x),
         "scroll_bar_margin": int(12 * scale_factor_x * 2) + 1,
         "scroll_bar_radius": int(12 * scale_factor_x / 2.0),
     }
