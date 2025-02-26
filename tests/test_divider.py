@@ -8,7 +8,7 @@ from qtpy import QtCore
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3.divider import MDivider
+from dayu_widgets.divider import MDivider
 
 
 @pytest.mark.parametrize("text, visible_text", (("", False), ("test", True)))

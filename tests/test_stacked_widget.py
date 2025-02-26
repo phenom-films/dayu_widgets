@@ -4,7 +4,7 @@
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3.stacked_widget import MStackedWidget
+from dayu_widgets.stacked_widget import MStackedWidget
 
 
 def test_stacked_widget_init(qtbot):

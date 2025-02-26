@@ -3,13 +3,13 @@ from qtpy import QtCore
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3 import dayu_theme
-from dayu_widgets3.avatar import MAvatar
-from dayu_widgets3.divider import MDivider
-from dayu_widgets3.field_mixin import MFieldMixin
-from dayu_widgets3.label import MLabel
-from dayu_widgets3.push_button import MPushButton
-from dayu_widgets3.qt import MPixmap
+from dayu_widgets import dayu_theme
+from dayu_widgets.avatar import MAvatar
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.label import MLabel
+from dayu_widgets.push_button import MPushButton
+from dayu_widgets.qt import MPixmap
 
 
 class AvatarExample(QtWidgets.QWidget, MFieldMixin):
@@ -67,8 +67,8 @@ class AvatarExample(QtWidgets.QWidget, MFieldMixin):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets3 import dayu_theme
-    from dayu_widgets3.qt import application
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
     with application() as app:
         test = AvatarExample()

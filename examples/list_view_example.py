@@ -2,13 +2,13 @@
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3 import dayu_theme
-from dayu_widgets3.divider import MDivider
-from dayu_widgets3.field_mixin import MFieldMixin
-from dayu_widgets3.item_model import MSortFilterModel
-from dayu_widgets3.item_model import MTableModel
-from dayu_widgets3.item_view import MListView
-from dayu_widgets3.line_edit import MLineEdit
+from dayu_widgets import dayu_theme
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.item_model import MSortFilterModel
+from dayu_widgets.item_model import MTableModel
+from dayu_widgets.item_view import MListView
+from dayu_widgets.line_edit import MLineEdit
 import examples._mock_data as mock
 
 
@@ -52,8 +52,8 @@ class ListViewExample(QtWidgets.QWidget, MFieldMixin):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets3 import dayu_theme
-    from dayu_widgets3.qt import application
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
     with application() as app:
         test = ListViewExample()

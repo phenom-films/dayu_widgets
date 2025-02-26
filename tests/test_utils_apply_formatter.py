@@ -1,9 +1,10 @@
 """Test utils.apply_formatter function."""
+
 # Import third-party modules
 import pytest
 
 # Import local modules
-from dayu_widgets3 import utils
+from dayu_widgets import utils
 
 
 def callable_for_test(*args, **kwargs):
