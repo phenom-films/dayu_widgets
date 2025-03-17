@@ -7,7 +7,7 @@ Test the function from_list_to_nested_dict.
 import pytest
 
 # Import local modules
-from dayu_widgets3 import utils
+from dayu_widgets import utils
 
 
 TEST_DATA = (

@@ -5,7 +5,7 @@ import pytest
 from qtpy import QtCore
 
 # Import local modules
-from dayu_widgets3.slider import MSlider
+from dayu_widgets.slider import MSlider
 
 
 @pytest.mark.parametrize("orient", (QtCore.Qt.Horizontal, QtCore.Qt.Vertical))

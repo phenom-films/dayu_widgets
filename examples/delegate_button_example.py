@@ -3,11 +3,11 @@ from qtpy import QtCore
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3 import dayu_theme
-from dayu_widgets3 import utils
-from dayu_widgets3.item_model import MSortFilterModel
-from dayu_widgets3.item_model import MTableModel
-from dayu_widgets3.item_view import MTableView
+from dayu_widgets import dayu_theme
+from dayu_widgets import utils
+from dayu_widgets.item_model import MSortFilterModel
+from dayu_widgets.item_model import MTableModel
+from dayu_widgets.item_view import MTableView
 
 
 class MPushButtonDelegate(QtWidgets.QStyledItemDelegate):
@@ -136,8 +136,7 @@ class DelegateButtonExample(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets3 import dayu_theme
-    from dayu_widgets3.qt import application
+    from dayu_widgets.qt import application
 
     with application() as app:
         test = DelegateButtonExample()

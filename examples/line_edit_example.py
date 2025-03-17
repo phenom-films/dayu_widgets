@@ -6,14 +6,14 @@ from qtpy import QtCore
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3.combo_box import MComboBox
-from dayu_widgets3.divider import MDivider
-from dayu_widgets3.label import MLabel
-from dayu_widgets3.line_edit import MLineEdit
-from dayu_widgets3.menu import MMenu
-from dayu_widgets3.message import MMessage
-from dayu_widgets3.push_button import MPushButton
-from dayu_widgets3.tool_button import MToolButton
+from dayu_widgets.combo_box import MComboBox
+from dayu_widgets.divider import MDivider
+from dayu_widgets.label import MLabel
+from dayu_widgets.line_edit import MLineEdit
+from dayu_widgets.menu import MMenu
+from dayu_widgets.message import MMessage
+from dayu_widgets.push_button import MPushButton
+from dayu_widgets.tool_button import MToolButton
 
 
 class LineEditExample(QtWidgets.QWidget):
@@ -102,8 +102,8 @@ class LineEditExample(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets3 import dayu_theme
-    from dayu_widgets3.qt import application
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
     with application() as app:
         test = LineEditExample()

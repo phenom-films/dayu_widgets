@@ -7,7 +7,7 @@ from qtpy import QtCore
 from qtpy import QtGui
 
 # Import local modules
-from dayu_widgets3 import utils
+from dayu_widgets import utils
 
 
 def test_with_string_list_model():

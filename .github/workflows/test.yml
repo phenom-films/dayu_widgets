@@ -1,0 +1,44 @@
+name: Test and Lint
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.7, 3.8, 3.9, 3.10, 3.11, 3.12]
+        qt-binding: ['pyside2', 'pyside6']
+        exclude:
+          # PySide2 不支持 Python 3.11+
+          - python-version: 3.11
+            qt-binding: 'pyside2'
+          - python-version: 3.12
+            qt-binding: 'pyside2'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install nox
+    
+    - name: Run tests
+      run: |
+        nox -s test -- --qt-binding=${{ matrix.qt-binding }}
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      continue-on-error: true
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: true

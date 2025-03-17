@@ -3,7 +3,7 @@ import pytest
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3.progress_circle import MProgressCircle
+from dayu_widgets.progress_circle import MProgressCircle
 
 
 def test_progress_circle_init(qtbot):

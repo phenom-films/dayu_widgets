@@ -1,5 +1,9 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry]
-name = "dayu_widgets3"
+name = "dayu_widgets"
 version = "0.2.0"
 description = "Components for PySide2/PySide6."
 homepage = "https://github.com/muyr/dayu_widgets3"
@@ -15,27 +19,26 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
-
-packages = [
-    { include = "dayu_widgets3" },
-]
+packages = [{ include = "dayu_widgets" }]
 
 [tool.poetry.dependencies]
-python = "^3.7,<3.11,"
+python = "^3.7"
 qtpy = "^2.3.1"
-
+PySide2 = { version = ">=5.15.2.1", optional = true }
+PySide6 = { version = ">=6.4.2", optional = true }
 
 [tool.poetry.group.dev.dependencies]
-pyside2 = "^5.15.2.1"
 isort = "5.11.5"
 black = "23.3"
 flake8 = "5"
 autoflake = "1.7"
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.poetry.extras]
+pyside2 = ["PySide2"]
+pyside6 = ["PySide6"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
@@ -43,16 +46,14 @@ version = "0.2.0"
 tag_format = "v$version"
 version_files = [
     "pyproject.toml:version",
-    "dayu_widgets3/__version__.py"
+    "dayu_widgets/__version__.py"
 ]
-
 
 [tool.black]
 line-length = 120
 target_version = ['py310']
 include = '\.pyi?$'
 exclude = '''
-
 (
   /(
       \.eggs         # exclude a few common directories in the
@@ -79,7 +80,7 @@ lines_after_imports = 2
 lines_between_types = 1
 use_parentheses = true
 filter_files = true
-known_first_party = ["dayu_widgets3"]
+known_first_party = ["dayu_widgets"]
 
 # Enforce import section headers.
 import_heading_future = "Import future modules"

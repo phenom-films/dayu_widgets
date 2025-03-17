@@ -5,12 +5,12 @@ import random
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3 import dayu_theme
-from dayu_widgets3.combo_box import MComboBox
-from dayu_widgets3.divider import MDivider
-from dayu_widgets3.field_mixin import MFieldMixin
-from dayu_widgets3.label import MLabel
-from dayu_widgets3.menu import MMenu
+from dayu_widgets import dayu_theme
+from dayu_widgets.combo_box import MComboBox
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.label import MLabel
+from dayu_widgets.menu import MMenu
 
 
 class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
@@ -44,10 +44,9 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
         self.bind("button2_selected", select2, "value", signal="sig_value_changed")
 
         def dynamic_get_city():
-            data = cities + ["郑州", "石家庄"]
-            start = random.randint(0, len(data))
-            end = random.randint(start, len(data))
-            return data[start:end]
+            all_cities = cities + ["郑州", "石家庄"]
+            count = random.randint(2, min(4, len(all_cities)))
+            return random.sample(all_cities, count)
 
         self.register_field("button3_selected", "")
         menu3 = MMenu(parent=self)
@@ -161,7 +160,7 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets3.qt import application
+    from dayu_widgets.qt import application
 
     with application() as app:
         test = ComboBoxExample()

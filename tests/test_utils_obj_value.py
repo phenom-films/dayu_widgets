@@ -6,7 +6,7 @@ Test get_obj_value set_obj_value has_obj_value
 import pytest
 
 # Import local modules
-from dayu_widgets3 import utils
+from dayu_widgets import utils
 
 
 class _HasNameAgeObject(object):

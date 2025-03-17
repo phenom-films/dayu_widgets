@@ -1,5 +1,5 @@
 # Import local modules
-from dayu_widgets3.progress_bar import MProgressBar
+from dayu_widgets.progress_bar import MProgressBar
 
 
 def test_progress_bar_init(qtbot):

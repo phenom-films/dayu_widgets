@@ -4,7 +4,7 @@
 import pytest
 
 # Import local modules
-from dayu_widgets3.dock_widget import MDockWidget
+from dayu_widgets.dock_widget import MDockWidget
 
 
 @pytest.mark.parametrize("title", ("", "test"))
