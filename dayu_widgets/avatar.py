@@ -24,10 +24,9 @@ class MAvatar(QtWidgets.QLabel):
         super(MAvatar, self).__init__(parent, flags)
         self._default_pix = MPixmap("user_fill.svg")
         self._pixmap = self._default_pix
+        self._original_pixmap = self._default_pix
         self._dayu_size = 0
         self.set_dayu_size(dayu_theme.default_size)
-        # Ensure the default pixmap is properly scaled
-        self._set_dayu_image()
 
     def set_dayu_size(self, value):
         """
@@ -43,17 +42,7 @@ class MAvatar(QtWidgets.QLabel):
         self._set_dayu_image()
 
     def _set_dayu_image(self):
-        # Check if pixmap is null or has zero size
-        if self._pixmap.isNull() or self._pixmap.size().isEmpty():
-            # Reset to default pixmap
-            self._pixmap = self._default_pix.copy()
-
-        # Scale the pixmap to the current size
-        if self.height() > 0:
-            # Create a copy of the pixmap to avoid reference issues
-            pixmap_to_scale = self._pixmap.copy()
-            scaled_pixmap = pixmap_to_scale.scaledToWidth(self.height(), QtCore.Qt.SmoothTransformation)
-            self.setPixmap(scaled_pixmap)
+        self.setPixmap(self._pixmap.scaledToWidth(self.height(), QtCore.Qt.SmoothTransformation))
 
     def set_dayu_image(self, value):
         """
@@ -63,15 +52,15 @@ class MAvatar(QtWidgets.QLabel):
         """
 
         if value is None:
-            # Make sure we use a copy of the default pixmap to avoid issues
-            self._pixmap = self._default_pix.copy()
+            self._pixmap = self._default_pix
+            self._original_pixmap = self._default_pix
         elif isinstance(value, QtGui.QPixmap):
-            # If the pixmap is null, use a copy of the default pixmap
             if value.isNull():
-                self._pixmap = self._default_pix.copy()
+                self._pixmap = self._default_pix
+                self._original_pixmap = self._default_pix
             else:
-                # Make a copy of the input pixmap to avoid reference issues
-                self._pixmap = value.copy()
+                self._pixmap = value
+                self._original_pixmap = value
         else:
             msg = "Input argument 'value' should be QPixmap or None, but get {}"
             raise TypeError(msg.format(type(value)))
@@ -82,7 +71,7 @@ class MAvatar(QtWidgets.QLabel):
         Get the avatar image.
         :return: QPixmap
         """
-        return self._pixmap
+        return self._original_pixmap
 
     def get_dayu_size(self):
         """
