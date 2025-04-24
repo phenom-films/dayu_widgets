@@ -100,7 +100,7 @@ class TableViewExample(QtWidgets.QWidget, MFieldMixin):
         main_lay.addWidget(MDivider("With Grid"))
         main_lay.addWidget(table_grid)
         main_lay.addStretch()
-        main_lay.addWidget(MAlert('Simply use "MItemViewSet" or "MItemViewFullSet"'))
+        main_lay.addWidget(MDivider('Simply use "MItemViewSet" or "MItemViewFullSet"'))
         self.setLayout(main_lay)
 
 
