@@ -120,11 +120,14 @@ def test_mavatar_default_image(qtbot):
     assert default_pix is not None
     assert not default_pix.isNull()
 
+    # Store the default size before modifying the image
+    default_size = default_pix.size()
+
     # Setting image to None should revert to default
     widget.set_dayu_image(None)
     # Check if the image is not null and has the same size
     assert not widget.pixmap().isNull()
-    assert widget.pixmap().size() == default_pix.size()
+    assert widget.pixmap().size() == default_size
 
 
 def test_mavatar_null_image(qtbot):
