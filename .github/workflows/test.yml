@@ -114,7 +114,18 @@ jobs:
         nox --version
         nox -l
         # Run pytest directly instead of through nox
-        python -m pytest tests -v --cov=dayu_widgets --cov-report=xml --qt-binding=${{ matrix.qt-binding }}
+        # Set QT_API environment variable instead of using command line argument
+        $env:QT_API = "${{ matrix.qt-binding }}"
+        # Install the required Qt binding
+        if ("${{ matrix.qt-binding }}" -eq "pyside2") {
+          python -m pip install PySide2==5.15.2
+          python -m pip install -e ".[pyside2]"
+        } else {
+          python -m pip install PySide6==6.4.2
+          python -m pip install -e ".[pyside6]"
+        }
+        # Run pytest
+        python -m pytest tests -v --cov=dayu_widgets --cov-report=xml
 
     - name: Run tests (Linux with PySide2)
       if: runner.os == 'Linux' && matrix.qt-binding == 'pyside2'
