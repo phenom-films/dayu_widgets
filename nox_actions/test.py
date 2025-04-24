@@ -34,14 +34,20 @@ def test(session: nox.Session, qt_binding: str) -> None:
 
     # Install dependencies
     if has_uv:
+        # Create a virtual environment if it doesn't exist
+        try:
+            session.run("uv", "venv", "--system-site-packages", external=True)
+        except Exception:
+            session.log("Virtual environment already exists or could not be created")
+
         # Install dependencies with uv
-        session.run("uv", "pip", "install", *deps, external=True)
+        session.run("uv", "pip", "install", "--system", *deps, external=True)
 
         # Then install the package itself
         if qt_binding == "pyside2":
-            session.run("uv", "pip", "install", "-e", ".[pyside2]", external=True)
+            session.run("uv", "pip", "install", "--system", "-e", ".[pyside2]", external=True)
         else:
-            session.run("uv", "pip", "install", "-e", ".[pyside6]", external=True)
+            session.run("uv", "pip", "install", "--system", "-e", ".[pyside6]", external=True)
     else:
         # Fall back to pip if uv is not available
         for dep in deps:

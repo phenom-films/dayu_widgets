@@ -77,6 +77,11 @@ jobs:
         # Ensure uv is in PATH
         export PATH="$HOME/.cargo/bin:$PATH"
         uv --version
+        # Create a virtual environment
+        uv venv
+        # Activate the virtual environment
+        source .venv/bin/activate
+        # Install dependencies
         uv pip install nox
         uv pip list
 
@@ -86,6 +91,11 @@ jobs:
         # Ensure uv is in PATH
         $env:PATH += ";$HOME\.local\bin"
         uv --version
+        # Create a virtual environment
+        uv venv
+        # Activate the virtual environment (Windows)
+        . .\.venv\Scripts\Activate.ps1
+        # Install dependencies
         uv pip install nox
         uv pip list
 
@@ -216,6 +226,11 @@ jobs:
         # Ensure uv is in PATH
         export PATH="$HOME/.cargo/bin:$PATH"
         uv --version
+        # Create a virtual environment
+        uv venv
+        # Activate the virtual environment
+        source .venv/bin/activate
+        # Install dependencies
         uv pip install nox
 
     - name: Run Maya tests
@@ -263,6 +278,11 @@ jobs:
         # Ensure uv is in PATH
         export PATH="$HOME/.cargo/bin:$PATH"
         uv --version
+        # Create a virtual environment
+        uv venv
+        # Activate the virtual environment
+        source .venv/bin/activate
+        # Install dependencies
         uv pip install nox
 
     - name: Run Blender tests
