@@ -9,4 +9,4 @@
 * 提供亮色和暗色两种主题
 
 [GitHub](https://github.com/phenom-films/dayu_widgets)
-[开始使用](/zh-cn/README.md)
+[开始使用](README.md)

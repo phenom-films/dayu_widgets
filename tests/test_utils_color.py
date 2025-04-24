@@ -1,12 +1,13 @@
 """
 Test Color helper functions.
 """
+
 # Import third-party modules
 import pytest
 from qtpy import QtGui
 
 # Import local modules
-from dayu_widgets3 import utils
+from dayu_widgets import utils
 
 
 @pytest.mark.parametrize(

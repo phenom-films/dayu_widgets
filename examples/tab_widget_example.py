@@ -3,15 +3,15 @@ from qtpy import QtCore
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3.divider import MDivider
-from dayu_widgets3.label import MLabel
-from dayu_widgets3.message import MMessage
-from dayu_widgets3.tab_widget import MTabWidget
+from dayu_widgets.divider import MDivider
+from dayu_widgets.label import MLabel
+from dayu_widgets.message import MMessage
+from dayu_widgets.tab_widget import MTabWidget
 
 
-class TabWidgetExample(QtWidgets.QWidget):
+class TabWidget(QtWidgets.QWidget):
     def __init__(self, parent=None):
-        super(TabWidgetExample, self).__init__(parent)
+        super(TabWidget, self).__init__(parent)
         self._init_ui()
         self.resize(500, 500)
 
@@ -29,7 +29,7 @@ class TabWidgetExample(QtWidgets.QWidget):
         self.tab_closable.addTab(MLabel("test 1"), "标签一")
         self.tab_closable.addTab(MLabel("test 2"), "标签二")
         self.tab_closable.addTab(MLabel("test 3"), "标签三")
-        self.tab_closable.tabCloseRequested.connect(self.slot_close_tab)
+        # self.tab_closable.tabCloseRequested.connect(self.slot_close_tab)
         main_lay.addWidget(MDivider("Normal"))
         main_lay.addWidget(tab_card)
         main_lay.addWidget(MDivider("Closable"))
@@ -48,10 +48,10 @@ class TabWidgetExample(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets3 import dayu_theme
-    from dayu_widgets3.qt import application
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
     with application() as app:
-        test = TabWidgetExample()
+        test = TabWidget()
         dayu_theme.apply(test)
         test.show()

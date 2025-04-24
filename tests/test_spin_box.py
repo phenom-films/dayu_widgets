@@ -7,8 +7,8 @@ import datetime
 import pytest
 
 # Import local modules
-from dayu_widgets3 import dayu_theme
-from dayu_widgets3 import spin_box
+from dayu_widgets import dayu_theme
+from dayu_widgets import spin_box
 
 
 @pytest.mark.parametrize(

@@ -2,30 +2,962 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>Dayu Widgets</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
+  <meta name="description" content="基于PySide的组件库">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
-</head>
-<body>
-  <div id="app"></div>
-  <script src="//unpkg.com/docsify-edit-on-github/index.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" id="theme-stylesheet">
+  <!-- 立即初始化主题，避免闪烁 -->
   <script>
+    // 立即设置主题，在页面渲染前执行
+    (function() {
+      var savedTheme = localStorage.getItem('dayu-widgets-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+
+      // 创建并添加一个内联样式表，立即设置图标显示状态
+      var style = document.createElement('style');
+      style.id = 'theme-icon-styles';
+      if (savedTheme === 'dark') {
+        style.textContent = '\
+          .light-icon { display: block !important; }\
+          .dark-icon { display: none !important; }\
+          .github-icon { fill: #fa8c16 !important; }\
+          .top-nav { background-color: #1f1f1f !important; }\
+        ';
+      } else {
+        style.textContent = '\
+          .light-icon { display: none !important; }\
+          .dark-icon { display: block !important; }\
+          .github-icon { fill: #42b983 !important; }\
+          .top-nav { background-color: #fff !important; }\
+        ';
+      }
+      document.head.appendChild(style);
+    })();
+  </script>
+  <style>
+    /* 防止页面加载时的过渡动画 */
+    .no-transition * {
+      transition: none !important;
+    }
+
+    /* 定义CSS变量用于主题颜色 */
+    :root {
+      --theme-color: #42b983;
+      --theme-color-light: rgba(66, 185, 131, 0.05);
+      --text-color-base: #2c3e50;
+      --text-color-secondary: #476582;
+      --bg-color: #fff;
+      --bg-color-secondary: #f8f8f8;
+      --border-color: #eaeaea;
+      --code-bg-color: #f5f5f5;
+      --code-text-color: #333333;
+      --checkbox-color: #42b983;
+      --search-bg-color: #fff;
+      --search-input-bg-color: #f5f5f5;
+      --search-result-bg-color: #fff;
+      --nav-bg-color: var(--bg-color);
+    }
+
+    /* 深色主题变量 */
+    [data-theme="dark"] {
+      --theme-color: #fa8c16;
+      --theme-color-light: rgba(250, 140, 22, 0.05);
+      --text-color-base: #c8c8c8;
+      --text-color-secondary: #8a8a8a;
+      --bg-color: #1f1f1f;
+      --bg-color-secondary: #272727;
+      --border-color: #3a3a3a;
+      --code-bg-color: #2d2d2d;
+      --code-text-color: #ddd;
+      --checkbox-color: #fa8c16;
+      --search-bg-color: #1f1f1f;
+      --search-input-bg-color: #333;
+      --search-result-bg-color: #2d2d2d;
+      --nav-bg-color: var(--bg-color);
+    }
+
+    /* 应用主题变量 */
+    body {
+      color: var(--text-color-base);
+      background-color: var(--bg-color);
+    }
+
+    /* 首页背景颜色渐变样式 */
+    section.cover {
+      background: linear-gradient(to right bottom, #a8e6cf, #b8e6d4, #c8e6da, #dcedc1, #e8f4df) !important;
+    }
+
+    /* 激活的侧边栏项目 */
+    .sidebar ul li.active > a {
+      color: var(--theme-color) !important;
+      border-right: 2px solid var(--theme-color) !important;
+      font-weight: 600 !important;
+    }
+
+    /* 侧边栏链接悬停效果 */
+    .sidebar ul li a:hover {
+      color: var(--theme-color) !important;
+    }
+
+    /* 代码块内部链接和强调色 */
+    .markdown-section a {
+      color: var(--theme-color) !important;
+      text-decoration: none;
+    }
+
+    .markdown-section a:hover {
+      text-decoration: underline;
+    }
+
+    /* 选中文本的背景色 */
+    ::selection {
+      background: var(--theme-color-light);
+      color: var(--theme-color);
+    }
+
+    /* 首页背景颜色渐变样式 */
+    section.cover {
+      background: linear-gradient(to right bottom, #84fad5, #c5f9ff, #8ae8ff, #79d1ff, #88b6ff) !important;
+    }
+
+    .content {
+      color: var(--text-color-base);
+    }
+
+    .sidebar {
+      background-color: var(--bg-color);
+      color: var(--text-color-base);
+      border-right: 1px solid var(--border-color);
+    }
+
+    .sidebar-toggle {
+      background-color: var(--bg-color);
+    }
+
+    .markdown-section code {
+      color: var(--code-text-color);
+      background-color: var(--code-bg-color);
+    }
+
+    .markdown-section pre {
+      background-color: var(--code-bg-color);
+    }
+
+    /* 通用图片容器样式 */
+    .markdown-section img {
+      max-width: 70%;
+      max-height: 450px;
+      object-fit: contain;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: block;
+      margin: 20px 0;
+    }
+
+    /* 搜索框样式适配 */
+    .search {
+      background-color: var(--search-bg-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .search input {
+      background-color: var(--search-input-bg-color);
+      color: var(--text-color-base);
+      border: 1px solid var(--border-color);
+    }
+
+    .search input:focus {
+      box-shadow: 0 0 5px var(--theme-color);
+    }
+
+    .search .results-panel {
+      background-color: var(--search-result-bg-color);
+      color: var(--text-color-base);
+    }
+
+    .search .matching-post {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    /* 主题图片切换样式 */
+    .theme-image-container {
+      position: relative;
+      width: 70%;
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    .theme-image {
+      max-width: 100%;
+      display: none;
+      max-height: 450px;
+      object-fit: contain;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="light"] .light-theme-image {
+      display: block;
+    }
+
+    [data-theme="dark"] .dark-theme-image {
+      display: block;
+    }
+
+    /* 顶部导航栏样式 */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 101;
+      display: flex;
+      align-items: center;
+      height: 60px;
+      padding: 0 20px;
+      background-color: var(--nav-bg-color);
+      border-bottom: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    /* 首页导航栏样式 */
+    body.ready section.cover ~ .top-nav {
+      background-color: transparent !important;
+      border-bottom: none;
+      box-shadow: none;
+    }
+
+    body.ready section.cover ~ .top-nav .language-nav a,
+    body.ready section.cover ~ .top-nav .top-nav-item svg {
+      color: var(--text-color-base);
+      fill: var(--text-color-base);
+    }
+
+    body.ready section.cover:not(.show) ~ .top-nav {
+      background-color: var(--nav-bg-color) !important;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    /* 语言切换区域 */
+    .language-nav {
+      display: flex;
+      align-items: center;
+      margin-right: 15px;
+    }
+
+    .language-nav a {
+      display: flex;
+      align-items: center;
+      padding: 5px 8px;
+      color: var(--text-color-secondary);
+      font-size: 14px;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .language-nav a.active {
+      color: var(--theme-color);
+      font-weight: bold;
+    }
+
+    .language-nav a:hover {
+      background: var(--bg-color-secondary);
+    }
+
+    .language-nav img {
+      width: 20px;
+      height: 14px;
+      margin-right: 4px;
+    }
+
+    .top-nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      margin-left: 10px;
+      color: var(--text-color-base);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .top-nav-item:hover {
+      background-color: var(--bg-color-secondary);
+      transform: scale(1.1);
+    }
+
+    .top-nav-item svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--text-color-base);
+      transition: fill 0.3s ease;
+    }
+
+    /* 调整内容区域的上边距 */
+    .content {
+      padding-top: 60px;
+    }
+
+    /* 首页时的样式 */
+    body.on-cover-page .top-nav {
+      background-color: transparent !important;
+      border-bottom: none;
+    }
+
+    /* 自定义代码复制按钮样式 */
+    .docsify-copy-code-button {
+      border-radius: 3px !important;
+      background-color: #42b983 !important;
+      color: white !important;
+      font-size: 0px !important;
+      padding: 8px !important;
+      width: 32px !important;
+      height: 32px !important;
+      right: 5px !important;
+      top: 5px !important;
+      cursor: pointer;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: all 0.3s ease !important;
+      opacity: 0.8 !important;
+    }
+
+    .docsify-copy-code-button::before {
+      content: '' !important;
+      display: block !important;
+      width: 18px !important;
+      height: 18px !important;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z'/%3E%3C/svg%3E") !important;
+      background-repeat: no-repeat !important;
+      background-position: center !important;
+      background-size: contain !important;
+    }
+
+    .docsify-copy-code-button::after {
+      content: '' !important;
+    }
+
+    .docsify-copy-code-button:hover {
+      opacity: 1 !important;
+      transform: scale(1.05) !important;
+    }
+
+    .docsify-copy-code-button.success {
+      background-color: #42b983 !important;
+    }
+
+    .docsify-copy-code-button.success::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") !important;
+    }
+
+    pre[data-lang] {
+      position: relative;
+      overflow: hidden;
+      padding: 30px 16px 16px !important;
+      border-radius: 4px !important;
+    }
+
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 2px 10px;
+      font-size: 12px;
+      color: var(--text-color-secondary);
+      background-color: var(--code-bg-color);
+      border-radius: 0 0 4px 0;
+    }
+  </style>
+</head>
+<body class="no-transition">
+  <div id="app"></div>
+
+  <!-- 顶部导航栏 -->
+  <div class="top-nav">
+    <!-- 语言切换按钮 -->
+    <div class="language-nav" id="language-nav">
+      <!-- 语言选项将由JavaScript动态生成 -->
+    </div>
+
+    <!-- GitHub链接 -->
+    <a class="top-nav-item" href="https://github.com/phenom-films/dayu_widgets" target="_blank" title="GitHub">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="github-icon">
+        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+      </svg>
+    </a>
+
+    <!-- 主题切换按钮 -->
+    <div class="top-nav-item" id="theme-toggle" title="切换主题">
+      <!-- 亮色主题图标(显示在深色主题下) -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="light-icon">
+        <path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-1.04-.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path>
+      </svg>
+      <!-- 深色主题图标(显示在亮色主题下) -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="dark-icon">
+        <path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-1.04-.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path>
+      </svg>
+    </div>
+  </div>
+
+  <script>
+    // 定义支持的语言
+    const SUPPORTED_LANGUAGES = [
+      { code: 'en-us', name: 'English', flag: 'gb', defaultPath: '/en-us/' },
+      { code: 'zh-cn', name: '中文', flag: 'cn', defaultPath: '/zh-cn/' }
+      // 未来可以添加更多语言，如：
+      // { code: 'zh-tw', name: '繁體中文', flag: 'tw', defaultPath: '/zh-tw/' }
+    ];
+
+    // 获取当前语言模式
+    function getCurrentLanguage() {
+      // 优先从URL路径中获取语言代码
+      const hash = window.location.hash;
+      if (hash) {
+        // 解析路径格式：#/{lang}/path
+        const pathParts = hash.split('/');
+        if (pathParts.length >= 2) {
+          // 正确处理带#的路径
+          const possibleLangCode = pathParts[1] === '#' ? pathParts[2] : pathParts[1];
+
+          // 检查是否为有效语言代码
+          const matchedLang = SUPPORTED_LANGUAGES.find(lang => lang.code === possibleLangCode);
+          if (matchedLang) {
+            return matchedLang;
+          }
+        }
+      }
+
+      // 其次从localStorage中获取
+      const savedLang = localStorage.getItem('dayu-widgets-language');
+      if (savedLang) {
+        const matchedLang = SUPPORTED_LANGUAGES.find(lang => lang.code === savedLang);
+        if (matchedLang) {
+          return matchedLang;
+        }
+      }
+
+      // 最后返回默认语言（英文）
+      return SUPPORTED_LANGUAGES[0];
+    }
+
+    // 切换到指定语言
+    function switchToLanguage(langCode) {
+      // 查找语言对象
+      const targetLang = SUPPORTED_LANGUAGES.find(lang => lang.code === langCode);
+      if (!targetLang) {
+        console.error('不支持的语言代码:', langCode);
+        return;
+      }
+
+      console.log('切换语言:', langCode);
+
+      // 保存语言设置到localStorage
+      localStorage.setItem('dayu-widgets-language', langCode);
+
+      // 获取当前路径（不含语言代码）
+      let currentPath = '';
+      const hash = window.location.hash;
+
+      if (hash) {
+        // 解析当前路径
+        const pathParts = hash.slice(1).split('/');
+
+        // 移除可能存在的语言代码部分
+        if (pathParts.length >= 2) {
+          const possibleLangIndex = 1; // URL格式为 #/{lang}/path
+          const possibleLangCode = pathParts[possibleLangIndex];
+
+          // 检查是否为当前支持的语言代码
+          const isLangCode = SUPPORTED_LANGUAGES.some(lang => lang.code === possibleLangCode);
+
+          if (isLangCode) {
+            // 移除语言代码部分，重建路径
+            pathParts.splice(possibleLangIndex, 1);
+            currentPath = pathParts.join('/');
+          } else {
+            // 不包含语言代码，直接使用
+            currentPath = hash.slice(1);
+          }
+        } else {
+          // 路径太短，可能只有#
+          currentPath = '';
+        }
+      }
+
+      // 构建新的URL，始终使用#/{lang}/path格式
+      let newHash = '#/' + langCode;
+      if (currentPath && !currentPath.startsWith('/')) {
+        newHash += '/' + currentPath;
+      } else if (currentPath) {
+        newHash += currentPath;
+      } else {
+        newHash += '/';
+      }
+
+      // 仅当URL需要更改时才更新
+      if (window.location.hash !== newHash) {
+        console.log('更新URL:', window.location.hash, '->', newHash);
+        window.location.hash = newHash;
+      } else {
+        // 即使URL没变，也要更新UI状态
+        updateLanguageUI();
+      }
+    }
+
+    // 更新语言选择器UI
+    function updateLanguageUI() {
+      const currentLang = getCurrentLanguage();
+      const languageNav = document.getElementById('language-nav');
+
+      // 清空当前选项
+      languageNav.innerHTML = '';
+
+      // 创建语言选项
+      SUPPORTED_LANGUAGES.forEach(lang => {
+        const link = document.createElement('a');
+        link.href = 'javascript:void(0)';
+        link.setAttribute('data-lang-code', lang.code);
+        link.classList.add('language-link');
+
+        // 添加点击事件
+        link.onclick = function(e) {
+          e.preventDefault();
+          console.log('点击切换语言:', lang.code);
+          switchToLanguage(lang.code);
+        };
+
+        // 添加国旗图标
+        const img = document.createElement('img');
+        img.src = `https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/flags/4x3/${lang.flag}.svg`;
+        img.alt = lang.name;
+        link.appendChild(img);
+
+        // 添加语言名称
+        const span = document.createElement('span');
+        span.textContent = lang.name;
+        link.appendChild(span);
+
+        // 设置激活状态
+        if (currentLang.code === lang.code) {
+          link.classList.add('active');
+        }
+
+        languageNav.appendChild(link);
+      });
+    }
+
+    // 处理直接访问页面的语言设置
+    function handleDirectPageAccess() {
+      const hash = window.location.hash;
+
+      // 没有哈希或根路径时重定向到默认语言
+      if (!hash || hash === '#/' || hash === '#') {
+        const currentLang = getCurrentLanguage();
+        window.location.hash = '#/' + currentLang.code + '/';
+        return true;
+      }
+
+      // 检查URL是否包含语言路径
+      const pathParts = hash.slice(1).split('/');
+      if (pathParts.length >= 2) {
+        const possibleLangCode = pathParts[1];
+
+        // 如果是有效语言代码，保存并确保UI更新
+        const isValidLang = SUPPORTED_LANGUAGES.some(lang => lang.code === possibleLangCode);
+
+        if (isValidLang) {
+          // 已有语言代码，无需重定向
+          return false;
+        }
+      }
+
+      // 没有语言代码，添加当前语言
+      const currentLang = getCurrentLanguage();
+      let path = hash.slice(1);
+      if (!path.startsWith('/')) {
+        path = '/' + path;
+      }
+
+      window.location.hash = '#/' + currentLang.code + path;
+      return true;
+    }
+
+    // 链接处理插件：处理所有内部链接，确保包含当前语言前缀
+    function linkProcessor(hook, vm) {
+      hook.doneEach(function() {
+        const currentLang = getCurrentLanguage();
+
+        // 处理所有内部链接
+        document.querySelectorAll('a').forEach(function(link) {
+          const href = link.getAttribute('href');
+          if (!href) return;
+
+          // 排除外部链接、锚点链接和已处理的链接
+          if (href.startsWith('http') || href.startsWith('javascript:') || link.hasAttribute('data-processed')) {
+            return;
+          }
+
+          // 解析链接路径
+          let targetPath = href;
+
+          // 处理markdown文件链接
+          if (targetPath.endsWith('.md')) {
+            targetPath = targetPath.substring(0, targetPath.length - 3);
+          }
+
+          // 处理开头的#或/
+          if (targetPath.startsWith('#')) {
+            targetPath = targetPath.substring(1);
+          }
+          if (targetPath.startsWith('/')) {
+            targetPath = targetPath.substring(1);
+          }
+
+          // 检查是否已包含语言代码
+          const hasLangPrefix = SUPPORTED_LANGUAGES.some(lang =>
+            targetPath.startsWith(lang.code + '/') || targetPath === lang.code
+          );
+
+          // 没有语言前缀时，添加当前语言
+          if (!hasLangPrefix) {
+            const newHref = '#/' + currentLang.code + '/' + targetPath;
+            link.setAttribute('href', newHref);
+            link.setAttribute('data-processed', 'true');
+            console.log('链接处理:', href, '->', newHref);
+          }
+        });
+      });
+    }
+
+    // 处理首页按钮点击事件
+    function handleCoverPageButtons() {
+      // 监听所有按钮点击事件，特别是首页按钮
+      document.addEventListener('click', function(e) {
+        // 获取最接近的链接元素
+        const link = e.target.closest('a');
+        if (!link) return;
+
+        const href = link.getAttribute('href');
+        if (!href) return;
+
+        // 排除外部链接、锚点链接和已处理的链接
+        if (href.startsWith('http') || href.startsWith('javascript:') || link.hasAttribute('data-processed')) {
+          return;
+        }
+
+        // 处理README.md链接（首页按钮）
+        if (href === 'README.md' || href.endsWith('/README.md') || href === '#/README') {
+          e.preventDefault();
+
+          const currentLang = getCurrentLanguage();
+          console.log('首页按钮点击，跳转到:', currentLang.code + '/README');
+
+          // 手动跳转到当前语言的README页面
+          window.location.hash = '#/' + currentLang.code + '/README';
+          return;
+        }
+      });
+    }
+
+    // 检查并自动重定向到带语言代码的URL
+    function checkAndRedirect() {
+      const hash = window.location.hash;
+
+      // 特殊处理没有hash或只有#的情况
+      if (!hash || hash === '#') {
+        const currentLang = getCurrentLanguage();
+        window.location.hash = '#/' + currentLang.code + '/';
+        return true;
+      }
+
+      // 特殊处理直接访问#/README的情况（首页按钮点击无语言前缀）
+      if (hash === '#/README' || hash.startsWith('#/README')) {
+        const currentLang = getCurrentLanguage();
+        window.location.hash = '#/' + currentLang.code + '/README';
+        return true;
+      }
+
+      // 检查是否带有语言代码
+      const pathParts = hash.slice(1).split('/');
+      if (pathParts.length >= 2) {
+        const possibleLangCode = pathParts[1];
+
+        // 如果是有效语言代码，保存并确保UI更新
+        const isValidLang = SUPPORTED_LANGUAGES.some(lang => lang.code === possibleLangCode);
+
+        if (isValidLang) {
+          // 已有语言代码，无需重定向
+          return false;
+        }
+      }
+
+      // 没有语言代码，添加当前语言
+      const currentLang = getCurrentLanguage();
+      let path = hash.slice(1);
+      if (!path.startsWith('/')) {
+        path = '/' + path;
+      }
+
+      window.location.hash = '#/' + currentLang.code + path;
+      return true;
+    }
+
+    // 图片处理器：按顺序尝试加载 gif、jpg、png 格式
+    function imageProcessor(hook, vm) {
+      hook.doneEach(function() {
+        const images = document.querySelectorAll('img');
+        images.forEach(function(img) {
+          const src = img.getAttribute('src');
+          if (src && !src.startsWith('http')) {
+            // 移除扩展名部分（如果有）
+            const basePath = src.replace(/\.(gif|jpg|jpeg|png)$/i, '');
+
+            // 创建一个图片元素用于检测图片是否存在
+            const checkImage = function(url, callback) {
+              const img = new Image();
+              img.onload = function() { callback(true); };
+              img.onerror = function() { callback(false); };
+              img.src = url;
+            };
+
+            // 按优先级检查图片格式
+            checkImage(basePath + '.gif', function(exists) {
+              if (exists) {
+                img.src = basePath + '.gif';
+              } else {
+                checkImage(basePath + '.jpg', function(exists) {
+                  if (exists) {
+                    img.src = basePath + '.jpg';
+                  } else {
+                    checkImage(basePath + '.png', function(exists) {
+                      if (exists) {
+                        img.src = basePath + '.png';
+                      }
+                      // 如果都不存在，保持原样
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      });
+    }
+
+    // 初始化主题设置
+    function initTheme() {
+      // 主题已在页面加载前设置，这里只需确保图标状态正确
+      const savedTheme = localStorage.getItem('dayu-widgets-theme') || 'light';
+      // 确保文档元素的主题属性正确
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      // 更新主题图标状态
+      updateThemeIcon(savedTheme);
+      // 初始化主题图片显示
+      updateThemeImages(savedTheme);
+    }
+
+    // 更新主题图标
+    function updateThemeIcon(theme) {
+      // 创建并替换内联样式表，确保图标显示状态正确
+      const styleId = 'theme-icon-styles';
+      let styleEl = document.getElementById(styleId);
+
+      if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = styleId;
+        document.head.appendChild(styleEl);
+      }
+
+      if (theme === 'dark') {
+        styleEl.textContent = '\
+          .light-icon { display: block !important; }\
+          .dark-icon { display: none !important; }\
+          .github-icon { fill: #fa8c16 !important; }\
+          .top-nav { background-color: #1f1f1f !important; }\
+        ';
+      } else {
+        styleEl.textContent = '\
+          .light-icon { display: none !important; }\
+          .dark-icon { display: block !important; }\
+          .github-icon { fill: #42b983 !important; }\
+          .top-nav { background-color: #fff !important; }\
+        ';
+      }
+    }
+
+    // 切换主题
+    function toggleTheme() {
+      // 添加过渡禁用类，避免闪烁
+      document.body.classList.add('no-transition');
+
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('dayu-widgets-theme', newTheme);
+      updateThemeIcon(newTheme);
+
+      // 更新主题图片显示
+      updateThemeImages(newTheme);
+
+      // 延迟移除过渡禁用类
+      setTimeout(function() {
+        document.body.classList.remove('no-transition');
+      }, 50);
+    }
+
+    // 更新主题图片显示
+    function updateThemeImages(theme) {
+      const lightImages = document.querySelectorAll('.light-theme-image');
+      const darkImages = document.querySelectorAll('.dark-theme-image');
+
+      if (theme === 'light') {
+        lightImages.forEach(img => img.style.display = 'block');
+        darkImages.forEach(img => img.style.display = 'none');
+      } else {
+        lightImages.forEach(img => img.style.display = 'none');
+        darkImages.forEach(img => img.style.display = 'block');
+      }
+    }
+
+    // 页面加载和初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      // 初始化主题
+      initTheme();
+
+      // 添加主题切换按钮事件监听器
+      document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+      // 初始化更新语言状态
+      updateLanguageUI();
+
+      // 处理首页按钮点击事件
+      handleCoverPageButtons();
+
+      // 检查并自动重定向到带语言代码的URL
+      if (!checkAndRedirect()) {
+        // 如果没有重定向，手动处理直接访问
+        handleDirectPageAccess();
+      }
+
+      // 监听路由变化
+      window.addEventListener('hashchange', function() {
+        updateLanguageUI();
+        checkCoverVisible();
+      });
+    });
+
+    // 检查封面页面状态
+    function checkCoverVisible() {
+      const coverSection = document.querySelector('section.cover');
+      if (coverSection) {
+        const isVisible = coverSection.classList.contains('show');
+        document.body.classList.toggle('on-cover-page', isVisible);
+      }
+    }
+
+    // 处理侧边栏链接
+    function handleSidebarLinks() {
+      // 获取当前语言
+      const currentLang = getCurrentLanguage();
+
+      // 处理侧边栏中的所有链接
+      const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+      sidebarLinks.forEach(function(link) {
+        const href = link.getAttribute('href');
+        if (!href) return;
+
+        // 排除外部链接和已处理的链接
+        if (href.startsWith('http') || link.hasAttribute('data-processed')) {
+          return;
+        }
+
+        // 解析链接路径
+        let targetPath = href;
+
+        // 处理markdown文件链接
+        if (targetPath.endsWith('.md')) {
+          targetPath = targetPath.substring(0, targetPath.length - 3);
+        }
+
+        // 处理开头的#或/
+        if (targetPath.startsWith('#')) {
+          targetPath = targetPath.substring(1);
+        }
+        if (targetPath.startsWith('/')) {
+          targetPath = targetPath.substring(1);
+        }
+
+        // 检查是否已包含语言代码
+        const hasLangPrefix = SUPPORTED_LANGUAGES.some(lang =>
+          targetPath.startsWith(lang.code + '/') || targetPath === lang.code
+        );
+
+        // 没有语言前缀时，添加当前语言
+        if (!hasLangPrefix) {
+          const newHref = '#/' + currentLang.code + '/' + targetPath;
+          link.setAttribute('href', newHref);
+          link.setAttribute('data-processed', 'true');
+          console.log('侧边栏链接处理:', href, '->', newHref);
+        }
+
+        // 添加点击事件监听器，确保链接正常工作
+        if (!link.hasAttribute('data-click-handler')) {
+          link.setAttribute('data-click-handler', 'true');
+          link.addEventListener('click', function(e) {
+            // 阻止默认行为，手动处理导航
+            e.preventDefault();
+            const href = this.getAttribute('href');
+            if (href && href.startsWith('#/')) {
+              window.location.hash = href;
+            }
+          });
+        }
+      });
+    }
+
+    // 页面完全加载后执行
+    window.addEventListener('load', function() {
+      // 检查封面页面状态
+      checkCoverVisible();
+
+      // 再次确保语言切换按钮存在
+      if (document.getElementById('language-nav').children.length === 0) {
+        updateLanguageUI();
+      }
+
+      // 处理侧边栏链接
+      setTimeout(handleSidebarLinks, 100);
+
+      // 移除no-transition类，允许过渡动画
+      setTimeout(function() {
+        document.body.classList.remove('no-transition');
+      }, 100);
+    });
+
     window.$docsify = {
-      name: '',
-      repo: '',
-      loadNavbar: true,
+      name: 'Dayu Widgets',
+      repo: false,  // 关闭默认的GitHub角标
+      basePath: '/',
+      homepage: '/en-us/README.md',
+      loadNavbar: false,
       loadSidebar: true,
       subMaxLevel: 2,
       coverpage: [
-        '/',
+        '/en-us/',
         '/zh-cn/'
       ],
+      onlyCover: true,  // 只显示封面页，不显示内容页
       plugins: [
-          EditOnGithubPlugin.create('https://github.com/phenom-films/dayu_widgets/tree/master/docs/',
-                  'https://github.com/phenom-films/dayu_widgets/tree/master/docs/',
-                  '📝Edit on Github')
+        imageProcessor,
+        linkProcessor  // 添加链接处理插件
       ],
       search: {
         maxAge: 86400000, // 过期时间，单位毫秒，默认一天
@@ -42,14 +974,50 @@
           '/': 'No Results'
         },
 
-        // 搜索标题的最大程级, 1 - 6
+        // 搜索标题的最大级别, 1 - 6
         depth: 2
+      },
+      // 添加主题色配置
+      themeColor: '#42b983',
+      // 钩子函数
+      hooks: {
+        // 页面内容渲染前
+        beforeEach: function(content) {
+          return content;
+        },
+        // 页面内容渲染后
+        doneEach: function() {
+          // 页面内容渲染完毕后再次检查首页状态
+          checkCoverVisible();
+          setTimeout(handleSidebarLinks, 100);
+          // 更新主题图片显示
+          const currentTheme = document.documentElement.getAttribute('data-theme');
+          updateThemeImages(currentTheme);
+        },
+        // 文档准备完成
+        ready: function() {
+          // docsify 文档准备完成
+          setTimeout(handleSidebarLinks, 100);
+        }
+      },
+      // 添加外部资源路径配置
+      alias: {
+        '/screenshots/(.*)': 'https://raw.githubusercontent.com/muyr/dayu_widgets3/main/screenshots/$1',
+        '/examples/(.*)': 'https://raw.githubusercontent.com/muyr/dayu_widgets3/main/examples/$1'
       }
     }
   </script>
-  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
-  <script src="//unpkg.com/prismjs/components/prism-python.js"></script>
-  <script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
-  <script src="//unpkg.com/docsify-copy-code"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-python.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.js"></script>
+  <script>
+    // 添加代码复制按钮配置
+    window.$docsify.copyCode = {
+      buttonText: '',
+      errorText: '',
+      successText: ''
+    }
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 # Import local modules
-from dayu_widgets3.check_box import MCheckBox
+from dayu_widgets.check_box import MCheckBox
 
 
 def test_radio_button_init(qtbot):

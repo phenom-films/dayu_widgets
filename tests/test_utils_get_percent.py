@@ -6,7 +6,7 @@ Test get_percent.
 import pytest
 
 # Import local modules
-from dayu_widgets3 import utils
+from dayu_widgets import utils
 
 
 @pytest.mark.parametrize(

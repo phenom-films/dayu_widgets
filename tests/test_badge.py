@@ -7,7 +7,7 @@ import pytest
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3.badge import MBadge
+from dayu_widgets.badge import MBadge
 
 
 @pytest.mark.parametrize(

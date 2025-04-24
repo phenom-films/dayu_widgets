@@ -3,18 +3,18 @@ from qtpy import QtCore
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3.button_group import MRadioButtonGroup
-from dayu_widgets3.check_box import MCheckBox
-from dayu_widgets3.combo_box import MComboBox
-from dayu_widgets3.divider import MDivider
-from dayu_widgets3.field_mixin import MFieldMixin
-from dayu_widgets3.line_edit import MLineEdit
-from dayu_widgets3.push_button import MPushButton
-from dayu_widgets3.qt import MIcon
-from dayu_widgets3.slider import MSlider
-from dayu_widgets3.spin_box import MDateEdit
-from dayu_widgets3.spin_box import MSpinBox
-from dayu_widgets3.switch import MSwitch
+from dayu_widgets.button_group import MRadioButtonGroup
+from dayu_widgets.check_box import MCheckBox
+from dayu_widgets.combo_box import MComboBox
+from dayu_widgets.divider import MDivider
+from dayu_widgets.field_mixin import MFieldMixin
+from dayu_widgets.line_edit import MLineEdit
+from dayu_widgets.push_button import MPushButton
+from dayu_widgets.qt import MIcon
+from dayu_widgets.slider import MSlider
+from dayu_widgets.spin_box import MDateEdit
+from dayu_widgets.spin_box import MSpinBox
+from dayu_widgets.switch import MSwitch
 
 
 class ThemeExample(QtWidgets.QWidget, MFieldMixin):
@@ -67,8 +67,8 @@ class ThemeExample(QtWidgets.QWidget, MFieldMixin):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets3 import dayu_theme
-    from dayu_widgets3.qt import application
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
     with application() as app:
         test = ThemeExample()

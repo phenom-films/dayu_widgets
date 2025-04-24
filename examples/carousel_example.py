@@ -2,11 +2,11 @@
 from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets3.carousel import MCarousel
-from dayu_widgets3.label import MLabel
-from dayu_widgets3.qt import MPixmap
-from dayu_widgets3.slider import MSlider
-from dayu_widgets3.switch import MSwitch
+from dayu_widgets.carousel import MCarousel
+from dayu_widgets.label import MLabel
+from dayu_widgets.qt import MPixmap
+from dayu_widgets.slider import MSlider
+from dayu_widgets.switch import MSwitch
 
 
 class CarouselExample(QtWidgets.QWidget):
@@ -42,8 +42,8 @@ class CarouselExample(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets3 import dayu_theme
-    from dayu_widgets3.qt import application
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
 
     with application() as app:
         test = CarouselExample()
