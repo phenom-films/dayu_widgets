@@ -109,8 +109,8 @@ jobs:
     - name: Run tests (Windows)
       if: runner.os == 'Windows'
       run: |
-        # Use the nox from the virtual environment
-        . .\.venv\Scripts\Activate.ps1
+        # Install nox directly with pip instead of using the virtual environment
+        python -m pip install nox
         nox --version
         nox -l
         nox -s test -- --qt-binding=${{ matrix.qt-binding }}
@@ -118,8 +118,8 @@ jobs:
     - name: Run tests (Linux with PySide2)
       if: runner.os == 'Linux' && matrix.qt-binding == 'pyside2'
       run: |
-        # Use the nox from the virtual environment
-        source .venv/bin/activate
+        # Install nox directly with pip
+        python -m pip install nox
         nox --version
         nox -l
         echo "Running special Linux test for PySide2..."
@@ -132,8 +132,8 @@ jobs:
     - name: Run tests (Linux with PySide6)
       if: runner.os == 'Linux' && matrix.qt-binding == 'pyside6'
       run: |
-        # Use the nox from the virtual environment
-        source .venv/bin/activate
+        # Install nox directly with pip
+        python -m pip install nox
         nox --version
         nox -l
         echo "Running tests on Linux with PySide6..."
@@ -144,7 +144,6 @@ jobs:
         mkdir -p /tmp/runtime-runner
         chmod 700 /tmp/runtime-runner
         # Try to install PySide6 directly to verify it works
-        source .venv/bin/activate
         uv pip install PySide6==6.4.2
         # Run a simple test to verify PySide6 works
         python -c "import sys; from PySide6 import QtCore; print(f'Qt version: {QtCore.qVersion()}'); print('PySide6 import successful!')"
@@ -244,8 +243,8 @@ jobs:
       env:
         MAYA_VERSION: ${{ matrix.maya-version }}
       run: |
-        # Use the nox from the virtual environment
-        source .venv/bin/activate
+        # Install nox directly with pip
+        python -m pip install nox
         nox -s maya-test
 
   blender-test:
@@ -296,8 +295,8 @@ jobs:
 
     - name: Run Blender tests
       run: |
-        # Use the nox from the virtual environment
-        source .venv/bin/activate
+        # Install nox directly with pip
+        python -m pip install nox
         nox -s blender-test
 
 
