@@ -9,9 +9,9 @@ from dayu_widgets.message import MMessage
 from dayu_widgets.tab_widget import MTabWidget
 
 
-class MTabWidgetTest(QtWidgets.QWidget):
+class TabWidget(QtWidgets.QWidget):
     def __init__(self, parent=None):
-        super(MTabWidgetTest, self).__init__(parent)
+        super(TabWidget, self).__init__(parent)
         self._init_ui()
         self.resize(500, 500)
 
@@ -52,6 +52,6 @@ if __name__ == "__main__":
     from dayu_widgets.qt import application
 
     with application() as app:
-        test = MTabWidgetTest()
+        test = TabWidget()
         dayu_theme.apply(test)
         test.show()
