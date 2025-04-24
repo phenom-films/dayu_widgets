@@ -56,12 +56,35 @@ jobs:
         sudo apt-get install -y libgl1-mesa-dev libglib2.0-0 libegl1 libdbus-1-3 libxkbcommon0 libxkbcommon-x11-0 libxcb-cursor0
 
     - name: Install uv
+      if: runner.os == 'Linux'
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-    - name: Install dependencies
+    - name: Install uv (Windows)
+      if: runner.os == 'Windows'
       run: |
+        # Install uv using PowerShell
+        iwr -useb https://astral.sh/uv/install.ps1 | iex
+        # Add to PATH for current step
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+        # Also add to PATH for current session
+        $env:PATH += ";$HOME\.local\bin"
+
+    - name: Install dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: |
+        # Ensure uv is in PATH
+        export PATH="$HOME/.cargo/bin:$PATH"
+        uv --version
+        uv pip install nox
+        uv pip list
+
+    - name: Install dependencies (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        # Ensure uv is in PATH
+        $env:PATH += ";$HOME\.local\bin"
         uv --version
         uv pip install nox
         uv pip list
@@ -185,9 +208,13 @@ jobs:
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+        # Ensure uv is in PATH for current session
+        export PATH="$HOME/.cargo/bin:$PATH"
 
     - name: Install dependencies
       run: |
+        # Ensure uv is in PATH
+        export PATH="$HOME/.cargo/bin:$PATH"
         uv --version
         uv pip install nox
 
@@ -228,9 +255,13 @@ jobs:
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+        # Ensure uv is in PATH for current session
+        export PATH="$HOME/.cargo/bin:$PATH"
 
     - name: Install dependencies
       run: |
+        # Ensure uv is in PATH
+        export PATH="$HOME/.cargo/bin:$PATH"
         uv --version
         uv pip install nox
 
