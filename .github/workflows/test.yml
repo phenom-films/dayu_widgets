@@ -109,11 +109,12 @@ jobs:
     - name: Run tests (Windows)
       if: runner.os == 'Windows'
       run: |
-        # Install nox directly with pip instead of using the virtual environment
-        python -m pip install nox
+        # Install nox and pytest directly with pip
+        python -m pip install nox pytest pytest-qt pytest-cov
         nox --version
         nox -l
-        nox -s test -- --qt-binding=${{ matrix.qt-binding }}
+        # Run pytest directly instead of through nox
+        python -m pytest tests -v --cov=dayu_widgets --cov-report=xml --qt-binding=${{ matrix.qt-binding }}
 
     - name: Run tests (Linux with PySide2)
       if: runner.os == 'Linux' && matrix.qt-binding == 'pyside2'
@@ -132,8 +133,8 @@ jobs:
     - name: Run tests (Linux with PySide6)
       if: runner.os == 'Linux' && matrix.qt-binding == 'pyside6'
       run: |
-        # Install nox directly with pip
-        python -m pip install nox
+        # Install nox and pytest directly with pip
+        python -m pip install nox pytest pytest-qt pytest-cov
         nox --version
         nox -l
         echo "Running tests on Linux with PySide6..."
@@ -143,13 +144,15 @@ jobs:
         # Create XDG runtime directory
         mkdir -p /tmp/runtime-runner
         chmod 700 /tmp/runtime-runner
-        # Try to install PySide6 directly to verify it works
-        uv pip install PySide6==6.4.2
+        # Install PySide6 directly with pip (not uv)
+        python -m pip install PySide6==6.4.2
         # Run a simple test to verify PySide6 works
         python -c "import sys; from PySide6 import QtCore; print(f'Qt version: {QtCore.qVersion()}'); print('PySide6 import successful!')"
+        # Install the package in development mode
+        python -m pip install -e ".[pyside6]"
         # Run with Xvfb with specific configuration
         set +e  # Don't exit on error
-        xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" nox -s test -- --qt-binding=pyside6
+        xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" python -m pytest tests -v --cov=dayu_widgets --cov-report=xml
         # Regardless of the test result, ensure coverage file exists
         if [ ! -f "coverage.xml" ]; then
           echo "Creating dummy coverage file..."
