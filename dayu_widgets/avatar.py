@@ -26,6 +26,8 @@ class MAvatar(QtWidgets.QLabel):
         self._pixmap = self._default_pix
         self._dayu_size = 0
         self.set_dayu_size(dayu_theme.default_size)
+        # Ensure the default pixmap is properly scaled
+        self._set_dayu_image()
 
     def set_dayu_size(self, value):
         """
@@ -51,9 +53,10 @@ class MAvatar(QtWidgets.QLabel):
         """
 
         if value is None:
-            self._pixmap = self._default_pix
+            # Make sure we use a copy of the default pixmap to avoid issues
+            self._pixmap = self._default_pix.copy()
         elif isinstance(value, QtGui.QPixmap):
-            self._pixmap = self._default_pix if value.isNull() else value
+            self._pixmap = self._default_pix.copy() if value.isNull() else value
         else:
             msg = "Input argument 'value' should be QPixmap or None, but get {}"
             raise TypeError(msg.format(type(value)))
