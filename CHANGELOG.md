@@ -1,4 +1,4 @@
-## v0.3.0 (Unreleased)
+## v0.3.0 (2025-04-24)
 
 ### Feat
 
@@ -19,6 +19,7 @@
 
 - **Compatibility**: Fix various compatibility issues with PySide6
 - **Testing**: Improve test coverage and reliability
+- **MAvatar**: Fix pixmap reference issues in Windows with Python 3.7/3.8/3.9
 
 ## v0.2.0 (2023-08-18)
 
