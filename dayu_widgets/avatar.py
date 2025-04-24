@@ -46,6 +46,8 @@ class MAvatar(QtWidgets.QLabel):
         if self._pixmap.isNull() or self._pixmap.size().isEmpty():
             # Reset to default pixmap
             self._pixmap = self._default_pix.copy()
+            # Also update original pixmap reference to ensure consistency
+            self._original_pixmap = self._default_pix
 
         # Scale the pixmap to the current size
         if self.height() > 0:
