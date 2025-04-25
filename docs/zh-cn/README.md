@@ -12,6 +12,26 @@
 * 暗色 #fa8c16
 
 
+## 安装
+
+```shell
+pip install dayu_widgets
+```
+
+## 运行示例程序
+
+安装后，可以通过以下命令直接运行示例程序：
+
+```shell
+# 使用 Python 模块方式运行
+python -m dayu_widgets
+
+# 或者使用命令行工具运行
+uvx dayu_widgets
+```
+
+## 使用
+
 ```python
 import dayu_widgets
 ```

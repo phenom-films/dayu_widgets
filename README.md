@@ -12,7 +12,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END --> 
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 </p>
 
 
@@ -149,12 +149,33 @@ Components for PySide
 ![pageres](screenshots/divider_light.png)![pageres](screenshots/divider_dark.png)
 
 
+# 使用方法
+
+## 安装
+
+```shell
+pip install dayu_widgets
+```
+
+## 运行示例程序
+
+安装后，可以通过以下命令直接运行示例程序：
+
+```shell
+# 使用 Python 模块方式运行
+python -m dayu_widgets
+
+# 或者使用命令行工具运行
+uvx dayu_widgets
+```
+
 # 如何贡献代码
 
 ## 安装poetry
-``shell
+```shell
 pip install poetry
-``
+```
+
 ## 安装依赖
 ```shell
 poetry install
@@ -169,6 +190,7 @@ poetry run pytest
 ```shell
 poetry run black dayu_widgets
 ```
+
 ## 运行isort
 ```shell
 poetry run isort dayu_widgets

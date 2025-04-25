@@ -12,6 +12,26 @@ The screenshots in docs used:
 * Dark: #fa8c16
 
 
+## Installation
+
+```shell
+pip install dayu_widgets
+```
+
+## Run Demo
+
+After installation, you can run the demo application with the following commands:
+
+```shell
+# Run as a Python module
+python -m dayu_widgets
+
+# Or use the command line tool
+uvx dayu_widgets
+```
+
+## Usage
+
 ```python
 import dayu_widgets
 ```
