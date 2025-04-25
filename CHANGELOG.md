@@ -1,3 +1,14 @@
+## v0.14.0 (2025-04-25)
+
+### Feat
+
+- add command line entry point for running demo
+- add command line entry point for running demo
+
+### Fix
+
+- use app variable in __main__.py to avoid unused variable warning
+
 ## v0.13.15 (2024-10-28)
 
 ### Fix
