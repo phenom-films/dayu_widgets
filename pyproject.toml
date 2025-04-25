@@ -22,6 +22,7 @@ classifiers = [
 
 packages = [
     { include = "dayu_widgets" },
+    { include = "examples" },
 ]
 [tool.poetry.build]
 generate-setup-file = false
