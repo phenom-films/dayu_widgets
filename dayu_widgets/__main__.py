@@ -64,10 +64,13 @@ def main():
     from dayu_widgets import dayu_theme
     from dayu_widgets.qt import application
 
+    # Create application and run the demo
     with application() as app:
         test = MDemo()
         dayu_theme.apply(test)
         test.show()
+        # Return the app's exit code (this will implicitly use the app variable)
+        return app.exec_()
 
 
 if __name__ == "__main__":
