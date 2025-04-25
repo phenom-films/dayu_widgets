@@ -1,3 +1,9 @@
+## v0.14.1 (2025-04-25)
+
+### Fix
+
+- **deps**: update dependency qt.py to v1.4.4
+
 ## v0.14.0 (2025-04-25)
 
 ### Feat
