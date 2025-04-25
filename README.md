@@ -159,15 +159,17 @@ pip install dayu_widgets
 
 ## 运行示例程序
 
-安装后，可以通过以下命令直接运行示例程序：
+安装后，可以通过以下命令直接运行示例程序。注意，运行示例程序需要 Qt 环境（如 PySide2 或 PyQt5）：
 
 ```shell
-# 使用 Python 模块方式运行
+# 使用 Python 模块方式运行（需要先安装 PySide2 或 PyQt5）
 python -m dayu_widgets
 
-# 或者使用命令行工具运行
-uvx dayu_widgets
+# 使用 uvx 命令行工具运行（推荐方式，自动处理依赖）
+uvx --python 3.10 --with pyside2 dayu_widgets
 ```
+
+> **注意**：dayu_widgets 是一个 Qt 界面库，运行示例程序需要 Qt 环境。使用 `uvx` 命令时可以通过 `--with pyside2` 参数自动处理 Qt 依赖。
 
 # 如何贡献代码
 
