@@ -40,6 +40,9 @@ autoflake = "1.7"
 pyside2 = ["PySide2"]
 pyside6 = ["PySide6"]
 
+[tool.poetry.scripts]
+dayu_widgets = "dayu_widgets.__main__:main"
+
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "0.3.0"

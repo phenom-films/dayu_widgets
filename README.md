@@ -87,6 +87,35 @@ uv pip install -e ".[pyside2]"  # 使用 PySide2
 
 注意：依赖里并未强制要求安装任何 Qt 的 Python 绑定库，可根据自己的需要，选择手动安装 PySide2、PySide6、PyQt4、PyQt5。
 
+## 运行 Demo
+
+安装完成后，可以通过以下方式运行演示界面：
+
+### 使用 uvx 运行（推荐）
+
+```shell
+# 使用 Python 3.10 和 PySide2 运行 demo
+uvx --python 3.10 --with pyside2 dayu_widgets
+
+# 使用 Python 3.10 和 PySide6 运行 demo
+uvx --python 3.10 --with pyside6 dayu_widgets
+```
+
+### 使用 Python 模块方式运行
+
+```shell
+# 使用当前环境的 Python 和 Qt 绑定运行 demo
+python -m dayu_widgets
+```
+
+### 直接运行示例脚本
+
+```shell
+# 进入项目目录
+cd examples
+python demo.py
+```
+
 ## 开发指南
 
 ### 开发环境设置
