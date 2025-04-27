@@ -9,11 +9,15 @@
 <img src="https://img.shields.io/pypi/l/dayu_widgets" alt="License">
 <img src="https://img.shields.io/pypi/format/dayu_widgets" alt="pypi format">
 <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" alt="Maintenance"></a>
+<a href="https://context7.com/phenom-films/dayu_widgets">
+<img src="https://img.shields.io/badge/Context7-Enabled-blue" alt="Context7 Enabled"></a>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 </p>
+
+> **AI Assistant Integration**: This project is integrated with [Context7](https://context7.com/phenom-films/dayu_widgets), allowing AI assistants to access up-to-date documentation and examples. Try prompts like: `帮我创建一个dayu_widgets的进度条， use context7`
 
 
 Components for PySide
@@ -201,6 +205,16 @@ poetry run isort dayu_widgets
 ## 提交代码
 ```shell
 poetry run cz commit
+```
+
+## Context7 Integration
+
+This project includes a `llms.txt` file that provides code examples and documentation for AI assistants and LLMs through [Context7](https://context7.com/). The file is automatically generated from the examples in the `examples/` directory.
+
+To manually generate the `llms.txt` file, run:
+
+```shell
+python scripts/generate_llms_txt.py
 ```
 
 ## Contributors ✨
