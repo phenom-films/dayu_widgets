@@ -11,13 +11,13 @@ from qtpy import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.dock_widget import MDockWidget
 from dayu_widgets.item_view_set import MItemViewSet
-from dayu_widgets.__version__ import __version__, __repo__, __repo_url__
+from dayu_widgets.__version__ import __version__
 
 
 def get_test_widget():
     result = []
-    DIR = os.path.dirname(__file__)
-    for i in os.listdir(DIR):
+    examples_dir = os.path.dirname(__file__)
+    for i in os.listdir(examples_dir):
         if i.startswith("__") or (not i.endswith(".py")) or i == "demo.py":
             continue
         name = i.split(".")[0]
@@ -25,7 +25,7 @@ def get_test_widget():
         class_name = "".join(map(lambda x: x.title(), name.split("_")))
         module = importlib.import_module(module_name, class_name)
         if hasattr(module, class_name):
-            with codecs.open(os.path.join(DIR, "%s.py" % name), encoding="utf-8") as f:
+            with codecs.open(os.path.join(examples_dir, "%s.py" % name), encoding="utf-8") as f:
                 result.append((name, getattr(module, class_name), f.readlines()))
     return result
 
@@ -70,7 +70,6 @@ class MDemo(QtWidgets.QMainWindow):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets import dayu_theme
     from dayu_widgets.qt import application
 
     with application() as app:
