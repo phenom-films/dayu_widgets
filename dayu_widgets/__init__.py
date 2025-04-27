@@ -71,6 +71,7 @@ from dayu_widgets.tool_button import MToolButton
 
 
 __all__ = [
+    "dayu_theme",
     "MAlert",
     "MAvatar",
     "MBadge",
