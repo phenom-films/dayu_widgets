@@ -33,18 +33,12 @@ def get_test_widget():
 class MDemo(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super(MDemo, self).__init__(parent)
-        self.setWindowTitle(f"Dayu Widgets Demo v{__version__} ({__repo__})")
+        self.setWindowTitle(f"Dayu Widgets Demo v{__version__}")
         self._init_ui()
 
     def _init_ui(self):
         self.text_edit = QtWidgets.QTextEdit()
         self.stacked_widget = QtWidgets.QStackedWidget()
-
-        # 创建菜单栏
-        menu_bar = self.menuBar()
-        help_menu = menu_bar.addMenu("帮助")
-        about_action = help_menu.addAction("关于")
-        about_action.triggered.connect(self.show_about_dialog)
 
         list_widget = MItemViewSet(view_type=MItemViewSet.ListViewType)
         list_widget.set_header_list([{"key": "name", "label": "Name", "icon": "list_view.svg"}])
@@ -67,18 +61,6 @@ class MDemo(QtWidgets.QMainWindow):
         code_widget.setWidget(self.text_edit)
         self.addDockWidget(QtCore.Qt.RightDockWidgetArea, code_widget)
         self.setCentralWidget(self.stacked_widget)
-
-    def show_about_dialog(self):
-        """显示关于对话框"""
-        from dayu_widgets.message import MMessage
-
-        about_text = f"""
-        <b>Dayu Widgets</b> v{__version__}
-        <p>仓库: <a href="{__repo_url__}">{__repo__}</a></p>
-        <p>一个现代化的 PySide 组件库，提供丰富的 UI 组件和主题支持。</p>
-        """
-
-        MMessage.info(about_text, parent=self, duration=0)
 
     def slot_change_widget(self, index):
         self.stacked_widget.setCurrentIndex(index.row())
