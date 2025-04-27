@@ -1,3 +1,9 @@
+## v0.15.0 (2025-04-27)
+
+### Feat
+
+- add script to generate llms.txt for Context7 integration
+
 ## v0.14.1 (2025-04-25)
 
 ### Fix
