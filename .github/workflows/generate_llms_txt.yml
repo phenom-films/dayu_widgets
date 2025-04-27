@@ -1,0 +1,30 @@
+name: Generate llms.txt
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  generate-llms-txt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Generate llms.txt
+        run: |
+          python scripts/generate_llms_txt.py
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add llms.txt
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update llms.txt [skip ci]" && git push)

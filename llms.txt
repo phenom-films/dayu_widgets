@@ -1,0 +1,2780 @@
+TITLE: Importing dayu_widgets in Python
+DESCRIPTION: This code snippet demonstrates how to import the dayu_widgets library into a Python script. This import statement is the prerequisite for using any of the UI components provided by the library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/README.md#L1
+LANGUAGE: Python
+CODE: ```
+import dayu_widgets
+```
+----------------------------------------
+TITLE: Using AlertExample Widget
+DESCRIPTION: error
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/alert_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = AlertExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Using AvatarExample Widget
+DESCRIPTION: Example of how to use the AvatarExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/avatar_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = AvatarExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Using BadgeExample Widget
+DESCRIPTION: Example of how to use the BadgeExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/badge_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = BadgeExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing BadgeExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for BadgeExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/badge_example.py#L1
+LANGUAGE: Python
+CODE: ```
+standalone_lay = QtWidgets.QHBoxLayout()
+        standalone_lay.addWidget(MBadge.count(0))
+        standalone_lay.addWidget(MBadge.count(20))
+        standalone_lay.addWidget(MBadge.count(100))
+        standalone_lay.addWidget(MBadge.dot(True))
+        standalone_lay.addWidget(MBadge.text("new"))
+        standalone_lay.addStretch()
+
+        button = MToolButton().svg("trash_line.svg")
+        avatar = MAvatar.large(MPixmap("avatar.png"))
+        button_alert = MToolButton().svg("alert_fill.svg").large()
+        badge_1 = MBadge.dot(True, widget=button)
+        badge_2 = MBadge.dot(True, widget=avatar)
+        badge_3 = MBadge.dot(True, widget=button_alert)
+        button.clicked.connect(lambda: badge_1.set_dayu_dot(False))
+
+        spin_box = MSpinBox()
+        spin_box.setRange(0, 9999)
+        spin_box.valueChanged.connect(badge_3.set_dayu_count)
+        spin_box.setValue(1)
+
+        self.register_field("button1_selected", "北京")
+        menu1 = MMenu(parent=self)
+        menu1.set_data(["北京", "上海", "广州", "深圳"])
+        select1 = MComboBox()
+        select1.set_menu(menu1)
+        self.bind("button1_selected", select1, "value", signal="sig_value_changed")
+
+        badge_hot = MBadge.text("hot", widget=MLabel("你的理想城市  "))
+
+        sub_lay1 = QtWidgets.QHBoxLayout()
+        sub_lay1.addWidget(badge_1)
+        sub_lay1.addWidget(badge_2)
+        sub_lay1.addWidget(badge_3)
+        sub_lay1.addStretch()
+
+        sub_lay2 = QtWidgets.QHBoxLayout()
+        sub_lay2.addWidget(badge_hot)
+        sub_lay2.addWidget(select1)
+        sub_lay2.addStretch()
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("use standalone"))
+        main_lay.addLayout(standalone_lay)
+        main_lay.addWidget(MDivider("different type"))
+        main_lay.addLayout(sub_lay1)
+        main_lay.addWidget(spin_box)
+        main_lay.addWidget(MDivider("different type"))
+        main_lay.addLayout(sub_lay2)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using BreadcrumbExample Widget
+DESCRIPTION: home_line.svg
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/breadcrumb_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = BreadcrumbExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing BreadcrumbExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for BreadcrumbExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/breadcrumb_example.py#L1
+LANGUAGE: Python
+CODE: ```
+MMessage.config(duration=1)
+        entity_list = [
+            {
+                "clicked": functools.partial(
+                    self.slot_show_message, MMessage.info, 'Go to "Home Page"'
+                ),
+                "svg": "home_line.svg",
+            },
+            {
+                "text": "pl",
+                "clicked": functools.partial(
+                    self.slot_show_message, MMessage.info, 'Go to "pl"'
+                ),
+                "svg": "user_line.svg",
+            },
+            {
+                "text": "pl_0010",
+                "clicked": functools.partial(
+                    self.slot_show_message, MMessage.info, 'Go to "pl_0010"'
+                ),
+            },
+        ]
+        no_icon_eg = MBreadcrumb()
+        no_icon_eg.set_item_list(entity_list)
+
+        separator_eg = MBreadcrumb(separator="=>")
+        separator_eg.set_item_list(entity_list)
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("normal"))
+        main_lay.addWidget(no_icon_eg)
+        main_lay.addWidget(MDivider("separator: =>"))
+        main_lay.addWidget(separator_eg)
+
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using BrowserExample Widget
+DESCRIPTION: Example of how to use the BrowserExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/browser_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = BrowserExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing BrowserExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for BrowserExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/browser_example.py#L1
+LANGUAGE: Python
+CODE: ```
+browser_1 = MClickBrowserFilePushButton(
+            text="Browser File PushButton"
+        ).primary()
+        browser_2 = MClickBrowserFolderPushButton(text="Browser Folder PushButton")
+        browser_2.setIcon(MIcon("upload_line.svg"))
+        browser_3 = MClickBrowserFilePushButton(
+            text="Browser Multi Files", multiple=True
+        ).primary()
+        lay_1 = QtWidgets.QHBoxLayout()
+        lay_1.addWidget(browser_1)
+        lay_1.addWidget(browser_2)
+        lay_1.addWidget(browser_3)
+
+        browser_4 = MClickBrowserFileToolButton().huge()
+        label_4 = MLabel()
+        label_4.set_elide_mode(QtCore.Qt.ElideMiddle)
+        browser_4.sig_file_changed.connect(label_4.setText)
+
+        browser_5 = MClickBrowserFolderToolButton().huge()
+        label_5 = MLabel()
+        label_5.set_elide_mode(QtCore.Qt.ElideMiddle)
+        browser_5.sig_folder_changed.connect(label_5.setText)
+
+        lay_2 = QtWidgets.QHBoxLayout()
+        lay_2.addWidget(label_4)
+        lay_2.addWidget(browser_4)
+        lay_2.addWidget(label_5)
+        lay_2.addWidget(browser_5)
+
+        browser_6 = MDragFileButton(text="Click or drag file here")
+        browser_6.set_dayu_svg("attachment_line.svg")
+        label_6 = MLabel()
+        label_6.set_elide_mode(QtCore.Qt.ElideMiddle)
+        browser_6.sig_file_changed.connect(label_6.setText)
+
+        browser_7 = MDragFolderButton()
+        label_7 = MLabel()
+        label_7.set_elide_mode(QtCore.Qt.ElideRight)
+        browser_7.sig_folder_changed.connect(label_7.setText)
+
+        lay_3 = QtWidgets.QGridLayout()
+        lay_3.addWidget(browser_6, 2, 0)
+        lay_3.addWidget(browser_7, 2, 1)
+        lay_3.addWidget(label_6, 3, 0)
+        lay_3.addWidget(label_7, 3, 1)
+
+        browser_8 = MDragFileButton(
+            text="Click or drag media file here", multiple=False
+        )
+        browser_8.set_dayu_svg("media_line.svg")
+        browser_8.set_dayu_filters([".mov", ".mp4"])
+        browser_8_label = MLabel()
+        browser_8_label.set_elide_mode(QtCore.Qt.ElideRight)
+        self.register_field("current_file", "")
+        self.bind("current_file", browser_8, "dayu_path", signal="sig_file_changed")
+        self.bind("current_file", browser_8_label, "text")
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("MClickBrowser*PushButton"))
+        main_lay.addLayout(lay_1)
+        main_lay.addWidget(MDivider("MClickBrowser*ToolButton"))
+        main_lay.addLayout(lay_2)
+        main_lay.addWidget(MDivider("MDragBrowser*ToolButton"))
+        main_lay.addLayout(lay_3)
+        main_lay.addWidget(MDivider("data bind"))
+        main_lay.addWidget(browser_8)
+        main_lay.addWidget(browser_8_label)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using CardExample Widget
+DESCRIPTION: Example of how to use the CardExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/card_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = CardExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing CardExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for CardExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/card_example.py#L1
+LANGUAGE: Python
+CODE: ```
+basic_card_lay = MFlowLayout()
+        basic_card_lay.setSpacing(20)
+        for setting in [
+            {
+                "title": "",
+            },
+            {"title": "Card Title", "size": dayu_theme.small},
+            {"title": "Card Title", "image": MPixmap("app-houdini.png")},
+            {
+                "title": "Card Title",
+                "extra": "More",
+                "image": MPixmap("app-houdini.png"),
+            },
+            {
+                "title": "Card Title",
+                "extra": "More",
+            },
+        ]:
+            card_0 = MCard(**setting)
+            content_widget_0 = QtWidgets.QWidget()
+            content_lay_0 = QtWidgets.QVBoxLayout()
+            content_lay_0.setContentsMargins(15, 15, 15, 15)
+            content_widget_0.setLayout(content_lay_0)
+            for i in range(4):
+                content_lay_0.addWidget(MLabel("Card Content {}".format(i + 1)))
+            card_0.set_widget(content_widget_0)
+
+            basic_card_lay.addWidget(card_0)
+
+        meta_card_lay = MFlowLayout()
+        meta_card_lay.setSpacing(20)
+        for setting in [
+            {
+                "title": "Houdini",
+                "description": "Side Effects Software的旗舰级产品，是创建高级视觉效果的有效工具",
+                "avatar": MPixmap("user_line.svg"),
+                "cover": MPixmap("app-houdini.png"),
+            },
+            {
+                "title": "Autodesk Maya",
+                "description": "3D 数字动画和视觉效果的世界领先软件应用程序",
+                "cover": MPixmap("app-maya.png"),
+            },
+        ]:
+            meta_card = MMeta()
+            meta_card.setup_data(setting)
+            meta_card_lay.addWidget(meta_card)
+
+        task_card_lay = QtWidgets.QVBoxLayout()
+        # task_card_lay.setSpacing(10)
+        for setting in [
+            {
+                "title": "Task A",
+                "description": "demo pl_0010 Animation \n2019/04/01 - 2019/04/09",
+                "avatar": MPixmap("success_line.svg", dayu_theme.success_color),
+            },
+            {
+                "title": "Task B",
+                "description": "#2 closed by xiao hua.",
+                "avatar": MPixmap("error_line.svg", dayu_theme.error_color),
+            },
+            {
+                "title": "Task C",
+                "description": "#3 closed by xiao hua.",
+                "avatar": MPixmap("warning_line.svg", dayu_theme.warning_color),
+            },
+        ] * 5:
+            meta_card = MMeta(extra=True)
+            meta_card.setup_data(setting)
+            task_card_lay.addWidget(meta_card)
+
+        left_lay = QtWidgets.QVBoxLayout()
+        left_lay.addWidget(MDivider("Basic"))
+        left_lay.addLayout(basic_card_lay)
+        left_lay.addWidget(MDivider("Meta E-Commerce Example"))
+        left_lay.addLayout(meta_card_lay)
+        left_lay.addStretch()
+        left_widget = QtWidgets.QWidget()
+        left_widget.setLayout(left_lay)
+
+        right_lay = QtWidgets.QVBoxLayout()
+        right_lay.addWidget(MDivider("Meta Task Item Example"))
+        scroll = QtWidgets.QScrollArea()
+        scroll.setWidgetResizable(True)
+        task_widget = QtWidgets.QWidget()
+        task_widget.setLayout(task_card_lay)
+        scroll.setWidget(task_widget)
+
+        right_lay.addWidget(scroll)
+        right_widget = QtWidgets.QWidget()
+        right_widget.setLayout(right_lay)
+
+        splitter = QtWidgets.QSplitter()
+        splitter.addWidget(left_widget)
+        splitter.addWidget(right_widget)
+        splitter.setStretchFactor(0, 80)
+        splitter.setStretchFactor(1, 20)
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(splitter)
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using CarouselExample Widget
+DESCRIPTION: Example of how to use the CarouselExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/carousel_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = CarouselExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing CarouselExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for CarouselExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/carousel_example.py#L1
+LANGUAGE: Python
+CODE: ```
+switch = MSwitch()
+        switch.setChecked(True)
+        slider = MSlider()
+        slider.setRange(1, 10)
+        switch_lay = QtWidgets.QFormLayout()
+        switch_lay.addRow(MLabel("AutoPlay"), switch)
+        switch_lay.addRow(MLabel("Interval"), slider)
+        test = MCarousel(
+            [MPixmap("app-{}.png".format(a)) for a in ["maya", "nuke", "houdini"]],
+            width=300,
+            height=300,
+            autoplay=True,
+        )
+        switch.toggled.connect(test.set_autoplay)
+        slider.valueChanged.connect(lambda x: test.set_interval(x * 1000))
+        slider.setValue(3)
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(test)
+        main_lay.addLayout(switch_lay)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using CheckBoxExample Widget
+DESCRIPTION: Yes!
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/check_box_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = CheckBoxExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Using CheckBoxGroupExample Widget
+DESCRIPTION: Maya
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/check_box_group_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = CheckBoxGroupExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing CheckBoxGroupExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for CheckBoxGroupExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/check_box_group_example.py#L1
+LANGUAGE: Python
+CODE: ```
+self.app_data = [
+            {"text": "Maya", "icon": MIcon("app-maya.png")},
+            {"text": "Nuke", "icon": MIcon("app-nuke.png")},
+            {"text": "Houdini", "icon": MIcon("app-houdini.png")},
+        ]
+        radio_group_h = MCheckBoxGroup()
+        radio_group_v = MCheckBoxGroup(orientation=QtCore.Qt.Vertical)
+
+        radio_group_h.set_button_list(self.app_data)
+        radio_group_v.set_button_list(self.app_data)
+
+        self.data_list = ["北京", "上海", "广州", "深圳", "郑州", "石家庄"]
+        radio_group_b = MCheckBoxGroup()
+        radio_group_b.set_button_list(self.data_list)
+
+        button = MPushButton(text="Change Value")
+        button.clicked.connect(self.slot_button_clicked)
+
+        label = MLabel()
+        self.register_field("checked_app", ["北京", "郑州"])
+        self.register_field(
+            "checked_app_text", lambda: " & ".join(self.field("checked_app"))
+        )
+        self.bind(
+            "checked_app", radio_group_b, "dayu_checked", signal="sig_checked_changed"
+        )
+        self.bind("checked_app_text", label, "text")
+
+        radio_group_tri = MCheckBoxGroup()
+        radio_group_tri.set_button_list(self.app_data)
+        self.register_field("check_grp", ["Maya"])
+        self.bind(
+            "check_grp", radio_group_tri, "dayu_checked", signal="sig_checked_changed"
+        )
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("Orientation Qt.Horizontal"))
+        main_lay.addWidget(radio_group_h)
+        main_lay.addWidget(MDivider("Orientation Qt.Vertical"))
+        main_lay.addWidget(radio_group_v)
+
+        main_lay.addWidget(MDivider("Data Bind"))
+        main_lay.addWidget(radio_group_b)
+        main_lay.addWidget(label)
+        main_lay.addWidget(button)
+
+        main_lay.addWidget(MDivider("Try Context Menu"))
+        main_lay.addWidget(radio_group_tri)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+
+    @QtCore.Slot()
+```
+----------------------------------------
+TITLE: Using CollapseExample Widget
+DESCRIPTION: 史蒂夫乔布斯
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/collapse_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = CollapseExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing CollapseExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for CollapseExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/collapse_example.py#L1
+LANGUAGE: Python
+CODE: ```
+label_1 = MLabel(
+            "史蒂夫·乔布斯（Steve Jobs），1955年2月24日生于美国加利福尼亚州旧金山，美国发明家、企业家、美国苹果公司联合创办人。"
+        )
+        label_2 = MLabel(
+            "斯蒂夫·盖瑞·沃兹尼亚克（Stephen Gary Wozniak），美国电脑工程师，曾与史蒂夫·乔布斯合伙创立苹果电脑（今之苹果公司）。斯蒂夫·盖瑞·沃兹尼亚克曾就读于美国科罗拉多大学，后转学入美国著名高等学府加州大学伯克利分校（UC Berkeley）并获得电机工程及计算机（EECS）本科学位（1987年）。"
+        )
+        label_3 = MLabel(
+            "乔纳森·伊夫是一位工业设计师，现任Apple公司设计师兼资深副总裁，英国爵士。他曾参与设计了iPod，iMac，iPhone，iPad等众多苹果产品。除了乔布斯，他是对苹果那些著名的产品最有影响力的人。"
+        )
+        label_1.setWordWrap(True)
+        label_2.setWordWrap(True)
+        label_3.setWordWrap(True)
+        section_list = [
+            {"title": "史蒂夫乔布斯", "expand": True, "widget": label_1},
+            {
+                "title": "可关闭的",
+                "expand": True,
+                "widget": MLabel("This is a closable collapse item"),
+                "closable": True,
+            },
+            {"title": "斯蒂夫·盖瑞·沃兹尼亚克", "expand": True, "widget": label_2},
+        ]
+
+        section_group = MCollapse()
+        section_group.add_section_list(section_list)
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(section_group)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using ComboBoxExample Widget
+DESCRIPTION: \u6545\u5bab
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/combo_box_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = ComboBoxExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing ComboBoxExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for ComboBoxExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/combo_box_example.py#L1
+LANGUAGE: Python
+CODE: ```
+cities = ["北京", "上海", "广州", "深圳"]
+        self.register_field("button1_selected", "北京")
+        menu1 = MMenu(parent=self)
+        menu1.set_data(cities)
+        size_list = [
+            ("Large", dayu_theme.large),
+            ("Medium", dayu_theme.medium),
+            ("Small", dayu_theme.small),
+        ]
+        size_lay = QtWidgets.QHBoxLayout()
+        for label, size in size_list:
+            combo_box = MComboBox()
+            combo_box.set_dayu_size(size)
+            combo_box.set_menu(menu1)
+            size_lay.addWidget(combo_box)
+            self.bind(
+                "button1_selected", combo_box, "value", signal="sig_value_changed"
+            )
+
+        self.register_field("button2_selected", ["北京"])
+        menu2 = MMenu(exclusive=False, parent=self)
+        menu2.set_data(cities)
+        select2 = MComboBox()
+        select2.set_menu(menu2)
+        self.bind("button2_selected", select2, "value", signal="sig_value_changed")
+```
+----------------------------------------
+TITLE: Using MPushButtonDelegate Widget
+DESCRIPTION: Name
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/delegate_button_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = DelegateButtonExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing MPushButtonDelegate UI
+DESCRIPTION: Example of how to initialize and configure the UI for MPushButtonDelegate widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/delegate_button_example.py#L1
+LANGUAGE: Python
+CODE: ```
+model_1 = MTableModel()
+        model_1.set_header_list(header_list)
+        model_sort = MSortFilterModel()
+        model_sort.setSourceModel(model_1)
+
+        table_grid = MTableView(size=dayu_theme.small, show_row_count=True)
+        table_grid.setShowGrid(True)
+        table_grid.setModel(model_sort)
+        model_sort.set_header_list(header_list)
+        table_grid.set_header_list(header_list)
+        button_delegate = MPushButtonDelegate(parent=self)
+        table_grid.setItemDelegateForColumn(4, button_delegate)
+        button_delegate.sig_clicked.connect(self.slot_cell_clicked)
+        model_1.set_data_list(
+            [
+                {
+                    "name": "John Brown",
+                    "sex": "Male",
+                    "sex_list": ["Male", "Female"],
+                    "age": 18,
+                    "score": 89,
+                    "city": "New York",
+                    "city_list": ["New York", "Ottawa", "London", "Sydney"],
+                    "date": "2016-10-03",
+                },
+                {
+                    "name": "Jim Green",
+                    "sex": "Male",
+                    "sex_list": ["Male", "Female"],
+                    "age": 24,
+                    "score": 55,
+                    "city": "London",
+                    "city_list": ["New York", "Ottawa", "London", "Sydney"],
+                    "date": "2016-10-01",
+                },
+            ]
+        )
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(table_grid)
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using DividerExample Widget
+DESCRIPTION: + str(self.field(
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/divider_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = DividerExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing DividerExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for DividerExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/divider_example.py#L1
+LANGUAGE: Python
+CODE: ```
+div1 = MDivider()
+        div2 = MDivider("With Text")
+        div3 = MDivider.left("Left Text")
+        div4 = MDivider.center("Center Text")
+        div5 = MDivider.right("Right Text")
+        div6 = MDivider.vertical()
+        div7 = MDivider.vertical()
+        div8 = MDivider.left("orientation=Qt.Vertical")
+        label1 = MLabel("Maya").strong()
+        label2 = MLabel("Nuke").underline()
+        label3 = MLabel("Houdini").mark()
+        sub_lay = QtWidgets.QHBoxLayout()
+        sub_lay.addWidget(label1)
+        sub_lay.addWidget(div6)
+        sub_lay.addWidget(label2)
+        sub_lay.addWidget(div7)
+        sub_lay.addWidget(label3)
+        sub_lay.addStretch()
+
+        some_text = (
+            "Steven Paul Jobs was an American entrepreneur and business magnate."
+        )
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MLabel(some_text))
+        main_lay.addWidget(div1)
+        main_lay.addWidget(MLabel(some_text))
+        main_lay.addWidget(div2)
+        main_lay.addWidget(MLabel(some_text))
+        main_lay.addWidget(div3)
+        main_lay.addWidget(MLabel(some_text))
+        main_lay.addWidget(div4)
+        main_lay.addWidget(MLabel(some_text))
+        main_lay.addWidget(div5)
+        main_lay.addLayout(sub_lay)
+        main_lay.addWidget(div8)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using DrawerExample Widget
+DESCRIPTION: right
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/drawer_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = DrawerExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing DrawerExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for DrawerExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/drawer_example.py#L1
+LANGUAGE: Python
+CODE: ```
+scale_x, _ = get_scale_factor()
+        self.button_grp = MRadioButtonGroup()
+        self.button_grp.set_button_list(
+            ["top", {"text": "right", "checked": True}, "bottom", "left"]
+        )
+
+        open_button_2 = MPushButton("Open").primary()
+        open_button_2.clicked.connect(self.slot_open_button_2)
+        placement_lay = QtWidgets.QHBoxLayout()
+        placement_lay.addWidget(self.button_grp)
+        placement_lay.addSpacing(20 * scale_x)
+        placement_lay.addWidget(open_button_2)
+        placement_lay.addStretch()
+
+        new_account_button = MPushButton(
+            text="New account", icon=MIcon("add_line.svg", "#fff")
+        ).primary()
+        new_account_button.clicked.connect(self.slot_new_account)
+        new_account_lay = QtWidgets.QHBoxLayout()
+        new_account_lay.addWidget(MLabel("Submit form in drawer"))
+        new_account_lay.addWidget(new_account_button)
+        new_account_lay.addStretch()
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("Custom Placement"))
+        main_lay.addLayout(placement_lay)
+        main_lay.addWidget(MDivider("Submit form in drawer"))
+        main_lay.addLayout(new_account_lay)
+
+        main_lay.addWidget(MDivider("Preview drawer"))
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using FieldMixinExample Widget
+DESCRIPTION: ), 0, 0)
+        main_lay.addWidget(thumbnail_label, 0, 1)
+        main_lay.addWidget(MLabel(
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/field_mixin_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = FieldMixinExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Using ItemViewBigTypeExample Widget
+DESCRIPTION: Name
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/item_view_big_type_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = ItemViewBigTypeExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing ItemViewBigTypeExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for ItemViewBigTypeExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/item_view_big_type_example.py#L1
+LANGUAGE: Python
+CODE: ```
+item_view_set_thumbnail = MItemViewSet(view_type=MItemViewSet.BigViewType)
+        item_view_set_thumbnail.set_header_list(
+            [
+                {
+                    "label": "Name",
+                    "key": "name",
+                    "searchable": True,
+                    "font": lambda x, y: {"underline": True},
+                    "icon": lambda x, y: y.get("icon"),
+                }
+            ]
+        )
+        add_button = MToolButton().svg("add_line.svg")
+        add_button.clicked.connect(
+            functools.partial(item_view_set_thumbnail.item_view.scale_size, 1.1)
+        )
+        minus_button = MToolButton().svg("minus_line.svg")
+        minus_button.clicked.connect(
+            functools.partial(item_view_set_thumbnail.item_view.scale_size, 0.8)
+        )
+        button_lay = QtWidgets.QHBoxLayout()
+        button_lay.addWidget(minus_button)
+        button_lay.addWidget(add_button)
+        button_lay.addStretch()
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("Big View"))
+        main_lay.addLayout(button_lay)
+        main_lay.addWidget(item_view_set_thumbnail)
+        self.setLayout(main_lay)
+        for data_dict in mock.data_list:
+            icon = QtGui.QIcon(
+                dayu_utils.generate_text_pixmap(
+                    400,
+                    400,
+                    data_dict.get("name") + "_" + data_dict.get("sex"),
+                    bg_color=dayu_theme.background_selected_color,
+                )
+            )
+            data_dict.update({"icon": icon})
+        item_view_set_thumbnail.setup_data((mock.data_list * 100))
+```
+----------------------------------------
+TITLE: Using ItemViewFullSetExample Widget
+DESCRIPTION: Example of how to use the ItemViewFullSetExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/item_view_full_set_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = ItemViewFullSetExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing ItemViewFullSetExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for ItemViewFullSetExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/item_view_full_set_example.py#L1
+LANGUAGE: Python
+CODE: ```
+item_view_set_table = MItemViewFullSet()
+        item_view_set_table.set_header_list(mock.header_list)
+
+        item_view_set_all = MItemViewFullSet(big_view=True)
+        item_view_set_all.set_header_list(mock.header_list)
+
+        refresh_button = MPushButton("Refresh Data")
+        refresh_button.clicked.connect(self.slot_update_data)
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("Only Table View"))
+        main_lay.addWidget(refresh_button)
+        main_lay.addWidget(item_view_set_table)
+        main_lay.addWidget(MDivider("Table View and Big View"))
+        main_lay.addWidget(item_view_set_all)
+        self.setLayout(main_lay)
+
+        self.view_list = [
+            item_view_set_table,
+            item_view_set_all,
+        ]
+        self.bind(
+            "item_view_full_set_example_header_state",
+            item_view_set_table.table_view.header_view,
+            "state",
+        )
+        self.slot_update_data()
+```
+----------------------------------------
+TITLE: Using ItemViewSetExample Widget
+DESCRIPTION: Example of how to use the ItemViewSetExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/item_view_set_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = ItemViewSetExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing ItemViewSetExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for ItemViewSetExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/item_view_set_example.py#L1
+LANGUAGE: Python
+CODE: ```
+item_view_set_table = MItemViewSet(view_type=MItemViewSet.TableViewType)
+        item_view_set_table.set_header_list(mock.header_list)
+        item_view_set_list = MItemViewSet(view_type=MItemViewSet.ListViewType)
+        item_view_set_list.set_header_list(mock.header_list)
+        item_view_set_tree = MItemViewSet(view_type=MItemViewSet.TreeViewType)
+        item_view_set_tree.set_header_list(mock.header_list)
+        item_view_set_thumbnail = MItemViewSet(view_type=MItemViewSet.BigViewType)
+        item_view_set_thumbnail.set_header_list(mock.header_list)
+
+        item_view_set_search = MItemViewSet(view_type=MItemViewSet.TreeViewType)
+        item_view_set_search.set_header_list(mock.header_list)
+        item_view_set_search.searchable()
+        expand_button = MPushButton("Expand All")
+        expand_button.clicked.connect(item_view_set_search.item_view.expandAll)
+        coll_button = MPushButton("Collapse All")
+        coll_button.clicked.connect(item_view_set_search.item_view.collapseAll)
+        item_view_set_search.insert_widget(coll_button)
+        item_view_set_search.insert_widget(expand_button)
+
+        refresh_button = MPushButton("Refresh Data")
+        refresh_button.clicked.connect(self.slot_update_data)
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("Table View"))
+        main_lay.addWidget(refresh_button)
+        main_lay.addWidget(item_view_set_table)
+        main_lay.addWidget(MDivider("List View"))
+        main_lay.addWidget(item_view_set_list)
+        main_lay.addWidget(MDivider("Tree View"))
+        main_lay.addWidget(item_view_set_tree)
+        main_lay.addWidget(MDivider("Big View"))
+        main_lay.addWidget(item_view_set_thumbnail)
+        main_lay.addWidget(MDivider("With Search line edit"))
+        main_lay.addWidget(item_view_set_search)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+
+        item_view_set_tree.setup_data(mock.tree_data_list)
+        item_view_set_search.setup_data(mock.tree_data_list)
+        self.view_list = [
+            item_view_set_table,
+            item_view_set_list,
+            item_view_set_thumbnail,
+        ]
+        self.bind(
+            "item_view_set_example_header_state",
+            item_view_set_table.item_view.header_view,
+            "state",
+        )
+        self.slot_update_data()
+```
+----------------------------------------
+TITLE: Using LabelExample Widget
+DESCRIPTION: Example of how to use the LabelExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/label_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = LabelExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing LabelExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for LabelExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/label_example.py#L1
+LANGUAGE: Python
+CODE: ```
+title_lay = QtWidgets.QGridLayout()
+        title_lay.addWidget(MLabel("一级标题").h1(), 0, 0)
+        title_lay.addWidget(MLabel("二级标题").h2(), 1, 0)
+        title_lay.addWidget(MLabel("三级标题").h3(), 2, 0)
+        title_lay.addWidget(MLabel("四级标题").h4(), 3, 0)
+        title_lay.addWidget(MLabel("h1 Level").h1(), 0, 1)
+        title_lay.addWidget(MLabel("h2 Level").h2(), 1, 1)
+        title_lay.addWidget(MLabel("h3 Level").h3(), 2, 1)
+        title_lay.addWidget(MLabel("h4 Level").h4(), 3, 1)
+
+        text_type_lay = QtWidgets.QHBoxLayout()
+        text_type_lay.addWidget(MLabel("MLabel: Normal"))
+        text_type_lay.addWidget(MLabel("MLabel: Secondary").secondary())
+        text_type_lay.addWidget(MLabel("MLabel: Warning").warning())
+        text_type_lay.addWidget(MLabel("MLabel: Danger").danger())
+        disable_text = MLabel("MLabel: Disabled")
+        disable_text.setEnabled(False)
+        text_type_lay.addWidget(disable_text)
+
+        text_attr_lay = QtWidgets.QHBoxLayout()
+        text_attr_lay.addWidget(MLabel("MLabel: Mark").mark())
+        text_attr_lay.addWidget(MLabel("MLabel: Code").code())
+        text_attr_lay.addWidget(MLabel("MLabel: Underline").underline())
+        text_attr_lay.addWidget(MLabel("MLabel: Delete").delete())
+        text_attr_lay.addWidget(MLabel("MLabel: Strong").strong())
+
+        text_mix_lay = QtWidgets.QHBoxLayout()
+        text_mix_lay.addWidget(
+            MLabel("MLabel: Strong & Underline").strong().underline()
+        )
+        text_mix_lay.addWidget(MLabel("MLabel: Danger & Delete").danger().delete())
+        text_mix_lay.addWidget(MLabel("MLabel: Warning & Strong").warning().strong())
+        text_mix_lay.addWidget(MLabel("MLabel: H4 & Mark").h4().mark())
+
+        data_bind_lay = QtWidgets.QHBoxLayout()
+        data_bind_label = MLabel()
+        button = MPushButton(text="Random An Animal").primary()
+        button.clicked.connect(self.slot_change_text)
+        data_bind_lay.addWidget(data_bind_label)
+        data_bind_lay.addWidget(button)
+        data_bind_lay.addStretch()
+        self.register_field("show_text", "Guess")
+        self.bind("show_text", data_bind_label, "text")
+
+        lay_elide = QtWidgets.QVBoxLayout()
+        label_none = MLabel(
+            "This is a elide NONE mode label. "
+            "Ellipsis should NOT appear in the text."
+        )
+        label_left = MLabel(
+            "This is a elide LEFT mode label. "
+            "The ellipsis should appear at the beginning of the text. "
+            "xiao mao xiao gou xiao ci wei"
+        )
+        label_left.set_elide_mode(QtCore.Qt.ElideLeft)
+        label_middle = MLabel(
+            "This is a elide MIDDLE mode label. "
+            "The ellipsis should appear in the middle of the text. "
+            "xiao mao xiao gou xiao ci wei"
+        )
+        label_middle.set_elide_mode(QtCore.Qt.ElideMiddle)
+        label_right = MLabel()
+        label_right.setText(
+            "This is a elide RIGHT mode label. "
+            "The ellipsis should appear at the end of the text. "
+            "Some text to fill the line bala bala bala."
+        )
+        label_right.set_elide_mode(QtCore.Qt.ElideRight)
+        lay_elide.addWidget(label_none)
+        lay_elide.addWidget(label_left)
+        lay_elide.addWidget(label_middle)
+        lay_elide.addWidget(label_right)
+
+        hyper_label_1 = MLabel()
+        hyper_label_1.set_link("https://baidu.com", text="baidu")
+        hyper_label_2 = MLabel()
+        hyper_label_2.set_link("https://baidu.com")
+        hyper_label_3 = MLabel()
+        hyper_label_3.set_link(
+            "https://github.com/phenom-films/dayu_widgets", text="Dayu Widgets"
+        )
+
+        hyperlink_lay = QtWidgets.QVBoxLayout()
+        hyperlink_lay.addWidget(hyper_label_1)
+        hyperlink_lay.addWidget(hyper_label_2)
+        hyperlink_lay.addWidget(hyper_label_3)
+        # hyperlink_lay.addWidget()
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("different level"))
+        main_lay.addLayout(title_lay)
+        main_lay.addWidget(MDivider("different type"))
+        main_lay.addLayout(text_type_lay)
+        main_lay.addWidget(MDivider("different property"))
+        main_lay.addLayout(text_attr_lay)
+        main_lay.addWidget(MDivider("mix"))
+        main_lay.addLayout(text_mix_lay)
+
+        # main_lay.addWidget(MDivider('data bind'))
+        # main_lay.addLayout(data_bind_lay)
+        main_lay.addWidget(MDivider("elide mode"))
+        main_lay.addLayout(lay_elide)
+        main_lay.addWidget(MDivider("hyperlink"))
+        main_lay.addLayout(hyperlink_lay)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using LineEditExample Widget
+DESCRIPTION: Example of how to use the LineEditExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/line_edit_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = LineEditExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing LineEditExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for LineEditExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/line_edit_example.py#L1
+LANGUAGE: Python
+CODE: ```
+size_lay = QtWidgets.QHBoxLayout()
+        line_edit_l = MLineEdit().large()
+        line_edit_l.setPlaceholderText("large size")
+        line_edit_m = MLineEdit().medium()
+        line_edit_m.setPlaceholderText("default size")
+        line_edit_s = MLineEdit().small()
+        line_edit_s.setPlaceholderText("small size")
+        size_lay.addWidget(line_edit_l)
+        size_lay.addWidget(line_edit_m)
+        size_lay.addWidget(line_edit_s)
+
+        line_edit_tool_button = MLineEdit(text="MToolButton")
+        line_edit_tool_button.set_prefix_widget(
+            MToolButton().svg("user_line.svg").icon_only()
+        )
+
+        line_edit_label = MLineEdit(text="MLabel")
+        tool_button = MLabel(text="User").mark().secondary()
+        tool_button.setAlignment(QtCore.Qt.AlignCenter)
+        tool_button.setFixedWidth(80)
+        line_edit_label.set_prefix_widget(tool_button)
+
+        line_edit_push_button = MLineEdit(text="MPushButton")
+        push_button = MPushButton(text="Go").primary()
+        push_button.setFixedWidth(40)
+        line_edit_push_button.set_suffix_widget(push_button)
+
+        search_engine_line_edit = MLineEdit().search_engine().large()
+        search_engine_line_edit.returnPressed.connect(self.slot_search)
+
+        line_edit_options = MLineEdit()
+        combobox = MComboBox()
+        option_menu = MMenu()
+        option_menu.set_separator("|")
+        option_menu.set_data([r"http://", r"https://"])
+        combobox.set_menu(option_menu)
+        combobox.set_value("http://")
+        combobox.setFixedWidth(100)
+        line_edit_options.set_prefix_widget(combobox)
+
+        delay_line_editor = MLineEdit()
+        delay_display_label = MLabel()
+        delay_button = MPushButton("Click to Edit Text")
+        delay_line_editor.sig_delay_text_changed.connect(delay_display_label.setText)
+        delay_button.clicked.connect(
+            functools.partial(delay_line_editor.setText, "Edited from code")
+        )
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("different size"))
+        main_lay.addLayout(size_lay)
+        main_lay.addWidget(MDivider("custom prefix and suffix widget"))
+        main_lay.addWidget(line_edit_tool_button)
+        main_lay.addWidget(line_edit_label)
+        main_lay.addWidget(line_edit_push_button)
+        main_lay.addWidget(MDivider("preset"))
+
+        main_lay.addWidget(MLabel("error"))
+        main_lay.addWidget(
+            MLineEdit(text="waring: file d:/ddd/ccc.jpg not exists.").error()
+        )
+        main_lay.addWidget(MLabel("search"))
+        main_lay.addWidget(MLineEdit().search().small())
+        main_lay.addWidget(MLabel("search_engine"))
+        main_lay.addWidget(search_engine_line_edit)
+        main_lay.addWidget(MLabel("file"))
+        main_lay.addWidget(MLineEdit().file().small())
+        main_lay.addWidget(MLabel("folder"))
+        main_lay.addWidget(MLineEdit().folder().small())
+        main_lay.addWidget(MLabel("MLineEdit.options()"))
+        main_lay.addWidget(line_edit_options)
+        main_lay.addWidget(MDivider("Test delay Signal"))
+        main_lay.addWidget(delay_line_editor)
+        main_lay.addWidget(delay_display_label)
+        main_lay.addWidget(delay_button)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+
+    @QtCore.Slot()
+```
+----------------------------------------
+TITLE: Using LineTabWidgetExample Widget
+DESCRIPTION: Tab 1
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/line_tab_widget_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = LineTabWidgetExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing LineTabWidgetExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for LineTabWidgetExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/line_tab_widget_example.py#L1
+LANGUAGE: Python
+CODE: ```
+main_lay = QtWidgets.QVBoxLayout()
+
+        tab_center = MLineTabWidget()
+        tab_center.add_tab(
+            MLabel("test 1 " * 10), {"text": "Tab 1", "svg": "user_line.svg"}
+        )
+        tab_center.add_tab(MLabel("test 2 " * 10), {"svg": "calendar_line.svg"})
+        tab_center.add_tab(MLabel("test 3 " * 10), "Tab 3")
+        tab_center.tool_button_group.set_dayu_checked(0)
+
+        tab_left = MLineTabWidget(alignment=QtCore.Qt.AlignLeft)
+        tab_left.add_tab(MLabel("test 1 " * 10), "Tab 1")
+        tab_left.add_tab(MLabel("test 2 " * 10), "Tab 2")
+        tab_left.add_tab(MLabel("test 3 " * 10), "Tab 3")
+        tab_left.tool_button_group.set_dayu_checked(0)
+
+        tab_right = MLineTabWidget(alignment=QtCore.Qt.AlignRight)
+        tab_right.add_tab(MLabel("test 1 " * 10), "Tab 1")
+        tab_right.add_tab(MLabel("test 2 " * 10), "Tab 2")
+        tab_right.add_tab(MLabel("test 3 " * 10), "Tab 3")
+        tab_right.tool_button_group.set_dayu_checked(0)
+
+        tab_huge = MLineTabWidget()
+        tab_huge.set_dayu_size(dayu_theme.huge)
+        tab_huge.add_tab(
+            MLabel("test 1 " * 10), {"text": "Tab 1", "svg": "user_line.svg"}
+        )
+        tab_huge.add_tab(MLabel("test 2 " * 10), "Tab 2")
+        tab_huge.add_tab(MLabel("test 3 " * 10), "Tab 3")
+        tab_huge.tool_button_group.set_dayu_checked(0)
+
+        tab_append_insert = MLineTabWidget()
+        tab_append_insert.add_tab(
+            MLabel("test 1 " * 10), {"text": "Tab 1", "svg": "user_line.svg"}
+        )
+        tab_append_insert.add_tab(MLabel("test 2 " * 10), "Tab 2")
+        tab_append_insert.add_tab(MLabel("test 3 " * 10), "Tab 3")
+        tab_append_insert.tool_button_group.set_dayu_checked(0)
+        tab_append_insert.insert_widget(MLabel("Insert Label").h4())
+        tab_append_insert.append_widget(
+            MToolButton().svg("refresh_line.svg").icon_only()
+        )
+
+        main_lay.addWidget(MDivider("Center"))
+        main_lay.addWidget(tab_center)
+        main_lay.addSpacing(20)
+        main_lay.addWidget(MDivider("Left"))
+        main_lay.addWidget(tab_left)
+        main_lay.addSpacing(20)
+        main_lay.addWidget(MDivider("Right"))
+        main_lay.addWidget(tab_right)
+        main_lay.addSpacing(20)
+        main_lay.addWidget(MDivider("Huge"))
+        main_lay.addWidget(tab_huge)
+        main_lay.addWidget(MDivider("append_widget/insert_widget"))
+        main_lay.addWidget(tab_append_insert)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using ListViewExample Widget
+DESCRIPTION: Example of how to use the ListViewExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/list_view_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = ListViewExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing ListViewExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for ListViewExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/list_view_example.py#L1
+LANGUAGE: Python
+CODE: ```
+table_small = MListView(size=dayu_theme.small)
+        table_default = MListView()
+        table_large = MListView(size=dayu_theme.large)
+
+        model_1 = MTableModel()
+        model_1.set_header_list(mock.header_list)
+        model_sort = MSortFilterModel()
+        model_sort.setSourceModel(model_1)
+        table_small.setModel(model_sort)
+        table_default.setModel(model_sort)
+        table_large.setModel(model_sort)
+        model_sort.set_header_list(mock.header_list)
+        table_small.set_header_list(mock.header_list)
+        table_default.set_header_list(mock.header_list)
+        table_large.set_header_list(mock.header_list)
+        model_1.set_data_list(mock.data_list)
+
+        line_edit = MLineEdit().search().small()
+        line_edit.textChanged.connect(model_sort.set_search_pattern)
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(line_edit)
+        main_lay.addWidget(MDivider("Small Size"))
+        main_lay.addWidget(table_small)
+        main_lay.addWidget(MDivider("Default Size"))
+        main_lay.addWidget(table_default)
+        main_lay.addWidget(MDivider("Large Size"))
+        main_lay.addWidget(table_large)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using LoadingExample Widget
+DESCRIPTION: Example of how to use the LoadingExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/loading_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = LoadingExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing LoadingExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for LoadingExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/loading_example.py#L1
+LANGUAGE: Python
+CODE: ```
+size_lay = QtWidgets.QHBoxLayout()
+        size_list = [
+            ("Huge", MLoading.huge),
+            ("Large", MLoading.large),
+            ("Medium", MLoading.medium),
+            ("Small", MLoading.small),
+            ("Tiny", MLoading.tiny),
+        ]
+        for label, cls in size_list:
+            size_lay.addWidget(MLabel(label))
+            size_lay.addWidget(cls())
+            size_lay.addSpacing(10)
+
+        color_lay = QtWidgets.QHBoxLayout()
+        color_list = [
+            ("cyan", "#13c2c2"),
+            ("green", "#52c41a"),
+            ("magenta", "#eb2f96"),
+            ("red", "#f5222d"),
+            ("yellow", "#fadb14"),
+            ("volcano", "#fa541c"),
+        ]
+        for label, color in color_list:
+            color_lay.addWidget(MLabel(label))
+            color_lay.addWidget(MLoading.tiny(color=color))
+            color_lay.addSpacing(10)
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("different size"))
+        main_lay.addLayout(size_lay)
+        main_lay.addWidget(MDivider("different color"))
+        main_lay.addLayout(color_lay)
+        main_lay.addWidget(MDivider("loading wrapper"))
+        # main_lay.addLayout(wrapper_lay)
+
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using MenuExample Widget
+DESCRIPTION: ,
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/menu_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = MenuExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing MenuExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for MenuExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/menu_example.py#L1
+LANGUAGE: Python
+CODE: ```
+self.register_field("button1_selected", "北京")
+        self.register_field(
+            "button1_selected_text", lambda: self.field("button1_selected")
+        )
+        button1 = MPushButton(text="Normal Menu")
+        menu1 = MMenu(parent=self)
+        menu1.set_data(["北京", "上海", "广州", "深圳"])
+        button1.setMenu(menu1)
+        button1.clicked.connect(button1.showMenu)
+        label1 = MLabel()
+
+        self.bind("button1_selected", menu1, "value", signal="sig_value_changed")
+        self.bind("button1_selected_text", label1, "text")
+
+        self.register_field("button2_selected", ["北京"])
+        self.register_field(
+            "button2_selected_text", lambda: ", ".join(self.field("button2_selected"))
+        )
+        button2 = MPushButton(text="Multi Select Menu")
+        menu2 = MMenu(exclusive=False, parent=self)
+        menu2.set_data(["北京", "上海", "广州", "深圳"])
+        button2.setMenu(menu2)
+        button2.clicked.connect(button2.showMenu)
+        label2 = MLabel()
+        self.bind("button2_selected", menu2, "value", signal="sig_value_changed")
+        self.bind("button2_selected_text", label2, "text")
+
+        self.register_field("button3_selected", "")
+        self.register_field(
+            "button3_selected_text", lambda: self.field("button3_selected")
+        )
+        button3 = MPushButton(text="回调函数获取选项")
+        menu3 = MMenu(parent=self)
+        menu3.set_load_callback(lambda: ["北京", "上海", "广州", "深圳"])
+        button3.setMenu(menu3)
+        button3.clicked.connect(button2.showMenu)
+        label3 = MLabel()
+        self.bind("button3_selected", menu3, "value", signal="sig_value_changed")
+        self.bind("button3_selected_text", label3, "text")
+
+        self.register_field("button4_selected", "")
+        self.register_field(
+            "button4_selected_text", lambda: " / ".join(self.field("button4_selected"))
+        )
+        button4 = MPushButton(text="级联选择")
+        menu4 = MMenu(cascader=True, parent=self)
+        menu4.set_data(
+            ["北京/故宫", "北京/天坛", "北京/王府井", "江苏/南京/夫子庙", "江苏/苏州/拙政园", "江苏/苏州/狮子林"]
+        )
+        button4.setMenu(menu4)
+        button4.clicked.connect(button4.showMenu)
+        label4 = MLabel()
+        self.bind("button4_selected", menu4, "value", signal="sig_value_changed")
+        self.bind("button4_selected_text", label4, "text")
+
+        sub_lay1 = QtWidgets.QHBoxLayout()
+        sub_lay1.addWidget(button1)
+        sub_lay1.addWidget(label1)
+        sub_lay2 = QtWidgets.QHBoxLayout()
+        sub_lay2.addWidget(button2)
+        sub_lay2.addWidget(label2)
+        sub_lay3 = QtWidgets.QHBoxLayout()
+        sub_lay3.addWidget(button3)
+        sub_lay3.addWidget(label3)
+        sub_lay4 = QtWidgets.QHBoxLayout()
+        sub_lay4.addWidget(button4)
+        sub_lay4.addWidget(label4)
+
+        sub_lay5 = QtWidgets.QHBoxLayout()
+        button = MPushButton(text="滚动菜单")
+        menu = MMenu(parent=self)
+        items = ["北京", "上海", "广州", "深圳", "北戴河", "BBC/data", "BBC/hello", "American"]
+        menu.set_data(items)
+        menu.setProperty("max_scroll_count", 3)
+        menu.setProperty("scrollable", True)
+        menu.setProperty("searchable", True)
+        button.setMenu(menu)
+        sub_lay5.addWidget(button)
+
+        sub_lay6 = QtWidgets.QHBoxLayout()
+        button = MPushButton(text="搜索菜单")
+        menu = MMenu(parent=self)
+        items = ["北京", "上海", "广州", "深圳", "北戴河"]
+        for item in items:
+            menu.addAction(item)
+        sub_menu = MMenu(parent=self, title="BBC")
+        for item in ["data", "hello"]:
+            _menu = MMenu(parent=self, title=item)
+            _menu.addAction("tencent")
+            _menu.addAction("baidu")
+            _menu.addAction("google")
+            _menu.setProperty("searchable", True)
+            sub_menu.addMenu(_menu)
+        menu.addMenu(sub_menu)
+        menu.setProperty("searchable", True)
+        button.setMenu(menu)
+        sub_lay6.addWidget(button)
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("Select"))
+        main_lay.addLayout(sub_lay1)
+        main_lay.addLayout(sub_lay2)
+        main_lay.addLayout(sub_lay3)
+        main_lay.addWidget(MDivider("级联选择"))
+        main_lay.addLayout(sub_lay4)
+        main_lay.addLayout(sub_lay5)
+        main_lay.addLayout(sub_lay6)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using MenuTabWidgetExample Widget
+DESCRIPTION: Overview
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/menu_tab_widget_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = MenuTabWidgetExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing MenuTabWidgetExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for MenuTabWidgetExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/menu_tab_widget_example.py#L1
+LANGUAGE: Python
+CODE: ```
+item_list = [
+            {
+                "text": "Overview",
+                "svg": "home_line.svg",
+                "clicked": functools.partial(MMessage.info, "首页", parent=self),
+            },
+            {
+                "text": "我的",
+                "svg": "user_line.svg",
+                "clicked": functools.partial(MMessage.info, "编辑账户", parent=self),
+            },
+            {
+                "text": "Notice",
+                "svg": "alert_line.svg",
+                "clicked": functools.partial(MMessage.info, "查看通知", parent=self),
+            },
+        ]
+        tool_bar = MMenuTabWidget()
+        tool_bar_huge = MMenuTabWidget()
+        tool_bar_huge.set_dayu_size(dayu_theme.huge)
+        tool_bar_huge_v = MMenuTabWidget(orientation=QtCore.Qt.Vertical)
+        tool_bar_huge_v.set_dayu_size(dayu_theme.huge)
+        tool_bar.tool_bar_insert_widget(MLabel("DaYu").h4().secondary().strong())
+        tool_bar_huge.tool_bar_insert_widget(MLabel("DaYu").h4().secondary().strong())
+        dayu_icon = MLabel("DaYu").h4().secondary().strong()
+        dayu_icon.setContentsMargins(10, 10, 10, 10)
+        tool_bar_huge_v.tool_bar_insert_widget(dayu_icon)
+        tool_bar.tool_bar_append_widget(
+            MBadge.dot(
+                show=True, widget=MToolButton().icon_only().svg("user_fill.svg").large()
+            )
+        )
+        for index, data_dict in enumerate(item_list):
+            tool_bar.add_menu(data_dict, index)
+            tool_bar_huge.add_menu(data_dict, index)
+            tool_bar_huge_v.add_menu(data_dict, index)
+
+        tool_bar.tool_button_group.set_dayu_checked(0)
+        tool_bar_huge.tool_button_group.set_dayu_checked(0)
+        tool_bar_huge_v.tool_button_group.set_dayu_checked(0)
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.setContentsMargins(0, 0, 0, 0)
+
+        main_lay.addWidget(MLabel("Menu Tab Widget (Large)"))
+        main_lay.addWidget(tool_bar)
+
+        main_lay.addWidget(MLabel("Menu Tab Widget (Huge)"))
+        main_lay.addWidget(tool_bar_huge)
+
+        main_lay.addWidget(MLabel("Menu Vertical Tab Widget (Huge)"))
+        main_lay.addWidget(tool_bar_huge_v)
+
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using MessageExample Widget
+DESCRIPTION: 这是一条普通提示
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/message_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = MessageExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing MessageExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for MessageExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/message_example.py#L1
+LANGUAGE: Python
+CODE: ```
+button3 = MPushButton(text="Normal Message").primary()
+        button4 = MPushButton(text="Success Message").success()
+        button5 = MPushButton(text="Warning Message").warning()
+        button6 = MPushButton(text="Error Message").danger()
+        button3.clicked.connect(
+            functools.partial(
+                self.slot_show_message, MMessage.info, {"text": "这是一条普通提示"}
+            )
+        )
+        button4.clicked.connect(
+            functools.partial(
+                self.slot_show_message, MMessage.success, {"text": "恭喜你，成功啦！"}
+            )
+        )
+        button5.clicked.connect(
+            functools.partial(
+                self.slot_show_message, MMessage.warning, {"text": "我警告你哦！"}
+            )
+        )
+        button6.clicked.connect(
+            functools.partial(self.slot_show_message, MMessage.error, {"text": "失败了！"})
+        )
+
+        sub_lay1 = QtWidgets.QHBoxLayout()
+        sub_lay1.addWidget(button3)
+        sub_lay1.addWidget(button4)
+        sub_lay1.addWidget(button5)
+        sub_lay1.addWidget(button6)
+
+        button_duration = MPushButton(text="show 5s Message")
+        button_duration.clicked.connect(
+            functools.partial(
+                self.slot_show_message,
+                MMessage.info,
+                {"text": "该条消息将显示5秒后关闭", "duration": 5},
+            )
+        )
+        button_closable = MPushButton(text="closable Message")
+        button_closable.clicked.connect(
+            functools.partial(
+                self.slot_show_message,
+                MMessage.info,
+                {"text": "可手动关闭提示", "closable": True},
+            )
+        )
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("different type"))
+        main_lay.addLayout(sub_lay1)
+        main_lay.addWidget(MLabel("不同的提示状态：普通、成功、警告、错误。默认2秒后消失"))
+        main_lay.addWidget(MDivider("set duration"))
+        main_lay.addWidget(button_duration)
+        main_lay.addWidget(MLabel("自定义时长，config中设置duration值，单位为秒"))
+
+        main_lay.addWidget(MDivider("set closable"))
+        main_lay.addWidget(button_closable)
+        main_lay.addWidget(MLabel("设置是否可关闭，config中设置closable 为 True"))
+
+        button_grp = MPushButtonGroup()
+        button_grp.set_button_list(
+            [
+                {
+                    "text": "set duration to 1s",
+                    "clicked": functools.partial(
+                        self.slot_set_config, MMessage.config, {"duration": 1}
+                    ),
+                },
+                {
+                    "text": "set duration to 10s",
+                    "clicked": functools.partial(
+                        self.slot_set_config, MMessage.config, {"duration": 10}
+                    ),
+                },
+                {
+                    "text": "set top to 5",
+                    "clicked": functools.partial(
+                        self.slot_set_config, MMessage.config, {"top": 5}
+                    ),
+                },
+                {
+                    "text": "set top to 50",
+                    "clicked": functools.partial(
+                        self.slot_set_config, MMessage.config, {"top": 50}
+                    ),
+                },
+            ]
+        )
+        loading_button = MPushButton("Display a loading indicator")
+        loading_button.clicked.connect(self.slot_show_loading)
+        main_lay.addWidget(MDivider("set global setting"))
+        main_lay.addWidget(button_grp)
+        main_lay.addWidget(MLabel("全局设置默认duration（默认2秒）；top（离parent顶端的距离，默认24px）"))
+        main_lay.addWidget(loading_button)
+
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using PageExample Widget
+DESCRIPTION: Example of how to use the PageExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/page_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = PageExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing PageExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for PageExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/page_example.py#L1
+LANGUAGE: Python
+CODE: ```
+page_1 = MPage()
+        page_1.set_total(255)
+        page_1.sig_page_changed.connect(print)
+
+        page_2 = MPage()
+        page_2.set_total(100)
+
+        main_lay = QtWidgets.QVBoxLayout()
+        self.setLayout(main_lay)
+        main_lay.addWidget(MDivider())
+        main_lay.addWidget(page_1)
+        main_lay.addWidget(MDivider())
+        main_lay.addWidget(page_2)
+        main_lay.addStretch()
+```
+----------------------------------------
+TITLE: Using ProgressBarExample Widget
+DESCRIPTION: , progress_normal)
+        form_lay.addRow(
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/progress_bar_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = ProgressBarExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing ProgressBarExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for ProgressBarExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/progress_bar_example.py#L1
+LANGUAGE: Python
+CODE: ```
+progress_1 = MProgressBar()
+        progress_1.setValue(10)
+        progress_1.setAlignment(QtCore.Qt.AlignCenter)
+        progress_2 = MProgressBar()
+        progress_2.setValue(80)
+
+        progress_normal = MProgressBar()
+        progress_normal.setValue(30)
+        progress_success = MProgressBar().success()
+        progress_success.setValue(100)
+        progress_error = MProgressBar().error()
+        progress_error.setValue(50)
+        form_lay = QtWidgets.QFormLayout()
+        form_lay.addRow("Primary:", progress_normal)
+        form_lay.addRow("Success:", progress_success)
+        form_lay.addRow("Error:", progress_error)
+
+        self.progress_count = 0
+        self.timer = QtCore.QTimer()
+        self.timer.setInterval(10)
+        self.timer.timeout.connect(self.slot_timeout)
+        run_button = MPushButton(text="Run Something")
+        run_button.clicked.connect(self.slot_run)
+        self.auto_color_progress = MProgressBar().auto_color()
+        auto_color_lay = QtWidgets.QVBoxLayout()
+        auto_color_lay.addWidget(run_button)
+        auto_color_lay.addWidget(self.auto_color_progress)
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("Basic"))
+
+        main_lay.addWidget(progress_1)
+        main_lay.addWidget(progress_2)
+        main_lay.addWidget(MDivider("different type"))
+        main_lay.addLayout(form_lay)
+        main_lay.addWidget(MDivider("auto color"))
+        main_lay.addLayout(auto_color_lay)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using ProgressCircleExample Widget
+DESCRIPTION: +
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/progress_circle_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = ProgressCircleExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing ProgressCircleExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for ProgressCircleExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/progress_circle_example.py#L1
+LANGUAGE: Python
+CODE: ```
+main_lay = QtWidgets.QVBoxLayout()
+        self.setLayout(main_lay)
+        main_lay.addWidget(MDivider("circle"))
+        lay1 = QtWidgets.QHBoxLayout()
+        circle_1 = MProgressCircle(parent=self)
+        circle_1.setFormat("%p Days")
+        circle_1.setValue(80)
+        circle_2 = MProgressCircle(parent=self)
+        circle_2.set_dayu_color(dayu_theme.success_color)
+        circle_2.setValue(100)
+        circle_3 = MProgressCircle(parent=self)
+        circle_3.set_dayu_color(dayu_theme.error_color)
+        circle_3.setValue(40)
+
+        dashboard_1 = MProgressCircle.dashboard(parent=self)
+        dashboard_1.setFormat("%p Days")
+        dashboard_1.setValue(80)
+        dashboard_2 = MProgressCircle.dashboard(parent=self)
+        dashboard_2.set_dayu_color(dayu_theme.success_color)
+        dashboard_2.setValue(100)
+        dashboard_3 = MProgressCircle.dashboard(parent=self)
+        dashboard_3.set_dayu_color(dayu_theme.error_color)
+        dashboard_3.setValue(40)
+
+        lay1.addWidget(circle_1)
+        lay1.addWidget(circle_2)
+        lay1.addWidget(circle_3)
+
+        dashboard_lay = QtWidgets.QHBoxLayout()
+        dashboard_lay.addWidget(dashboard_1)
+        dashboard_lay.addWidget(dashboard_2)
+        dashboard_lay.addWidget(dashboard_3)
+        main_lay.addLayout(lay1)
+        main_lay.addWidget(MDivider("dashboard"))
+        main_lay.addLayout(dashboard_lay)
+        main_lay.addWidget(MDivider("different radius"))
+
+        scale_x, _ = get_scale_factor()
+        circle_4 = MProgressCircle(parent=self)
+        circle_4.set_dayu_width(100 * scale_x)
+        circle_4.setValue(40)
+        circle_5 = MProgressCircle(parent=self)
+        circle_5.setValue(40)
+        circle_6 = MProgressCircle(parent=self)
+        circle_6.set_dayu_width(160 * scale_x)
+        circle_6.setValue(40)
+        lay2 = QtWidgets.QHBoxLayout()
+        lay2.addWidget(circle_4)
+        lay2.addWidget(circle_5)
+        lay2.addWidget(circle_6)
+
+        main_lay.addLayout(lay2)
+        main_lay.addWidget(MDivider("data bind"))
+
+        self.register_field("percent", 0)
+        self.register_field("color", self.get_color)
+        self.register_field("format", self.get_format)
+        circle = MProgressCircle(parent=self)
+
+        self.bind("percent", circle, "value")
+        self.bind("color", circle, "dayu_color")
+        self.bind("format", circle, "format")
+        lay3 = QtWidgets.QHBoxLayout()
+        button_grp = MPushButtonGroup()
+        button_grp.set_dayu_type(MPushButton.DefaultType)
+        button_grp.set_button_list(
+            [
+                {
+                    "text": "+",
+                    "clicked": functools.partial(self.slot_change_percent, 10),
+                },
+                {
+                    "text": "-",
+                    "clicked": functools.partial(self.slot_change_percent, -10),
+                },
+            ]
+        )
+        lay3.addWidget(circle)
+        lay3.addWidget(button_grp)
+        lay3.addStretch()
+        main_lay.addLayout(lay3)
+
+        custom_widget = QtWidgets.QWidget()
+        custom_layout = QtWidgets.QVBoxLayout()
+        custom_layout.setContentsMargins(20, 20, 20, 20)
+        custom_layout.addStretch()
+        custom_widget.setLayout(custom_layout)
+        lab1 = MLabel(text="42,001,776").h3()
+        lab2 = MLabel(text="消费人群规模").secondary()
+        lab3 = MLabel(text="总占人数 75%").secondary()
+        lab1.setAlignment(QtCore.Qt.AlignCenter)
+        lab2.setAlignment(QtCore.Qt.AlignCenter)
+        lab3.setAlignment(QtCore.Qt.AlignCenter)
+        custom_layout.addWidget(lab1)
+        custom_layout.addWidget(lab2)
+        custom_layout.addWidget(MDivider())
+        custom_layout.addWidget(lab3)
+        custom_layout.addStretch()
+        custom_circle = MProgressCircle()
+        custom_circle.set_dayu_width(180 * scale_x)
+        custom_circle.setValue(75)
+        custom_circle.set_widget(custom_widget)
+
+        main_lay.addWidget(MDivider("custom circle"))
+        main_lay.addWidget(custom_circle)
+        main_lay.addStretch()
+```
+----------------------------------------
+TITLE: Using PushButtonExample Widget
+DESCRIPTION: Example of how to use the PushButtonExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/push_button_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = PushButtonExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Using PushButtonGroupExample Widget
+DESCRIPTION: Add
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/push_button_group_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = PushButtonGroupExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing PushButtonGroupExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for PushButtonGroupExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/push_button_group_example.py#L1
+LANGUAGE: Python
+CODE: ```
+button_config_list = [
+            {
+                "text": "Add",
+                "icon": MIcon("add_line.svg", "#fff"),
+                "type": MPushButton.PrimaryType,
+            },
+            {
+                "text": "Edit",
+                "icon": MIcon("edit_fill.svg", "#fff"),
+                "type": MPushButton.WarningType,
+            },
+            {
+                "text": "Delete",
+                "icon": MIcon("trash_line.svg", "#fff"),
+                "type": MPushButton.DangerType,
+            },
+        ]
+        button_group_h = MPushButtonGroup()
+        button_group_h.set_dayu_size(dayu_theme.large)
+        button_group_h.set_button_list(button_config_list)
+        h_lay = QtWidgets.QHBoxLayout()
+        h_lay.addWidget(button_group_h)
+        h_lay.addStretch()
+
+        button_group_v = MPushButtonGroup(orientation=QtCore.Qt.Vertical)
+        button_group_v.set_button_list(button_config_list)
+        h_lay_2 = QtWidgets.QHBoxLayout()
+        h_lay_2.addWidget(button_group_v)
+        h_lay_2.addStretch()
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(
+            MLabel(
+                "MPushButtonGroup is MPushButton collection. they are not exclusive."
+            )
+        )
+        main_lay.addWidget(MDivider("MPushButton group: Horizontal & Small Size"))
+        main_lay.addLayout(h_lay)
+        main_lay.addWidget(MDivider("MPushButton group: Vertical & Default Size"))
+        main_lay.addLayout(h_lay_2)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using RadioButtonExample Widget
+DESCRIPTION: Yes!
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/radio_button_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = RadioButtonExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Using RadioButtonGroupExample Widget
+DESCRIPTION: Banana
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/radio_button_group_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = RadioButtonGroupExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing RadioButtonGroupExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for RadioButtonGroupExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/radio_button_group_example.py#L1
+LANGUAGE: Python
+CODE: ```
+radio_group_h = MRadioButtonGroup()
+        radio_group_h.set_button_list(["Apple", {"text": "Banana"}, {"text": "Pear"}])
+        radio_grp_1_lay = QtWidgets.QHBoxLayout()
+        radio_grp_1_lay.addWidget(radio_group_h)
+        radio_grp_1_lay.addStretch()
+
+        app_data = [
+            {"text": "Maya", "icon": MIcon("app-maya.png")},
+            {"text": "Nuke", "icon": MIcon("app-nuke.png")},
+            {"text": "Houdini", "icon": MIcon("app-houdini.png")},
+        ]
+
+        radio_group_v = MRadioButtonGroup(orientation=QtCore.Qt.Vertical)
+        radio_group_v.set_button_list(app_data)
+
+        radio_group_button_h = MRadioButtonGroup()
+        radio_group_button_h.set_button_list(app_data)
+        radio_grp_h_lay = QtWidgets.QHBoxLayout()
+        radio_grp_h_lay.addWidget(radio_group_button_h)
+        radio_grp_h_lay.addStretch()
+
+        radio_group_button_v = MRadioButtonGroup(orientation=QtCore.Qt.Vertical)
+        radio_group_button_v.set_button_list(app_data)
+
+        self.register_field("value1", -1)
+        self.register_field(
+            "value1_text", functools.partial(self.value_to_text, "value1", app_data)
+        )
+        self.register_field("value2", 0)
+        self.register_field(
+            "value2_text", functools.partial(self.value_to_text, "value2", app_data)
+        )
+        self.register_field("value3", -1)
+        self.register_field(
+            "value3_text", functools.partial(self.value_to_text, "value3", app_data)
+        )
+
+        button1 = MPushButton(text="Group 1")
+        button2 = MPushButton(text="Group 2")
+        button3 = MPushButton(text="Group 3")
+        button1.clicked.connect(functools.partial(self.slot_change_value, "value1"))
+        button2.clicked.connect(functools.partial(self.slot_change_value, "value2"))
+        button3.clicked.connect(functools.partial(self.slot_change_value, "value3"))
+
+        self.bind("value1", radio_group_v, "dayu_checked", signal="sig_checked_changed")
+        self.bind(
+            "value2", radio_group_button_h, "dayu_checked", signal="sig_checked_changed"
+        )
+        self.bind(
+            "value3", radio_group_button_v, "dayu_checked", signal="sig_checked_changed"
+        )
+        self.bind("value1_text", button1, "text")
+        self.bind("value2_text", button2, "text")
+        self.bind("value3_text", button3, "text")
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("MRadioButtonGroup: orientation=Qt.Horizontal "))
+        main_lay.addLayout(radio_grp_1_lay)
+        main_lay.addWidget(MDivider("MRadioButtonGroup: orientation=Qt.Vertical"))
+        main_lay.addWidget(radio_group_v)
+        main_lay.addWidget(button1)
+        main_lay.addWidget(
+            MDivider("MRadioButtonGroup: orientation=Qt.Horizontal type=button")
+        )
+        main_lay.addLayout(radio_grp_h_lay)
+        main_lay.addWidget(button2)
+        main_lay.addWidget(
+            MDivider("MRadioButtonGroup: orientation=Qt.Vertical, type=button")
+        )
+        main_lay.addWidget(radio_group_button_v)
+        main_lay.addWidget(button3)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using SequenceFileExample Widget
+DESCRIPTION: Example of how to use the SequenceFileExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/sequence_file_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = SequenceFileExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing SequenceFileExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for SequenceFileExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/sequence_file_example.py#L1
+LANGUAGE: Python
+CODE: ```
+browser = MDragFileButton(text="Click or drag files")
+        browser.set_dayu_filters([".py", "pyc", ".jpg", ".mov", "exr"])
+        browser.sig_file_changed.connect(self.slot_add_file)
+        self.sequence_file_1 = MSequenceFile()
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("different size"))
+        main_lay.addWidget(browser)
+        main_lay.addWidget(self.sequence_file_1)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+
+    @QtCore.Slot(str)
+```
+----------------------------------------
+TITLE: Using SliderExample Widget
+DESCRIPTION: +
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/slider_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = SliderExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing SliderExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for SliderExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/slider_example.py#L1
+LANGUAGE: Python
+CODE: ```
+self.register_field("percent", 20)
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("different orientation"))
+        for orn in [QtCore.Qt.Horizontal, QtCore.Qt.Vertical]:
+            line_edit_hor = MSlider(orn)
+            line_edit_hor.setRange(1, 100)
+            self.bind("percent", line_edit_hor, "value")
+            lay = QtWidgets.QVBoxLayout()
+            lay.addWidget(line_edit_hor)
+            main_lay.addLayout(lay)
+        spin_box = MSpinBox()
+        spin_box.setRange(1, 100)
+        self.bind("percent", spin_box, "value", signal="valueChanged")
+
+        lay3 = QtWidgets.QHBoxLayout()
+        button_grp = MPushButtonGroup()
+        button_grp.set_button_list(
+            [
+                {"text": "+", "clicked": functools.partial(self.slot_change_value, 10)},
+                {
+                    "text": "-",
+                    "clicked": functools.partial(self.slot_change_value, -10),
+                },
+            ]
+        )
+        lay3.addWidget(spin_box)
+        lay3.addWidget(button_grp)
+        lay3.addStretch()
+        main_lay.addWidget(MDivider("data bind"))
+        main_lay.addLayout(lay3)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using SpinBoxExample Widget
+DESCRIPTION: Example of how to use the SpinBoxExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/spin_box_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = SpinBoxExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Using SplitterExample Widget
+DESCRIPTION: Example of how to use the SplitterExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/splitter_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = SplitterExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Using SwitchExample Widget
+DESCRIPTION: Example of how to use the SwitchExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/switch_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = SwitchExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing SwitchExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for SwitchExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/switch_example.py#L1
+LANGUAGE: Python
+CODE: ```
+check_box_1 = MSwitch()
+        check_box_1.setChecked(True)
+        check_box_2 = MSwitch()
+        check_box_3 = MSwitch()
+        check_box_3.setEnabled(False)
+        lay = QtWidgets.QHBoxLayout()
+        lay.addWidget(check_box_1)
+        lay.addWidget(check_box_2)
+        lay.addWidget(check_box_3)
+
+        size_lay = QtWidgets.QFormLayout()
+        size_lay.addRow("Huge", MSwitch().huge())
+        size_lay.addRow("Large", MSwitch().large())
+        size_lay.addRow("Medium", MSwitch().medium())
+        size_lay.addRow("Small", MSwitch().small())
+        size_lay.addRow("Tiny", MSwitch().tiny())
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("Basic"))
+        main_lay.addLayout(lay)
+        main_lay.addWidget(MDivider("different size"))
+        main_lay.addLayout(size_lay)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using MFetchDataThread Widget
+DESCRIPTION: Example of how to use the MFetchDataThread widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/table_view_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = TableViewExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing MFetchDataThread UI
+DESCRIPTION: Example of how to initialize and configure the UI for MFetchDataThread widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/table_view_example.py#L1
+LANGUAGE: Python
+CODE: ```
+model_1 = MTableModel()
+        model_1.set_header_list(mock.header_list)
+        model_sort = MSortFilterModel()
+        model_sort.setSourceModel(model_1)
+
+        table_small = MTableView(size=dayu_theme.small, show_row_count=True)
+        table_grid = MTableView(size=dayu_theme.small, show_row_count=True)
+        table_grid.setShowGrid(True)
+        table_default = MTableView(size=dayu_theme.medium, show_row_count=True)
+        thread = MFetchDataThread(self)
+
+        self.loading_wrapper = MLoadingWrapper(widget=table_default, loading=False)
+        thread.started.connect(
+            functools.partial(self.loading_wrapper.set_dayu_loading, True)
+        )
+        thread.finished.connect(
+            functools.partial(self.loading_wrapper.set_dayu_loading, False)
+        )
+        thread.finished.connect(functools.partial(table_default.setModel, model_sort))
+        button = MPushButton(text="Get Data: 4s")
+        button.clicked.connect(thread.start)
+        switch_lay = QtWidgets.QHBoxLayout()
+        switch_lay.addWidget(button)
+        switch_lay.addStretch()
+        table_large = MTableView(size=dayu_theme.large, show_row_count=False)
+
+        table_small.setModel(model_sort)
+        table_grid.setModel(model_sort)
+        table_large.setModel(model_sort)
+        model_sort.set_header_list(mock.header_list)
+        table_small.set_header_list(mock.header_list)
+        table_grid.set_header_list(mock.header_list)
+        table_default.set_header_list(mock.header_list)
+        table_large.set_header_list(mock.header_list)
+        model_1.set_data_list(mock.data_list)
+
+        line_edit = MLineEdit().search().small()
+        line_edit.textChanged.connect(model_sort.set_search_pattern)
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(line_edit)
+        main_lay.addWidget(MDivider("Small Size"))
+        main_lay.addWidget(table_small)
+        main_lay.addWidget(MDivider("Default Size"))
+        main_lay.addLayout(switch_lay)
+        main_lay.addWidget(self.loading_wrapper)
+        main_lay.addWidget(MDivider("Large Size (Hide Row Count)"))
+        main_lay.addWidget(table_large)
+        main_lay.addWidget(MDivider("With Grid"))
+        main_lay.addWidget(table_grid)
+        main_lay.addStretch()
+        main_lay.addWidget(MAlert('Simply use "MItemViewSet" or "MItemViewFullSet"'))
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using MTabWidgetTest Widget
+DESCRIPTION: Example of how to use the MTabWidgetTest widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/tab_widget_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = MTabWidgetTest()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing MTabWidgetTest UI
+DESCRIPTION: Example of how to initialize and configure the UI for MTabWidgetTest widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/tab_widget_example.py#L1
+LANGUAGE: Python
+CODE: ```
+main_lay = QtWidgets.QVBoxLayout()
+
+        tab_card = MTabWidget()
+        tab_card.addTab(MLabel("test 1"), "Current Element")
+        tab_card.addTab(MLabel("test 2"), "Linked Assets")
+        tab_card.addTab(MLabel("test 2"), "Hero Shots")
+        tab_card.addTab(MLabel("test 3"), "Linked Metadata")
+
+        self.tab_closable = MTabWidget()
+        self.tab_closable.setTabsClosable(True)
+        self.tab_closable.addTab(MLabel("test 1"), "标签一")
+        self.tab_closable.addTab(MLabel("test 2"), "标签二")
+        self.tab_closable.addTab(MLabel("test 3"), "标签三")
+        # self.tab_closable.tabCloseRequested.connect(self.slot_close_tab)
+        main_lay.addWidget(MDivider("Normal"))
+        main_lay.addWidget(tab_card)
+        main_lay.addWidget(MDivider("Closable"))
+        main_lay.addWidget(self.tab_closable)
+        self.setLayout(main_lay)
+
+    @QtCore.Slot(int)
+```
+----------------------------------------
+TITLE: Using TextEditExample Widget
+DESCRIPTION: Example of how to use the TextEditExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/text_edit_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = TextEditExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing TextEditExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for TextEditExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/text_edit_example.py#L1
+LANGUAGE: Python
+CODE: ```
+main_lay = QtWidgets.QVBoxLayout()
+
+        main_lay.addWidget(MDivider("no size grip"))
+        main_lay.addWidget(MTextEdit(self))
+        main_lay.addWidget(MDivider("size grip"))
+        main_lay.addWidget(MTextEdit(self).resizeable())
+        main_lay.addWidget(MPushButton("text").primary())
+
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using ThemeExample Widget
+DESCRIPTION: Female
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/theme_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = ThemeExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing ThemeExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for ThemeExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/theme_example.py#L1
+LANGUAGE: Python
+CODE: ```
+form_lay = QtWidgets.QFormLayout()
+        form_lay.setLabelAlignment(QtCore.Qt.AlignRight)
+        gender_grp = MRadioButtonGroup()
+        gender_grp.set_button_list(
+            [
+                {"text": "Female", "icon": MIcon("female.svg")},
+                {"text": "Male", "icon": MIcon("male.svg")},
+            ]
+        )
+
+        country_combo_box = MComboBox().small()
+        country_combo_box.addItems(["China", "France", "Japan", "US"])
+        date_edit = MDateEdit().small()
+        date_edit.setCalendarPopup(True)
+
+        form_lay.addRow("Name:", MLineEdit().small())
+        form_lay.addRow("Gender:", gender_grp)
+        form_lay.addRow("Age:", MSpinBox().small())
+        form_lay.addRow("Password:", MLineEdit().small().password())
+        form_lay.addRow("Country:", country_combo_box)
+        form_lay.addRow("Birthday:", date_edit)
+        switch = MSwitch()
+        switch.setChecked(True)
+        form_lay.addRow("Switch:", switch)
+        slider = MSlider()
+        slider.setValue(30)
+        form_lay.addRow("Slider:", slider)
+
+        button_lay = QtWidgets.QHBoxLayout()
+        button_lay.addStretch()
+        button_lay.addWidget(MPushButton(text="Submit").primary())
+        button_lay.addWidget(MPushButton(text="Cancel"))
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addLayout(form_lay)
+        main_lay.addWidget(MCheckBox("I accept the terms and conditions"))
+        main_lay.addStretch()
+        main_lay.addWidget(MDivider())
+        main_lay.addLayout(button_lay)
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using MWorkThread Widget
+DESCRIPTION: 好像没啥用
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/toast_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = ToastExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing MWorkThread UI
+DESCRIPTION: Example of how to initialize and configure the UI for MWorkThread widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/toast_example.py#L1
+LANGUAGE: Python
+CODE: ```
+button3 = MPushButton(text="Normal Message").primary()
+        button4 = MPushButton(text="Success Message").success()
+        button5 = MPushButton(text="Warning Message").warning()
+        button6 = MPushButton(text="Error Message").danger()
+        button3.clicked.connect(
+            functools.partial(self.slot_show_message, MToast.info, {"text": "好像没啥用"})
+        )
+        button4.clicked.connect(
+            functools.partial(self.slot_show_message, MToast.success, {"text": "领取成功"})
+        )
+        button5.clicked.connect(
+            functools.partial(self.slot_show_message, MToast.warning, {"text": "暂不支持"})
+        )
+        button6.clicked.connect(
+            functools.partial(
+                self.slot_show_message, MToast.error, {"text": "支付失败，请重试"}
+            )
+        )
+
+        sub_lay1 = QtWidgets.QHBoxLayout()
+        sub_lay1.addWidget(button3)
+        sub_lay1.addWidget(button4)
+        sub_lay1.addWidget(button5)
+        sub_lay1.addWidget(button6)
+
+        loading_button = MPushButton("Loading Toast").primary()
+        loading_button.clicked.connect(self.slot_show_loading)
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("different type"))
+        main_lay.addLayout(sub_lay1)
+        main_lay.addWidget(MLabel("不同的提示状态：成功、失败、加载中。默认2秒后消失"))
+        main_lay.addWidget(loading_button)
+
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using ToolButtonExample Widget
+DESCRIPTION: Example of how to use the ToolButtonExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/tool_button_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = ToolButtonExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing ToolButtonExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for ToolButtonExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/tool_button_example.py#L1
+LANGUAGE: Python
+CODE: ```
+size_lay = QtWidgets.QVBoxLayout()
+        sub_lay1 = QtWidgets.QHBoxLayout()
+        sub_lay1.addWidget(MToolButton().svg("left_line.svg").icon_only().huge())
+        sub_lay1.addWidget(MToolButton().svg("right_line.svg").icon_only().large())
+        sub_lay1.addWidget(MToolButton().svg("up_line.svg").icon_only())
+        sub_lay1.addWidget(MToolButton().svg("up_line.svg").icon_only().small())
+        sub_lay1.addWidget(MToolButton().svg("down_line.svg").icon_only().tiny())
+        custom_size = MToolButton().svg("left_line.svg").icon_only()
+        custom_size.set_dayu_size(200)
+        custom_size.setToolTip("Custom Size 200")
+
+        sub_lay1.addStretch()
+        size_lay.addLayout(sub_lay1)
+        size_lay.addWidget(custom_size)
+
+        button2 = MToolButton().svg("detail_line.svg").icon_only()
+        button2.setEnabled(False)
+        button7 = MToolButton().svg("bold.svg").icon_only()
+        button7.setCheckable(True)
+        state_lay = QtWidgets.QHBoxLayout()
+        state_lay.addWidget(button2)
+        state_lay.addWidget(button7)
+        state_lay.addStretch()
+
+        button_trash = MToolButton().svg("trash_line.svg").text_beside_icon()
+        button_trash.setText("Delete")
+        button_login = MToolButton().svg("user_line.svg").text_beside_icon()
+        button_login.setText("Login")
+
+        button_lay = QtWidgets.QHBoxLayout()
+        button_lay.addWidget(button_trash)
+        button_lay.addWidget(button_login)
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("different button_size"))
+        main_lay.addLayout(size_lay)
+        main_lay.addWidget(MDivider("disabled & checkable"))
+        main_lay.addLayout(state_lay)
+        main_lay.addWidget(MDivider("type=normal"))
+        main_lay.addLayout(button_lay)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using ToolButtonGroupExample Widget
+DESCRIPTION: Banana
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/tool_button_group_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = ToolButtonGroupExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing ToolButtonGroupExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for ToolButtonGroupExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/tool_button_group_example.py#L1
+LANGUAGE: Python
+CODE: ```
+tool_group_h = MToolButtonGroup(size=dayu_theme.small)
+        tool_group_h.set_button_list(["Apple", {"text": "Banana"}, {"text": "Pear"}])
+        tool_1_lay = QtWidgets.QHBoxLayout()
+        tool_1_lay.addWidget(tool_group_h)
+        tool_1_lay.addStretch()
+
+        app_data = [
+            {"text": "Maya", "icon": MIcon("app-maya.png"), "checkable": True},
+            {"text": "Nuke", "icon": MIcon("app-nuke.png"), "checkable": True},
+            {"text": "Houdini", "icon": MIcon("app-houdini.png"), "checkable": True},
+        ]
+
+        tool_group_v = MToolButtonGroup(
+            exclusive=True, size=dayu_theme.small, orientation=QtCore.Qt.Vertical
+        )
+        tool_group_v.set_button_list(app_data)
+
+        tool_group_button_h = MToolButtonGroup()
+        tool_group_button_h.set_button_list(app_data)
+        tool_2_lay = QtWidgets.QHBoxLayout()
+        tool_2_lay.addWidget(tool_group_button_h)
+        tool_2_lay.addStretch()
+
+        tool_grp_excl_true = MToolButtonGroup(
+            orientation=QtCore.Qt.Horizontal, exclusive=True
+        )
+        tool_grp_excl_true.set_button_list(
+            [
+                {"svg": "table_view.svg", "checkable": True, "tooltip": "Table View"},
+                {"svg": "list_view.svg", "checkable": True, "tooltip": "List View"},
+                {"svg": "tree_view.svg", "checkable": True, "tooltip": "Tree View"},
+                {"svg": "big_view.svg", "checkable": True, "tooltip": "Big View"},
+            ]
+        )
+        tool_grp_excl_true.set_dayu_checked(0)
+        tool_excl_lay = QtWidgets.QHBoxLayout()
+        tool_excl_lay.addWidget(tool_grp_excl_true)
+        tool_excl_lay.addStretch()
+
+        tool_grp_excl_false = MToolButtonGroup(
+            orientation=QtCore.Qt.Horizontal, exclusive=False
+        )
+        tool_grp_excl_false.set_button_list(
+            [
+                {"tooltip": "加粗", "svg": "bold.svg", "checkable": True},
+                {"tooltip": "倾斜", "svg": "italic.svg", "checkable": True},
+                {"tooltip": "下划线", "svg": "underline.svg", "checkable": True},
+            ]
+        )
+        tool_excl_2_lay = QtWidgets.QHBoxLayout()
+        tool_excl_2_lay.addWidget(tool_grp_excl_false)
+        tool_excl_2_lay.addStretch()
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addWidget(MDivider("orientation=Qt.Horizontal "))
+        main_lay.addLayout(tool_1_lay)
+        main_lay.addWidget(MDivider("orientation=Qt.Vertical"))
+        main_lay.addWidget(tool_group_v)
+        main_lay.addWidget(MDivider("orientation=Qt.Horizontal"))
+        main_lay.addLayout(tool_2_lay)
+        main_lay.addWidget(MDivider("checkable=True; exclusive=True"))
+        main_lay.addLayout(tool_excl_lay)
+        main_lay.addWidget(MDivider("checkable=True; exclusive=False"))
+        main_lay.addLayout(tool_excl_2_lay)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
+----------------------------------------
+TITLE: Using TreeViewExample Widget
+DESCRIPTION: Example of how to use the TreeViewExample widget from dayu_widgets library.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/tree_view_example.py#L1
+LANGUAGE: Python
+CODE: ```
+# Import local modules
+    from dayu_widgets import dayu_theme
+    from dayu_widgets.qt import application
+
+    with application() as app:
+        test = TreeViewExample()
+        dayu_theme.apply(test)
+        test.show()
+```
+----------------------------------------
+TITLE: Initializing TreeViewExample UI
+DESCRIPTION: Example of how to initialize and configure the UI for TreeViewExample widget.
+SOURCE: https://github.com/phenom-films/dayu_widgets/blob/master/examples/tree_view_example.py#L1
+LANGUAGE: Python
+CODE: ```
+model_1 = MTableModel()
+        model_1.set_header_list(mock.header_list)
+        model_sort = MSortFilterModel()
+        model_sort.setSourceModel(model_1)
+
+        tree_view = MTreeView()
+        tree_view.setModel(model_sort)
+
+        model_sort.set_header_list(mock.header_list)
+        tree_view.set_header_list(mock.header_list)
+        model_1.set_data_list(mock.tree_data_list)
+
+        line_edit = MLineEdit().search().small()
+        line_edit.textChanged.connect(model_sort.set_search_pattern)
+
+        expand_all_button = MPushButton("Expand All").small()
+        expand_all_button.clicked.connect(tree_view.expandAll)
+        collapse_all_button = MPushButton("Collapse All").small()
+        collapse_all_button.clicked.connect(tree_view.collapseAll)
+        button_lay = QtWidgets.QHBoxLayout()
+        button_lay.addWidget(expand_all_button)
+        button_lay.addWidget(collapse_all_button)
+        button_lay.addWidget(line_edit)
+        button_lay.addStretch()
+
+        main_lay = QtWidgets.QVBoxLayout()
+        main_lay.addLayout(button_lay)
+        main_lay.addWidget(tree_view)
+        main_lay.addStretch()
+        self.setLayout(main_lay)
+```
