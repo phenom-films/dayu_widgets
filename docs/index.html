@@ -924,6 +924,24 @@
       });
     }
 
+    // 处理标题点击事件
+    function handleTitleClick() {
+      // 查找标题元素
+      const appNameElement = document.querySelector('.app-name-link');
+      if (appNameElement) {
+        // 移除默认的链接行为
+        appNameElement.removeAttribute('href');
+
+        // 添加自定义点击事件
+        appNameElement.addEventListener('click', function(e) {
+          e.preventDefault();
+          const currentLang = getCurrentLanguage();
+          console.log('标题点击，跳转到:', currentLang.code);
+          window.location.hash = '#/' + currentLang.code + '/';
+        });
+      }
+    }
+
     // 页面完全加载后执行
     window.addEventListener('load', function() {
       // 检查封面页面状态
@@ -937,6 +955,9 @@
       // 处理侧边栏链接
       setTimeout(handleSidebarLinks, 100);
 
+      // 处理标题点击事件
+      setTimeout(handleTitleClick, 200);
+
       // 移除no-transition类，允许过渡动画
       setTimeout(function() {
         document.body.classList.remove('no-transition');
@@ -945,6 +966,11 @@
 
     window.$docsify = {
       name: 'Dayu Widgets',
+      nameLink: {
+        '/zh-cn/': '#/zh-cn/',
+        '/en-us/': '#/en-us/',
+        '/': '#/'
+      },
       repo: false,  // 关闭默认的GitHub角标
       basePath: './',
       homepage: 'en-us/README.md',
@@ -991,6 +1017,7 @@
           // 页面内容渲染完毕后再次检查首页状态
           checkCoverVisible();
           setTimeout(handleSidebarLinks, 100);
+          setTimeout(handleTitleClick, 200);
           // 更新主题图片显示
           const currentTheme = document.documentElement.getAttribute('data-theme');
           updateThemeImages(currentTheme);
@@ -999,6 +1026,7 @@
         ready: function() {
           // docsify 文档准备完成
           setTimeout(handleSidebarLinks, 100);
+          setTimeout(handleTitleClick, 200);
         }
       },
       // 添加外部资源路径配置

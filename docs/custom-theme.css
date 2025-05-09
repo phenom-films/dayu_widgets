@@ -100,6 +100,18 @@ h6 { font-size: var(--heading-h6-font-size); }
   border-right-color: var(--border-color);
 }
 
+/* 标题样式 */
+.app-name-link {
+  color: var(--theme-color) !important;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--transition-duration);
+}
+
+.app-name-link:hover {
+  opacity: 0.8;
+}
+
 .sidebar-nav li {
   margin: 6px 0;
 }
