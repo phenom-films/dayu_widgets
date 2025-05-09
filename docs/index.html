@@ -7,6 +7,7 @@
   <meta name="description" content="基于PySide的组件库">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" id="theme-stylesheet">
+  <link rel="stylesheet" href="custom-theme.css">
   <!-- 立即初始化主题，避免闪烁 -->
   <script>
     // 立即设置主题，在页面渲染前执行
@@ -21,8 +22,8 @@
         style.textContent = '\
           .light-icon { display: block !important; }\
           .dark-icon { display: none !important; }\
-          .github-icon { fill: #fa8c16 !important; }\
-          .top-nav { background-color: #1f1f1f !important; }\
+          .github-icon { fill: #42b983 !important; }\
+          .top-nav { background-color: #1a1a1a !important; }\
         ';
       } else {
         style.textContent = '\
@@ -61,19 +62,19 @@
 
     /* 深色主题变量 */
     [data-theme="dark"] {
-      --theme-color: #fa8c16;
-      --theme-color-light: rgba(250, 140, 22, 0.05);
-      --text-color-base: #c8c8c8;
-      --text-color-secondary: #8a8a8a;
-      --bg-color: #1f1f1f;
-      --bg-color-secondary: #272727;
+      --theme-color: #42b983;
+      --theme-color-light: rgba(66, 185, 131, 0.05);
+      --text-color-base: #e0e0e0;
+      --text-color-secondary: #a0a0a0;
+      --bg-color: #1a1a1a;
+      --bg-color-secondary: #252525;
       --border-color: #3a3a3a;
-      --code-bg-color: #2d2d2d;
-      --code-text-color: #ddd;
-      --checkbox-color: #fa8c16;
-      --search-bg-color: #1f1f1f;
-      --search-input-bg-color: #333;
-      --search-result-bg-color: #2d2d2d;
+      --code-bg-color: #282c34;
+      --code-text-color: #e3e3e3;
+      --checkbox-color: #42b983;
+      --search-bg-color: #1a1a1a;
+      --search-input-bg-color: #2a2a2a;
+      --search-result-bg-color: #252525;
       --nav-bg-color: var(--bg-color);
     }
 
@@ -779,8 +780,8 @@
         styleEl.textContent = '\
           .light-icon { display: block !important; }\
           .dark-icon { display: none !important; }\
-          .github-icon { fill: #fa8c16 !important; }\
-          .top-nav { background-color: #1f1f1f !important; }\
+          .github-icon { fill: #42b983 !important; }\
+          .top-nav { background-color: #1a1a1a !important; }\
         ';
       } else {
         styleEl.textContent = '\
@@ -1009,6 +1010,10 @@
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-python.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-bash.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-json.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-yaml.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-ini.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.js"></script>
   <script>
     // 添加代码复制按钮配置

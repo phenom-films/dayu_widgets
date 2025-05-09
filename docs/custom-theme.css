@@ -1,0 +1,366 @@
+/* 自定义主题样式 */
+
+/* 全局变量 */
+:root {
+  --theme-color: #42b983;
+  --theme-color-dark: #33a06f;
+  --text-color-base: #2c3e50;
+  --text-color-secondary: #476582;
+  --border-color: #eaecef;
+  --code-font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  --code-font-size: 14px;
+  --code-block-padding: 1.25em 1.5em;
+  --code-inline-padding: 0.25em 0.5em;
+  --code-inline-margin: 0 0.25em;
+  --code-inline-border-radius: 3px;
+  --sidebar-width: 300px;
+  --content-max-width: 800px;
+  --heading-font-weight: 600;
+  --heading-color: #273849;
+  --heading-h1-font-size: 2.2em;
+  --heading-h2-font-size: 1.65em;
+  --heading-h3-font-size: 1.35em;
+  --heading-h4-font-size: 1.15em;
+  --heading-h5-font-size: 1em;
+  --heading-h6-font-size: 0.85em;
+  --transition-duration: 0.3s;
+}
+
+/* 暗色主题变量 */
+[data-theme="dark"] {
+  --theme-color: #42b983;
+  --theme-color-dark: #33a06f;
+  --text-color-base: #c8c8c8;
+  --text-color-secondary: #8c8c8c;
+  --border-color: #3e3e3e;
+  --heading-color: #e6e6e6;
+  --background-color: #1f1f1f;
+  --sidebar-background: #252525;
+  --code-background: #282c34;
+  --blockquote-background: #2c2c2c;
+  --blockquote-border-color: #3a3a3a;
+  --table-row-odd-background: #2c2c2c;
+  --table-cell-border-color: #3a3a3a;
+  --scrollbar-background: #1a1a1a;
+  --scrollbar-thumb: #3a3a3a;
+}
+
+/* 基础样式 */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-color-base);
+  background-color: #fff;
+  transition: background-color var(--transition-duration), color var(--transition-duration);
+}
+
+[data-theme="dark"] body {
+  background-color: var(--background-color);
+  color: var(--text-color-base);
+}
+
+/* 链接样式 */
+a {
+  color: var(--theme-color);
+  text-decoration: none;
+  transition: color var(--transition-duration);
+}
+
+a:hover {
+  color: var(--theme-color-dark);
+  text-decoration: underline;
+}
+
+/* 标题样式 */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--heading-font-weight);
+  color: var(--heading-color);
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+  line-height: 1.25;
+}
+
+h1 { font-size: var(--heading-h1-font-size); }
+h2 { font-size: var(--heading-h2-font-size); }
+h3 { font-size: var(--heading-h3-font-size); }
+h4 { font-size: var(--heading-h4-font-size); }
+h5 { font-size: var(--heading-h5-font-size); }
+h6 { font-size: var(--heading-h6-font-size); }
+
+/* 侧边栏样式 */
+.sidebar {
+  background-color: #f8f8f8;
+  border-right: 1px solid var(--border-color);
+  transition: background-color var(--transition-duration), border-color var(--transition-duration);
+}
+
+[data-theme="dark"] .sidebar {
+  background-color: var(--sidebar-background);
+  border-right-color: var(--border-color);
+}
+
+.sidebar-nav li {
+  margin: 6px 0;
+}
+
+.sidebar-nav a {
+  color: var(--text-color-base);
+  font-size: 15px;
+  text-decoration: none;
+  transition: color var(--transition-duration);
+}
+
+.sidebar-nav a:hover {
+  color: var(--theme-color);
+}
+
+.sidebar-nav a.active {
+  color: var(--theme-color);
+  font-weight: 600;
+}
+
+/* 代码样式 */
+code {
+  font-family: var(--code-font-family);
+  font-size: var(--code-font-size);
+  background-color: #f0f0f0;
+  padding: var(--code-inline-padding);
+  margin: var(--code-inline-margin);
+  border-radius: var(--code-inline-border-radius);
+  transition: background-color var(--transition-duration), color var(--transition-duration);
+}
+
+[data-theme="dark"] code {
+  background-color: #2a2a2a;
+  color: #e3e3e3;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  padding: var(--code-block-padding);
+  overflow: auto;
+  transition: background-color var(--transition-duration);
+}
+
+[data-theme="dark"] pre {
+  background-color: var(--code-background);
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  color: #476582;
+}
+
+[data-theme="dark"] pre code {
+  color: #e3e3e3;
+}
+
+/* 代码高亮 - 暗色主题 */
+[data-theme="dark"] .token.comment,
+[data-theme="dark"] .token.prolog,
+[data-theme="dark"] .token.doctype,
+[data-theme="dark"] .token.cdata {
+  color: #8a8a8a;
+}
+
+[data-theme="dark"] .token.punctuation {
+  color: #ccc;
+}
+
+[data-theme="dark"] .token.property,
+[data-theme="dark"] .token.tag,
+[data-theme="dark"] .token.boolean,
+[data-theme="dark"] .token.number,
+[data-theme="dark"] .token.constant,
+[data-theme="dark"] .token.symbol,
+[data-theme="dark"] .token.deleted {
+  color: #f78c6c;
+}
+
+[data-theme="dark"] .token.selector,
+[data-theme="dark"] .token.attr-name,
+[data-theme="dark"] .token.string,
+[data-theme="dark"] .token.char,
+[data-theme="dark"] .token.builtin,
+[data-theme="dark"] .token.inserted {
+  color: #b5cea8;
+}
+
+[data-theme="dark"] .token.operator,
+[data-theme="dark"] .token.entity,
+[data-theme="dark"] .token.url,
+[data-theme="dark"] .language-css .token.string,
+[data-theme="dark"] .style .token.string {
+  color: #d4d4d4;
+}
+
+[data-theme="dark"] .token.atrule,
+[data-theme="dark"] .token.attr-value,
+[data-theme="dark"] .token.keyword {
+  color: #c792ea;
+}
+
+[data-theme="dark"] .token.function,
+[data-theme="dark"] .token.class-name {
+  color: #82aaff;
+}
+
+[data-theme="dark"] .token.regex,
+[data-theme="dark"] .token.important,
+[data-theme="dark"] .token.variable {
+  color: #ffcb6b;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--scrollbar-background);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #4a4a4a;
+}
+
+/* 表格样式 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+  display: table;
+  overflow-x: auto;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 0.6em 1em;
+  text-align: left;
+}
+
+tr:nth-child(odd) {
+  background-color: #f8f8f8;
+}
+
+[data-theme="dark"] tr:nth-child(odd) {
+  background-color: var(--table-row-odd-background);
+}
+
+[data-theme="dark"] th,
+[data-theme="dark"] td {
+  border-color: var(--table-cell-border-color);
+}
+
+/* 引用块样式 */
+blockquote {
+  border-left: 4px solid var(--theme-color);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  background-color: #f8f8f8;
+  color: var(--text-color-secondary);
+  transition: background-color var(--transition-duration), border-color var(--transition-duration), color var(--transition-duration);
+}
+
+[data-theme="dark"] blockquote {
+  background-color: var(--blockquote-background);
+  border-left-color: var(--theme-color);
+}
+
+/* 代码复制按钮 */
+.docsify-copy-code-button {
+  background-color: var(--theme-color) !important;
+  border-radius: 3px !important;
+  padding: 0.4em 0.6em !important;
+  font-size: 0.8em !important;
+}
+
+.docsify-copy-code-button:hover {
+  background-color: var(--theme-color-dark) !important;
+}
+
+/* 顶部导航栏 */
+.top-nav {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .top-nav {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* 封面页样式 */
+section.cover {
+  background: linear-gradient(to bottom right, #ffffff, #f8f8f8) !important;
+}
+
+[data-theme="dark"] section.cover {
+  background: linear-gradient(to bottom right, #1f1f1f, #252525) !important;
+}
+
+section.cover .cover-main {
+  margin: 0 20px;
+}
+
+section.cover h1 {
+  font-size: 3em;
+  font-weight: 700;
+  margin: 0.5em 0;
+}
+
+section.cover p {
+  font-size: 1.2em;
+  line-height: 1.5;
+  margin: 1em 0;
+}
+
+section.cover .cover-main > p:last-child a {
+  border-radius: 4px;
+  border: 1px solid var(--theme-color);
+  box-sizing: border-box;
+  color: var(--theme-color);
+  display: inline-block;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  margin: 0.5em 0.5em;
+  padding: 0.6em 2em;
+  text-decoration: none;
+  transition: all var(--transition-duration);
+}
+
+section.cover .cover-main > p:last-child a:hover {
+  background-color: var(--theme-color);
+  color: #fff;
+}
+
+section.cover .cover-main > p:last-child a:last-child {
+  background-color: var(--theme-color);
+  color: #fff;
+}
+
+section.cover .cover-main > p:last-child a:last-child:hover {
+  background-color: var(--theme-color-dark);
+  color: #fff;
+}
