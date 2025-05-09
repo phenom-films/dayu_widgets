@@ -7,6 +7,7 @@
   <meta name="description" content="基于PySide的组件库">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" id="theme-stylesheet">
+  <link rel="stylesheet" href="custom-theme.css">
   <!-- 立即初始化主题，避免闪烁 -->
   <script>
     // 立即设置主题，在页面渲染前执行
@@ -21,8 +22,8 @@
         style.textContent = '\
           .light-icon { display: block !important; }\
           .dark-icon { display: none !important; }\
-          .github-icon { fill: #fa8c16 !important; }\
-          .top-nav { background-color: #1f1f1f !important; }\
+          .github-icon { fill: #42b983 !important; }\
+          .top-nav { background-color: #1a1a1a !important; }\
         ';
       } else {
         style.textContent = '\
@@ -61,19 +62,19 @@
 
     /* 深色主题变量 */
     [data-theme="dark"] {
-      --theme-color: #fa8c16;
-      --theme-color-light: rgba(250, 140, 22, 0.05);
-      --text-color-base: #c8c8c8;
-      --text-color-secondary: #8a8a8a;
-      --bg-color: #1f1f1f;
-      --bg-color-secondary: #272727;
+      --theme-color: #42b983;
+      --theme-color-light: rgba(66, 185, 131, 0.05);
+      --text-color-base: #e0e0e0;
+      --text-color-secondary: #a0a0a0;
+      --bg-color: #1a1a1a;
+      --bg-color-secondary: #252525;
       --border-color: #3a3a3a;
-      --code-bg-color: #2d2d2d;
-      --code-text-color: #ddd;
-      --checkbox-color: #fa8c16;
-      --search-bg-color: #1f1f1f;
-      --search-input-bg-color: #333;
-      --search-result-bg-color: #2d2d2d;
+      --code-bg-color: #282c34;
+      --code-text-color: #e3e3e3;
+      --checkbox-color: #42b983;
+      --search-bg-color: #1a1a1a;
+      --search-input-bg-color: #2a2a2a;
+      --search-result-bg-color: #252525;
       --nav-bg-color: var(--bg-color);
     }
 
@@ -156,7 +157,7 @@
       margin: 20px 0;
     }
 
-    /* 搜索框样式适配 */
+    /* 搜索框样式适配 - 这些样式会被custom-theme.css中的样式覆盖 */
     .search {
       background-color: var(--search-bg-color);
       border-bottom: 1px solid var(--border-color);
@@ -387,7 +388,7 @@
     </div>
 
     <!-- GitHub链接 -->
-    <a class="top-nav-item" href="https://github.com/phenom-films/dayu_widgets" target="_blank" title="GitHub">
+    <a class="top-nav-item" href="https://github.com/muyr/dayu_widgets3" target="_blank" title="GitHub">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="github-icon">
         <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
       </svg>
@@ -863,6 +864,24 @@
       }
     }
 
+    // 处理标题点击事件
+    function handleTitleClick() {
+      // 查找标题元素
+      const appNameElement = document.querySelector('.app-name-link');
+      if (appNameElement) {
+        // 移除默认的链接行为
+        appNameElement.removeAttribute('href');
+
+        // 添加自定义点击事件
+        appNameElement.addEventListener('click', function(e) {
+          e.preventDefault();
+          const currentLang = getCurrentLanguage();
+          console.log('标题点击，跳转到:', currentLang.code);
+          window.location.hash = '#/' + currentLang.code + '/';
+        });
+      }
+    }
+
     // 处理侧边栏链接
     function handleSidebarLinks() {
       // 获取当前语言
@@ -936,6 +955,9 @@
       // 处理侧边栏链接
       setTimeout(handleSidebarLinks, 100);
 
+      // 处理标题点击事件
+      setTimeout(handleTitleClick, 200);
+
       // 移除no-transition类，允许过渡动画
       setTimeout(function() {
         document.body.classList.remove('no-transition');
@@ -944,6 +966,11 @@
 
     window.$docsify = {
       name: 'Dayu Widgets',
+      nameLink: {
+        '/zh-cn/': '#/zh-cn/',
+        '/en-us/': '#/en-us/',
+        '/': '#/'
+      },
       repo: false,  // 关闭默认的GitHub角标
       basePath: '/',
       homepage: '/en-us/README.md',
@@ -990,6 +1017,7 @@
           // 页面内容渲染完毕后再次检查首页状态
           checkCoverVisible();
           setTimeout(handleSidebarLinks, 100);
+          setTimeout(handleTitleClick, 200);
           // 更新主题图片显示
           const currentTheme = document.documentElement.getAttribute('data-theme');
           updateThemeImages(currentTheme);
@@ -998,6 +1026,7 @@
         ready: function() {
           // docsify 文档准备完成
           setTimeout(handleSidebarLinks, 100);
+          setTimeout(handleTitleClick, 200);
         }
       },
       // 添加外部资源路径配置
@@ -1009,6 +1038,10 @@
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-python.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-bash.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-json.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-yaml.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-ini.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.js"></script>
   <script>
     // 添加代码复制按钮配置
