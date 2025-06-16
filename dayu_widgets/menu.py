@@ -2,11 +2,13 @@
 from functools import partial
 import os
 import re
+import sys
 
 # Import third-party modules
 from qtpy import QtCore
 from qtpy import QtGui
 from qtpy import QtWidgets
+from qtpy import API
 
 # Import local modules
 from dayu_widgets.mixin import property_mixin
@@ -19,10 +21,15 @@ PYSIDE6 = os.environ.get("QT_API") == "pyside6"
 
 
 class CompatStyle(QtWidgets.QProxyStyle):
-    """PySide2 PySide6"""
+    """PySide2 PySide6 compatibility style with Python version-specific initialization"""
 
     def __init__(self, style=None):
-        super(CompatStyle, self).__init__(style)
+        # Check if we should skip super() call (Python 3.11+ with PySide2)
+        # This fixes checkbox functionality issues in Houdini 20.5 environment
+        should_skip_super = sys.version_info >= (3, 11) and API == "pyside2"
+
+        if not should_skip_super:
+            super(CompatStyle, self).__init__(style)
         self.style = style
 
     @property
