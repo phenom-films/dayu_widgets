@@ -8,7 +8,14 @@ import sys
 from qtpy import QtCore
 from qtpy import QtGui
 from qtpy import QtWidgets
-from qtpy import API
+
+# Safe import of API for older qtpy versions
+try:
+    from qtpy import API
+except ImportError:
+    # Fallback for older qtpy versions (Maya compatibility)
+    import os
+    API = os.environ.get("QT_API", "unknown")
 
 # Import local modules
 from dayu_widgets.mixin import property_mixin
