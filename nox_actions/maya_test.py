@@ -94,14 +94,35 @@ def maya_test(session: nox.Session) -> None:
             docker_path = f"//{drive.lower()}{path}"
             print(f"Converted Windows path to Docker path: {docker_path}")
 
-        # Create a simplified test script focused on the core issue
+        # Create a test script that installs dependencies first
         test_script = f"""import sys
 import os
+import subprocess
 
 print("=== Maya {maya_version} Environment Info ===")
 print(f"Python version: {{sys.version}}")
 print(f"Python executable: {{sys.executable}}")
 print(f"QT_API environment: {{os.environ.get('QT_API', 'not set')}}")
+
+print("\\n=== Installing required dependencies ===")
+try:
+    # Install qtpy first
+    print("Installing qtpy...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "qtpy>=2.3.1"])
+    print("✓ qtpy installed successfully")
+
+    # Install PySide2 if not available
+    try:
+        import PySide2
+        print("✓ PySide2 already available")
+    except ImportError:
+        print("Installing PySide2...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "PySide2>=5.15.2.1"])
+        print("✓ PySide2 installed successfully")
+
+except Exception as e:
+    print(f"✗ Failed to install dependencies: {{e}}")
+    sys.exit(1)
 
 print("\\n=== Testing qtpy import ===")
 try:
