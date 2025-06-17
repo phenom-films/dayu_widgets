@@ -62,75 +62,111 @@ def maya_test(session: nox.Session) -> None:
     }
 
     if docker_available:
-        # Run the Maya tests using Docker
-        try:
-            print("Running Maya tests with Docker...")
-            # Pull the Docker image
-            try:
-                session.run(
-                    "docker", "pull", f"mottosso/maya:{maya_version}",
-                    external=True
-                )
-                print(f"Successfully pulled mottosso/maya:{maya_version} image")
-            except Exception as e:
-                print(f"Warning: Could not pull Docker image: {e}")
-                print("Continuing with existing image if available...")
+        # Run the Maya tests using Docker - NO EXCEPTION HANDLING FOR DEBUGGING
+        print("Running Maya tests with Docker...")
 
-            # Convert Windows path to Docker-compatible path if needed
-            docker_path = str(root_dir).replace('\\', '/')
-            if os.name == 'nt' and ':' in docker_path:  # Windows path with drive letter
-                drive, path = docker_path.split(':', 1)
-                docker_path = f"//{drive.lower()}{path}"
-                print(f"Converted Windows path to Docker path: {docker_path}")
+        # Pull the Docker image - STRICT MODE
+        print(f"Pulling Docker image mottosso/maya:{maya_version}...")
+        session.run(
+            "docker", "pull", f"mottosso/maya:{maya_version}",
+            external=True
+        )
+        print(f"Successfully pulled mottosso/maya:{maya_version} image")
 
-            # Create a simple test script
-            test_script = """import sys
+        # Convert Windows path to Docker-compatible path if needed
+        docker_path = str(root_dir).replace('\\', '/')
+        if os.name == 'nt' and ':' in docker_path:  # Windows path with drive letter
+            drive, path = docker_path.split(':', 1)
+            docker_path = f"//{drive.lower()}{path}"
+            print(f"Converted Windows path to Docker path: {docker_path}")
+
+        # Create a test script that will show detailed errors
+        test_script = """import sys
 import os
 
+print(f"Python version: {sys.version}")
+print(f"Python path: {sys.path}")
+
+# Test qtpy import first
+try:
+    import qtpy
+    print(f"qtpy imported successfully: {qtpy}")
+    print(f"qtpy.__file__: {qtpy.__file__}")
+
+    # Test qtpy.API import
+    try:
+        from qtpy import API
+        print(f"qtpy.API imported successfully: {API}")
+    except ImportError as e:
+        print(f"qtpy.API import failed: {e}")
+        # Try environment variable fallback
+        import os
+        api_from_env = os.environ.get("QT_API", "unknown")
+        print(f"QT_API from environment: {api_from_env}")
+
+except ImportError as e:
+    print(f"qtpy import failed: {e}")
+    sys.exit(1)
+
+# Test dayu_widgets import
 try:
     import dayu_widgets
+    print(f"dayu_widgets imported successfully: {dayu_widgets}")
+    print(f"dayu_widgets.__file__: {dayu_widgets.__file__}")
+
+    # Test specific module that caused issues
+    try:
+        from dayu_widgets import menu
+        print(f"dayu_widgets.menu imported successfully: {menu}")
+    except Exception as e:
+        print(f"dayu_widgets.menu import failed: {e}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+
     print('Maya Docker test passed!')
 except Exception as e:
     print(f'Error importing dayu_widgets: {e}')
+    import traceback
+    traceback.print_exc()
     sys.exit(1)
 """
-            test_script_path = os.path.join(root_dir, "maya_test_script.py")
-            with open(test_script_path, "w") as f:
-                f.write(test_script)
-            print(f"Created test script at {test_script_path}")
+        test_script_path = os.path.join(root_dir, "maya_test_script.py")
+        with open(test_script_path, "w") as f:
+            f.write(test_script)
+        print(f"Created detailed test script at {test_script_path}")
 
-            # Run the Docker container
-            print("Running Docker container...")
-            session.run(
-                "docker", "run", "--rm",
-                "-v", f"{docker_path}:/dayu_widgets",
-                "-w", "/dayu_widgets",
-                f"mottosso/maya:{maya_version}",
-                "mayapy", "maya_test_script.py",
-                external=True
-            )
-            print("Maya Docker test completed successfully!")
-        except Exception as e:
-            print(f"Error running Maya tests with Docker: {e}")
-            print("Falling back to simple test...")
-            # Fall back to simple test if Docker fails
-            session.run(
-                "python", "-c",
-                """import sys;
-import os;
-import dayu_widgets;
-print('Maya compatibility test passed!');
-""",
-                env=env
-            )
+        # Run the Docker container - NO EXCEPTION HANDLING
+        print("Running Docker container...")
+        session.run(
+            "docker", "run", "--rm",
+            "-v", f"{docker_path}:/dayu_widgets",
+            "-w", "/dayu_widgets",
+            f"mottosso/maya:{maya_version}",
+            "mayapy", "maya_test_script.py",
+            external=True
+        )
+        print("Maya Docker test completed successfully!")
     else:
-        # Without Docker, run a simple test
-        print("Running simple Maya compatibility test...")
+        # Without Docker, run a detailed test - NO EXCEPTION HANDLING
+        print("Running detailed Maya compatibility test without Docker...")
         session.run(
             "python", "-c",
             """import sys;
 import os;
+print(f'Python version: {sys.version}');
+print(f'Environment QT_API: {os.environ.get("QT_API", "not set")}');
+
+try:
+    from qtpy import API;
+    print(f'qtpy.API: {API}');
+except ImportError as e:
+    print(f'qtpy.API import failed: {e}');
+    api_from_env = os.environ.get('QT_API', 'unknown');
+    print(f'Using QT_API from environment: {api_from_env}');
+
 import dayu_widgets;
+from dayu_widgets import menu;
 print('Maya compatibility test passed!');
 """,
             env=env
