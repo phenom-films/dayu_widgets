@@ -111,14 +111,26 @@ try:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "qtpy>=2.3.1"])
     print("✓ qtpy installed successfully")
 
-    # Install PySide2 if not available
-    try:
-        import PySide2
-        print("✓ PySide2 already available")
-    except ImportError:
-        print("Installing PySide2...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "PySide2>=5.15.2.1"])
-        print("✓ PySide2 installed successfully")
+    # Install appropriate Qt binding based on Python version
+    python_version = sys.version_info
+    if python_version >= (3, 11):
+        # Python 3.11+ should use PySide6
+        try:
+            import PySide6
+            print("✓ PySide6 already available")
+        except ImportError:
+            print("Installing PySide6 for Python 3.11+...")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "PySide6>=6.2.0"])
+            print("✓ PySide6 installed successfully")
+    else:
+        # Python 3.10 and below can use PySide2
+        try:
+            import PySide2
+            print("✓ PySide2 already available")
+        except ImportError:
+            print("Installing PySide2...")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "PySide2>=5.15.2.1"])
+            print("✓ PySide2 installed successfully")
 
 except Exception as e:
     print(f"✗ Failed to install dependencies: {{e}}")
