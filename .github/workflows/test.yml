@@ -210,7 +210,7 @@ jobs:
   maya-test:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: true  # Changed to true to see actual errors
+      fail-fast: false  # Allow other jobs to continue running
       matrix:
         maya-version: ['2022', '2023', '2024', '2025']
     steps:
