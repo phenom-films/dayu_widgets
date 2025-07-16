@@ -1,11 +1,6 @@
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
-from Qt import QtWidgets
 import pytest
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets.progress_circle import MProgressCircle

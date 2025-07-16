@@ -1,19 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets.browser import MClickBrowserFilePushButton
@@ -35,14 +22,10 @@ class BrowserExample(QtWidgets.QWidget, MFieldMixin):
         self._init_ui()
 
     def _init_ui(self):
-        browser_1 = MClickBrowserFilePushButton(
-            text="Browser File PushButton"
-        ).primary()
+        browser_1 = MClickBrowserFilePushButton(text="Browser File PushButton").primary()
         browser_2 = MClickBrowserFolderPushButton(text="Browser Folder PushButton")
         browser_2.setIcon(MIcon("upload_line.svg"))
-        browser_3 = MClickBrowserFilePushButton(
-            text="Browser Multi Files", multiple=True
-        ).primary()
+        browser_3 = MClickBrowserFilePushButton(text="Browser Multi Files", multiple=True).primary()
         lay_1 = QtWidgets.QHBoxLayout()
         lay_1.addWidget(browser_1)
         lay_1.addWidget(browser_2)
@@ -81,9 +64,7 @@ class BrowserExample(QtWidgets.QWidget, MFieldMixin):
         lay_3.addWidget(label_6, 3, 0)
         lay_3.addWidget(label_7, 3, 1)
 
-        browser_8 = MDragFileButton(
-            text="Click or drag media file here", multiple=False
-        )
+        browser_8 = MDragFileButton(text="Click or drag media file here", multiple=False)
         browser_8.set_dayu_svg("media_line.svg")
         browser_8.set_dayu_filters([".mov", ".mp4"])
         browser_8_label = MLabel()

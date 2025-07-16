@@ -1,18 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
-from Qt import QtWidgets
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets.field_mixin import MFieldMixin
@@ -49,9 +36,7 @@ class FieldMixinExample(QtWidgets.QWidget, MFieldMixin):
         main_lay.addWidget(MLabel("Avatar:"), 0, 0)
         main_lay.addWidget(thumbnail_label, 0, 1)
         main_lay.addWidget(MLabel("Name:"), 1, 0)
-        main_lay.addWidget(
-            self.bind("my_name", MLineEdit(), "text", signal="textEdited"), 1, 1
-        )
+        main_lay.addWidget(self.bind("my_name", MLineEdit(), "text", signal="textEdited"), 1, 1)
         main_lay.addWidget(MLabel("Email:"), 2, 0)
         main_lay.addWidget(email_label, 2, 1)
         main_lay.addWidget(MLabel("Enabled:"), 3, 0)

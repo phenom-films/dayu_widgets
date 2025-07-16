@@ -1,23 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-
 # Import built-in modules
-import itertools
 import random
 
 # Import third-party modules
-from Qt import QtWidgets
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -49,9 +34,7 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
             combo_box.set_dayu_size(size)
             combo_box.set_menu(menu1)
             size_lay.addWidget(combo_box)
-            self.bind(
-                "button1_selected", combo_box, "value", signal="sig_value_changed"
-            )
+            self.bind("button1_selected", combo_box, "value", signal="sig_value_changed")
 
         self.register_field("button2_selected", ["北京"])
         menu2 = MMenu(exclusive=False, parent=self)
@@ -61,10 +44,9 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
         self.bind("button2_selected", select2, "value", signal="sig_value_changed")
 
         def dynamic_get_city():
-            data = cities + ["郑州", "石家庄"]
-            start = random.randint(0, len(data))
-            end = random.randint(start, len(data))
-            return data[start:end]
+            all_cities = cities + ["郑州", "石家庄"]
+            count = random.randint(2, min(4, len(all_cities)))
+            return random.sample(all_cities, count)
 
         self.register_field("button3_selected", "")
         menu3 = MMenu(parent=self)
@@ -186,7 +168,6 @@ class ComboBoxExample(QtWidgets.QWidget, MFieldMixin):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets import dayu_theme
     from dayu_widgets.qt import application
 
     with application() as app:

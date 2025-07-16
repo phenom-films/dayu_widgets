@@ -1,17 +1,13 @@
 """
 Test MLoading and MLoadingWrapper class
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
 import pytest
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
-from Qt import QtCore
-from Qt import QtWidgets
 from dayu_widgets import dayu_theme
 from dayu_widgets.loading import MLoading
 from dayu_widgets.loading import MLoadingWrapper

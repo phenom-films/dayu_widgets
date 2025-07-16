@@ -1,10 +1,6 @@
 """
 Test the display_formatter icon_formatter font_formatter
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import built-in modules
 import datetime
@@ -63,9 +59,7 @@ class _HasIconObject(object):
         ({"id": 111, "age": 18}, str({"id": 111, "age": 18})),
         (
             [{"id": 111, "age": 18}, {"id": 112, "age": 19}],
-            ",".join(
-                [str(item) for item in [{"id": 111, "age": 18}, {"id": 112, "age": 19}]]
-            ),
+            ",".join([str(item) for item in [{"id": 111, "age": 18}, {"id": 112, "age": 19}]]),
         ),
         ("test", "test"),
         (["test", "test2"], "test,test2"),

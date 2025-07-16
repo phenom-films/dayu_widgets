@@ -1,23 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtGui
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtGui
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets.menu import MMenu
@@ -25,11 +12,11 @@ import dayu_widgets.utils as utils
 
 
 class MHeaderView(QtWidgets.QHeaderView):
-    def __init__(self, orientation, parent=None):
+    def __init__(self, orientation, parent=None, show_sort_indicator=True):
         super(MHeaderView, self).__init__(orientation, parent)
         self.setMovable(True)
         self.setClickable(True)
-        self.setSortIndicatorShown(True)
+        self.setSortIndicatorShown(show_sort_indicator)
         self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self._slot_context_menu)
         self.setDefaultAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
@@ -60,16 +47,23 @@ class MHeaderView(QtWidgets.QHeaderView):
                 functools.partial(self._slot_set_select, logical_column, QtCore.Qt.Checked)
             )
             action_select_none.triggered.connect(
-                functools.partial(self._slot_set_select, logical_column, QtCore.Qt.Unchecked)
+                functools.partial(
+                    self._slot_set_select, logical_column, QtCore.Qt.Unchecked
+                )
             )
-            action_select_invert.triggered.connect(functools.partial(self._slot_set_select, logical_column, None))
+            action_select_invert.triggered.connect(
+                functools.partial(self._slot_set_select, logical_column, None)
+            )
             context_menu.addSeparator()
 
         fit_action = context_menu.addAction(self.tr("Fit Size"))
         fit_action.triggered.connect(functools.partial(self._slot_set_resize_mode, True))
         context_menu.addSeparator()
         for column in range(self.count()):
-            action = context_menu.addAction(model.headerData(column, QtCore.Qt.Horizontal, QtCore.Qt.DisplayRole))
+            header_text = model.headerData(
+                column, QtCore.Qt.Horizontal, QtCore.Qt.DisplayRole
+            )
+            action = context_menu.addAction(header_text)
             action.setCheckable(True)
             action.setChecked(not self.isSectionHidden(column))
             action.toggled.connect(functools.partial(self._slot_set_section_visible, column))

@@ -1,20 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
 """MLineTabWidget"""
 
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -25,7 +13,9 @@ from dayu_widgets.tool_button import MToolButton
 
 
 class MUnderlineButton(MToolButton):
-    """MUnderlineButton"""
+    """
+    MUnderlineButton
+    """
 
     def __init__(self, parent=None):
         super(MUnderlineButton, self).__init__(parent)
@@ -33,7 +23,9 @@ class MUnderlineButton(MToolButton):
 
 
 class MUnderlineButtonGroup(MButtonGroupBase):
-    """MUnderlineButtonGroup"""
+    """
+    MUnderlineButtonGroup
+    """
 
     sig_checked_changed = QtCore.Signal(int)
 
@@ -42,9 +34,14 @@ class MUnderlineButtonGroup(MButtonGroupBase):
         self._line_tab = tab
         self.set_spacing(1)
         self._button_group.setExclusive(True)
-        self._button_group.buttonClicked[int].connect(self.sig_checked_changed)
+        self._button_group.idClicked.connect(self.sig_checked_changed)
 
     def create_button(self, data_dict):
+        """
+        Create a button with data_dict.
+        :param data_dict: dict contains text, icon, checkable, checked
+        :return: button
+        """
         button = MUnderlineButton(parent=self)
         if data_dict.get("svg"):
             button.svg(data_dict.get("svg"))
@@ -59,6 +56,11 @@ class MUnderlineButtonGroup(MButtonGroupBase):
         return button
 
     def update_size(self, size):
+        """
+        Update all button's size
+        :param size: int
+        :return: None
+        """
         for button in self._button_group.buttons():
             button.set_dayu_size(size)
 
@@ -69,14 +71,18 @@ class MUnderlineButtonGroup(MButtonGroupBase):
         self.sig_checked_changed.emit(value)
 
     def get_dayu_checked(self):
-        """Get current checked button's id"""
+        """
+        Get current checked button's id
+        """
         return self._button_group.checkedId()
 
     dayu_checked = QtCore.Property(int, get_dayu_checked, set_dayu_checked, notify=sig_checked_changed)
 
 
 class MLineTabWidget(QtWidgets.QWidget):
-    """MLineTabWidget"""
+    """ 
+    MLineTabWidget 
+    """
 
     def __init__(self, alignment=QtCore.Qt.AlignCenter, parent=None):
         super(MLineTabWidget, self).__init__(parent=parent)
@@ -94,7 +100,9 @@ class MLineTabWidget(QtWidgets.QWidget):
             self.bar_layout.addStretch()
             self.bar_layout.addWidget(self.tool_button_group)
         self.stack_widget = MStackedWidget()
-        self.tool_button_group.sig_checked_changed.connect(self.stack_widget.setCurrentIndex)
+        self.tool_button_group.sig_checked_changed.connect(
+            self.stack_widget.setCurrentIndex
+        )
         main_lay = QtWidgets.QVBoxLayout()
         main_lay.setContentsMargins(0, 0, 0, 0)
         main_lay.setSpacing(0)
@@ -106,15 +114,24 @@ class MLineTabWidget(QtWidgets.QWidget):
         self._dayu_size = dayu_theme.default
 
     def append_widget(self, widget):
-        """Add the widget to line tab's right position."""
+        """
+        Add the widget to line tab's right position.
+        """
         self.bar_layout.addWidget(widget)
 
     def insert_widget(self, widget):
-        """Insert the widget to line tab's left position."""
+        """
+        Insert the widget to line tab's left position.
+        """
         self.bar_layout.insertWidget(0, widget)
 
     def add_tab(self, widget, data_dict):
-        """Add a tab"""
+        """
+        Add a tab.
+
+        :param widget: The widget to be added
+        :param data_dict: Dictionary containing tab data like text, icon
+        """
         self.stack_widget.addWidget(widget)
         self.tool_button_group.add_button(data_dict, self.stack_widget.count() - 1)
 

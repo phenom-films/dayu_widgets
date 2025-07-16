@@ -1,14 +1,12 @@
 """
 Test get_obj_value set_obj_value has_obj_value
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
-from dayu_widgets import utils
 import pytest
+
+# Import local modules
+from dayu_widgets import utils
 
 
 class _HasNameAgeObject(object):
@@ -18,9 +16,7 @@ class _HasNameAgeObject(object):
         self.age = age
 
 
-@pytest.mark.parametrize(
-    "obj", ({"name": "xiaoming", "age": 18}, _HasNameAgeObject("xiaoming", 18))
-)
+@pytest.mark.parametrize("obj", ({"name": "xiaoming", "age": 18}, _HasNameAgeObject("xiaoming", 18)))
 class TestObjValue(object):
     """Test get_obj_value has_obj_value set_obj_value collection."""
 

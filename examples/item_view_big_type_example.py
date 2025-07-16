@@ -1,21 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
 # Import third-party modules
-from Qt import QtGui
-from Qt import QtWidgets
+from qtpy import QtGui
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -46,13 +34,9 @@ class ItemViewBigTypeExample(QtWidgets.QWidget, MFieldMixin):
             ]
         )
         add_button = MToolButton().svg("add_line.svg")
-        add_button.clicked.connect(
-            functools.partial(item_view_set_thumbnail.item_view.scale_size, 1.1)
-        )
+        add_button.clicked.connect(functools.partial(item_view_set_thumbnail.item_view.scale_size, 1.1))
         minus_button = MToolButton().svg("minus_line.svg")
-        minus_button.clicked.connect(
-            functools.partial(item_view_set_thumbnail.item_view.scale_size, 0.8)
-        )
+        minus_button.clicked.connect(functools.partial(item_view_set_thumbnail.item_view.scale_size, 0.8))
         button_lay = QtWidgets.QHBoxLayout()
         button_lay.addWidget(minus_button)
         button_lay.addWidget(add_button)

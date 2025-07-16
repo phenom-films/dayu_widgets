@@ -1,36 +1,18 @@
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2018.5
-# Email : muyanru345@163.com
-###################################################################
 """
 Some helper functions for handling color and formatter.
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import built-in modules
 import collections
 import datetime as dt
-import functools
+from functools import singledispatch
 import math
 import os
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtGui
-from Qt import QtWidgets
-import six
-
-
-if hasattr(functools, "singledispatch"):
-    # Import built-in modules
-    from functools import singledispatch
-else:
-    from singledispatch import singledispatch
+from qtpy import QtCore
+from qtpy import QtGui
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import CUSTOM_STATIC_FOLDERS
@@ -50,8 +32,8 @@ def get_static_file(path):
     :param path: file name
     :return: if input file found, return the full path, else return None
     """
-    if not isinstance(path, six.string_types):
-        raise TypeError("Input argument 'path' should be six.string_types type, " "but get {}".format(type(path)))
+    if not isinstance(path, str):
+        raise TypeError("Input argument 'path' should be str type, " "but get {}".format(type(path)))
     full_path = next(
         (
             os.path.join(prefix, path)
@@ -74,8 +56,8 @@ def from_list_to_nested_dict(input_arg, sep="/"):
     """
     if not isinstance(input_arg, (list, tuple, set)):
         raise TypeError("Input argument 'input' should be list or tuple or set, " "but get {}".format(type(input_arg)))
-    if not isinstance(sep, six.string_types):
-        raise TypeError("Input argument 'sep' should be six.string_types, " "but get {}".format(type(sep)))
+    if not isinstance(sep, str):
+        raise TypeError("Input argument 'sep' should be str, " "but get {}".format(type(sep)))
 
     result = []
     for item in input_arg:
@@ -157,7 +139,7 @@ def generate_color(primary_color, index):
         return max((v_comp * 100 - brightness_step2 * i) / 100, 0.0)
 
     light = index <= 6
-    hsv_color = QtGui.QColor(primary_color) if isinstance(primary_color, six.string_types) else primary_color
+    hsv_color = QtGui.QColor(primary_color) if isinstance(primary_color, str) else primary_color
     index = light_color_count + 1 - index if light else index - light_color_count - 1
     return QtGui.QColor.fromHsvF(
         _get_hue(hsv_color, index, light),
@@ -240,7 +222,7 @@ def display_formatter(input_other_type):
     Used for QAbstractItemModel data method for Qt.DisplayRole
     Format any input value to a string.
     :param input_other_type: any type value
-    :return: six.string_types
+    :return: str
     """
     return str(input_other_type)  # this function never reached
 
@@ -269,7 +251,7 @@ def _(input_str):
     # return obj.decode()
 
 
-@display_formatter.register(six.text_type)
+@display_formatter.register(str)
 def _(input_unicode):
     return input_unicode
 
@@ -433,6 +415,16 @@ def read_settings(organization, app_name):
     return result_dict
 
 
+def is_qt_object_alive(obj):
+    try:
+        # 尝试访问对象的某个基本属性
+        # 如果对象已被删除，这将引发异常
+        obj.objectName()
+        return True
+    except (RuntimeError, ReferenceError):
+        return False
+
+
 def add_settings(organization, app_name, event_name="closeEvent"):
     def _write_settings(self):
         settings = QtCore.QSettings(
@@ -442,6 +434,8 @@ def add_settings(organization, app_name, event_name="closeEvent"):
             app_name,
         )
         for attr, widget, property in self._bind_data:
+            if not is_qt_object_alive(widget):
+                continue
             if property == "geometry":
                 settings.setValue(attr, widget.saveGeometry())
             elif property == "state":

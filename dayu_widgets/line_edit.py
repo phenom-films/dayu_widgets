@@ -1,25 +1,13 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
 """MLineEdit
 Get the user input is a text field
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import built-in modules
 import functools
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
-import six
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -35,7 +23,7 @@ from dayu_widgets.tool_button import MToolButton
 class MLineEdit(QtWidgets.QLineEdit):
     """MLineEdit"""
 
-    sig_delay_text_changed = QtCore.Signal(six.string_types[0])
+    sig_delay_text_changed = QtCore.Signal(str)
 
     def __init__(self, text="", parent=None):
         super(MLineEdit, self).__init__(text, parent)
@@ -87,7 +75,7 @@ class MLineEdit(QtWidgets.QLineEdit):
     def _slot_delay_text_changed(self):
         self.sig_delay_text_changed.emit(self.text())
 
-    @QtCore.Slot(six.text_type)
+    @QtCore.Slot(str)
     def _slot_begin_to_start_delay(self, _):
         if self._delay_timer.isActive():
             self._delay_timer.stop()
@@ -165,7 +153,7 @@ class MLineEdit(QtWidgets.QLineEdit):
         def _slot_show_detail(self):
             dialog = QtWidgets.QTextEdit(self)
             dialog.setReadOnly(True)
-            geo = QtWidgets.QApplication.desktop().screenGeometry()
+            geo = QtWidgets.QApplication.primaryScreen().geometry()
             dialog.setGeometry(geo.width() / 2, geo.height() / 2, geo.width() / 4, geo.height() / 4)
             dialog.setWindowTitle(self.tr("Error Detail Information"))
             dialog.setText(self.property("history"))

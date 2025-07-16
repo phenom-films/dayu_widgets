@@ -1,2 +1,0 @@
-recursive-include dayu_widgets/static *
-include MANIFEST.in

@@ -1,13 +1,13 @@
 # dayu_widgets
 
 <p align="center">
-<a href="https://img.shields.io/pypi/pyversions/dayu_widgets">
-<img src="https://img.shields.io/pypi/pyversions/dayu_widgets" alt="python version"></a>
-<a href="https://badge.fury.io/py/dayu_widgets">
-<img src="https://img.shields.io/pypi/v/dayu_widgets?color=green" alt="PyPI version"></a>
-<img src="https://img.shields.io/pypi/dw/dayu_widgets" alt="Downloads Status">
-<img src="https://img.shields.io/pypi/l/dayu_widgets" alt="License">
-<img src="https://img.shields.io/pypi/format/dayu_widgets" alt="pypi format">
+<a href="https://img.shields.io/pypi/pyversions/dayu_widgets3">
+<img src="https://img.shields.io/pypi/pyversions/dayu_widgets3" alt="python version"></a>
+<a href="https://badge.fury.io/py/dayu_widgets3">
+<img src="https://img.shields.io/pypi/v/dayu_widgets3?color=green" alt="PyPI version"></a>
+<img src="https://img.shields.io/pypi/dw/dayu_widgets3" alt="Downloads Status">
+<img src="https://img.shields.io/pypi/l/dayu_widgets3" alt="License">
+<img src="https://img.shields.io/pypi/format/dayu_widgets3" alt="pypi format">
 <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" alt="Maintenance"></a>
 <a href="https://context7.com/phenom-films/dayu_widgets">
 <img src="https://img.shields.io/badge/Context7-Enabled-blue" alt="Context7 Enabled"></a>
@@ -194,12 +194,12 @@ poetry run pytest
 
 ## 运行 black检查
 ```shell
-poetry run black dayu_widgets
+poetry run black dayu_widgets3
 ```
 
 ## 运行isort
 ```shell
-poetry run isort dayu_widgets
+poetry run isort dayu_widgets3
 ```
 
 ## 提交代码
@@ -226,9 +226,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/muyr"><img src="https://avatars.githubusercontent.com/u/1860334?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yanru Mu</b></sub></a><br /><a href="https://github.com/phenom-films/dayu_widgets/commits?q=author%3Yanru Mu" itle="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/loonghao"><img src="https://avatars1.githubusercontent.com/u/13111745?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Hal</b></sub></a><br /><a href="https://github.com/phenom-films/dayu_widgets/commits?author=loonghao" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/FXTD-ODYSSEY"><img src="https://avatars.githubusercontent.com/u/40897360?v=4?s=100" width="100px;" alt=""/><br /><sub><b>FXTD-ODYSSEY</b></sub></a><br /><a href="https://github.com/phenom-films/dayu_widgets/commits?author=FXTD-ODYSSEY" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/muyr"><img src="https://avatars.githubusercontent.com/u/1860334?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yanru Mu</b></sub></a><br /><a href="https://github.com/muyr/dayu_widgets3/commits?q=author%3Yanru Mu" itle="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/loonghao"><img src="https://avatars1.githubusercontent.com/u/13111745?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Hal</b></sub></a><br /><a href="https://github.com/muyr/dayu_widgets3/commits?author=loonghao" title="Code">💻</a></td>
   </tr>
 </table>
 

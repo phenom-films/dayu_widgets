@@ -1,32 +1,129 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 from functools import partial
+import os
 import re
 
 # Import third-party modules
-from Qt import QtCompat
-from Qt import QtCore
-from Qt import QtGui
-from Qt import QtWidgets
-import six
+from qtpy import QtCore
+from qtpy import QtGui
+from qtpy import QtWidgets
 
 # Import local modules
-from dayu_widgets.line_edit import MLineEdit
 from dayu_widgets.mixin import property_mixin
 from dayu_widgets.popup import MPopup
+from dayu_widgets.line_edit import MLineEdit
 import dayu_widgets.utils as utils
+
+
+PYSIDE6 = os.environ.get("QT_API") == "pyside6"
+
+
+class CompatStyle(QtWidgets.QProxyStyle):
+    """PySide2 PySide6"""
+
+    def __init__(self, style=None):
+        super(CompatStyle, self).__init__(style)
+        self.style = style
+
+    @property
+    def State_None(self):
+        if PYSIDE6:
+            return QtWidgets.QStyle.State()
+        return QtWidgets.QStyle.State_None
+
+    @property
+    def State_Active(self):
+        if PYSIDE6:
+            return QtWidgets.QStyle.State.State_Active
+        return QtWidgets.QStyle.State_Active
+
+    @property
+    def State_Enabled(self):
+        if PYSIDE6:
+            return QtWidgets.QStyle.State.State_Enabled
+        return QtWidgets.QStyle.State_Enabled
+
+    @property
+    def State_DownArrow(self):
+        if PYSIDE6:
+            return QtWidgets.QStyle.State.State_DownArrow
+        return QtWidgets.QStyle.State_DownArrow
+
+    @property
+    def State_UpArrow(self):
+        if PYSIDE6:
+            return QtWidgets.QStyle.State.State_UpArrow
+        return QtWidgets.QStyle.State_UpArrow
+
+    @property
+    def PE_PanelMenu(self):
+        if PYSIDE6:
+            # 在PySide6中使用PE_PanelButtonCommand替代PE_Frame
+            # PE_PanelButtonCommand通常会填充背景
+            return QtWidgets.QStyle.PE_PanelButtonCommand
+        return QtWidgets.QStyle.PE_PanelMenu
+
+    @property
+    def PE_FrameMenu(self):
+        if PYSIDE6:
+            return QtWidgets.QStyle.PE_Frame
+        return QtWidgets.QStyle.PE_FrameMenu
+
+    @property
+    def CE_MenuEmptyArea(self):
+        if PYSIDE6:
+            return QtWidgets.QStyle.CE_ShapedFrame
+        return QtWidgets.QStyle.CE_MenuEmptyArea
+
+    @property
+    def CE_MenuItem(self):
+        return QtWidgets.QStyle.CE_MenuItem
+
+    @property
+    def CE_MenuScroller(self):
+        return QtWidgets.QStyle.CE_MenuScroller
+
+    @property
+    def PM_MenuPanelWidth(self):
+        return QtWidgets.QStyle.PM_MenuPanelWidth
+
+    @property
+    def PM_MenuHMargin(self):
+        return QtWidgets.QStyle.PM_MenuHMargin
+
+    @property
+    def PM_MenuVMargin(self):
+        return QtWidgets.QStyle.PM_MenuVMargin
+
+    @property
+    def MenuItemType_EmptyArea(self):
+        if PYSIDE6:
+            return QtWidgets.QStyleOptionMenuItem.MenuItemType.EmptyArea
+        return QtWidgets.QStyleOptionMenuItem.EmptyArea
+
+    @property
+    def CheckType_NotCheckable(self):
+        if PYSIDE6:
+            return QtWidgets.QStyleOptionMenuItem.CheckType.NotCheckable
+        return QtWidgets.QStyleOptionMenuItem.NotCheckable
+
+    @property
+    def MenuItemType_Scroller(self):
+        if PYSIDE6:
+            return QtWidgets.QStyleOptionMenuItem.MenuItemType.Scroller
+        return QtWidgets.QStyleOptionMenuItem.Scroller
+
+    def combine_states(self, *states):
+        if PYSIDE6:
+            result = QtWidgets.QStyle.State()
+            for state in states:
+                result |= state
+            return result
+        else:
+            result = 0
+            for state in states:
+                result |= state
+            return result
 
 
 @property_mixin
@@ -43,8 +140,11 @@ class ScrollableMenuBase(QtWidgets.QMenu):
         super(ScrollableMenuBase, self).__init__(*args, **kwargs)
         self._maximumHeight = self.maximumHeight()
         self._actionRects = []
+        self._compat_style = CompatStyle(self.style())
 
-        self.scrollTimer = QtCore.QTimer(self, interval=50, singleShot=True, timeout=self.checkScroll)
+        self.scrollTimer = QtCore.QTimer(parent=self, interval=50, singleShot=True)
+        self.scrollTimer.timeout.connect(self.checkScroll)
+
         self.scrollTimer.setProperty("defaultInterval", 50)
         self.delayTimer = QtCore.QTimer(self, interval=100, singleShot=True)
 
@@ -82,22 +182,30 @@ class ScrollableMenuBase(QtWidgets.QMenu):
         qfm = opt.fontMetrics
         size.setWidth(fm.boundingRect(QtCore.QRect(), QtCore.Qt.TextSingleLine, a.text()).width())
         size.setHeight(max(fm.height(), qfm.height()))
-        self.defaultItemHeight = style.sizeFromContents(style.CT_MenuItem, opt, size, self).height()
+        self.defaultItemHeight = style.sizeFromContents(QtWidgets.QStyle.CT_MenuItem, opt, size, self).height()
 
         if not count:
             self.setMaximumHeight(self._maximumHeight)
         else:
-            fw = style.pixelMetric(style.PM_MenuPanelWidth, None, self)
-            vmargin = style.pixelMetric(style.PM_MenuHMargin, opt, self)
+            pm_menu_panel_width = self._compat_style.PM_MenuPanelWidth
+            fw = style.pixelMetric(pm_menu_panel_width, None, self)
+            vmargin = style.pixelMetric(self._compat_style.PM_MenuVMargin, opt, self)
             scrollHeight = self.scrollHeight(style)
-            self.setMaximumHeight(self.defaultItemHeight * count + (fw + vmargin + scrollHeight) * 2)
+            max_height = (
+                self.defaultItemHeight * count +
+                (fw + vmargin + scrollHeight) * 2
+            )
+            self.setMaximumHeight(max_height)
         self.dirty = True
 
     def scrollHeight(self, style):
-        return style.pixelMetric(style.PM_MenuScrollerHeight, None, self) * 2
+        height = style.pixelMetric(QtWidgets.QStyle.PixelMetric.PM_MenuScrollerHeight, None, self)
+        return height * 2
 
     def isScrollable(self):
-        return self.property("scrollable") and self.height() < super(ScrollableMenuBase, self).sizeHint().height()
+        is_scrollable = self.property("scrollable")
+        size_hint = super(ScrollableMenuBase, self).sizeHint()
+        return is_scrollable and self.height() < size_hint.height()
 
     def checkScroll(self):
         pos = self.mapFromGlobal(QtGui.QCursor.pos())
@@ -119,11 +227,12 @@ class ScrollableMenuBase(QtWidgets.QMenu):
 
     def ensureVisible(self, action):
         style = self.style()
-        fw = style.pixelMetric(style.PM_MenuPanelWidth, None, self)
-        hmargin = style.pixelMetric(style.PM_MenuHMargin, None, self)
-        vmargin = style.pixelMetric(style.PM_MenuVMargin, None, self)
+        pm_menu_panel_width = self._compat_style.PM_MenuPanelWidth
+        fw = style.pixelMetric(pm_menu_panel_width, None, self)
+        h_margin = style.pixelMetric(self._compat_style.PM_MenuHMargin, None, self)
+        v_margin = style.pixelMetric(self._compat_style.PM_MenuVMargin, None, self)
         scrollHeight = self.scrollHeight(style)
-        extent = fw + hmargin + vmargin + scrollHeight
+        extent = fw + h_margin + v_margin + scrollHeight
         r = self.rect().adjusted(0, extent, 0, -extent)
         geo = self.translatedActionGeometry(action)
         if geo.top() < r.top():
@@ -170,7 +279,7 @@ class ScrollableMenuBase(QtWidgets.QMenu):
         return hint
 
     def eventFilter(self, source, event):
-        if event.type() == event.Show:
+        if event.type() == QtCore.QEvent.Show:
             if self.isScrollable() and self.deltaY:
                 action = source.menuAction()
                 self.ensureVisible(action)
@@ -244,7 +353,7 @@ class ScrollableMenuBase(QtWidgets.QMenu):
                 action = None
 
         self.setActiveAction(action)
-        if action and QtCompat.isValid(action) and not action.isSeparator():
+        if action and not action.isSeparator():
 
             def ensureVisible():
                 self.delayTimer.timeout.disconnect()
@@ -294,23 +403,28 @@ class ScrollableMenuBase(QtWidgets.QMenu):
     def resizeEvent(self, event):
         super(ScrollableMenuBase, self).resizeEvent(event)
 
-        style = self.style()
-        l, t, r, b = self.getContentsMargins()
-        fw = style.pixelMetric(style.PM_MenuPanelWidth, None, self)
-        hmargin = style.pixelMetric(style.PM_MenuHMargin, None, self)
-        vmargin = style.pixelMetric(style.PM_MenuVMargin, None, self)
-        leftMargin = fw + hmargin + l
-        topMargin = fw + vmargin + t
-        bottomMargin = fw + vmargin + b
-        contentWidth = self.width() - (fw + hmargin) * 2 - l - r
+        margins = self.contentsMargins()
+        l, t, r, b = margins.left(), margins.top(), margins.right(), margins.bottom()
 
-        scrollHeight = self.scrollHeight(style)
-        self.scrollUpRect = QtCore.QRect(leftMargin, topMargin, contentWidth, scrollHeight)
+        style = self.style()
+        pm_menu_panel_width = self._compat_style.PM_MenuPanelWidth
+        pm_menu_v_margin = self._compat_style.PM_MenuVMargin
+        fw = style.pixelMetric(pm_menu_panel_width, None, self)
+        h_margin = style.pixelMetric(self._compat_style.PM_MenuHMargin, None, self)
+        v_margin = style.pixelMetric(pm_menu_v_margin, None, self)
+
+        left_margin = fw + h_margin + l
+        top_margin = fw + v_margin + t
+        bottom_margin = fw + v_margin + b
+        content_width = self.width() - (fw + v_margin) * 2 - l - r
+        scroll_height = self.scrollHeight(style)
+
+        self.scrollUpRect = QtCore.QRect(left_margin, top_margin, content_width, scroll_height)
         self.scrollDownRect = QtCore.QRect(
-            leftMargin,
-            self.height() - scrollHeight - bottomMargin,
-            contentWidth,
-            scrollHeight,
+            left_margin,
+            self.height() - scroll_height - bottom_margin,
+            content_width,
+            scroll_height,
         )
 
     def paintEvent(self, event):
@@ -325,12 +439,12 @@ class ScrollableMenuBase(QtWidgets.QMenu):
 
         menuOpt = QtWidgets.QStyleOptionMenuItem()
         menuOpt.initFrom(self)
-        menuOpt.state = style.State_None
+        menuOpt.state = self._compat_style.State_None
         menuOpt.maxIconWidth = 0
         menuOpt.tabWidth = 0
-        style.drawPrimitive(style.PE_PanelMenu, menuOpt, qp, self)
+        style.drawPrimitive(self._compat_style.PE_PanelMenu, menuOpt, qp, self)
 
-        fw = style.pixelMetric(style.PM_MenuPanelWidth, None, self)
+        fw = style.pixelMetric(self._compat_style.PM_MenuPanelWidth, None, self)
         topEdge = self.scrollUpRect.bottom()
         bottomEdge = self.scrollDownRect.top()
         offset = self.offset()
@@ -356,7 +470,7 @@ class ScrollableMenuBase(QtWidgets.QMenu):
             opt = QtWidgets.QStyleOptionMenuItem()
             self.initStyleOption(opt, action)
             opt.rect = actionRect.translated(0, offset)
-            style.drawControl(style.CE_MenuItem, opt, qp, self)
+            style.drawControl(self._compat_style.CE_MenuItem, opt, qp, self)
         qp.restore()
 
         cursor = self.mapFromGlobal(QtGui.QCursor.pos())
@@ -368,25 +482,25 @@ class ScrollableMenuBase(QtWidgets.QMenu):
 
             scrollOpt = QtWidgets.QStyleOptionMenuItem()
             scrollOpt.initFrom(self)
-            scrollOpt.state = style.State_None
-            scrollOpt.state |= style.State_DownArrow if isDown else style.State_UpArrow
-            scrollOpt.checkType = scrollOpt.NotCheckable
+            scrollOpt.state = self._compat_style.State_None
+            scrollOpt.state |= self._compat_style.State_DownArrow if isDown else self._compat_style.State_UpArrow
+            scrollOpt.checkType = self._compat_style.CheckType_NotCheckable
             scrollOpt.maxIconWidth = scrollOpt.tabWidth = 0
             scrollOpt.rect = scrollRect
-            scrollOpt.menuItemType = scrollOpt.Scroller
+            scrollOpt.menuItemType = self._compat_style.MenuItemType_Scroller
             if enabled:
-                if scrollRect.contains(cursor):
-                    frame = QtWidgets.QStyleOptionMenuItem()
-                    frame.initFrom(self)
-                    frame.rect = scrollRect
-                    frame.state |= style.State_Selected | style.State_Enabled
-                    style.drawControl(style.CE_MenuItem, frame, qp, self)
+                frame = QtWidgets.QStyleOptionMenuItem()
+                frame.initFrom(self)
+                frame.rect = scrollRect
+                frame.state = self._compat_style.combine_states(self._compat_style.State_Active,
+                                                                self._compat_style.State_Enabled)
+                style.drawControl(self._compat_style.CE_MenuItem, frame, qp, self)
 
-                scrollOpt.state |= style.State_Enabled
+                scrollOpt.state = self._compat_style.combine_states(scrollOpt.state, self._compat_style.State_Enabled)
                 scrollOpt.palette.setCurrentColorGroup(QtGui.QPalette.Active)
             else:
                 scrollOpt.palette.setCurrentColorGroup(QtGui.QPalette.Disabled)
-            style.drawControl(style.CE_MenuScroller, scrollOpt, qp, self)
+            style.drawControl(self._compat_style.CE_MenuScroller, scrollOpt, qp, self)
 
         if fw:
             borderReg = QtGui.QRegion()
@@ -399,17 +513,20 @@ class ScrollableMenuBase(QtWidgets.QMenu):
             frame = QtWidgets.QStyleOptionFrame()
             frame.rect = rect
             frame.palette = self.palette()
-            frame.state = QtWidgets.QStyle.State_None
-            frame.lineWidth = style.pixelMetric(style.PM_MenuPanelWidth)
+            frame.state = self._compat_style.combine_states(self._compat_style.State_None,
+                                                            self._compat_style.State_Active,
+                                                            self._compat_style.State_Enabled)
+            frame.lineWidth = style.pixelMetric(self._compat_style.PM_MenuPanelWidth, None, self)
             frame.midLineWidth = 0
-            style.drawPrimitive(style.PE_FrameMenu, frame, qp, self)
+            style.drawPrimitive(self._compat_style.PE_FrameMenu, frame, qp, self)
 
         qp.setClipRegion(emptyArea)
-        menuOpt.state = style.State_None
-        menuOpt.menuItemType = menuOpt.EmptyArea
-        menuOpt.checkType = menuOpt.NotCheckable
+        menuOpt.state = self._compat_style.combine_states(self._compat_style.State_None,
+                                                          self._compat_style.State_Enabled)
+        menuOpt.menuItemType = self._compat_style.MenuItemType_EmptyArea
+        menuOpt.checkType = self._compat_style.CheckType_NotCheckable
         menuOpt.rect = menuOpt.menuRect = rect
-        style.drawControl(style.CE_MenuEmptyArea, menuOpt, qp, self)
+        style.drawControl(self._compat_style.CE_MenuEmptyArea, menuOpt, qp, self)
 
 
 @property_mixin
@@ -422,7 +539,9 @@ class SearchableMenuBase(ScrollableMenuBase):
         self.search_label = QtWidgets.QLabel()
 
         self.search_bar.textChanged.connect(self.slot_search_change)
-        self.search_bar.keyPressEvent = partial(self.search_key_event, self.search_bar.keyPressEvent)
+        search_key_event_partial = partial(self.search_key_event,
+                                           self.search_bar.keyPressEvent)
+        self.search_bar.keyPressEvent = search_key_event_partial
         self.aboutToHide.connect(lambda: self.search_bar.setText(""))
 
         layout = QtWidgets.QVBoxLayout()
@@ -440,10 +559,10 @@ class SearchableMenuBase(ScrollableMenuBase):
         key = event.key()
         # NOTES: support menu original key event on search bar
         if key in (
-            QtCore.Qt.Key_Up,
-            QtCore.Qt.Key_Down,
-            QtCore.Qt.Key_Return,
-            QtCore.Qt.Key_Enter,
+                QtCore.Qt.Key_Up,
+                QtCore.Qt.Key_Down,
+                QtCore.Qt.Key_Return,
+                QtCore.Qt.Key_Enter,
         ):
             super(SearchableMenuBase, self).keyPressEvent(event)
         elif key == QtCore.Qt.Key_Tab:
@@ -457,7 +576,7 @@ class SearchableMenuBase(ScrollableMenuBase):
         self.search_bar.setPlaceholderText(value)
 
     def _set_search_re(self, value):
-        if not isinstance(value, six.text_type):
+        if not isinstance(value, str):
             raise TypeError("`search_re` property should be a string type")
 
     def slot_search_change(self, text):
@@ -532,11 +651,11 @@ class MMenu(SearchableMenuBase):
         self.set_data(data_list)
 
     def set_value(self, data):
-        assert isinstance(data, (list, six.string_types, six.integer_types, float))
+        assert isinstance(data, (list, str, int, float))
         # if isinstance(data, int):
         #     action = self._action_group.actions()[data]
         #     data = action.property('value')
-        if self.property("cascader") and isinstance(data, six.string_types):
+        if self.property("cascader") and isinstance(data, str):
             data = data.split(self.property("separator"))
         self.setProperty("value", data)
 
@@ -544,46 +663,35 @@ class MMenu(SearchableMenuBase):
         data_list = value if isinstance(value, list) else [value]
         flag = False
         for act in self._action_group.actions():
-            if act.property("long_path"):
-                # Ensure all values is string type.
-                selected = "/".join(map(str, data_list))
-                checked = act.property("long_path") == selected
-            else:
-                checked = act.property("value") in data_list
+            checked = act.property("value") in data_list
             if act.isChecked() != checked:  # 更新来自代码
                 act.setChecked(checked)
                 flag = True
         if flag:
             self.sig_value_changed.emit(value)
 
-    def _add_menu(self, parent_menu, data_dict, long_path=None):
+    def _add_menu(self, parent_menu, data_dict):
         if "children" in data_dict:
             menu = MMenu(title=data_dict.get("label"), parent=self)
             menu.setProperty("value", data_dict.get("value"))
             parent_menu.addMenu(menu)
-            if not (parent_menu is self):
+            if parent_menu is not self:
                 # 用来将来获取父层级数据
                 menu.setProperty("parent_menu", parent_menu)
             for i in data_dict.get("children"):
-                long_path = long_path or data_dict.get("label")
-                assemble_long_path = "{root}/{label}".format(root=long_path, label=i.get("label"))
-                if assemble_long_path:
-                    self._add_menu(menu, i, assemble_long_path)
-                else:
-                    self._add_menu(menu, i)
+                self._add_menu(menu, i)
         else:
             action = self._action_group.addAction(utils.display_formatter(data_dict.get("label")))
             action.setProperty("value", data_dict.get("value"))
             action.setCheckable(True)
             # 用来将来获取父层级数据
-            action.setProperty("long_path", long_path)
             action.setProperty("parent_menu", parent_menu)
             parent_menu.addAction(action)
 
     def set_data(self, option_list):
         assert isinstance(option_list, list)
         if option_list:
-            if all(isinstance(i, six.string_types) for i in option_list):
+            if all(isinstance(i, str) for i in option_list):
                 option_list = utils.from_list_to_nested_dict(option_list, sep=self.property("separator"))
             if all(isinstance(i, (int, float)) for i in option_list):
                 option_list = [{"value": i, "label": str(i)} for i in option_list]

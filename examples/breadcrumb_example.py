@@ -1,21 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
 # Import third-party modules
-from Qt import QtWidgets
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets.breadcrumb import MBreadcrumb
@@ -34,23 +21,17 @@ class BreadcrumbExample(QtWidgets.QWidget, MFieldMixin):
         MMessage.config(duration=1)
         entity_list = [
             {
-                "clicked": functools.partial(
-                    self.slot_show_message, MMessage.info, 'Go to "Home Page"'
-                ),
+                "clicked": functools.partial(self.slot_show_message, MMessage.info, 'Go to "Home Page"'),
                 "svg": "home_line.svg",
             },
             {
                 "text": "pl",
-                "clicked": functools.partial(
-                    self.slot_show_message, MMessage.info, 'Go to "pl"'
-                ),
+                "clicked": functools.partial(self.slot_show_message, MMessage.info, 'Go to "pl"'),
                 "svg": "user_line.svg",
             },
             {
                 "text": "pl_0010",
-                "clicked": functools.partial(
-                    self.slot_show_message, MMessage.info, 'Go to "pl_0010"'
-                ),
+                "clicked": functools.partial(self.slot_show_message, MMessage.info, 'Go to "pl_0010"'),
             },
         ]
         no_icon_eg = MBreadcrumb()

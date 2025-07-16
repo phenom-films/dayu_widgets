@@ -1,22 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.4
-# Email : muyanru345@163.com
-###################################################################
 """
 MLoading
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtGui
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtGui
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -109,9 +98,10 @@ class MLoadingWrapper(QtWidgets.QWidget):
         self._widget = widget
         self._mask_widget = QtWidgets.QFrame()
         self._mask_widget.setObjectName("mask")
-        self._mask_widget.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        policy = QtWidgets.QSizePolicy.Expanding
+        self._mask_widget.setSizePolicy(policy, policy)
         self._loading_widget = MLoading()
-        self._loading_widget.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self._loading_widget.setSizePolicy(policy, policy)
 
         self._main_lay = QtWidgets.QGridLayout()
         self._main_lay.setContentsMargins(0, 0, 0, 0)

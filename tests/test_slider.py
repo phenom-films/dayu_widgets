@@ -1,14 +1,10 @@
 """Test MSlider class"""
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
 import pytest
+from qtpy import QtCore
 
 # Import local modules
-from Qt import QtCore
 from dayu_widgets.slider import MSlider
 
 

@@ -1,21 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
 # Import third-party modules
-from Qt import QtWidgets
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets.alert import MAlert
@@ -56,21 +43,15 @@ class AlertExample(QtWidgets.QWidget, MFieldMixin):
             [
                 {
                     "text": "error",
-                    "clicked": functools.partial(
-                        self.slot_change_alert, "password is wrong", MAlert.ErrorType
-                    ),
+                    "clicked": functools.partial(self.slot_change_alert, "password is wrong", MAlert.ErrorType),
                 },
                 {
                     "text": "success",
-                    "clicked": functools.partial(
-                        self.slot_change_alert, "login success", MAlert.SuccessType
-                    ),
+                    "clicked": functools.partial(self.slot_change_alert, "login success", MAlert.SuccessType),
                 },
                 {
                     "text": "no more error",
-                    "clicked": functools.partial(
-                        self.slot_change_alert, "", MAlert.InfoType
-                    ),
+                    "clicked": functools.partial(self.slot_change_alert, "", MAlert.InfoType),
                 },
             ]
         )

@@ -1,20 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
-
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets.button_group import MCheckBoxGroup
@@ -51,20 +37,14 @@ class CheckBoxGroupExample(QtWidgets.QWidget, MFieldMixin):
 
         label = MLabel()
         self.register_field("checked_app", ["北京", "郑州"])
-        self.register_field(
-            "checked_app_text", lambda: " & ".join(self.field("checked_app"))
-        )
-        self.bind(
-            "checked_app", radio_group_b, "dayu_checked", signal="sig_checked_changed"
-        )
+        self.register_field("checked_app_text", lambda: " & ".join(self.field("checked_app")))
+        self.bind("checked_app", radio_group_b, "dayu_checked", signal="sig_checked_changed")
         self.bind("checked_app_text", label, "text")
 
         radio_group_tri = MCheckBoxGroup()
         radio_group_tri.set_button_list(self.app_data)
         self.register_field("check_grp", ["Maya"])
-        self.bind(
-            "check_grp", radio_group_tri, "dayu_checked", signal="sig_checked_changed"
-        )
+        self.bind("check_grp", radio_group_tri, "dayu_checked", signal="sig_checked_changed")
 
         main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("Orientation Qt.Horizontal"))
