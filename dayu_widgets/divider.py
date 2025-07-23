@@ -1,22 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
 """
 MDivider
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
-import six
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets.label import MLabel
@@ -27,7 +15,7 @@ class MDivider(QtWidgets.QWidget):
     A divider line separates different content.
 
     Property:
-        dayu_text: six.string_types
+        dayu_text: str
     """
 
     _alignment_map = {
@@ -67,8 +55,10 @@ class MDivider(QtWidgets.QWidget):
             self._left_frame.setFrameShape(QtWidgets.QFrame.VLine)
             self._left_frame.setFrameShadow(QtWidgets.QFrame.Plain)
             self.setFixedWidth(2)
-        self._main_lay.setStretchFactor(self._left_frame, self._alignment_map.get(alignment, 50))
-        self._main_lay.setStretchFactor(self._right_frame, 100 - self._alignment_map.get(alignment, 50))
+        left_stretch = self._alignment_map.get(alignment, 50)
+        right_stretch = 100 - left_stretch
+        self._main_lay.setStretchFactor(self._left_frame, left_stretch)
+        self._main_lay.setStretchFactor(self._right_frame, right_stretch)
         self._text = None
         self.set_dayu_text(text)
 
@@ -77,7 +67,7 @@ class MDivider(QtWidgets.QWidget):
         Set the divider's text.
         When text is empty, hide the text_label and right_frame to ensure the divider not has a gap.
 
-        :param value: six.string_types
+        :param value: str
         :return: None
         """
         self._text = value
@@ -89,11 +79,11 @@ class MDivider(QtWidgets.QWidget):
     def get_dayu_text(self):
         """
         Get current text
-        :return: six.string_types
+        :return: str
         """
         return self._text
 
-    dayu_text = QtCore.Property(six.string_types[0], get_dayu_text, set_dayu_text)
+    dayu_text = QtCore.Property(str, get_dayu_text, set_dayu_text)
 
     @classmethod
     def left(cls, text=""):

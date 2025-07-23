@@ -1,25 +1,13 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
 """
 MAlert class.
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import built-in modules
 import functools
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
-import six
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -54,8 +42,10 @@ class MAlert(QtWidgets.QWidget):
         self._content_label = MLabel().secondary()
         self._close_button = MToolButton().svg("close_line.svg").tiny().icon_only()
         self._close_button.clicked.connect(functools.partial(self.setVisible, False))
+
         scale_x, _ = get_scale_factor()
         margin = 8 * scale_x
+
         self._main_lay = QtWidgets.QHBoxLayout()
         self._main_lay.setContentsMargins(margin, margin, margin, margin)
         self._main_lay.addWidget(self._icon_label)
@@ -64,9 +54,9 @@ class MAlert(QtWidgets.QWidget):
         self._main_lay.addWidget(self._close_button)
 
         self.setLayout(self._main_lay)
-
         self.set_show_icon(True)
         self.set_closable(False)
+
         self._dayu_type = None
         self._dayu_text = None
         self.set_dayu_type(MAlert.InfoType)
@@ -86,10 +76,12 @@ class MAlert(QtWidgets.QWidget):
 
     def set_dayu_text(self, value):
         """Set the feedback content."""
-        if isinstance(value, six.string_types):
+
+        if isinstance(value, str):
             self._dayu_text = value
         else:
-            raise TypeError("Input argument 'value' should be string type, " "but get {}".format(type(value)))
+            msg = "Input argument 'value' should be string type, but get {}"
+            raise TypeError(msg.format(type(value)))
         self._set_dayu_text()
 
     def _set_dayu_type(self):
@@ -103,15 +95,17 @@ class MAlert(QtWidgets.QWidget):
 
     def set_dayu_type(self, value):
         """Set feedback type."""
-        if value in [
+        valid_types = [
             MAlert.InfoType,
             MAlert.SuccessType,
             MAlert.WarningType,
             MAlert.ErrorType,
-        ]:
+        ]
+        if value in valid_types:
             self._dayu_type = value
         else:
-            raise ValueError("Input argument 'value' should be one of " "info/success/warning/error string.")
+            msg = "Input argument 'value' should be one of info/success/warning/error string."
+            raise ValueError(msg)
         self._set_dayu_type()
 
     def get_dayu_type(self):
@@ -124,11 +118,11 @@ class MAlert(QtWidgets.QWidget):
     def get_dayu_text(self):
         """
         Get MAlert feedback message.
-        :return: six.string_types
+        :return: str
         """
         return self._dayu_text
 
-    dayu_text = QtCore.Property(six.text_type, get_dayu_text, set_dayu_text)
+    dayu_text = QtCore.Property(str, get_dayu_text, set_dayu_text)
     dayu_type = QtCore.Property(str, get_dayu_type, set_dayu_type)
 
     def info(self):

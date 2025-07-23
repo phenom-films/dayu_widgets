@@ -1,22 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
-# Import built-in modules
-import re
-
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -40,7 +24,8 @@ class MLabel(QtWidgets.QLabel):
 
     def __init__(self, text="", parent=None, flags=QtCore.Qt.Widget):
         super(MLabel, self).__init__(text, parent, flags)
-        self.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction | QtCore.Qt.LinksAccessibleByMouse)
+        flags = QtCore.Qt.TextBrowserInteraction | QtCore.Qt.LinksAccessibleByMouse
+        self.setTextInteractionFlags(flags)
         self.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         self._dayu_type = ""
         self._dayu_underline = False
@@ -135,7 +120,7 @@ class MLabel(QtWidgets.QLabel):
 
         :returns:   The original unmodified text
         """
-        return self.property("dayu_text")
+        return self.property("text")
 
     def setText(self, text):
         """
@@ -143,7 +128,7 @@ class MLabel(QtWidgets.QLabel):
 
         :param text:    The text to set on the label
         """
-        self.setProperty("dayu_text", text)
+        self.setProperty("text", text)
         self._update_elided_text()
         self.setToolTip(text)
 
@@ -155,7 +140,10 @@ class MLabel(QtWidgets.QLabel):
         """
         # 这里富文本的超链接必须使用 html 的样式，使用 qss 不起作用
         link_style = dayu_theme.hyperlink_style
-        self.setText('{style}<a href="{href}">{text}</a>'.format(style=link_style, href=href, text=text or href))
+        text_content = text or href
+        self.setText(
+            f'{link_style}<a href="{href}">{text_content}</a>'
+        )
         self.setOpenExternalLinks(True)
 
     def _update_elided_text(self):
@@ -163,18 +151,10 @@ class MLabel(QtWidgets.QLabel):
         Update the elided text on the label
         """
         _font_metrics = self.fontMetrics()
-        text = self.property("dayu_text")
+        text = self.property("text")
         text = text if text else ""
-        # 检查文本是否包含 HTML 标签
-        is_html = bool(re.search(r"<[^>]+>", text))
-
-        if is_html:
-            # 如果文本包含 HTML 标签，直接设置富文本
-            super(MLabel, self).setText(text)
-        else:
-            # 否则，使用省略模式设置文本
-            _elided_text = _font_metrics.elidedText(text, self._elide_mode, self.width() - 2 * 2)
-            super(MLabel, self).setText(_elided_text)
+        _elided_text = _font_metrics.elidedText(text, self._elide_mode, self.width() - 2 * 2)
+        super(MLabel, self).setText(_elided_text)
 
     def resizeEvent(self, event):
         """
@@ -245,6 +225,10 @@ class MLabel(QtWidgets.QLabel):
         return self
 
     def event(self, event):
-        if event.type() == QtCore.QEvent.DynamicPropertyChange and event.propertyName() == "dayu_text":
+        is_text_change = (
+            event.type() == QtCore.QEvent.DynamicPropertyChange and
+            event.propertyName() == "dayu_text"
+        )
+        if is_text_change:
             self.setText(self.property("dayu_text"))
         return super(MLabel, self).event(event)

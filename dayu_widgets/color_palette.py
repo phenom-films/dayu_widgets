@@ -1,23 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtGui
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtGui
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets.divider import MDivider
@@ -48,9 +35,10 @@ class MColorChart(QtWidgets.QWidget):
             target = color_list[index]
             button.setText("color-{}\t{}".format(index + 1, target))
             button.setProperty("color", target)
+            text_color = "#000" if index < 5 else "#fff"
             button.setStyleSheet(
                 "QPushButton{{background-color:{};color:{};border: 0 solid black}}"
-                "QPushButton:hover{{font-weight:bold;}}".format(target, "#000" if index < 5 else "#fff")
+                "QPushButton:hover{{font-weight:bold;}}".format(target, text_color)
             )
 
     def slot_copy_color(self, button):
@@ -110,7 +98,11 @@ class MColorPaletteDialog(QtWidgets.QDialog):
             "background-color:{};".format(self.primary_color.name())
         )
         self.color_label.setText(self.primary_color.name())
-        self.color_chart.set_colors([utils.generate_color(self.primary_color, index + 1) for index in range(10)])
+        colors = [
+            utils.generate_color(self.primary_color, index + 1)
+            for index in range(10)
+        ]
+        self.color_chart.set_colors(colors)
 
 
 if __name__ == "__main__":

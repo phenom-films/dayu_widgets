@@ -1,20 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2018.5
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+# Import built-in modules
+import re
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtGui
-import six
+from qtpy import QtCore
+from qtpy import QtGui
 
 # Import local modules
 from dayu_widgets.utils import apply_formatter
@@ -217,7 +206,11 @@ class MTableModel(QtCore.QAbstractItemModel):
                 # 如果header中没有配置该role，而且也不是 DisplayRole/EditRole，直接返回None
                 return None
             else:
-                value = apply_formatter(formatter_from_config, get_obj_value(data_obj, attr), data_obj)
+                value = apply_formatter(
+                    formatter_from_config,
+                    get_obj_value(data_obj, attr),
+                    data_obj
+                )
             formatter_from_model = SETTING_MAP[role].get("formatter", None)  # role 配置的转换函数
             result = apply_formatter(formatter_from_model, value)
             return result
@@ -241,7 +234,7 @@ class MTableModel(QtCore.QAbstractItemModel):
                 # 更新它的children
                 for row, sub_obj in enumerate(get_obj_value(data_obj, "children", [])):
                     set_obj_value(sub_obj, key, value)
-                    sub_index = index.child(row, index.column())
+                    sub_index = self.index(row, index.column(), index)
                     self.dataChanged.emit(sub_index, sub_index)
 
                 # 更新它的parent
@@ -250,7 +243,9 @@ class MTableModel(QtCore.QAbstractItemModel):
                     parent_obj = parent_index.internalPointer()
                     new_parent_value = value
                     old_parent_value = get_obj_value(parent_obj, key)
-                    for sibling_obj in get_obj_value(get_obj_value(data_obj, "_parent"), "children", []):
+                    parent = get_obj_value(data_obj, "_parent")
+                    parent_children = get_obj_value(parent, "children", [])
+                    for sibling_obj in parent_children:
                         if value != get_obj_value(sibling_obj, key):
                             new_parent_value = 1
                             break
@@ -275,26 +270,23 @@ class MSortFilterModel(QtCore.QSortFilterProxyModel):
         if hasattr(self, "setRecursiveFilteringEnabled"):
             self.setRecursiveFilteringEnabled(True)
         self.header_list = []
-        self.search_reg = QtCore.QRegExp()
-        self.search_reg.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
-        self.search_reg.setPatternSyntax(QtCore.QRegExp.Wildcard)
+        self.search_reg = None
+        # self.search_reg.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
+        # self.search_reg.setPatternSyntax(QtCore.QRegExp.Wildcard)
 
     def set_header_list(self, header_list):
         self.header_list = header_list
         for head in self.header_list:
-            reg_exp = QtCore.QRegExp()
-            reg_exp.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
-            reg_exp.setPatternSyntax(QtCore.QRegExp.RegExp)
-            head.update({"reg": reg_exp})
+            head.update({"reg": None})
 
     def filterAcceptsRow(self, source_row, source_parent):
         # 如果search 栏有内容 先匹配 search 栏的内容
-        if self.search_reg.pattern():
+        if self.search_reg:
             for index, data_dict in enumerate(self.header_list):
                 if data_dict.get("searchable", False):
                     model_index = self.sourceModel().index(source_row, index, source_parent)
                     value = self.sourceModel().data(model_index)
-                    if self.search_reg.indexIn(six.text_type(value)) != -1:
+                    if value is not None and self.search_reg.search(str(value)) is not None:
                         # 搜索匹配上了
                         break
             else:
@@ -306,19 +298,25 @@ class MSortFilterModel(QtCore.QSortFilterProxyModel):
             model_index = self.sourceModel().index(source_row, index, source_parent)
             value = self.sourceModel().data(model_index)
             reg_exp = data_dict.get("reg", None)
-            if reg_exp and reg_exp.pattern() and (not reg_exp.exactMatch(value)):
+            if reg_exp and value is not None and not reg_exp.search(str(value)):
                 # 不符合筛选，直接返回 False
                 return False
 
         return True
 
     def set_search_pattern(self, pattern):
-        self.search_reg.setPattern(pattern)
+        if pattern:
+            self.search_reg = re.compile(pattern, re.IGNORECASE)
+        else:
+            self.search_reg = None
         self.invalidateFilter()
 
     def set_filter_attr_pattern(self, attr, pattern):
         for data_dict in self.header_list:
             if data_dict.get("key") == attr:
-                data_dict.get("reg").setPattern(pattern)
+                if pattern:
+                    data_dict["reg"] = re.compile(pattern, re.IGNORECASE)
+                else:
+                    data_dict["reg"] = None
                 break
         self.invalidateFilter()

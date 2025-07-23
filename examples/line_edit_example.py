@@ -1,22 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets.combo_box import MComboBox
@@ -48,9 +35,7 @@ class LineEditExample(QtWidgets.QWidget):
         size_lay.addWidget(line_edit_s)
 
         line_edit_tool_button = MLineEdit(text="MToolButton")
-        line_edit_tool_button.set_prefix_widget(
-            MToolButton().svg("user_line.svg").icon_only()
-        )
+        line_edit_tool_button.set_prefix_widget(MToolButton().svg("user_line.svg").icon_only())
 
         line_edit_label = MLineEdit(text="MLabel")
         tool_button = MLabel(text="User").mark().secondary()
@@ -80,9 +65,7 @@ class LineEditExample(QtWidgets.QWidget):
         delay_display_label = MLabel()
         delay_button = MPushButton("Click to Edit Text")
         delay_line_editor.sig_delay_text_changed.connect(delay_display_label.setText)
-        delay_button.clicked.connect(
-            functools.partial(delay_line_editor.setText, "Edited from code")
-        )
+        delay_button.clicked.connect(functools.partial(delay_line_editor.setText, "Edited from code"))
 
         main_lay = QtWidgets.QVBoxLayout()
         main_lay.addWidget(MDivider("different size"))
@@ -94,9 +77,7 @@ class LineEditExample(QtWidgets.QWidget):
         main_lay.addWidget(MDivider("preset"))
 
         main_lay.addWidget(MLabel("error"))
-        main_lay.addWidget(
-            MLineEdit(text="waring: file d:/ddd/ccc.jpg not exists.").error()
-        )
+        main_lay.addWidget(MLineEdit(text="waring: file d:/ddd/ccc.jpg not exists.").error())
         main_lay.addWidget(MLabel("search"))
         main_lay.addWidget(MLineEdit().search().small())
         main_lay.addWidget(MLabel("search_engine"))

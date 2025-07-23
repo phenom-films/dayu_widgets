@@ -1,13 +1,11 @@
 """Test MSwitch class"""
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
+import pytest
+
+# Import local modules
 from dayu_widgets import dayu_theme
 from dayu_widgets.switch import MSwitch
-import pytest
 
 
 @pytest.mark.parametrize(
