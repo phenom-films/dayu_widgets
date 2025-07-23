@@ -1,15 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2018.9
-# Email : muyanru345@163.com
-###################################################################
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
@@ -49,7 +37,8 @@ class MFieldMixin(object):
         else:
             self.props_dict[data_name]["bind"].append(data_dict)
         if signal:  # 用户操作绑定数据
-            getattr(widget, signal).connect(functools.partial(self._slot_changed_from_user, data_dict))
+            slot = functools.partial(self._slot_changed_from_user, data_dict)
+            getattr(widget, signal).connect(slot)
         self._data_update_ui(data_dict)
         return widget
 

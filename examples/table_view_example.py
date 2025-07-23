@@ -1,21 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -77,12 +65,8 @@ class TableViewExample(QtWidgets.QWidget, MFieldMixin):
         thread = MFetchDataThread(self)
 
         self.loading_wrapper = MLoadingWrapper(widget=table_default, loading=False)
-        thread.started.connect(
-            functools.partial(self.loading_wrapper.set_dayu_loading, True)
-        )
-        thread.finished.connect(
-            functools.partial(self.loading_wrapper.set_dayu_loading, False)
-        )
+        thread.started.connect(functools.partial(self.loading_wrapper.set_dayu_loading, True))
+        thread.finished.connect(functools.partial(self.loading_wrapper.set_dayu_loading, False))
         thread.finished.connect(functools.partial(table_default.setModel, model_sort))
         button = MPushButton(text="Get Data: 4s")
         button.clicked.connect(thread.start)
@@ -116,7 +100,7 @@ class TableViewExample(QtWidgets.QWidget, MFieldMixin):
         main_lay.addWidget(MDivider("With Grid"))
         main_lay.addWidget(table_grid)
         main_lay.addStretch()
-        main_lay.addWidget(MAlert('Simply use "MItemViewSet" or "MItemViewFullSet"'))
+        main_lay.addWidget(MDivider('Simply use "MItemViewSet" or "MItemViewFullSet"'))
         self.setLayout(main_lay)
 
 

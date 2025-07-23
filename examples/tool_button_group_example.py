@@ -1,19 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -41,9 +28,7 @@ class ToolButtonGroupExample(QtWidgets.QWidget, MFieldMixin):
             {"text": "Houdini", "icon": MIcon("app-houdini.png"), "checkable": True},
         ]
 
-        tool_group_v = MToolButtonGroup(
-            exclusive=True, size=dayu_theme.small, orientation=QtCore.Qt.Vertical
-        )
+        tool_group_v = MToolButtonGroup(exclusive=True, size=dayu_theme.small, orientation=QtCore.Qt.Vertical)
         tool_group_v.set_button_list(app_data)
 
         tool_group_button_h = MToolButtonGroup()
@@ -52,9 +37,7 @@ class ToolButtonGroupExample(QtWidgets.QWidget, MFieldMixin):
         tool_2_lay.addWidget(tool_group_button_h)
         tool_2_lay.addStretch()
 
-        tool_grp_excl_true = MToolButtonGroup(
-            orientation=QtCore.Qt.Horizontal, exclusive=True
-        )
+        tool_grp_excl_true = MToolButtonGroup(orientation=QtCore.Qt.Horizontal, exclusive=True)
         tool_grp_excl_true.set_button_list(
             [
                 {"svg": "table_view.svg", "checkable": True, "tooltip": "Table View"},
@@ -68,9 +51,7 @@ class ToolButtonGroupExample(QtWidgets.QWidget, MFieldMixin):
         tool_excl_lay.addWidget(tool_grp_excl_true)
         tool_excl_lay.addStretch()
 
-        tool_grp_excl_false = MToolButtonGroup(
-            orientation=QtCore.Qt.Horizontal, exclusive=False
-        )
+        tool_grp_excl_false = MToolButtonGroup(orientation=QtCore.Qt.Horizontal, exclusive=False)
         tool_grp_excl_false.set_button_list(
             [
                 {"tooltip": "加粗", "svg": "bold.svg", "checkable": True},

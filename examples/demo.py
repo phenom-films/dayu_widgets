@@ -1,37 +1,11 @@
-# -*- coding: utf-8 -*-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
-import signal
-
-# Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
-
-
-signal.signal(signal.SIGINT, signal.SIG_DFL)
-
-# Import built-in modules
+import codecs
 import importlib
 import os
 
 # Import third-party modules
-import Qt
-
-
-# Qt.py global variable for preferred Qt binding
-# os.environ["QT_PREFERRED_BINDING"] = "PyQt4;PyQt5;PySide;PySide2"
-# For Houdini hython.exe
-# os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = r"E:\Houdini18\bin\Qt_plugins\platforms"
-
-
-print(Qt.__binding__)
-
-# Import built-in modules
-import codecs
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -66,9 +40,7 @@ class MDemo(QtWidgets.QMainWindow):
         self.stacked_widget = QtWidgets.QStackedWidget()
 
         list_widget = MItemViewSet(view_type=MItemViewSet.ListViewType)
-        list_widget.set_header_list(
-            [{"key": "name", "label": "Name", "icon": "list_view.svg"}]
-        )
+        list_widget.set_header_list([{"key": "name", "label": "Name", "icon": "list_view.svg"}])
         list_widget.sig_left_clicked.connect(self.slot_change_widget)
         data_list = []
         for index, (name, cls, code) in enumerate(get_test_widget()):

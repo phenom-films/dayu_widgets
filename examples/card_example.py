@@ -1,18 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.4
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
-from Qt import QtWidgets
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -28,18 +15,17 @@ class CardExample(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(CardExample, self).__init__(parent)
         self.setWindowTitle("Examples for MCard")
-        geo = QtWidgets.QApplication.desktop().screenGeometry()
-        width = float(geo.width())
-        height = float(geo.height())
-        x = int(width / 4)
-        y = int(height / 4)
-        w = int(width / 1.5)
-        h = int(height / 2)
-        self.setGeometry(x, y, w, h)
+        # geo = QtWidgets.QApplication.desktop().screenGeometry()
+        # width = float(geo.width())
+        # height = float(geo.height())
+        # x = int(width / 4)
+        # y = int(height / 4)
+        # w = int(width / 1.5)
+        # h = int(height / 2)
+        # self.setGeometry(x, y, w, h)
         self._init_ui()
 
     def _init_ui(self):
-
         basic_card_lay = MFlowLayout()
         basic_card_lay.setSpacing(20)
         for setting in [
@@ -144,7 +130,6 @@ class CardExample(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets import dayu_theme
     from dayu_widgets.qt import application
 
     with application() as app:

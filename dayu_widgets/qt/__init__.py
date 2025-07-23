@@ -1,26 +1,13 @@
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import contextlib
 import signal
 import sys
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtGui
-from Qt import QtWidgets
-from Qt.QtSvg import QSvgRenderer
-import six
+from qtpy import QtCore
+from qtpy import QtGui
+from qtpy import QtWidgets
+from qtpy.QtSvg import QSvgRenderer
 
 
 class MCacheDict(object):
@@ -42,7 +29,7 @@ class MCacheDict(object):
             data_content = f.read()
             if replace_color is not None:
                 data_content = data_content.replace("#555555", replace_color)
-            self._render.load(QtCore.QByteArray(six.b(data_content)))
+            self._render.load(QtCore.QByteArray(data_content.encode()))
             pix = QtGui.QPixmap(128, 128)
             pix.fill(QtCore.Qt.transparent)
             painter = QtGui.QPainter(pix)
@@ -73,11 +60,22 @@ class MCacheDict(object):
 
 def get_scale_factor():
     if not QtWidgets.QApplication.instance():
-        app = QtWidgets.QApplication([])
+        QtWidgets.QApplication([])
     standard_dpi = 96.0
-    scale_factor_x = QtWidgets.QApplication.desktop().logicalDpiX() / standard_dpi
-    scale_factor_y = QtWidgets.QApplication.desktop().logicalDpiY() / standard_dpi
-    return scale_factor_x, scale_factor_y
+
+    # For PySide6
+    if hasattr(QtWidgets.QApplication, 'primaryScreen'):
+        screen = QtWidgets.QApplication.primaryScreen()
+        scale_factor_x = screen.logicalDotsPerInchX() / standard_dpi
+        scale_factor_y = screen.logicalDotsPerInchY() / standard_dpi
+        return scale_factor_x, scale_factor_y
+    # For PySide2
+    elif hasattr(QtWidgets.QApplication, 'desktop'):
+        scale_factor_x = QtWidgets.QApplication.desktop().logicalDpiX() / standard_dpi
+        scale_factor_y = QtWidgets.QApplication.desktop().logicalDpiY() / standard_dpi
+        return scale_factor_x, scale_factor_y
+    else:
+        return 1, 1
 
 
 @contextlib.contextmanager

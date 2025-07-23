@@ -1,21 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
 """
 MBadge
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import utils
@@ -26,6 +15,7 @@ class MBadge(QtWidgets.QWidget):
     Badge normally appears in proximity to notifications or user avatars with eye-catching appeal,
     typically displaying unread messages count.
     Show something at the wrapped widget top right.
+
     There is 3 type styles:
         dot: show a dot
         count: show a number at
@@ -33,7 +23,7 @@ class MBadge(QtWidgets.QWidget):
 
     Property:
         dayu_dot: bool
-        dayu_text: six.string_types
+        dayu_text: str
         dayu_count: int
         dayu_overflow: int
     """
@@ -42,19 +32,20 @@ class MBadge(QtWidgets.QWidget):
         super(MBadge, self).__init__(parent)
         self._widget = widget
         self._overflow_count = 99
-
         self._dot = False
         self._text = None
         self._count = None
-
         self._badge_button = QtWidgets.QPushButton()
-        self._badge_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-
+        size_policy = QtWidgets.QSizePolicy.Minimum
+        self._badge_button.setSizePolicy(size_policy, size_policy)
         self._main_lay = QtWidgets.QGridLayout()
         self._main_lay.setContentsMargins(0, 0, 0, 0)
+
         if widget is not None:
             self._main_lay.addWidget(widget, 0, 0)
-        self._main_lay.addWidget(self._badge_button, 0, 0, QtCore.Qt.AlignTop | QtCore.Qt.AlignRight)
+
+        align_flags = QtCore.Qt.AlignTop | QtCore.Qt.AlignRight
+        self._main_lay.addWidget(self._badge_button, 0, 0, align_flags)
         self.setLayout(self._main_lay)
 
     def get_dayu_overflow(self):
@@ -101,7 +92,6 @@ class MBadge(QtWidgets.QWidget):
     def set_dayu_count(self, num):
         """
         Set current style to show a number
-
         :param num: int
         :return: None
         """
@@ -117,14 +107,15 @@ class MBadge(QtWidgets.QWidget):
     def get_dayu_text(self):
         """
         Get current showed text
-        :return: six.string_types
+        :return: str
         """
+
         return self._text
 
     def set_dayu_text(self, text):
         """
         Set current style to show a text.
-        :param text: six.string_types
+        :param text: str
         :return: None
         """
         self._text = text
@@ -166,7 +157,7 @@ class MBadge(QtWidgets.QWidget):
     def text(cls, text="", widget=None):
         """
         Create a Badge with text style.
-        :param text: six.string_types
+        :param text: str
         :param widget: the wrapped widget
         :return: instance badge
         """

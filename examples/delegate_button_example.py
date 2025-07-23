@@ -1,19 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -46,9 +33,7 @@ class MPushButtonDelegate(QtWidgets.QStyledItemDelegate):
         button.text = "Click Me (" + str(index.data(QtCore.Qt.DisplayRole)) + ")"
         button.state = QtWidgets.QStyle.State_Enabled
 
-        QtWidgets.QApplication.style().drawControl(
-            QtWidgets.QStyle.CE_PushButton, button, painter
-        )
+        QtWidgets.QApplication.style().drawControl(QtWidgets.QStyle.CE_PushButton, button, painter)
 
 
 header_list = [
@@ -151,7 +136,6 @@ class DelegateButtonExample(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     # Import local modules
-    from dayu_widgets import dayu_theme
     from dayu_widgets.qt import application
 
     with application() as app:

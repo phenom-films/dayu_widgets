@@ -1,22 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
-
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import built-in modules
 import functools
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets.label import MLabel
@@ -48,7 +35,8 @@ class MSectionItem(QtWidgets.QWidget):
         self.header_widget.setAttribute(QtCore.Qt.WA_StyledBackground)
         self.header_widget.setObjectName("title")
         self.header_widget.setLayout(header_lay)
-        self.header_widget.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        policy = QtWidgets.QSizePolicy.Minimum
+        self.header_widget.setSizePolicy(policy, policy)
         self.header_widget.setCursor(QtCore.Qt.PointingHandCursor)
         self.title_label.setCursor(QtCore.Qt.PointingHandCursor)
         self.header_widget.installEventFilter(self)
@@ -94,7 +82,8 @@ class MSectionItem(QtWidgets.QWidget):
 
     def _set_expand(self, value):
         self.content_widget.setVisible(value)
-        self.expand_icon.setPixmap(MPixmap("down_line.svg" if value else "right_line.svg").scaledToHeight(12))
+        icon_name = "down_line.svg" if value else "right_line.svg"
+        self.expand_icon.setPixmap(MPixmap(icon_name).scaledToHeight(12))
 
     def set_title(self, value):
         self.setProperty("title", value)
@@ -132,7 +121,8 @@ class MCollapse(QtWidgets.QWidget):
     def add_section_list(self, section_list):
         for section_data in section_list:
             section_widget = self.add_section(section_data)
-            section_widget._close_button.clicked.connect(functools.partial(self.remove_section, section_widget))
+            callback = functools.partial(self.remove_section, section_widget)
+            section_widget._close_button.clicked.connect(callback)
             self._section_list.append(section_widget)
 
     def remove_section(self, widget):

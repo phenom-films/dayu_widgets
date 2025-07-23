@@ -1,20 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
 """A Navigation menu"""
 
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -41,7 +29,7 @@ class MBlockButtonGroup(MButtonGroupBase):
         self.set_spacing(1)
         self._menu_tab = tab
         self._button_group.setExclusive(True)
-        self._button_group.buttonClicked[int].connect(self.sig_checked_changed)
+        self._button_group.idClicked.connect(self.sig_checked_changed)
 
     def create_button(self, data_dict):
         button = MBlockButton()

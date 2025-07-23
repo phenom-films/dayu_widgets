@@ -1,22 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.2
-# Email : muyanru345@163.com
-###################################################################
 """
 MAvatar.
 """
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtGui
-from Qt import QtWidgets
+from qtpy import QtCore
+from qtpy import QtGui
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -26,7 +15,6 @@ from dayu_widgets.qt import MPixmap
 class MAvatar(QtWidgets.QLabel):
     """
     Avatar component. It can be used to represent people or object.
-
     Property:
         image: avatar image, should be QPixmap.
         dayu_size: the size of image.
@@ -36,6 +24,7 @@ class MAvatar(QtWidgets.QLabel):
         super(MAvatar, self).__init__(parent, flags)
         self._default_pix = MPixmap("user_fill.svg")
         self._pixmap = self._default_pix
+        self._original_pixmap = self._default_pix
         self._dayu_size = 0
         self.set_dayu_size(dayu_theme.default_size)
 
@@ -53,7 +42,17 @@ class MAvatar(QtWidgets.QLabel):
         self._set_dayu_image()
 
     def _set_dayu_image(self):
-        self.setPixmap(self._pixmap.scaledToWidth(self.height(), QtCore.Qt.SmoothTransformation))
+        # Check if pixmap is null or has zero size
+        if self._pixmap.isNull() or self._pixmap.size().isEmpty():
+            # Reset to default pixmap
+            self._pixmap = self._default_pix.copy()
+            # Also update original pixmap reference to ensure consistency
+            self._original_pixmap = self._default_pix
+
+        # Scale the pixmap to the current size
+        if self.height() > 0:
+            scaled_pixmap = self._pixmap.scaledToWidth(self.height(), QtCore.Qt.SmoothTransformation)
+            self.setPixmap(scaled_pixmap)
 
     def set_dayu_image(self, value):
         """
@@ -61,12 +60,20 @@ class MAvatar(QtWidgets.QLabel):
         :param value: QPixmap or None.
         :return: None
         """
+
         if value is None:
             self._pixmap = self._default_pix
+            self._original_pixmap = self._default_pix
         elif isinstance(value, QtGui.QPixmap):
-            self._pixmap = self._default_pix if value.isNull() else value
+            if value.isNull():
+                self._pixmap = self._default_pix
+                self._original_pixmap = self._default_pix
+            else:
+                self._pixmap = value
+                self._original_pixmap = value
         else:
-            raise TypeError("Input argument 'value' should be QPixmap or None, " "but get {}".format(type(value)))
+            msg = "Input argument 'value' should be QPixmap or None, but get {}"
+            raise TypeError(msg.format(type(value)))
         self._set_dayu_image()
 
     def get_dayu_image(self):
@@ -74,7 +81,7 @@ class MAvatar(QtWidgets.QLabel):
         Get the avatar image.
         :return: QPixmap
         """
-        return self._pixmap
+        return self._original_pixmap
 
     def get_dayu_size(self):
         """

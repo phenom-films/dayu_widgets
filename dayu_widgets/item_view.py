@@ -1,19 +1,7 @@
-# -*- coding: utf-8 -*-
-###################################################################
-# Author: Mu yanru
-# Date  : 2019.3
-# Email : muyanru345@163.com
-###################################################################
-# Import future modules
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 # Import third-party modules
-from Qt import QtCore
-from Qt import QtGui
-from Qt import QtWidgets
-import six
+from qtpy import QtCore
+from qtpy import QtGui
+from qtpy import QtWidgets
 
 # Import local modules
 from dayu_widgets import dayu_theme
@@ -29,9 +17,6 @@ HEADER_SORT_MAP = {"asc": QtCore.Qt.AscendingOrder, "desc": QtCore.Qt.Descending
 
 
 def draw_empty_content(view, text=None, pix_map=None):
-    # Import local modules
-    from dayu_widgets import dayu_theme
-
     pix_map = pix_map or MPixmap("empty.svg")
     text = text or view.tr("No Data")
     painter = QtGui.QPainter(view)
@@ -39,9 +24,14 @@ def draw_empty_content(view, text=None, pix_map=None):
     painter.setPen(QtGui.QPen(QtGui.QColor(dayu_theme.secondary_text_color)))
     content_height = pix_map.height() + font_metrics.height()
     padding = 10
-    proper_min_size = min(view.height() - padding * 2, view.width() - padding * 2, content_height)
+    proper_min_size = min(
+        view.height() - padding * 2,
+        view.width() - padding * 2,
+        content_height
+    )
     if proper_min_size < content_height:
-        pix_map = pix_map.scaledToHeight(proper_min_size - font_metrics.height(), QtCore.Qt.SmoothTransformation)
+        height = proper_min_size - font_metrics.height()
+        pix_map = pix_map.scaledToHeight(height, QtCore.Qt.SmoothTransformation)
         content_height = proper_min_size
     painter.drawText(
         view.width() / 2 - font_metrics.width(text) / 2,
@@ -89,9 +79,8 @@ class MOptionDelegate(QtWidgets.QStyledItemDelegate):
         model.setData(index, editor.property("value"))
 
     def updateEditorGeometry(self, editor, option, index):
-        editor.move(
-            self.parent_widget.mapToGlobal(QtCore.QPoint(option.rect.x(), option.rect.y() + option.rect.height()))
-        )
+        point = QtCore.QPoint(option.rect.x(), option.rect.y() + option.rect.height())
+        editor.move(self.parent_widget.mapToGlobal(point))
 
     def paint(self, painter, option, index):
         painter.save()
@@ -161,8 +150,16 @@ def slot_context_menu(self, point):
     if proxy_index.isValid():
         need_map = isinstance(self.model(), QtCore.QSortFilterProxyModel)
         selection = []
-        for index in self.selectionModel().selectedRows() or self.selectionModel().selectedIndexes():
-            data_obj = self.model().mapToSource(index).internalPointer() if need_map else index.internalPointer()
+        selected = (
+            self.selectionModel().selectedRows() or
+            self.selectionModel().selectedIndexes()
+        )
+        for index in selected:
+            if need_map:
+                source_index = self.model().mapToSource(index)
+                data_obj = source_index.internalPointer()
+            else:
+                data_obj = index.internalPointer()
             selection.append(data_obj)
         event = utils.ItemViewMenuEvent(view=self, selection=selection, extra={})
         self.sig_context_menu.emit(event)
@@ -197,7 +194,7 @@ def mouse_release_event(self, event):
         if value:
             if isinstance(value, dict):
                 self.sig_link_clicked.emit(value)
-            elif isinstance(value, six.string_types):
+            elif isinstance(value, str):
                 self.sig_link_clicked.emit(data_obj)
             elif isinstance(value, list):
                 for i in value:
@@ -215,7 +212,7 @@ class MTableView(QtWidgets.QTableView):
         self._no_data_image = None
         self._no_data_text = self.tr("No Data")
         size = size or dayu_theme.default_size
-        ver_header_view = MHeaderView(QtCore.Qt.Vertical, parent=self)
+        ver_header_view = MHeaderView(QtCore.Qt.Vertical, parent=self, show_sort_indicator=False)
         ver_header_view.setDefaultSectionSize(size)
         ver_header_view.setSortIndicatorShown(False)
         self.setVerticalHeader(ver_header_view)
@@ -282,19 +279,19 @@ class MTableView(QtWidgets.QTableView):
             QtCore.QSettings.IniFormat,
             QtCore.QSettings.UserScope,
             "DAYU",
-            "dayu_widgets",
+            "dayu_widgets3",
         )
-        settings.setValue("{}/headerState".format(name, self.header_view.saveState()))
+        settings.setValue(f"{name}/headerState", self.header_view.saveState())
 
     def load_state(self, name):
         settings = QtCore.QSettings(
             QtCore.QSettings.IniFormat,
             QtCore.QSettings.UserScope,
             "DAYU",
-            "dayu_widgets",
+            "dayu_widgets3",
         )
-        if settings.value("{}/headerState".format(name)):
-            self.header_view.restoreState(settings.value("{}/headerState".format(name)))
+        if settings.value(f"{name}/headerState"):
+            self.header_view.restoreState(settings.value(f"{name}/headerState"))
 
 
 class MTreeView(QtWidgets.QTreeView):
