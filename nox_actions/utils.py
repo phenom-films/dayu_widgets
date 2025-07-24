@@ -39,14 +39,14 @@ def get_qt_dependencies(qt_binding):
 
 def setup_qt_test_env():
     """Setup environment for Qt testing.
-    
+
     This ensures:
     1. The package is importable
     2. Qt can find necessary plugins
     """
     if THIS_ROOT not in sys.path:
         sys.path.insert(0, str(THIS_ROOT))
-    
+
     # Set QT_QPA_PLATFORM for headless testing if needed
     if os.environ.get("CI") or os.environ.get("HEADLESS"):
         os.environ["QT_QPA_PLATFORM"] = "offscreen"

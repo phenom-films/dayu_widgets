@@ -15,10 +15,10 @@ from dayu_widgets.static import request_file
 def parse_db_orm(orm):
     """
     Parse database ORM object into a dictionary format.
-    
+
     Args:
         orm: Database ORM object that contains name, parent and tablename attributes
-        
+
     Returns:
         dict: A dictionary containing:
             - name (str): Name of the orm object or 'ROOT' if it's root
@@ -42,10 +42,10 @@ def parse_db_orm(orm):
 def parse_path(path):
     """
     Parse file system path into a dictionary format.
-    
+
     Args:
         path (str): File system path to parse
-        
+
     Returns:
         dict: A dictionary containing:
             - name (str): Base name of the path or full path if base name is empty
@@ -71,7 +71,7 @@ def parse_path(path):
 class MBaseButton(QtWidgets.QWidget):
     """
     Base button widget for path navigation.
-    
+
     Signals:
         sig_name_button_clicked (int): Emitted when the name button is clicked
         sig_menu_action_clicked (int, dict): Emitted when a menu action is clicked
@@ -83,7 +83,7 @@ class MBaseButton(QtWidgets.QWidget):
     def __init__(self, data_dict, parent=None):
         """
         Initialize the base button.
-        
+
         Args:
             data_dict (dict): Dictionary containing button data
             parent (QWidget, optional): Parent widget. Defaults to None.
@@ -140,7 +140,7 @@ class MBaseButton(QtWidgets.QWidget):
 class MDBPathButtons(QtWidgets.QFrame):
     """
     Path buttons widget for navigation.
-    
+
     Signals:
         sig_current_changed: Emitted when the current path changes
     """
@@ -151,7 +151,7 @@ class MDBPathButtons(QtWidgets.QFrame):
     def __init__(self, parent=None):
         """
         Initialize the path buttons widget.
-        
+
         Args:
             parent (QWidget, optional): Parent widget. Defaults to None.
         """
@@ -172,7 +172,7 @@ class MDBPathButtons(QtWidgets.QFrame):
     def set_parse_function(self, func):
         """
         Set the parse function for the path buttons.
-        
+
         Args:
             func (callable): Parse function to use
         """
@@ -181,7 +181,7 @@ class MDBPathButtons(QtWidgets.QFrame):
     def setup_data(self, obj):
         """
         Setup the data for the path buttons.
-        
+
         Args:
             obj: Object to parse and display
         """
@@ -193,7 +193,7 @@ class MDBPathButtons(QtWidgets.QFrame):
     def add_level(self, data_dict):
         """
         Add a level to the path buttons.
-        
+
         Args:
             data_dict (dict): Dictionary containing level data
         """
@@ -209,7 +209,7 @@ class MDBPathButtons(QtWidgets.QFrame):
     def clear_downstream(self, index):
         """
         Clear the downstream levels.
-        
+
         Args:
             index (int): Index to clear from
         """
@@ -224,7 +224,7 @@ class MDBPathButtons(QtWidgets.QFrame):
     def slot_show_menu(self, menu_button, data_dict):
         """
         Show the menu for a button.
-        
+
         Args:
             menu_button (QtWidgets.QToolButton): Button to show menu for
             data_dict (dict): Dictionary containing button data
@@ -242,7 +242,7 @@ class MDBPathButtons(QtWidgets.QFrame):
     def slot_button_clicked(self, index):
         """
         Handle button click event.
-        
+
         Args:
             index (int): Index of the button clicked
         """
@@ -253,7 +253,7 @@ class MDBPathButtons(QtWidgets.QFrame):
     def slot_menu_button_clicked(self, index, data_dict):
         """
         Handle menu button click event.
-        
+
         Args:
             index (int): Index of the button clicked
             data_dict (dict): Dictionary containing button data
@@ -266,7 +266,7 @@ class MDBPathButtons(QtWidgets.QFrame):
     def slot_go_to(self, obj_list):
         """
         Go to a specific path.
-        
+
         Args:
             obj_list (list): List of objects to navigate to
         """
@@ -289,7 +289,7 @@ class MDBPathButtons(QtWidgets.QFrame):
     def get_obj_list(self):
         """
         Get the list of objects.
-        
+
         Returns:
             list: List of objects
         """
