@@ -80,8 +80,8 @@ class MUnderlineButtonGroup(MButtonGroupBase):
 
 
 class MLineTabWidget(QtWidgets.QWidget):
-    """ 
-    MLineTabWidget 
+    """
+    MLineTabWidget
     """
 
     def __init__(self, alignment=QtCore.Qt.AlignCenter, parent=None):

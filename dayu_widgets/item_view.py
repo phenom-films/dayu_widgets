@@ -151,8 +151,8 @@ def slot_context_menu(self, point):
         need_map = isinstance(self.model(), QtCore.QSortFilterProxyModel)
         selection = []
         selected = (
-            self.selectionModel().selectedRows() or
-            self.selectionModel().selectedIndexes()
+            self.selectionModel().selectedRows()
+            or self.selectionModel().selectedIndexes()
         )
         for index in selected:
             if need_map:

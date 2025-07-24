@@ -1,6 +1,5 @@
 # Import built-in modules
 import os
-import sys
 from pathlib import Path
 
 # Import third-party modules

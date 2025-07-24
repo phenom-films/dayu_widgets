@@ -226,8 +226,8 @@ class MLabel(QtWidgets.QLabel):
 
     def event(self, event):
         is_text_change = (
-            event.type() == QtCore.QEvent.DynamicPropertyChange and
-            event.propertyName() == "dayu_text"
+            event.type() == QtCore.QEvent.DynamicPropertyChange
+            and event.propertyName() == "dayu_text"
         )
         if is_text_change:
             self.setText(self.property("dayu_text"))

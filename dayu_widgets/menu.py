@@ -192,8 +192,8 @@ class ScrollableMenuBase(QtWidgets.QMenu):
             vmargin = style.pixelMetric(self._compat_style.PM_MenuVMargin, opt, self)
             scrollHeight = self.scrollHeight(style)
             max_height = (
-                self.defaultItemHeight * count +
-                (fw + vmargin + scrollHeight) * 2
+                self.defaultItemHeight * count
+                + (fw + vmargin + scrollHeight) * 2
             )
             self.setMaximumHeight(max_height)
         self.dirty = True
