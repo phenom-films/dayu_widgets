@@ -1,3 +1,9 @@
+## v1.1.0 (2025-07-24)
+
+### Feat
+
+- update cr
+
 ## v1.0.0 (2025-07-24)
 
 ### BREAKING CHANGE
