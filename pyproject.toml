@@ -28,7 +28,7 @@ PySide6 = { version = ">=6.4.2", optional = true }
 
 [tool.poetry.group.dev.dependencies]
 pyside2 = "^5.15.2.1"
-isort = "5.11.5"
+isort = "6.0.1"
 black = "23.3"
 flake8 = "5"
 autoflake = "1.7"
