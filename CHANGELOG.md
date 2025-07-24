@@ -1,3 +1,27 @@
+## v1.0.0 (2025-07-24)
+
+### BREAKING CHANGE
+
+- pytest-qt 4.5.0 dropped support for PySide2
+
+### Feat
+
+- Apply successful repository's pytest-qt version strategy
+- Completely adopt reference repository strategy
+- Support for PySide6
+
+### Fix
+
+- Use pytest-qt<4.5.0 to maintain PySide2 support
+- Add Python version compatibility check for PySide2
+- Remove qt_api = auto from pytest.ini
+- Pin pytest-qt version to support PySide2
+- Add setup.cfg to resolve package discovery issues
+
+### Refactor
+
+- Adopt reference repository strategy for pytest-qt
+
 ## v0.15.0 (2025-04-27)
 
 ### Feat
