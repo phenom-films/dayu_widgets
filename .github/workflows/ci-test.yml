@@ -227,7 +227,7 @@ jobs:
         cache-dependency-path: '**/pyproject.toml'
 
     - name: Set up Docker
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v3
 
     - name: Check Docker
       run: |
@@ -281,7 +281,7 @@ jobs:
         cache-dependency-path: '**/pyproject.toml'
 
     - name: Set up Docker
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v3
 
     - name: Check Docker
       run: |
