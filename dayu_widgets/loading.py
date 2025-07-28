@@ -60,6 +60,26 @@ class MLoading(QtWidgets.QWidget):
         painter.end()
         return super(MLoading, self).paintEvent(event)
 
+    def start(self):
+        self._loading_ani.start()
+
+    def resume(self):
+        self._loading_ani.resume()
+
+    def pause(self):
+        self._loading_ani.pause()
+
+    def stop(self):
+        self._loading_ani.stop()
+
+    def hideEvent(self, event):
+        self._loading_ani.stop()
+        super(MLoading, self).hideEvent(event)
+
+    def showEvent(self, event):
+        self._loading_ani.start()
+        super(MLoading, self).showEvent(event)
+
     @classmethod
     def huge(cls, color=None):
         """Create a MLoading with huge size"""
