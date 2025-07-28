@@ -1,3 +1,9 @@
+## v1.1.1 (2025-07-28)
+
+### Fix
+
+- correct malformed JSON in .all-contributorsrc and add CI permissions
+
 ## v1.1.0 (2025-07-24)
 
 ### Feat
