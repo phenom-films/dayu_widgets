@@ -36,7 +36,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
       with:
         fetch-depth: 1
 
@@ -215,7 +215,7 @@ jobs:
         maya-version: ['2022', '2023', '2024', '2025']
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
       with:
         fetch-depth: 1
 
@@ -269,7 +269,7 @@ jobs:
         python-version: ['3.9', '3.10']
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
       with:
         fetch-depth: 1
 
