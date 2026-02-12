@@ -30,7 +30,7 @@ PySide6 = { version = ">=6.4.2", optional = true }
 pyside2 = "^5.15.2.1"
 isort = "5.11.5"
 black = "23.3"
-flake8 = "5"
+flake8 = "7.3.0"
 autoflake = "1.7"
 
 [tool.poetry.extras]
