@@ -31,7 +31,7 @@ pyside2 = "^5.15.2.1"
 isort = "5.11.5"
 black = "23.3"
 flake8 = "5"
-autoflake = "1.7"
+autoflake = "2.4.0"
 
 [tool.poetry.extras]
 pyside2 = ["PySide2"]
